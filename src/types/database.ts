@@ -1,0 +1,113 @@
+export type UserRole = 'admin' | 'director' | 'master' | 'player' | 'guest'
+export type RoomStatus = 'active' | 'paused' | 'closed' | 'archived'
+export type ReportStatus = 'pending' | 'reviewed' | 'resolved' | 'dismissed'
+export type NotificationType = 'mention' | 'reply' | 'message' | 'report' | 'system' | 'points'
+
+export interface Profile {
+  id: string
+  username: string
+  display_name: string | null
+  avatar_url: string | null
+  banner_url: string | null
+  bio: string | null
+  role: UserRole
+  points: number
+  level: number
+  status: string
+  ultimo_acceso: string
+  created_at: string
+  updated_at: string
+}
+
+export interface Character {
+  id: string
+  user_id: string
+  name: string
+  avatar_url: string | null
+  description: string | null
+  sheet: Record<string, unknown>
+  is_active: boolean
+  deleted_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface Room {
+  id: string
+  slug: string
+  title: string
+  description: string | null
+  cover_url: string | null
+  status: RoomStatus
+  owner_id: string | null
+  custom_css: string | null
+  tags: string[]
+  ultima_actividad: string
+  deleted_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface Topic {
+  id: string
+  room_id: string
+  title: string
+  starter: string | null
+  author_id: string | null
+  character_id: string | null
+  is_pinned: boolean
+  is_locked: boolean
+  view_count: number
+  deleted_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface Post {
+  id: string
+  topic_id: string
+  author_id: string | null
+  character_id: string | null
+  content: string
+  post_number: number
+  dice_result: { type: string; result: number; verified: boolean } | null
+  edited_at: string | null
+  deleted_at: string | null
+  created_at: string
+}
+
+export interface Notification {
+  id: string
+  user_id: string
+  type: NotificationType
+  title: string
+  body: string | null
+  link: string | null
+  read_at: string | null
+  created_at: string
+}
+
+// Tipo auxiliar para joins comunes
+export interface PostWithAuthor extends Post {
+  profiles: Pick<Profile, 'id' | 'username' | 'display_name' | 'avatar_url'> | null
+  characters: Pick<Character, 'id' | 'name' | 'avatar_url'> | null
+}
+
+export type Database = {
+  public: {
+    Tables: {
+      profiles: { Row: Profile; Insert: Partial<Profile>; Update: Partial<Profile> }
+      characters: { 
+      Row: Character
+     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Insert: any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Update: any
+}
+      rooms: { Row: Room; Insert: Partial<Room>; Update: Partial<Room> }
+      topics: { Row: Topic; Insert: Partial<Topic>; Update: Partial<Topic> }
+      posts: { Row: Post; Insert: Partial<Post>; Update: Partial<Post> }
+      notifications: { Row: Notification; Insert: Partial<Notification>; Update: Partial<Notification> }
+    }
+  }
+}
