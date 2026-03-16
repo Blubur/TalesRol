@@ -1,4 +1,4 @@
-export type UserRole = 'admin' | 'director' | 'master' | 'player' | 'guest'
+export type UserRole = 'admin' | 'director' | 'master' | 'jugador' | 'miembro'
 export type RoomStatus = 'active' | 'paused' | 'closed' | 'archived'
 export type ReportStatus = 'pending' | 'reviewed' | 'resolved' | 'dismissed'
 export type NotificationType = 'mention' | 'reply' | 'message' | 'report' | 'system' | 'points'
