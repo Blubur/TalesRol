@@ -17,19 +17,13 @@ async function requireAdmin() {
 export async function changeUserRole(userId: string, role: string) {
   const { error, supabase } = await requireAdmin()
   if (error || !supabase) return { error }
-  
-  console.log('Cambiando rol:', userId, role) // añadir
-  
-  const { error: dbError, data } = await supabase
+  const { error: dbError } = await supabase
     .from('profiles')
     .update({ role, updated_at: new Date().toISOString() })
     .eq('id', userId)
-    .select() // añadir
-    
-  console.log('Resultado:', data, dbError) // añadir
-  
   if (dbError) return { error: dbError.message }
-  revalidatePath('/admin')
+  revalidatePath('/admin', 'page')
+  revalidatePath('/', 'layout')
   return { success: true }
 }
 

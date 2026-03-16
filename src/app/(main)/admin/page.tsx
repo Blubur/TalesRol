@@ -22,6 +22,7 @@ import {
 export const metadata = { title: 'Panel de Administración — TalesRol' }
 
 export default async function AdminPage() {
+  export const dynamic = 'force-dynamic'
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
