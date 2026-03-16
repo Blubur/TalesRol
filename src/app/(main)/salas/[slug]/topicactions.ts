@@ -210,6 +210,11 @@ export async function deletePost(id: string, topic_id: string, slug: string) {
 // ── SALA: actualizar descripción con HTML ──────────────
 
 export async function updateRoomDescription(formData: FormData) {
+
+ console.log('id:', formData.get('id'))
+  console.log('title:', formData.get('title'))
+  console.log('description:', formData.get('description'))
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado.' }

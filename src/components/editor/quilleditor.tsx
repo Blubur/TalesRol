@@ -193,7 +193,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         />
       )}
 
-      <input ref={hiddenRef} type="hidden" name={name} defaultValue={defaultValue} />
+<input ref={hiddenRef} type="hidden" name={name} value={htmlValue} onChange={() => {}} />
 
       <style>{`
         .qe-wrapper { display: flex; flex-direction: column; border-radius: 4px; overflow: hidden; border: 1px solid var(--border-subtle); transition: border-color 0.2s; }
