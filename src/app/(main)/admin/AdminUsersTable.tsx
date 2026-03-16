@@ -56,26 +56,26 @@ export default function AdminUsersTable({ users, currentUserId, roleColors: init
     (u.display_name ?? '').toLowerCase().includes(search.toLowerCase())
   )
 
-  // ── Guardar rol de usuario ────────────────────────────────────────────────
-  async function handleSaveRole(userId: string) {
-    const newRole = pendingRole[userId]
-    if (!newRole) return
-    setLoading(userId + '_save')
-    setErrorRows(prev => { const n = { ...prev }; delete n[userId]; return n })
+ async function handleSaveRole(userId: string) {
+  const newRole = pendingRole[userId]
+  console.log('handleSaveRole llamado:', userId, newRole) // añadir
+  if (!newRole) return
+  setLoading(userId + '_save')
+  setErrorRows(prev => { const n = { ...prev }; delete n[userId]; return n })
 
-    const result = await changeUserRole(userId, newRole)
+  const result = await changeUserRole(userId, newRole)
+  console.log('resultado changeUserRole:', result) // añadir
 
-    if (result?.error) {
-      setErrorRows(prev => ({ ...prev, [userId]: String(result.error) }))
-    } else {
-      setLocalUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole as any } : u))
-      setPendingRole(prev => { const n = { ...prev }; delete n[userId]; return n })
-      setSavedRows(prev => new Set(prev).add(userId))
-      setTimeout(() => setSavedRows(prev => { const n = new Set(prev); n.delete(userId); return n }), 2200)
-    }
-    setLoading(null)
+  if (result?.error) {
+    setErrorRows(prev => ({ ...prev, [userId]: String(result.error) }))
+  } else {
+    setLocalUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole as any } : u))
+    setPendingRole(prev => { const n = { ...prev }; delete n[userId]; return n })
+    setSavedRows(prev => new Set(prev).add(userId))
+    setTimeout(() => setSavedRows(prev => { const n = new Set(prev); n.delete(userId); return n }), 2200)
   }
-
+  setLoading(null)
+}
   // ── Ban / Unban ───────────────────────────────────────────────────────────
   async function handleBan(userId: string) {
     if (!confirm('¿Banear a este usuario?')) return
