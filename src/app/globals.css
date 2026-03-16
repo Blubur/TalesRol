@@ -1932,6 +1932,24 @@ p:last-child { margin-bottom: 0; }
 }
 
 
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// CSS para menciones en posts — añadir a globals.css
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 
+*/
+.post-content a.mention {
+  color: var(--color-crimson);
+  font-weight: 600;
+  background: rgba(193, 6, 6, 0.08);
+  border-radius: 3px;
+  padding: 0 3px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.post-content a.mention:hover {
+  background: rgba(193, 6, 6, 0.18);
+  text-decoration: underline;
+}
 
 
 

@@ -8,6 +8,71 @@ import sanitizeHtml from 'sanitize-html'
 
 
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// AÑADIR esta función helper al principio de topicactions.ts
+// (después de los imports)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+/**
+ * Extrae los @usernames del HTML de un post y envía notificaciones.
+ * Nunca notifica al propio autor.
+ */
+async function notifyMentions(
+  supabase: any,
+  content: string,
+  authorId: string,
+  postId: string,
+  topicId: string,
+  topicTitle: string,
+  slug: string
+) {
+  // Extraer todos los hrefs de /perfil/X dentro de <a class="mention">
+  const mentionRegex = /<a[^>]+class="mention"[^>]+href="\/perfil\/([^"]+)"[^>]*>/gi
+  const usernames = new Set<string>()
+  let match: RegExpExecArray | null
+
+  while ((match = mentionRegex.exec(content)) !== null) {
+    usernames.add(match[1].toLowerCase())
+  }
+
+  if (usernames.size === 0) return
+
+  // Buscar los IDs de los usuarios mencionados
+  const { data: profiles } = await supabase
+    .from('profiles')
+    .select('id, username')
+    .in('username', [...usernames])
+
+  if (!profiles || profiles.length === 0) return
+
+  // Crear notificaciones (excluyendo al autor)
+  const notifications = profiles
+    .filter((p: any) => p.id !== authorId)
+    .map((p: any) => ({
+      user_id: p.id,
+      type:    'mention',
+      title:   'Te han mencionado',
+      body:    `Alguien te mencionó en el tema "${topicTitle}"`,
+      link:    `/salas/${slug}/${topicId}#post-new`,
+    }))
+
+  if (notifications.length > 0) {
+    await supabase.from('notifications').insert(notifications)
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 function sanitize(html: string): string {
   return sanitizeHtml(html, {
     allowedTags: [
