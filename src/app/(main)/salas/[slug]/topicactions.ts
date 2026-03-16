@@ -4,16 +4,24 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
-import DOMPurify from 'isomorphic-dompurify'
+import sanitizeHtml from 'sanitize-html'
 
-// En topicactions.ts, reemplaza la función sanitize por esta:
+
 
 function sanitize(html: string): string {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 's', 'h1', 'h2', 'h3', 'ul', 'ol', 'li', 'blockquote', 'hr', 'span', 'div', 'a', 'img'],
-    ALLOWED_ATTR: ['href', 'src', 'alt', 'class', 'style', 'target', 'data-verified', 'data-total', 'data-dice'],
-    ALLOW_DATA_ATTR: false,
-    FORCE_BODY: false,
+  return sanitizeHtml(html, {
+    allowedTags: [
+      'p', 'br', 'strong', 'em', 'u', 's',
+      'h1', 'h2', 'h3', 'ul', 'ol', 'li',
+      'blockquote', 'hr', 'span', 'div', 'a', 'img'
+    ],
+    allowedAttributes: {
+      'a':   ['href', 'target', 'rel'],
+      'img': ['src', 'alt'],
+      '*':   ['class', 'style'],
+    },
+    allowedSchemes: ['https', 'http'],
+    disallowedTagsMode: 'discard',
   })
 }
 
