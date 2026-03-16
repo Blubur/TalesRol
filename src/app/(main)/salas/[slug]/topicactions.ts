@@ -6,13 +6,6 @@ import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import sanitizeHtml from 'sanitize-html'
 
-
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// AÑADIR esta función helper al principio de topicactions.ts
-// (después de los imports)
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 /**
  * Extrae los @usernames del HTML de un post y envía notificaciones.
  * Nunca notifica al propio autor.
@@ -26,7 +19,6 @@ async function notifyMentions(
   topicTitle: string,
   slug: string
 ) {
-  // Extraer todos los hrefs de /perfil/X dentro de <a class="mention">
   const mentionRegex = /<a[^>]+class="mention"[^>]+href="\/perfil\/([^"]+)"[^>]*>/gi
   const usernames = new Set<string>()
   let match: RegExpExecArray | null
@@ -37,7 +29,6 @@ async function notifyMentions(
 
   if (usernames.size === 0) return
 
-  // Buscar los IDs de los usuarios mencionados
   const { data: profiles } = await supabase
     .from('profiles')
     .select('id, username')
@@ -45,7 +36,6 @@ async function notifyMentions(
 
   if (!profiles || profiles.length === 0) return
 
-  // Crear notificaciones (excluyendo al autor)
   const notifications = profiles
     .filter((p: any) => p.id !== authorId)
     .map((p: any) => ({
@@ -53,25 +43,13 @@ async function notifyMentions(
       type:    'mention',
       title:   'Te han mencionado',
       body:    `Alguien te mencionó en el tema "${topicTitle}"`,
-      link:    `/salas/${slug}/${topicId}#post-new`,
+      link:    `/salas/${slug}/${topicId}`,
     }))
 
   if (notifications.length > 0) {
     await supabase.from('notifications').insert(notifications)
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 function sanitize(html: string): string {
   return sanitizeHtml(html, {
@@ -81,9 +59,9 @@ function sanitize(html: string): string {
       'blockquote', 'hr', 'span', 'div', 'a', 'img'
     ],
     allowedAttributes: {
-      'a':   ['href', 'target', 'rel'],
+      'a':   ['href', 'target', 'rel', 'class'],
       'img': ['src', 'alt'],
-      '*':   ['class', 'style'],
+      '*':   ['class', 'style', 'data-verified', 'data-dice', 'data-result'],
     },
     allowedSchemes: ['https', 'http'],
     disallowedTagsMode: 'discard',
@@ -97,7 +75,7 @@ function getServiceClient() {
   )
 }
 
-// ── TEMAS ──────────────────────────────────────────────
+// ── TEMAS ─────────────────────────────────────────────────────────────────────
 
 export async function createTopic(formData: FormData) {
   const supabase = await createClient()
@@ -188,7 +166,7 @@ export async function deleteTopic(id: string, slug: string) {
   redirect(`/salas/${slug}`)
 }
 
-// ── POSTS ──────────────────────────────────────────────
+// ── POSTS ──────────────────────────────────────────────────────────────────────
 
 export async function createPost(formData: FormData) {
   const supabase = await createClient()
@@ -205,8 +183,9 @@ export async function createPost(formData: FormData) {
   }
 
   const content = sanitize(contentRaw)
+  const service = getServiceClient()
 
-  const { error } = await supabase
+  const { error } = await service
     .from('posts')
     .insert({
       topic_id,
@@ -218,7 +197,7 @@ export async function createPost(formData: FormData) {
   if (error) return { error: error.message }
 
   revalidatePath(`/salas/${slug}/${topic_id}`)
-  return { success: true, redirect: `/salas/${slug}/${topic_id}` }
+  return { success: true }
 }
 
 export async function updatePost(formData: FormData) {
@@ -235,8 +214,8 @@ export async function updatePost(formData: FormData) {
   if (post?.author_id !== user.id) return { error: 'No tienes permiso.' }
 
   const content = sanitize(contentRaw)
-
   const service = getServiceClient()
+
   const { error } = await service
     .from('posts')
     .update({ content, edited_at: new Date().toISOString() })
@@ -245,7 +224,7 @@ export async function updatePost(formData: FormData) {
   if (error) return { error: error.message }
 
   revalidatePath(`/salas/${slug}/${topic_id}`)
-  return { success: true, redirect: `/salas/${slug}/${topic_id}` }
+  return { success: true }
 }
 
 export async function deletePost(id: string, topic_id: string, slug: string) {
@@ -272,25 +251,20 @@ export async function deletePost(id: string, topic_id: string, slug: string) {
   return { success: true }
 }
 
-// ── SALA: actualizar descripción con HTML ──────────────
+// ── SALA: actualizar descripción con HTML ──────────────────────────────────────
 
 export async function updateRoomDescription(formData: FormData) {
-
- console.log('id:', formData.get('id'))
-  console.log('title:', formData.get('title'))
-  console.log('description:', formData.get('description'))
-
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado.' }
 
-  const id          = formData.get('id') as string
-  const slug        = formData.get('slug') as string
-  const title       = formData.get('title') as string
-  const descRaw     = formData.get('description') as string
-  const cover_url   = formData.get('cover_url') as string
-  const tagsRaw     = formData.get('tags') as string
-  const status      = formData.get('status') as string
+  const id        = formData.get('id') as string
+  const slug      = formData.get('slug') as string
+  const title     = formData.get('title') as string
+  const descRaw   = formData.get('description') as string
+  const cover_url = formData.get('cover_url') as string
+  const tagsRaw   = formData.get('tags') as string
+  const status    = formData.get('status') as string
 
   const { data: room } = await supabase.from('rooms').select('owner_id').eq('id', id).single()
   const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
@@ -305,7 +279,14 @@ export async function updateRoomDescription(formData: FormData) {
   const service = getServiceClient()
   const { error } = await service
     .from('rooms')
-    .update({ title: title?.trim(), description, cover_url: cover_url?.trim() || null, tags, status: status || 'active', updated_at: new Date().toISOString() })
+    .update({
+      title:       title?.trim(),
+      description,
+      cover_url:   cover_url?.trim() || null,
+      tags,
+      status:      status || 'active',
+      updated_at:  new Date().toISOString(),
+    })
     .eq('id', id)
 
   if (error) return { error: error.message }
