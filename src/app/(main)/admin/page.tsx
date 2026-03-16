@@ -20,9 +20,9 @@ import {
 } from '@heroicons/react/24/outline'
 
 export const metadata = { title: 'Panel de Administración — TalesRol' }
+export const dynamic = 'force-dynamic'
 
 export default async function AdminPage() {
-  export const dynamic = 'force-dynamic'
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
@@ -46,30 +46,32 @@ export default async function AdminPage() {
     supabase.from('posts').select('*', { count: 'exact', head: true }).is('deleted_at', null),
     supabase.from('reports').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
   ])
-const { data: roleColorsData } = await supabase
-  .from('role_colors')
-  .select('role, color')
 
-const roleColors = Object.fromEntries(
-  (roleColorsData ?? []).map(r => [r.role, r.color])
-)
+  const { data: roleColorsData } = await supabase
+    .from('role_colors')
+    .select('role, color')
+
+  const roleColors = Object.fromEntries(
+    (roleColorsData ?? []).map(r => [r.role, r.color])
+  )
+
   const { data: usersData } = await supabase.from('profiles').select('*').order('created_at', { ascending: false })
   const users = (usersData ?? []) as Profile[]
 
   const { data: roomsData } = await supabase.from('rooms').select('*').is('deleted_at', null).order('created_at', { ascending: false })
   const rooms = (roomsData ?? []) as Room[]
 
- const { data: reportsData } = await supabase
-  .from('reports')
-  .select(`
-    *,
-    reporter:profiles!reports_reporter_id_fkey(username, display_name, avatar_url),
-    target_user:profiles!reports_target_user_id_fkey(username, display_name, avatar_url),
-    target_post:posts!reports_target_post_id_fkey(content, topic_id),
-    target_room:rooms!reports_target_room_id_fkey(title, slug)
-  `)
-  .order('created_at', { ascending: false })
-  .limit(50)
+  const { data: reportsData } = await supabase
+    .from('reports')
+    .select(`
+      *,
+      reporter:profiles!reports_reporter_id_fkey(username, display_name, avatar_url),
+      target_user:profiles!reports_target_user_id_fkey(username, display_name, avatar_url),
+      target_post:posts!reports_target_post_id_fkey(content, topic_id),
+      target_room:rooms!reports_target_room_id_fkey(title, slug)
+    `)
+    .order('created_at', { ascending: false })
+    .limit(50)
   const reports = reportsData ?? []
 
   const { data: dice } = await supabase.from('dice_types').select('*').order('faces', { ascending: true })
@@ -123,7 +125,6 @@ const roleColors = Object.fromEntries(
         ))}
       </div>
 
-      {/* Nav interna */}
       <nav className="admin-nav animate-enter" style={{ animationDelay: '0.1s' }}>
         {navSections.map(s => (
           <a key={s.id} href={`#${s.id}`} className="admin-nav-link">
@@ -151,7 +152,8 @@ const roleColors = Object.fromEntries(
           <UsersIcon className="admin-section-icon" />
           <h2 className="admin-section-title">Usuarios <span className="admin-count">({users.length})</span></h2>
         </div>
-<AdminUsersTable users={users} currentUserId={user.id} roleColors={roleColors} />      </section>
+        <AdminUsersTable users={users} currentUserId={user.id} roleColors={roleColors} />
+      </section>
 
       <section id="salas" className="admin-section animate-enter" style={{ animationDelay: '0.25s' }}>
         <div className="admin-section-header">
@@ -186,14 +188,7 @@ const roleColors = Object.fromEntries(
       </section>
 
       <style>{`
-        .admin-page {max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    background: var(--bg-elevated);
-    background: var(--bg-elevated);
-    border: 8px solid var(--color-crimson-glow);
-    padding: var(--space-10);}
+        .admin-page { max-width: 100%; display: flex; flex-direction: column; gap: 2rem; background: var(--bg-elevated); border: 8px solid var(--color-crimson-glow); padding: var(--space-10); }
 
         .admin-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle); position: relative; }
         .admin-header::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 80px; height: 2px; background: var(--color-crimson); }
