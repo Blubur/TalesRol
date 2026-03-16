@@ -16,7 +16,7 @@ export async function createRoom(formData: FormData) {
     .eq('id', user.id)
     .single()
 
-  if (!profile || !['admin', 'director'].includes(profile.role)) {
+  if (!profile || !['admin', 'director', 'master'].includes(profile.role)) {
     return { error: 'No tienes permiso para crear salas.' }
   }
 
