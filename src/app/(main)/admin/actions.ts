@@ -13,14 +13,26 @@ async function requireAdmin() {
 }
 
 // ── USUARIOS ──────────────────────────────────────────────
+
 export async function changeUserRole(userId: string, role: string) {
   const { error, supabase } = await requireAdmin()
   if (error || !supabase) return { error }
-  const { error: dbError } = await supabase.from('profiles').update({ role, updated_at: new Date().toISOString() }).eq('id', userId)
+  
+  console.log('Cambiando rol:', userId, role) // añadir
+  
+  const { error: dbError, data } = await supabase
+    .from('profiles')
+    .update({ role, updated_at: new Date().toISOString() })
+    .eq('id', userId)
+    .select() // añadir
+    
+  console.log('Resultado:', data, dbError) // añadir
+  
   if (dbError) return { error: dbError.message }
   revalidatePath('/admin')
   return { success: true }
 }
+
 
 export async function banUser(userId: string) {
   const { error, supabase } = await requireAdmin()
