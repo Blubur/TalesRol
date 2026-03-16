@@ -12,12 +12,7 @@ export async function GET(request: Request) {
 
   const supabase = await createClient()
 
-const { data, error } = await supabase
-  .from('profiles')
-  .select('username, display_name, avatar_url')
-  .ilike('username', `${q}%`)
-  .order('username', { ascending: true })
-  .limit(limit)
+
 
   if (error) return NextResponse.json([], { status: 500 })
 
