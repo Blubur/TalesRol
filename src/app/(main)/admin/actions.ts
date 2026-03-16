@@ -16,16 +16,20 @@ async function requireAdmin() {
 // ── USUARIOS ──────────────────────────────────────────────
 
 export async function changeUserRole(userId: string, role: string) {
-  const { error, supabase } = await requireAdmin()
-  if (error || !supabase) return { error }
-  
-  const { error: dbError, data } = await supabase
+  const { error, supabase: _, user } = await requireAdmin()
+  if (error || !user) return { error }
+
+  // Usar service role para bypasear RLS
+  const { createClient: createServiceClient } = await import('@supabase/supabase-js')
+  const admin = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  const { error: dbError } = await admin
     .from('profiles')
     .update({ role, updated_at: new Date().toISOString() })
     .eq('id', userId)
-    .select('id, username, role')  // añadir
-
-  console.log('changeUserRole result:', { userId, role, data, dbError })  // añadir
 
   if (dbError) return { error: dbError.message }
   revalidatePath('/admin', 'page')
