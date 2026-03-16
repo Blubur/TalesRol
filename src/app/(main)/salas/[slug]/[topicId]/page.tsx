@@ -58,8 +58,7 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
   // Cargar posts
   const { data: postsData } = await supabase
     .from('posts')
-    .select('*, profiles!posts_author_id_fkey(id, username, display_name, avatar_url, role), characters(id, name, avatar_url)')
-    .eq('topic_id', topicId)
+ .select('*, profiles!posts_author_id_fkey(id, username, display_name, avatar_url, role), characters(id, name, avatar_url, description, sheet)')    .eq('topic_id', topicId)
     .is('deleted_at', null)
     .order('post_number', { ascending: true })
 

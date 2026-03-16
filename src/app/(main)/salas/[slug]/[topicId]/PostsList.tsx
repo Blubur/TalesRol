@@ -21,7 +21,13 @@ interface Post {
   blocked_at: string | null
   blocked_by: string | null
   profiles: { id: string; username: string; display_name: string | null; avatar_url: string | null; role: string } | null
-  characters: { id: string; name: string; avatar_url: string | null } | null
+  characters: {
+    id: string
+    name: string
+    avatar_url: string | null
+    description: string | null
+    sheet: Record<string, unknown> | null
+  } | null
 }
 
 interface DiceType {
@@ -55,6 +61,35 @@ const REPORT_REASONS = [
   'Otro',
 ]
 
+// Campos del sheet que se muestran primero si existen (en ese orden)
+const PRIORITY_FIELDS = ['raza', 'clase', 'edad', 'procedencia', 'origen', 'profesion', 'profesión', 'especie']
+
+function CharacterSheet({ sheet }: { sheet: Record<string, unknown> }) {
+  const entries = Object.entries(sheet).filter(([, v]) => v !== '' && v != null)
+  if (entries.length === 0) return null
+
+  // Ordenar: primero los campos prioritarios, luego el resto
+  const sorted = [...entries].sort(([a], [b]) => {
+    const ai = PRIORITY_FIELDS.indexOf(a.toLowerCase())
+    const bi = PRIORITY_FIELDS.indexOf(b.toLowerCase())
+    if (ai === -1 && bi === -1) return 0
+    if (ai === -1) return 1
+    if (bi === -1) return -1
+    return ai - bi
+  })
+
+  return (
+    <div className="char-sheet">
+      {sorted.map(([key, val]) => (
+        <div key={key} className="char-sheet-row">
+          <span className="char-sheet-key">{key}</span>
+          <span className="char-sheet-val">{String(val)}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, userId, userRole, characters, canPost, isLocked, diceTypes, isParticipant }: Props) {
   const [editingId, setEditingId]         = useState<string | null>(null)
   const [editContent, setEditContent]     = useState<string>('')
@@ -85,7 +120,6 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
     window.location.href = window.location.pathname + '?t=' + Date.now()
   }
 
-  // DiceRoller devuelve un array (puede ser 1 o varios dados tirados a la vez)
   function handleDiceResults(results: DiceRollResult[]) {
     setPendingRolls(prev => [...prev, ...results])
   }
@@ -109,7 +143,7 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
       return
     }
 
-    const diceBlocks  = pendingRolls.map(r => buildDiceHTML(r)).join('\n')
+    const diceBlocks   = pendingRolls.map(r => buildDiceHTML(r)).join('\n')
     const finalContent = hasText
       ? textContent + (hasDice ? '\n' + diceBlocks : '')
       : diceBlocks
@@ -229,22 +263,38 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
             const canEdit   = isOwner && !post.blocked_at && !hasDice
             const canDelete = isOwner || canHardDelete
             const isBlocked = !!post.blocked_at
-            const avatar    = post.characters?.avatar_url ?? post.profiles?.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${post.profiles?.username ?? 'anon'}`
-            const name      = post.characters?.name ?? post.profiles?.display_name ?? post.profiles?.username ?? 'Anónimo'
-            const username  = post.profiles?.username
+            const hasChar   = !!post.characters
+
+            const avatar  = post.characters?.avatar_url ?? post.profiles?.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${post.profiles?.username ?? 'anon'}`
+            const name    = post.characters?.name ?? post.profiles?.display_name ?? post.profiles?.username ?? 'Anónimo'
+            const username = post.profiles?.username
 
             return (
-              <div key={post.id} id={`post-${post.post_number}`} className={`post-item ${isBlocked ? 'post-blocked' : ''}`}>
+              <div key={post.id} id={`post-${post.post_number}`} className={`post-item ${isBlocked ? 'post-blocked' : ''} ${hasChar ? 'post-has-char' : ''}`}>
                 <div className="post-sidebar">
                   <Link href={username ? `/perfil/${username}` : '#'}>
                     <img src={avatar} alt={name} className="post-avatar" />
                   </Link>
                   <div className="post-author-info">
                     <Link href={username ? `/perfil/${username}` : '#'} className="post-author-name">{name}</Link>
+
+                    {/* Si hay personaje: mostrar jugador + datos de ficha */}
                     {post.characters && post.profiles && (
-                      <span className="post-player">({post.profiles.display_name || post.profiles.username})</span>
+                      <>
+                        <span className="post-player">
+                          ✦ {post.profiles.display_name || post.profiles.username}
+                        </span>
+                        {post.characters.description && (
+                          <p className="char-description">{post.characters.description}</p>
+                        )}
+                        {post.characters.sheet && Object.keys(post.characters.sheet).length > 0 && (
+                          <CharacterSheet sheet={post.characters.sheet as Record<string, unknown>} />
+                        )}
+                      </>
                     )}
-                    {post.profiles?.role && (
+
+                    {/* Si no hay personaje: mostrar rol normal */}
+                    {!post.characters && post.profiles?.role && (
                       <span className={`role-badge ${post.profiles.role}`}>{post.profiles.role}</span>
                     )}
                   </div>
@@ -397,6 +447,52 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
       <style>{`
         .action-icon { width: 13px; height: 13px; }
         .post-dice-badge { font-size: var(--text-xs); color: var(--color-info); font-family: var(--font-cinzel); letter-spacing: 0.06em; }
+
+        /* Ficha del personaje en sidebar */
+        .char-description {
+          font-size: 0.72rem;
+          color: var(--text-muted);
+          font-style: italic;
+          line-height: 1.4;
+          margin: 0.3rem 0 0;
+          max-width: 140px;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .char-sheet {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          margin-top: 0.4rem;
+          border-top: 1px solid var(--border-subtle);
+          padding-top: 0.4rem;
+          width: 100%;
+        }
+        .char-sheet-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          gap: 0.3rem;
+        }
+        .char-sheet-key {
+          font-size: 0.62rem;
+          font-family: var(--font-cinzel);
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: var(--text-muted);
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+        .char-sheet-val {
+          font-size: 0.7rem;
+          color: var(--text-secondary);
+          text-align: right;
+          word-break: break-word;
+        }
+
+        /* Dados */
         .dice-toggle-row { display: flex; align-items: center; gap: var(--space-3); }
         .dice-toggle-btn { display: flex; align-items: center; gap: var(--space-2); background: transparent; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: var(--space-1) var(--space-3); font-family: var(--font-cinzel); font-size: var(--text-xs); letter-spacing: 0.06em; color: var(--text-muted); cursor: pointer; transition: all var(--transition-fast); }
         .dice-toggle-btn:hover, .dice-toggle-btn.active { border-color: var(--color-crimson); color: var(--color-crimson); background: var(--color-crimson-subtle); }
