@@ -1,5 +1,3 @@
-// src/app/api/users/search/route.ts
-
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
@@ -12,7 +10,11 @@ export async function GET(request: Request) {
 
   const supabase = await createClient()
 
-
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('profiles.username, profiles.display_name, profiles.avatar_url')
+    .ilike('profiles.username', `${q}%`)
+    .limit(limit)
 
   if (error) return NextResponse.json([], { status: 500 })
 
