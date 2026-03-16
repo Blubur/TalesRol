@@ -10,11 +10,7 @@ export async function GET(request: Request) {
 
   const supabase = await createClient()
 
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('profiles.username, profiles.display_name, profiles.avatar_url')
-    .ilike('profiles.username', `${q}%`)
-    .limit(limit)
+  const { data, error } = await supabase.rpc('search_users', { query: q, max_results: limit })
 
   if (error) return NextResponse.json([], { status: 500 })
 
