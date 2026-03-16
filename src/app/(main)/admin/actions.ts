@@ -458,3 +458,17 @@ export async function transferRoomOwnership(roomId: string, reportId: string, ne
   revalidatePath(`/salas/${room.slug}`)
   return { success: true }
 }
+
+export async function updateRoleColors(colors: Record<string, string>) {
+  const { error, supabase } = await requireAdmin()
+  if (error || !supabase) return { error }
+
+  const rows = Object.entries(colors).map(([role, color]) => ({ role, color }))
+  const { error: dbError } = await supabase
+    .from('role_colors')
+    .upsert(rows, { onConflict: 'role' })
+
+  if (dbError) return { error: dbError.message }
+  revalidatePath('/admin')
+  return { success: true }
+}

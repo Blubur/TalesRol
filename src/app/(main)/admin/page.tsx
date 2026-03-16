@@ -45,7 +45,13 @@ export default async function AdminPage() {
     supabase.from('posts').select('*', { count: 'exact', head: true }).is('deleted_at', null),
     supabase.from('reports').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
   ])
+const { data: roleColorsData } = await supabase
+  .from('role_colors')
+  .select('role, color')
 
+const roleColors = Object.fromEntries(
+  (roleColorsData ?? []).map(r => [r.role, r.color])
+)
   const { data: usersData } = await supabase.from('profiles').select('*').order('created_at', { ascending: false })
   const users = (usersData ?? []) as Profile[]
 
@@ -144,8 +150,7 @@ export default async function AdminPage() {
           <UsersIcon className="admin-section-icon" />
           <h2 className="admin-section-title">Usuarios <span className="admin-count">({users.length})</span></h2>
         </div>
-        <AdminUsersTable users={users} currentUserId={user.id} />
-      </section>
+<AdminUsersTable users={users} currentUserId={user.id} roleColors={roleColors} />      </section>
 
       <section id="salas" className="admin-section animate-enter" style={{ animationDelay: '0.25s' }}>
         <div className="admin-section-header">
