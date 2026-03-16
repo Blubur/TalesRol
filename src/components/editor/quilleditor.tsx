@@ -95,7 +95,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     if (query.length < 1) { syncMention({ users: [], loading: false }); return }
     syncMention({ loading: true })
     try {
-      const res = await fetch(`/api/users/search?q=${encodeURIComponent(query)}&limit=6`)
+  const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=6`)
       if (!res.ok) throw new Error()
       const data: MentionUser[] = await res.json()
       syncMention({ users: data, loading: false, selectedIndex: 0 })
