@@ -162,6 +162,15 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
       setError('Error inesperado al publicar.')
       setLoading(false)
     }
+
+
+    const { data: newPost, error } = await service
+  .from('posts')
+  .insert({...})
+  .select('post_number')
+  .single()
+
+console.log('newPost:', newPost)
   }
 
   async function handleUpdate(e: React.FormEvent<HTMLFormElement>) {
