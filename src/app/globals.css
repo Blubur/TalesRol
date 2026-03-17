@@ -1370,6 +1370,81 @@ p:last-child { margin-bottom: 0; }
 }
 
 
+/* ====================== admin user table ================================== */
+        .admin-table-scroll { overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        .admin-table thead tr { background: var(--bg-secondary); }
+        .admin-table th { padding: 0.65rem 1rem; text-align: left; font-family: var(--font-cinzel); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; border-bottom: 1px solid var(--border-subtle); }
+        .admin-table td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border-subtle); vertical-align: middle; }
+        .admin-table tbody tr { background: var(--bg-card); transition: background 0.15s; }
+        .admin-table tbody tr:hover { background: var(--bg-elevated); }
+        .admin-table tbody tr:last-child td { border-bottom: none; }
+
+        .room-cell { display: flex; align-items: center; gap: 0.6rem; }
+        .room-thumb { width: 36px; height: 36px; border-radius: 3px; object-fit: cover; flex-shrink: 0; border: 1px solid var(--border-subtle); }
+        .room-thumb-placeholder { width: 36px; height: 36px; border-radius: 3px; background: var(--bg-secondary); border: 1px solid var(--border-subtle); flex-shrink: 0; }
+        .room-cell-title { font-family: var(--font-cinzel); font-size: 0.82rem; color: var(--text-primary); letter-spacing: 0.03em; }
+        
+
+        .owner-cell { display: flex; align-items: center; gap: 0.5rem; }
+        .owner-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-subtle); flex-shrink: 0; }
+        .owner-cell-info { display: flex; flex-direction: column; gap: 0.05rem; }
+        .owner-name { font-size: 0.78rem; color: var(--text-primary); white-space: nowrap; }
+        .owner-username { font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; }
+
+
+        .role-select { background: transparent; border: 1px solid; border-radius: 3px; padding: 0.2rem 0.5rem; font-size: 0.72rem; font-family: var(--font-cinzel); letter-spacing: 0.06em; cursor: pointer; outline: none; }
+        .role-select:disabled { opacity: 0.4; cursor: not-allowed; }
+        .role-select option { background: var(--bg-elevated); color: var(--text-primary); }
+
+        .tags-cell { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+        .tag-pill { font-size: 0.65rem; padding: 0.1rem 0.4rem; background: rgba(193,6,6,0.1); border: 1px solid rgba(193,6,6,0.2); border-radius: 2px; color: var(--color-crimson); font-family: var(--font-cinzel); letter-spacing: 0.04em; }
+        .date-cell { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+        .empty-row { text-align: center; color: var(--text-muted); padding: 2rem !important; font-style: italic; }
+
+        .action-btns { display: flex; gap: 0.35rem; }
+        .action-btn { display: flex; align-items: center; gap: 0.3rem; background: transparent; border: 1px solid; border-radius: 3px; padding: 0.25rem 0.6rem; font-size: 0.7rem; font-family: var(--font-cinzel); letter-spacing: 0.04em; cursor: pointer; transition: all 0.15s; white-space: nowrap; text-decoration: none; }
+        .action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .action-btn.danger { color: #ff6b6b; border-color: rgba(255,107,107,0.4); }
+        .action-btn.danger:hover:not(:disabled) { background: rgba(255,107,107,0.1); }
+        .action-btn.neutral { color: var(--text-secondary); border-color: var(--border-subtle); }
+        .action-btn.neutral:hover { background: var(--bg-elevated); color: var(--text-primary); }
+        .action-btn-icon { width: 12px; height: 12px; flex-shrink: 0; }
+
+
+
+        /* ============================================================
+   FILTROS DE TABLAS ADMIN
+   ============================================================ */
+
+.filter-bar { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 0.75rem 1rem; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 6px; }
+
+.filter-group { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.filter-label { font-family: var(--font-cinzel); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+
+.filter-btns { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+.filter-btn { background: transparent; border: 1px solid var(--border-subtle); border-radius: 3px; padding: 0.2rem 0.6rem; font-size: 0.7rem; font-family: var(--font-cinzel); letter-spacing: 0.05em; color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.filter-btn:hover { color: var(--text-primary); border-color: var(--border-medium); }
+.filter-btn.active { color: var(--color-crimson); border-color: var(--color-crimson); background: var(--color-crimson-subtle); }
+
+.filter-dates { display: flex; align-items: center; gap: 0.35rem; }
+.filter-date-input { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 3px; padding: 0.2rem 0.5rem; font-size: 0.7rem; color: var(--text-primary); outline: none; cursor: pointer; }
+.filter-date-input:focus { border-color: var(--color-crimson); }
+.filter-date-sep { font-size: 0.7rem; color: var(--text-muted); }
+
+.filter-clear-btn { background: transparent; border: 1px solid var(--border-subtle); border-radius: 3px; padding: 0.2rem 0.65rem; font-size: 0.7rem; font-family: var(--font-cinzel); letter-spacing: 0.05em; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+.filter-clear-btn:hover { color: var(--color-error); border-color: var(--color-error-border); background: var(--color-error-bg); }
+
+.filter-count { margin-left: auto; font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-cinzel); letter-spacing: 0.05em; white-space: nowrap; }
+
+/* Ordenación de columnas */
+.sort-th { display: flex; align-items: center; gap: 0.3rem; background: transparent; border: none; cursor: pointer; font-family: var(--font-cinzel); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); padding: 0; white-space: nowrap; transition: color 0.15s; }
+.sort-th:hover { color: var(--text-primary); }
+.sort-icon { width: 12px; height: 12px; flex-shrink: 0; }
+.sort-icon.muted { color: var(--text-muted); opacity: 0.4; }
+.sort-icon.active { color: var(--color-crimson); }
+
+
 
 /* ============================================================
    PÁGINA DE NORMAS — añadir al final de globals.css
