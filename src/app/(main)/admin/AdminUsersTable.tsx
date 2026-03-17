@@ -23,7 +23,7 @@ const DEFAULT_ROLE_COLORS: Record<string, string> = {
 }
 
 interface Props {
-  users: Profile[]
+  users: (Profile & { email: string })[]
   currentUserId: string
   /** Colores actuales de cada rol, cargados desde la BD */
   roleColors?: Record<string, string>
@@ -242,7 +242,10 @@ export default function AdminUsersTable({ users, currentUserId, roleColors: init
                       </div>
                     </Link>
                   </td>
-
+                  {/* correo */}
+                  <td>
+                    <span className="email-cell">{u.email || '—'}</span>
+                  </td>
                   {/* Rol */}
                   <td>
                     <div className="role-cell">
@@ -326,7 +329,7 @@ export default function AdminUsersTable({ users, currentUserId, roleColors: init
               )
             })}
             {filtered.length === 0 && (
-              <tr><td colSpan={6} className="empty-row">No se encontraron usuarios.</td></tr>
+              <tr><td colSpan={7} className="empty-row">No se encontraron usuarios.</td></tr>
             )}
           </tbody>
         </table>
@@ -387,6 +390,9 @@ export default function AdminUsersTable({ users, currentUserId, roleColors: init
         .user-cell-info { display: flex; flex-direction: column; gap: 0.05rem; }
         .user-cell-name { font-size: 0.82rem; font-family: var(--font-cinzel); letter-spacing: 0.02em; transition: color 0.2s; }
         .user-cell-username { color: var(--text-muted); font-size: 0.7rem; }
+
+        /*correo*/
+        .email-cell { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
 
         /* Selector de rol + guardar */
         .role-cell { display: flex; align-items: center; gap: 0.45rem; }
