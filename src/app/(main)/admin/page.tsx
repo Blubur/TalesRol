@@ -56,35 +56,28 @@ export default async function AdminPage() {
   )
 
   const { data: usersData } = await supabase.from('profiles').select('*').order('created_at', { ascending: false })
-  const users = (usersData ?? []) as Profile[]
 
-
-
-  // Obtener emails de auth.users con service role
-const { createClient: createServiceClient } = await import('@supabase/supabase-js')
-const admin = createServiceClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
-const { data: authUsersData } = await admin.auth.admin.listUsers({ perPage: 1000 })
-const emailMap: Record<string, string> = {}
-for (const u of authUsersData?.users ?? []) {
-  emailMap[u.id] = u.email ?? ''
-}
-
-const users = (usersData ?? []).map(u => ({
-  ...u,
-  email: emailMap[u.id] ?? '',
-})) as (Profile & { email: string })[]
-
+  const { createClient: createServiceClient } = await import('@supabase/supabase-js')
+  const admin = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+  const { data: authUsersData } = await admin.auth.admin.listUsers({ perPage: 1000 })
+  const emailMap: Record<string, string> = {}
+  for (const u of authUsersData?.users ?? []) {
+    emailMap[u.id] = u.email ?? ''
+  }
+  const users = (usersData ?? []).map(u => ({
+    ...u,
+    email: emailMap[u.id] ?? '',
+  })) as (Profile & { email: string })[]
 
   const { data: roomsData } = await supabase
-  .from('rooms')
-  .select('*, owner:profiles!rooms_owner_id_fkey(username, display_name, avatar_url)')
-  .is('deleted_at', null)
-  .order('created_at', { ascending: false })
-const rooms = (roomsData ?? []) as (Room & { owner: { username: string; display_name: string | null; avatar_url: string | null } | null })[]
-
+    .from('rooms')
+    .select('*, owner:profiles!rooms_owner_id_fkey(username, display_name, avatar_url)')
+    .is('deleted_at', null)
+    .order('created_at', { ascending: false })
+  const rooms = (roomsData ?? []) as (Room & { owner: { username: string; display_name: string | null; avatar_url: string | null } | null })[]
 
   const { data: reportsData } = await supabase
     .from('reports')
