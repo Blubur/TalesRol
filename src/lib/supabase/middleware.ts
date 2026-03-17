@@ -23,6 +23,21 @@ export async function updateSession(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
+  // Actualizar last_seen_at — solo en rutas de página, fire-and-forget
+  if (user) {
+    const { pathname } = request.nextUrl
+    const isPageRoute  = !pathname.startsWith('/_next') &&
+                         !pathname.startsWith('/api')   &&
+                         !pathname.match(/\.(ico|png|jpg|jpeg|svg|webp|css|js|woff2?)$/)
+    if (isPageRoute) {
+      supabase
+        .from('profiles')
+        .update({ last_seen_at: new Date().toISOString() })
+        .eq('id', user.id)
+        .then(() => {})
+    }
+  }
+
   // Rutas protegidas — redirigir al login si no hay sesión
   const protectedRoutes = ['/perfil', '/mensajes', '/notificaciones', '/admin']
   const isProtected = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))

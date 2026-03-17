@@ -10,6 +10,7 @@ import {
   UserPlusIcon,
 } from '@heroicons/react/24/outline'
 import RecentPostsWidget from '@/components/RecentPostsWidget'
+import StatsWidget from '@/components/StatsWidget'
 
 export const revalidate = 0
 
@@ -66,7 +67,10 @@ export default async function HomePage() {
         </div>
       )}
 
-      {/* Hero + widget lado a lado */}
+      {/* Barra de estadísticas */}
+      <StatsWidget />
+
+      {/* Hero + widget de últimos posts lado a lado */}
       <div className="home-hero-row">
         <div className="home-hero animate-enter">
           <div className="home-hero-bg" />
@@ -149,18 +153,10 @@ export default async function HomePage() {
           gap: 1.25rem;
           align-items: start;
         }
-        /* El hero ocupa toda la altura del sidebar si este es más alto */
-        .home-hero-row .home-hero {
-          height: 100%;
-        }
-        /* En móvil apilan verticalmente, widget primero no — hero primero */
+        .home-hero-row .home-hero { height: 100%; }
         @media (max-width: 720px) {
-          .home-hero-row {
-            grid-template-columns: 1fr;
-          }
-          .home-hero-sidebar {
-            order: 2;
-          }
+          .home-hero-row { grid-template-columns: 1fr; }
+          .home-hero-sidebar { order: 2; }
         }
       `}</style>
     </div>

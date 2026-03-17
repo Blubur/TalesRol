@@ -134,7 +134,8 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
           background: var(--bg-card);
           border: 1px solid var(--border-subtle);
           border-radius: 6px;
-          overflow: hidden;
+         overflow: auto;
+         height: 21em;
         }
 
         /* Cabecera */
@@ -159,6 +160,7 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
           color: var(--text-muted);
           text-decoration: none;
           transition: color 0.15s;
+          cursor: pointer;
         }
         .rpw-head-link:hover { color: var(--color-crimson); }
 
