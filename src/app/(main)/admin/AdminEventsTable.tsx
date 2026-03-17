@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createEvent, updateEvent, deleteEvent } from './actions'
+import { createEvent, updateEvent, deleteEvent } from '@/app/(main)/eventactions'
 
 interface Room {
   id: string
@@ -26,24 +26,23 @@ interface Props {
   rooms: Room[]
 }
 
-const EVENT_TYPES   = ['sesion', 'torneo', 'especial', 'otro']
+const EVENT_TYPES    = ['sesion', 'torneo', 'especial', 'otro']
 const EVENT_STATUSES = ['programado', 'en_curso', 'finalizado', 'cancelado']
 
 function toDatetimeLocal(iso: string | null) {
   if (!iso) return ''
-  return iso.slice(0, 16) // "YYYY-MM-DDTHH:MM"
+  return iso.slice(0, 16)
 }
 
 export default function AdminEventsTable({ events, rooms }: Props) {
-  const [creating, setCreating] = useState(false)
+  const [creating, setCreating]   = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
-  const [loading, setLoading]   = useState(false)
-  const [error, setError]       = useState<string | null>(null)
+  const [loading, setLoading]     = useState(false)
+  const [error, setError]         = useState<string | null>(null)
 
   async function handleCreate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setLoading(true)
-    setError(null)
+    setLoading(true); setError(null)
     const result = await createEvent(new FormData(e.currentTarget))
     setLoading(false)
     if (result?.error) { setError(result.error) }
@@ -52,8 +51,7 @@ export default function AdminEventsTable({ events, rooms }: Props) {
 
   async function handleUpdate(e: React.FormEvent<HTMLFormElement>, id: string) {
     e.preventDefault()
-    setLoading(true)
-    setError(null)
+    setLoading(true); setError(null)
     const fd = new FormData(e.currentTarget)
     fd.set('id', id)
     const result = await updateEvent(fd)
@@ -79,14 +77,12 @@ export default function AdminEventsTable({ events, rooms }: Props) {
             <label>Título *</label>
             <input name="title" className="input-base" required defaultValue={event?.title} />
           </div>
-
           <div className="form-group">
             <label>Tipo</label>
             <select name="type" className="input-base" defaultValue={event?.type ?? 'sesion'}>
               {EVENT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
-
           {event && (
             <div className="form-group">
               <label>Estado</label>
@@ -95,19 +91,16 @@ export default function AdminEventsTable({ events, rooms }: Props) {
               </select>
             </div>
           )}
-
           <div className="form-group">
             <label>Inicio *</label>
             <input name="starts_at" type="datetime-local" className="input-base" required
               defaultValue={toDatetimeLocal(event?.starts_at ?? null)} />
           </div>
-
           <div className="form-group">
             <label>Fin <span className="optional">(opcional)</span></label>
             <input name="ends_at" type="datetime-local" className="input-base"
               defaultValue={toDatetimeLocal(event?.ends_at ?? null)} />
           </div>
-
           <div className="form-group">
             <label>Sala <span className="optional">(opcional)</span></label>
             <select name="room_id" className="input-base" defaultValue={event?.room_id ?? ''}>
@@ -116,15 +109,12 @@ export default function AdminEventsTable({ events, rooms }: Props) {
             </select>
           </div>
         </div>
-
         <div className="form-group">
           <label>Descripción <span className="optional">(opcional)</span></label>
           <textarea name="description" className="input-base" rows={2}
             defaultValue={event?.description ?? ''} />
         </div>
-
         {error && <div className="auth-error"><span>⚠</span> {error}</div>}
-
         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
           <button type="submit" className="btn-primary" disabled={loading}
             style={{ fontSize: '0.8rem', padding: '0.35rem 0.85rem' }}>
@@ -142,11 +132,10 @@ export default function AdminEventsTable({ events, rooms }: Props) {
 
   return (
     <div className="admin-section">
-      <div className="admin-section-header">
-        <h2 className="admin-section-title">Eventos y sesiones</h2>
+      <div className="admin-section-header" style={{ justifyContent: 'space-between' }}>
         {!creating && (
           <button className="btn-primary" onClick={() => setCreating(true)}
-            style={{ fontSize: '0.8rem', padding: '0.35rem 0.85rem' }}>
+            style={{ fontSize: '0.8rem', padding: '0.35rem 0.85rem', marginLeft: 'auto' }}>
             + Nuevo evento
           </button>
         )}
@@ -178,9 +167,7 @@ export default function AdminEventsTable({ events, rooms }: Props) {
                   <td>{ev.title}</td>
                   <td><span style={{ fontSize: '0.72rem', textTransform: 'capitalize' }}>{ev.type}</span></td>
                   <td><span style={{ fontSize: '0.72rem', textTransform: 'capitalize' }}>{ev.status}</span></td>
-                  <td style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                    {ev.rooms?.title ?? '—'}
-                  </td>
+                  <td style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{ev.rooms?.title ?? '—'}</td>
                   <td style={{ fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
                     {new Date(ev.starts_at).toLocaleString('es-ES', {
                       day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
@@ -188,7 +175,8 @@ export default function AdminEventsTable({ events, rooms }: Props) {
                   </td>
                   <td>
                     <div style={{ display: 'flex', gap: '0.4rem' }}>
-                      <button className="btn-ghost" onClick={() => setEditingId(editingId === ev.id ? null : ev.id)}
+                      <button className="btn-ghost"
+                        onClick={() => setEditingId(editingId === ev.id ? null : ev.id)}
                         style={{ fontSize: '0.72rem', padding: '0.2rem 0.6rem' }}>
                         Editar
                       </button>
