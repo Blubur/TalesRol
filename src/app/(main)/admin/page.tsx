@@ -9,6 +9,7 @@ import AdminDiceTable from './AdminDiceTable'
 import AdminTagsTable from './AdminTagsTable'
 import AdminAnnouncementsTable from './AdminAnnouncementsTable'
 import AdminModLogTable from './AdminModLogTable'
+import AdminEventsTable from './AdminEventsTable'
 import {
   UsersIcon,
   BookOpenIcon,
@@ -19,6 +20,7 @@ import {
   TagIcon,
   SpeakerWaveIcon,
   ClockIcon,
+  CalendarDaysIcon,
 } from '@heroicons/react/24/outline'
 
 export const metadata = { title: 'Panel de Administración — TalesRol' }
@@ -57,7 +59,10 @@ export default async function AdminPage() {
     (roleColorsData ?? []).map(r => [r.role, r.color])
   )
 
-  const { data: usersData } = await supabase.from('profiles').select('*').order('created_at', { ascending: false })
+  const { data: usersData } = await supabase
+    .from('profiles')
+    .select('*')
+    .order('created_at', { ascending: false })
 
   const { createClient: createServiceClient } = await import('@supabase/supabase-js')
   const admin = createServiceClient(
@@ -74,12 +79,24 @@ export default async function AdminPage() {
     email: emailMap[u.id] ?? '',
   })) as (Profile & { email: string })[]
 
+  // Salas — usada tanto para AdminRoomsTable como para AdminEventsTable
   const { data: roomsData } = await supabase
     .from('rooms')
     .select('*, owner:profiles!rooms_owner_id_fkey(username, display_name, avatar_url)')
     .is('deleted_at', null)
     .order('created_at', { ascending: false })
-  const rooms = (roomsData ?? []) as (Room & { owner: { username: string; display_name: string | null; avatar_url: string | null } | null })[]
+  const rooms = (roomsData ?? []) as (Room & {
+    owner: { username: string; display_name: string | null; avatar_url: string | null } | null
+  })[]
+
+  // Lista simplificada de salas activas para el selector de eventos
+  const { data: activeRoomsData } = await supabase
+    .from('rooms')
+    .select('id, title, slug')
+    .is('deleted_at', null)
+    .eq('status', 'active')
+    .order('title')
+  const activeRooms = activeRoomsData ?? []
 
   const { data: reportsData } = await supabase
     .from('reports')
@@ -94,8 +111,16 @@ export default async function AdminPage() {
     .limit(50)
   const reports = reportsData ?? []
 
-  const { data: dice } = await supabase.from('dice_types').select('*').order('faces', { ascending: true })
-  const { data: tags } = await supabase.from('tags').select('*').order('name', { ascending: true })
+  const { data: dice } = await supabase
+    .from('dice_types')
+    .select('*')
+    .order('faces', { ascending: true })
+
+  const { data: tags } = await supabase
+    .from('tags')
+    .select('*')
+    .order('name', { ascending: true })
+
   const { data: announcements } = await supabase
     .from('announcements')
     .select('*, profiles!announcements_author_id_fkey(username, display_name)')
@@ -107,11 +132,19 @@ export default async function AdminPage() {
     .order('created_at', { ascending: false })
     .limit(100)
 
+  const { data: eventsData } = await supabase
+    .from('events')
+    .select('*, rooms(title)')
+    .is('deleted_at', null)
+    .order('starts_at', { ascending: false })
+  const events = eventsData ?? []
+
   const stats = [
     { label: 'Usuarios',  value: totalUsers  ?? 0, icon: UsersIcon,                  color: '#60a5fa' },
     { label: 'Salas',     value: totalRooms  ?? 0, icon: BookOpenIcon,               color: '#34d399' },
     { label: 'Posts',     value: totalPosts  ?? 0, icon: ChatBubbleLeftEllipsisIcon, color: '#c1c1c1' },
-    { label: 'Reportes pendientes', value: pendingReports ?? 0, icon: FlagIcon, color: (pendingReports ?? 0) > 0 ? '#ff6b6b' : '#9ca3af' },
+    { label: 'Reportes pendientes', value: pendingReports ?? 0, icon: FlagIcon,
+      color: (pendingReports ?? 0) > 0 ? '#ff6b6b' : '#9ca3af' },
   ]
 
   const navSections = [
@@ -121,6 +154,7 @@ export default async function AdminPage() {
     { id: 'dados',     label: 'Dados',     icon: CubeIcon },
     { id: 'etiquetas', label: 'Etiquetas', icon: TagIcon },
     { id: 'anuncios',  label: 'Anuncios',  icon: SpeakerWaveIcon },
+    { id: 'eventos',   label: 'Eventos',   icon: CalendarDaysIcon },
     { id: 'modlog',    label: 'Actividad', icon: ClockIcon },
   ]
 
@@ -212,6 +246,14 @@ export default async function AdminPage() {
           <h2 className="admin-section-title">Anuncios <span className="admin-count">({(announcements ?? []).length})</span></h2>
         </div>
         <AdminAnnouncementsTable announcements={announcements ?? []} currentUserId={user.id} />
+      </section>
+
+      <section id="eventos" className="admin-section animate-enter" style={{ animationDelay: '0.42s' }}>
+        <div className="admin-section-header">
+          <CalendarDaysIcon className="admin-section-icon" />
+          <h2 className="admin-section-title">Eventos <span className="admin-count">({events.length})</span></h2>
+        </div>
+        <AdminEventsTable events={events} rooms={activeRooms} />
       </section>
 
       <section id="modlog" className="admin-section animate-enter" style={{ animationDelay: '0.45s' }}>

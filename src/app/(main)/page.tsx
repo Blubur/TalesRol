@@ -11,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline'
 import RecentPostsWidget from '@/components/RecentPostsWidget'
 import StatsWidget from '@/components/StatsWidget'
+import EventsWidget from '@/components/EventsWidget'
 
 export const revalidate = 0
 
@@ -70,7 +71,7 @@ export default async function HomePage() {
       {/* Barra de estadísticas */}
       <StatsWidget />
 
-      {/* Hero + widget de últimos posts lado a lado */}
+      {/* Hero + últimos posts */}
       <div className="home-hero-row">
         <div className="home-hero animate-enter">
           <div className="home-hero-bg" />
@@ -96,6 +97,9 @@ export default async function HomePage() {
           <RecentPostsWidget limit={10} />
         </aside>
       </div>
+
+      {/* Eventos y sesiones */}
+      <EventsWidget userId={user?.id ?? null} />
 
       <div className="home-grid">
         <Link href="/salas" className="home-card animate-enter" style={{ animationDelay: '0.1s' }}>

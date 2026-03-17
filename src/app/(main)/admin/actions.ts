@@ -514,3 +514,6 @@ export async function updateRoleColors(colors: Record<string, string>) {
   revalidatePath('/admin')
   return { success: true }
 }
+
+
+export { createEvent, updateEvent, deleteEvent } from '@/app/(main)/eventactions'
