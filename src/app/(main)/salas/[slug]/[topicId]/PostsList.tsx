@@ -153,21 +153,21 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
     formData.set('content', finalContent)
     if (selectedChar) formData.set('character_id', selectedChar)
 
- try {
+    try {
       const result = await createPost(formData)
-      if (result?.error) { setError(result.error); setLoading(false) }
-      else if (result?.success) { forceReload(result.postNumber) }
+      if (result?.error) {
+        setError(result.error)
+        setLoading(false)
+      } else if (result?.success) {
+        const nextPostNumber = result.postNumber ?? (posts.length + 1)
+        forceReload(nextPostNumber)
+      }
     } catch (err) {
       console.error('Error en createPost:', err)
       setError('Error inesperado al publicar.')
       setLoading(false)
     }
-
-    const result = await createPost(formData)
-console.log('result completo:', JSON.stringify(result))
-if (result?.error) { setError(result.error); setLoading(false) }
-else if (result?.success) { forceReload(result.postNumber) }
-  }  // ← cierre de handleCreate, nada más después
+  }
 
   async function handleUpdate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -269,8 +269,8 @@ else if (result?.success) { forceReload(result.postNumber) }
             const isBlocked = !!post.blocked_at
             const hasChar   = !!post.characters
 
-            const avatar  = post.characters?.avatar_url ?? post.profiles?.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${post.profiles?.username ?? 'anon'}`
-            const name    = post.characters?.name ?? post.profiles?.display_name ?? post.profiles?.username ?? 'Anónimo'
+            const avatar   = post.characters?.avatar_url ?? post.profiles?.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${post.profiles?.username ?? 'anon'}`
+            const name     = post.characters?.name ?? post.profiles?.display_name ?? post.profiles?.username ?? 'Anónimo'
             const username = post.profiles?.username
 
             return (
@@ -446,68 +446,6 @@ else if (result?.success) { forceReload(result.postNumber) }
         <div className="posts-locked">Este tema está cerrado. No se aceptan más respuestas.</div>
       ) : null}
 
-      <style>{`
-        .action-icon { width: 13px; height: 13px; }
-        .post-dice-badge { font-size: var(--text-xs); color: var(--color-info); font-family: var(--font-cinzel); letter-spacing: 0.06em; }
-
-        .char-description {
-          font-size: 0.72rem;
-          color: var(--text-muted);
-          font-style: italic;
-          line-height: 1.4;
-          margin: 0.3rem 0 0;
-          max-width: 140px;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        .char-sheet {
-          display: flex;
-          flex-direction: column;
-          gap: 0.2rem;
-          margin-top: 0.4rem;
-          border-top: 1px solid var(--border-subtle);
-          padding-top: 0.4rem;
-          width: 100%;
-        }
-        .char-sheet-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: baseline;
-          gap: 0.3rem;
-        }
-        .char-sheet-key {
-          font-size: 0.62rem;
-          font-family: var(--font-cinzel);
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          color: var(--text-muted);
-          white-space: nowrap;
-          flex-shrink: 0;
-        }
-        .char-sheet-val {
-          font-size: 0.7rem;
-          color: var(--text-secondary);
-          text-align: right;
-          word-break: break-word;
-        }
-
-        .dice-toggle-row { display: flex; align-items: center; gap: var(--space-3); }
-        .dice-toggle-btn { display: flex; align-items: center; gap: var(--space-2); background: transparent; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: var(--space-1) var(--space-3); font-family: var(--font-cinzel); font-size: var(--text-xs); letter-spacing: 0.06em; color: var(--text-muted); cursor: pointer; transition: all var(--transition-fast); }
-        .dice-toggle-btn:hover, .dice-toggle-btn.active { border-color: var(--color-crimson); color: var(--color-crimson); background: var(--color-crimson-subtle); }
-        .dice-toggle-icon { width: 14px; height: 14px; }
-        .pending-rolls { display: flex; flex-direction: column; gap: var(--space-1); background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-left: 3px solid var(--color-crimson); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); }
-        .pending-rolls-label { font-family: var(--font-cinzel); font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-1); }
-        .pending-roll-item { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
-        .pending-roll-info { display: flex; align-items: center; gap: var(--space-2); }
-        .pending-roll-dice { font-family: var(--font-cinzel); font-size: var(--text-sm); font-weight: 600; color: var(--text-secondary); }
-        .pending-roll-individual { font-size: var(--text-xs); color: var(--text-muted); }
-        .pending-roll-arrow { color: var(--text-muted); }
-        .pending-roll-total { font-family: var(--font-cinzel); font-size: var(--text-lg); font-weight: 700; color: var(--color-crimson); }
-        .pending-roll-remove { background: transparent; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-muted); width: 20px; height: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--transition-fast); flex-shrink: 0; }
-        .pending-roll-remove:hover { border-color: var(--color-error); color: var(--color-error); }
-      `}</style>
     </div>
   )
 }
