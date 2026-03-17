@@ -66,24 +66,31 @@ export default async function HomePage() {
         </div>
       )}
 
-      <div className="home-hero animate-enter">
-        <div className="home-hero-bg" />
-        <div className="home-hero-symbol">✦</div>
-        <h1 className="home-hero-title">
-          {profile
-            ? `Bienvenido, ${profile.display_name || profile.username}`
-            : 'Bienvenido a TalesRol'
-          }
-        </h1>
-        <p className="home-hero-sub">
-          Plataforma de roleplay escrito — Crea personajes, únete a salas y vive tus historias
-        </p>
-        {!profile && (
-          <div className="home-hero-btns">
-            <Link href="/auth/register" className="btn-primary">Empezar ahora</Link>
-            <Link href="/salas" className="btn-ghost">Ver salas</Link>
-          </div>
-        )}
+      {/* Hero + widget lado a lado */}
+      <div className="home-hero-row">
+        <div className="home-hero animate-enter">
+          <div className="home-hero-bg" />
+          <div className="home-hero-symbol">✦</div>
+          <h1 className="home-hero-title">
+            {profile
+              ? `Bienvenido, ${profile.display_name || profile.username}`
+              : 'Bienvenido a TalesRol'
+            }
+          </h1>
+          <p className="home-hero-sub">
+            Plataforma de roleplay escrito — Crea personajes, únete a salas y vive tus historias
+          </p>
+          {!profile && (
+            <div className="home-hero-btns">
+              <Link href="/auth/register" className="btn-primary">Empezar ahora</Link>
+              <Link href="/salas" className="btn-ghost">Ver salas</Link>
+            </div>
+          )}
+        </div>
+
+        <aside className="home-hero-sidebar animate-enter" style={{ animationDelay: '0.08s' }}>
+          <RecentPostsWidget limit={10} />
+        </aside>
       </div>
 
       <div className="home-grid">
@@ -135,9 +142,27 @@ export default async function HomePage() {
         )}
       </div>
 
-      {/* Widget de últimos posts globales */}
-      <RecentPostsWidget limit={10} />
-
+      <style>{`
+        .home-hero-row {
+          display: grid;
+          grid-template-columns: 1fr 300px;
+          gap: 1.25rem;
+          align-items: start;
+        }
+        /* El hero ocupa toda la altura del sidebar si este es más alto */
+        .home-hero-row .home-hero {
+          height: 100%;
+        }
+        /* En móvil apilan verticalmente, widget primero no — hero primero */
+        @media (max-width: 720px) {
+          .home-hero-row {
+            grid-template-columns: 1fr;
+          }
+          .home-hero-sidebar {
+            order: 2;
+          }
+        }
+      `}</style>
     </div>
   )
 }
