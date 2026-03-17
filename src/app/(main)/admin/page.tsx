@@ -8,6 +8,7 @@ import AdminReportsTable from './AdminReportsTable'
 import AdminDiceTable from './AdminDiceTable'
 import AdminTagsTable from './AdminTagsTable'
 import AdminAnnouncementsTable from './AdminAnnouncementsTable'
+import AdminModLogTable from './AdminModLogTable'
 import {
   UsersIcon,
   BookOpenIcon,
@@ -17,6 +18,7 @@ import {
   CubeIcon,
   TagIcon,
   SpeakerWaveIcon,
+  ClockIcon,
 } from '@heroicons/react/24/outline'
 
 export const metadata = { title: 'Panel de Administración — TalesRol' }
@@ -99,6 +101,12 @@ export default async function AdminPage() {
     .select('*, profiles!announcements_author_id_fkey(username, display_name)')
     .order('created_at', { ascending: false })
 
+  const { data: modLogs } = await supabase
+    .from('moderation_logs')
+    .select('*, admin:profiles!moderation_logs_admin_id_fkey(username, display_name, avatar_url)')
+    .order('created_at', { ascending: false })
+    .limit(100)
+
   const stats = [
     { label: 'Usuarios',  value: totalUsers  ?? 0, icon: UsersIcon,                  color: '#60a5fa' },
     { label: 'Salas',     value: totalRooms  ?? 0, icon: BookOpenIcon,               color: '#34d399' },
@@ -113,6 +121,7 @@ export default async function AdminPage() {
     { id: 'dados',     label: 'Dados',     icon: CubeIcon },
     { id: 'etiquetas', label: 'Etiquetas', icon: TagIcon },
     { id: 'anuncios',  label: 'Anuncios',  icon: SpeakerWaveIcon },
+    { id: 'modlog',    label: 'Actividad', icon: ClockIcon },
   ]
 
   return (
@@ -203,6 +212,16 @@ export default async function AdminPage() {
           <h2 className="admin-section-title">Anuncios <span className="admin-count">({(announcements ?? []).length})</span></h2>
         </div>
         <AdminAnnouncementsTable announcements={announcements ?? []} currentUserId={user.id} />
+      </section>
+
+      <section id="modlog" className="admin-section animate-enter" style={{ animationDelay: '0.45s' }}>
+        <div className="admin-section-header">
+          <ClockIcon className="admin-section-icon" />
+          <h2 className="admin-section-title">
+            Log de Moderación <span className="admin-count">({(modLogs ?? []).length})</span>
+          </h2>
+        </div>
+        <AdminModLogTable logs={modLogs ?? []} />
       </section>
 
       <style>{`

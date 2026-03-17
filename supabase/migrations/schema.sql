@@ -699,3 +699,31 @@ CREATE POLICY "wiki_versions_insert" ON wiki_page_versions FOR INSERT
       )
     )
   );
+
+
+
+
+
+
+
+
+  CREATE TABLE moderation_logs (
+  id          uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  admin_id    uuid REFERENCES profiles(id) ON DELETE SET NULL,
+  action      text NOT NULL,
+  target_type text NOT NULL CHECK (target_type IN ('user', 'room', 'post', 'ip', 'system')),
+  target_id   text,
+  target_label text,
+  notes       text,
+  created_at  timestamptz DEFAULT now()
+);
+
+-- Solo admins pueden leer, nadie puede insertar/editar/borrar desde el cliente
+ALTER TABLE moderation_logs ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Admins pueden leer logs" ON moderation_logs
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
+    )
+  );

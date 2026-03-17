@@ -847,7 +847,7 @@ p:last-child { margin-bottom: 0; }
         @media (max-width: 700px) { .admin-stats { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 400px) { .admin-stats { grid-template-columns: 1fr; } }
 
-        
+
          .admin-table-wrap { display: flex; flex-direction: column; gap: 0.75rem; }
 
         /* Toolbar */
@@ -940,6 +940,47 @@ p:last-child { margin-bottom: 0; }
         .action-btn.success { color: #34d399;  border-color: rgba(52,211,153,0.4); }
         .action-btn.success:hover:not(:disabled) { background: rgba(52,211,153,0.1); }
         .action-btn-icon { width: 12px; height: 12px; flex-shrink: 0; }
+
+
+        /******* ============= LOG DE MODERACION ======================================================================================================
+        ==================================================================
+        ====================
+        */
+
+        /* ============================================================
+   LOG DE MODERACIÓN
+   ============================================================ */
+
+.modlog-wrap { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.modlog-filters { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.modlog-filter-btn { background: transparent; border: 1px solid var(--border-subtle); border-radius: 3px; padding: 0.25rem 0.65rem; font-size: 0.72rem; font-family: var(--font-cinzel); letter-spacing: 0.05em; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+.modlog-filter-btn:hover { color: var(--text-primary); border-color: var(--border-medium); }
+.modlog-filter-btn.active { color: var(--color-crimson); border-color: var(--color-crimson); background: var(--color-crimson-subtle); }
+
+.modlog-list { display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--border-subtle); border-radius: 6px; overflow: hidden; }
+
+.modlog-row { display: flex; align-items: center; gap: 1rem; padding: 0.65rem 1rem; background: var(--bg-card); border-bottom: 1px solid var(--border-subtle); flex-wrap: wrap; transition: background 0.15s; }
+.modlog-row:last-child { border-bottom: none; }
+.modlog-row:hover { background: var(--bg-elevated); }
+
+.modlog-action-col { flex-shrink: 0; }
+.modlog-action-badge { font-size: 0.68rem; font-family: var(--font-cinzel); letter-spacing: 0.06em; padding: 0.15rem 0.55rem; border-radius: 2px; border: 1px solid; white-space: nowrap; }
+
+.modlog-target-col { display: flex; align-items: center; gap: 0.35rem; flex: 1; min-width: 0; }
+.modlog-target-icon { font-size: 0.85rem; flex-shrink: 0; }
+.modlog-target-label { font-size: 0.78rem; color: var(--text-primary); font-family: var(--font-cinzel); letter-spacing: 0.03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.modlog-notes { font-size: 0.7rem; color: var(--text-muted); font-style: italic; flex-basis: 100%; padding-left: 1.5rem; }
+
+.modlog-meta { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; margin-left: auto; }
+.modlog-admin { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--text-secondary); font-family: var(--font-cinzel); letter-spacing: 0.03em; }
+.modlog-admin-avatar { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-subtle); }
+.modlog-date { font-size: 0.68rem; color: var(--text-muted); white-space: nowrap; font-family: var(--font-cinzel); letter-spacing: 0.03em; }
+.modlog-empty { text-align: center; color: var(--text-muted); padding: 2rem; font-style: italic; font-size: 0.88rem; background: var(--bg-card); }
+
+
+
         /* ============================================================
    MODERACIÓN DE SALAS
    ============================================================ */

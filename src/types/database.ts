@@ -177,3 +177,29 @@ export type Database = {
     }
   }
 }
+
+
+
+
+
+moderation_logs: {
+  Row: {
+    id:           string
+    admin_id:     string | null
+    action:       string
+    target_type:  'user' | 'room' | 'post' | 'ip' | 'system'
+    target_id:    string | null
+    target_label: string | null
+    notes:        string | null
+    created_at:   string
+  }
+  Insert: {
+    admin_id?:    string | null
+    action:       string
+    target_type:  'user' | 'room' | 'post' | 'ip' | 'system'
+    target_id?:   string | null
+    target_label?: string | null
+    notes?:       string | null
+  }
+  Update: Record<string, never>
+}
