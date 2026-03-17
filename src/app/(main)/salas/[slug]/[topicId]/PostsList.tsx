@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { FlagIcon, LockClosedIcon, LockOpenIcon, PencilIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { createPost, updatePost, deletePost } from '../topicactions'
 import { reportPost, blockPost, unblockPost } from '../reportactions'
@@ -9,6 +10,9 @@ import QuillEditor, { type QuillEditorHandle } from '@/components/editor/quilled
 import DiceRoller from '@/components/DiceRoller'
 import { buildDiceHTML } from '@/app/(main)/salas/[slug]/diceutils'
 import type { DiceRollResult } from '@/app/(main)/salas/[slug]/diceactions'
+import { getPageForPostNumber } from '@/lib/pagination'
+
+// ─── Tipos ────────────────────────────────────────────────────────────────────
 
 interface Post {
   id: string
@@ -50,7 +54,13 @@ interface Props {
   isLocked: boolean
   diceTypes: DiceType[]
   isParticipant: boolean
+  // Paginación
+  currentPage: number
+  totalPages: number
+  totalPosts: number
 }
+
+// ─── Constantes ───────────────────────────────────────────────────────────────
 
 const REPORT_REASONS = [
   'Contenido inapropiado',
@@ -62,6 +72,18 @@ const REPORT_REASONS = [
 ]
 
 const PRIORITY_FIELDS = ['raza', 'clase', 'edad', 'procedencia', 'origen', 'profesion', 'profesión', 'especie']
+
+// ─── Utilidades ───────────────────────────────────────────────────────────────
+
+function storageKey(topicId: string) {
+  return `talesrol_page_${topicId}`
+}
+
+function savePageToStorage(topicId: string, page: number) {
+  try { localStorage.setItem(storageKey(topicId), String(page)) } catch { /* noop */ }
+}
+
+// ─── Subcomponentes ───────────────────────────────────────────────────────────
 
 function CharacterSheet({ sheet }: { sheet: Record<string, unknown> }) {
   const entries = Object.entries(sheet).filter(([, v]) => v !== '' && v != null)
@@ -88,7 +110,95 @@ function CharacterSheet({ sheet }: { sheet: Record<string, unknown> }) {
   )
 }
 
-export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, userId, userRole, characters, canPost, isLocked, diceTypes, isParticipant }: Props) {
+// ─── Paginador ────────────────────────────────────────────────────────────────
+
+function Pagination({
+  currentPage,
+  totalPages,
+  topicId,
+  slug,
+  onNavigate,
+}: {
+  currentPage: number
+  totalPages: number
+  topicId: string
+  slug: string
+  onNavigate: (page: number) => void
+}) {
+  if (totalPages <= 1) return null
+
+  const pathname = `/salas/${slug}/${topicId}`
+
+  // Genera la lista de números de página a mostrar (con "..." cuando hay muchas)
+  function getPages(): (number | '...')[] {
+    if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1)
+    const pages: (number | '...')[] = [1]
+    if (currentPage > 3) pages.push('...')
+    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+      pages.push(i)
+    }
+    if (currentPage < totalPages - 2) pages.push('...')
+    pages.push(totalPages)
+    return pages
+  }
+
+  return (
+    <nav className="pagination" aria-label="Páginas del tema">
+      <Link
+        href={currentPage > 1 ? `${pathname}?page=${currentPage - 1}` : '#'}
+        className={`page-btn page-prev ${currentPage === 1 ? 'disabled' : ''}`}
+        aria-disabled={currentPage === 1}
+        onClick={() => currentPage > 1 && onNavigate(currentPage - 1)}
+      >
+        ‹
+      </Link>
+
+      {getPages().map((p, i) =>
+        p === '...' ? (
+          <span key={`ellipsis-${i}`} className="page-ellipsis">…</span>
+        ) : (
+          <Link
+            key={p}
+            href={`${pathname}?page=${p}`}
+            className={`page-btn ${p === currentPage ? 'active' : ''}`}
+            onClick={() => onNavigate(p as number)}
+          >
+            {p}
+          </Link>
+        )
+      )}
+
+      <Link
+        href={currentPage < totalPages ? `${pathname}?page=${currentPage + 1}` : '#'}
+        className={`page-btn page-next ${currentPage === totalPages ? 'disabled' : ''}`}
+        aria-disabled={currentPage === totalPages}
+        onClick={() => currentPage < totalPages && onNavigate(currentPage + 1)}
+      >
+        ›
+      </Link>
+    </nav>
+  )
+}
+
+// ─── Componente principal ─────────────────────────────────────────────────────
+
+export default function PostsList({
+  posts,
+  topicId,
+  slug,
+  roomId,
+  roomOwnerId,
+  userId,
+  userRole,
+  characters,
+  canPost,
+  isLocked,
+  diceTypes,
+  isParticipant,
+  currentPage,
+  totalPages,
+  totalPosts,
+}: Props) {
   const [editingId, setEditingId]         = useState<string | null>(null)
   const [editContent, setEditContent]     = useState<string>('')
   const [error, setError]                 = useState<string | null>(null)
@@ -109,14 +219,44 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
   const canHardDelete = isModerator
   const canUseDice    = canPost && isParticipant && diceTypes.length > 0
 
+  // Guardar página actual en localStorage
+  useEffect(() => {
+    savePageToStorage(topicId, currentPage)
+  }, [topicId, currentPage])
+
+  // Scroll al hash #post-N si viene en la URL (p.ej. desde notificación)
+  useEffect(() => {
+    const hash = window.location.hash
+    if (!hash.startsWith('#post-')) return
+    const el = document.querySelector(hash)
+    if (el) {
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120)
+    }
+  }, [posts])
+
+  function handlePageNavigate(page: number) {
+    savePageToStorage(topicId, page)
+  }
+
   function startEditing(post: Post) {
     setEditingId(post.id)
     setEditContent(post.content)
   }
 
+  /**
+   * Recarga la página. Si se pasa un postNumber, calcula en qué página
+   * cae y añade el hash para el scroll automático.
+   */
   function forceReload(postNumber?: number) {
-    const hash = postNumber ? `#post-${postNumber}` : ''
-    window.location.href = window.location.pathname + '?t=' + Date.now() + hash
+    if (postNumber) {
+      const targetPage = getPageForPostNumber(postNumber)
+      const hash       = `#post-${postNumber}`
+      const query      = targetPage > 1 ? `?page=${targetPage}` : ''
+      window.location.href = `/salas/${slug}/${topicId}${query}${hash}`
+    } else {
+      // Recargar en la página actual preservando el query param
+      window.location.href = window.location.pathname + window.location.search
+    }
   }
 
   function handleDiceResults(results: DiceRollResult[]) {
@@ -159,11 +299,11 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
         setError(result.error)
         setLoading(false)
       } else if (result?.success) {
-        const nextPostNumber = result.postNumber ?? (posts.length + 1)
+        // postNumber viene de la Server Action; si no, estimamos totalPosts + 1
+        const nextPostNumber = result.postNumber ?? (totalPosts + 1)
         forceReload(nextPostNumber)
       }
     } catch (err) {
-      console.error('Error en createPost:', err)
       setError('Error inesperado al publicar.')
       setLoading(false)
     }
@@ -182,7 +322,7 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
       const result = await updatePost(formData)
       if (result?.error) { setError(result.error); setLoading(false) }
       else if (result?.success) { forceReload() }
-    } catch (err) {
+    } catch {
       setError('Error inesperado al guardar.')
       setLoading(false)
     }
@@ -203,7 +343,10 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
     const result = await reportPost(postId, reason, topicId, slug)
     setLoading(false)
     if (result?.error) { setError(result.error) }
-    else { setReportSuccess(true); setTimeout(() => { setReportingId(null); setReportSuccess(false) }, 2000) }
+    else {
+      setReportSuccess(true)
+      setTimeout(() => { setReportingId(null); setReportSuccess(false) }, 2000)
+    }
   }
 
   async function handleBlock(postId: string) {
@@ -224,9 +367,12 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
     else forceReload()
   }
 
+  const paginationProps = { currentPage, totalPages, topicId, slug, onNavigate: handlePageNavigate }
+
   return (
     <div className="posts-section">
 
+      {/* Modal de reporte */}
       {reportingId && (
         <div className="report-overlay" onClick={() => setReportingId(null)}>
           <div className="report-modal" onClick={e => e.stopPropagation()}>
@@ -259,7 +405,11 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
         </div>
       )}
 
-      {posts.length > 0 && (
+      {/* Paginador superior */}
+      <Pagination {...paginationProps} />
+
+      {/* Lista de posts */}
+      {posts.length > 0 ? (
         <div className="posts-list">
           {posts.map(post => {
             const isOwner   = userId === post.author_id
@@ -284,9 +434,7 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
 
                     {post.characters && post.profiles && (
                       <>
-                        <span className="post-player">
-                          ✦ {post.profiles.display_name || post.profiles.username}
-                        </span>
+                        <span className="post-player">✦ {post.profiles.display_name || post.profiles.username}</span>
                         {post.characters.description && (
                           <p className="char-description">{post.characters.description}</p>
                         )}
@@ -306,14 +454,20 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
                   <div className="post-header">
                     <a href={`#post-${post.post_number}`} className="post-number">#{post.post_number}</a>
                     <span className="post-date">
-                      {new Date(post.created_at).toLocaleString('es-ES', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                      {new Date(post.created_at).toLocaleString('es-ES', {
+                        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+                      })}
                     </span>
                     {post.edited_at && <span className="post-edited">(editado)</span>}
                     {isBlocked && <span className="post-blocked-badge">bloqueado</span>}
                     {hasDice && <span className="post-dice-badge">tirada verificada</span>}
                     <div className="post-actions">
                       {userId && !isOwner && (
-                        <button className="post-action-btn report" onClick={() => { setReportingId(post.id); setReportReason(REPORT_REASONS[0]); setReportCustom(''); setError(null) }} title="Reportar">
+                        <button
+                          className="post-action-btn report"
+                          onClick={() => { setReportingId(post.id); setReportReason(REPORT_REASONS[0]); setReportCustom(''); setError(null) }}
+                          title="Reportar"
+                        >
                           <FlagIcon className="action-icon" />
                         </button>
                       )}
@@ -374,12 +528,14 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
             )
           })}
         </div>
-      )}
-
-      {posts.length === 0 && (
+      ) : (
         <div className="posts-empty"><p>Aún no hay respuestas en este tema.</p></div>
       )}
 
+      {/* Paginador inferior */}
+      <Pagination {...paginationProps} />
+
+      {/* Formulario de nuevo post */}
       {canPost ? (
         <div className="new-post-form">
           <h3 className="new-post-title">✦ Responder</h3>
@@ -446,6 +602,64 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
         <div className="posts-locked">Este tema está cerrado. No se aceptan más respuestas.</div>
       ) : null}
 
+      <style>{`
+        /* ── Paginador ─────────────────────────────────────────────── */
+        .pagination {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.3rem;
+          padding: 0.5rem 0;
+          flex-wrap: wrap;
+        }
+        .page-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 2rem;
+          height: 2rem;
+          padding: 0 0.5rem;
+          border: 1px solid var(--border-subtle);
+          border-radius: var(--radius-sm);
+          background: var(--bg-card);
+          color: var(--text-secondary);
+          font-size: 0.8rem;
+          font-family: var(--font-cinzel);
+          text-decoration: none;
+          transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+          cursor: pointer;
+        }
+        .page-btn:hover:not(.disabled):not(.active) {
+          background: var(--bg-elevated);
+          border-color: var(--border-medium);
+          color: var(--text-primary);
+        }
+        .page-btn.active {
+          background: var(--color-crimson);
+          border-color: var(--color-crimson);
+          color: #fff;
+          font-weight: 700;
+          cursor: default;
+        }
+        .page-btn.disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+          pointer-events: none;
+        }
+        .page-prev, .page-next {
+          font-size: 1.1rem;
+          line-height: 1;
+        }
+        .page-ellipsis {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 2rem;
+          height: 2rem;
+          color: var(--text-muted);
+          font-size: 0.85rem;
+        }
+      `}</style>
     </div>
   )
 }

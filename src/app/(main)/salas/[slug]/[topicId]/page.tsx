@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Profile, Topic, Room } from '@/types/database'
 import PostsList from './PostsList'
+import { parsePage, getRange, getTotalPages } from '@/lib/pagination'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; topicId: string }> }) {
   const { topicId } = await params
@@ -11,8 +12,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return { title: data?.title ?? 'Tema' }
 }
 
-export default async function TopicPage({ params }: { params: Promise<{ slug: string; topicId: string }> }) {
+export default async function TopicPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string; topicId: string }>
+  searchParams: Promise<{ page?: string }>
+}) {
   const { slug, topicId } = await params
+  const { page: pageParam }  = await searchParams
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -34,10 +42,26 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
     .is('deleted_at', null)
     .single()
 
-  console.log('topicData:', topicData, 'topicError:', topicError, 'topicId:', topicId)
-
   if (!topicData) notFound()
-  const topic = topicData as Topic & { profiles: Pick<Profile, 'username' | 'display_name' | 'avatar_url'> | null }
+  const topic = topicData as Topic & {
+    profiles: Pick<Profile, 'username' | 'display_name' | 'avatar_url'> | null
+  }
+
+  // Contar posts totales (para paginación)
+  const { count: totalPosts } = await supabase
+    .from('posts')
+    .select('id', { count: 'exact', head: true })
+    .eq('topic_id', topicId)
+    .is('deleted_at', null)
+
+  const totalCount = totalPosts ?? 0
+  const totalPages = getTotalPages(totalCount)
+
+  // Validar página: si viene ?page=N mayor que el total, redirigir a la última
+  const requestedPage = parsePage(pageParam)
+  const currentPage   = Math.min(requestedPage, totalPages)
+
+  const { from, to } = getRange(currentPage)
 
   // Incrementar view_count
   await supabase
@@ -55,12 +79,14 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
       .upsert({ room_id: room.id, user_id: user.id }, { onConflict: 'room_id,user_id' })
   }
 
-  // Cargar posts
+  // Cargar posts de la página actual
   const { data: postsData } = await supabase
     .from('posts')
- .select('*, profiles!posts_author_id_fkey(id, username, display_name, avatar_url, role), characters(id, name, avatar_url, description, sheet)')    .eq('topic_id', topicId)
+    .select('*, profiles!posts_author_id_fkey(id, username, display_name, avatar_url, role), characters(id, name, avatar_url, description, sheet)')
+    .eq('topic_id', topicId)
     .is('deleted_at', null)
     .order('post_number', { ascending: true })
+    .range(from, to)
 
   const posts = postsData ?? []
 
@@ -86,7 +112,7 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
     .order('faces', { ascending: true })
   const diceTypes = diceTypesData ?? []
 
-  // Comprobar si el usuario es participante (ha posteado alguna vez en la sala)
+  // Comprobar participación
   let isParticipant = false
   if (user) {
     const { data: participation } = await supabase
@@ -95,7 +121,6 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
       .eq('room_id', room.id)
       .eq('user_id', user.id)
       .single()
-    // También es participante si es owner o moderador
     const isOwner = room.owner_id === user.id
     const isMod   = profile?.role === 'admin' || profile?.role === 'master'
     isParticipant = !!participation || isOwner || isMod
@@ -136,15 +161,21 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
               </Link>
             )}
             <span className="topic-date">
-              {new Date(topic.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+              {new Date(topic.created_at).toLocaleDateString('es-ES', {
+                day: 'numeric', month: 'long', year: 'numeric',
+              })}
             </span>
             <span className="topic-views">👁 {topic.view_count + 1} lecturas</span>
-            <span className="topic-count">💬 {posts.length} post{posts.length !== 1 ? 's' : ''}</span>
+            <span className="topic-count">💬 {totalCount} post{totalCount !== 1 ? 's' : ''}</span>
           </div>
         </div>
         {canEdit && (
           <div className="topic-header-actions">
-            <Link href={`/salas/${slug}/${topicId}/editar`} className="btn-ghost" style={{ padding: '0.4rem 0.85rem', fontSize: '0.78rem' }}>
+            <Link
+              href={`/salas/${slug}/${topicId}/editar`}
+              className="btn-ghost"
+              style={{ padding: '0.4rem 0.85rem', fontSize: '0.78rem' }}
+            >
               ✎ Editar
             </Link>
           </div>
@@ -158,7 +189,7 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
         </div>
       )}
 
-      {/* Lista de posts + formulario */}
+      {/* Lista de posts + controles de paginación + formulario */}
       <PostsList
         posts={posts}
         topicId={topicId}
@@ -172,6 +203,9 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
         isLocked={topic.is_locked}
         diceTypes={diceTypes}
         isParticipant={isParticipant}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalPosts={totalCount}
       />
 
       <style>{`
