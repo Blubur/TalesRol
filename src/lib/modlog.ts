@@ -1,7 +1,7 @@
-import { SupabaseClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
 
 export async function logModerationAction(
-  admin: SupabaseClient,
+  _client: unknown,
   adminId: string,
   action: string,
   targetType: 'user' | 'room' | 'post' | 'ip' | 'system',
@@ -9,7 +9,12 @@ export async function logModerationAction(
   targetLabel?: string,
   notes?: string,
 ) {
-  await admin.from('moderation_logs').insert({
+  const serviceClient = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  const { error } = await serviceClient.from('moderation_logs').insert({
     admin_id:     adminId,
     action,
     target_type:  targetType,
@@ -17,4 +22,6 @@ export async function logModerationAction(
     target_label: targetLabel ?? null,
     notes:        notes ?? null,
   })
+
+  if (error) console.error('[modlog] Error al registrar acción:', error.message)
 }

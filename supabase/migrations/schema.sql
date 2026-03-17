@@ -727,3 +727,11 @@ CREATE POLICY "Admins pueden leer logs" ON moderation_logs
       SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
     )
   );
+
+
+  CREATE POLICY "Admins pueden insertar logs" ON moderation_logs
+  FOR INSERT WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
