@@ -8,8 +8,8 @@ import {
   BookOpenIcon,
   UserIcon,
   UserPlusIcon,
-  SparklesIcon,
 } from '@heroicons/react/24/outline'
+import RecentPostsWidget from '@/components/RecentPostsWidget'
 
 export const revalidate = 0
 
@@ -134,6 +134,10 @@ export default async function HomePage() {
           </Link>
         )}
       </div>
+
+      {/* Widget de últimos posts globales */}
+      <RecentPostsWidget limit={10} />
+
     </div>
   )
 }
