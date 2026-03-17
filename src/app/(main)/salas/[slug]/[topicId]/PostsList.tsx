@@ -162,6 +162,11 @@ export default function PostsList({ posts, topicId, slug, roomId, roomOwnerId, u
       setError('Error inesperado al publicar.')
       setLoading(false)
     }
+
+    const result = await createPost(formData)
+console.log('result completo:', JSON.stringify(result))
+if (result?.error) { setError(result.error); setLoading(false) }
+else if (result?.success) { forceReload(result.postNumber) }
   }  // ← cierre de handleCreate, nada más después
 
   async function handleUpdate(e: React.FormEvent<HTMLFormElement>) {
