@@ -58,8 +58,13 @@ export default async function AdminPage() {
   const { data: usersData } = await supabase.from('profiles').select('*').order('created_at', { ascending: false })
   const users = (usersData ?? []) as Profile[]
 
-  const { data: roomsData } = await supabase.from('rooms').select('*').is('deleted_at', null).order('created_at', { ascending: false })
-  const rooms = (roomsData ?? []) as Room[]
+  const { data: roomsData } = await supabase
+  .from('rooms')
+  .select('*, owner:profiles!rooms_owner_id_fkey(username, display_name, avatar_url)')
+  .is('deleted_at', null)
+  .order('created_at', { ascending: false })
+const rooms = (roomsData ?? []) as (Room & { owner: { username: string; display_name: string | null; avatar_url: string | null } | null })[]
+
 
   const { data: reportsData } = await supabase
     .from('reports')

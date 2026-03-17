@@ -198,6 +198,7 @@ export default function AdminUsersTable({ users, currentUserId, roleColors: init
           <thead>
             <tr>
               <th>Usuario</th>
+              <th>Correo</th>
               <th>Rol</th>
               <th>Estado</th>
               <th>Puntos</th>

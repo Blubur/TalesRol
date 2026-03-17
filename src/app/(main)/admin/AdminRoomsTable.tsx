@@ -20,8 +20,11 @@ const STATUSES = [
 
 const STATUS_COLORS: Record<string, string> = Object.fromEntries(STATUSES.map(s => [s.value, s.color]))
 
-export default function AdminRoomsTable({ rooms }: { rooms: Room[] }) {
-  const [loading, setLoading]     = useState<string | null>(null)
+type RoomWithOwner = Room & {
+  owner: { username: string; display_name: string | null; avatar_url: string | null } | null
+}
+
+export default function AdminRoomsTable({ rooms }: { rooms: RoomWithOwner[] }) {  const [loading, setLoading]     = useState<string | null>(null)
   const [localRooms, setLocalRooms] = useState(rooms)
 
   async function handleStatus(roomId: string, status: string) {
@@ -46,11 +49,12 @@ export default function AdminRoomsTable({ rooms }: { rooms: Room[] }) {
       <table className="admin-table">
         <thead>
           <tr>
-            <th>Sala</th>
-            <th>Estado</th>
-            <th>Tags</th>
-            <th>Creada</th>
-            <th>Acciones</th>
+          <th>Sala</th>
+          <th>Creador</th>
+          <th>Estado</th>
+          <th>Tags</th>
+          <th>Creada</th>
+          <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -66,6 +70,23 @@ export default function AdminRoomsTable({ rooms }: { rooms: Room[] }) {
                   <span className="room-cell-title">{room.title}</span>
                 </div>
               </td>
+              <td>
+  {room.owner ? (
+    <div className="owner-cell">
+      {room.owner.avatar_url && (
+        <img src={room.owner.avatar_url} alt="" className="owner-avatar" />
+      )}
+      <div className="owner-cell-info">
+        <span className="owner-name">
+          {room.owner.display_name || room.owner.username}
+        </span>
+        <span className="owner-username">@{room.owner.username}</span>
+      </div>
+    </div>
+  ) : (
+    <span className="date-cell">—</span>
+  )}
+</td>
               <td>
                 <select
                   className="role-select"
@@ -116,7 +137,7 @@ export default function AdminRoomsTable({ rooms }: { rooms: Room[] }) {
             </tr>
           ))}
           {localRooms.length === 0 && (
-            <tr><td colSpan={5} className="empty-row">No hay salas.</td></tr>
+<tr><td colSpan={6} className="empty-row">No hay salas.</td></tr>
           )}
         </tbody>
       </table>
@@ -135,6 +156,14 @@ export default function AdminRoomsTable({ rooms }: { rooms: Room[] }) {
         .room-thumb { width: 36px; height: 36px; border-radius: 3px; object-fit: cover; flex-shrink: 0; border: 1px solid var(--border-subtle); }
         .room-thumb-placeholder { width: 36px; height: 36px; border-radius: 3px; background: var(--bg-secondary); border: 1px solid var(--border-subtle); flex-shrink: 0; }
         .room-cell-title { font-family: var(--font-cinzel); font-size: 0.82rem; color: var(--text-primary); letter-spacing: 0.03em; }
+        
+
+        .owner-cell { display: flex; align-items: center; gap: 0.5rem; }
+        .owner-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-subtle); flex-shrink: 0; }
+        .owner-cell-info { display: flex; flex-direction: column; gap: 0.05rem; }
+        .owner-name { font-size: 0.78rem; color: var(--text-primary); white-space: nowrap; }
+        .owner-username { font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; }
+
 
         .role-select { background: transparent; border: 1px solid; border-radius: 3px; padding: 0.2rem 0.5rem; font-size: 0.72rem; font-family: var(--font-cinzel); letter-spacing: 0.06em; cursor: pointer; outline: none; }
         .role-select:disabled { opacity: 0.4; cursor: not-allowed; }
