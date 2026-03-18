@@ -3,7 +3,6 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { logModerationAction } from '@/lib/modlog'
-import { logModerationAction } from '@/lib/modlog'
 
 async function requireAdmin() {
   const supabase = await createClient()
