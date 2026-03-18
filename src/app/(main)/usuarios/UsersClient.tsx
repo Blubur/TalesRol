@@ -18,9 +18,8 @@ const ROLE_CONFIG: Record<string, { label: string; color: string }> = {
   admin:    { label: 'Admin',      color: 'var(--color-role-admin)' },
   master:   { label: 'Moderador',  color: 'var(--color-role-master)' },
   director: { label: 'Director',   color: 'var(--color-role-director)' },
-  player:   { label: 'Jugador',    color: 'var(--color-role-jugador)' },
-  guest:    { label: 'Invitado',   color: 'var(--color-role-miembro)' },
-}
+jugador:  { label: 'Jugador',    color: 'var(--color-role-jugador)' },
+miembro:  { label: 'Miembro',    color: 'var(--color-role-miembro)' },}
 
 type SortKey = 'ultimo_acceso' | 'created_at' | 'level' | 'post_count' | 'badge_count'
 
@@ -50,7 +49,7 @@ export default function UsersClient({ users, currentUserId }: Props) {
   const [sortBy, setSortBy]         = useState<SortKey>('ultimo_acceso')
   const [sortDir, setSortDir]       = useState<'asc' | 'desc'>('desc')
 
-  const roles = ['all', 'admin', 'master', 'director', 'player']
+const roles = ['all', 'admin', 'master', 'director', 'jugador', 'miembro']
 
   function toggleSort(key: SortKey) {
     if (sortBy === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc')
@@ -73,8 +72,8 @@ export default function UsersClient({ users, currentUserId }: Props) {
     }
 
     list.sort((a, b) => {
-      let va: any = a[sortBy]
-      let vb: any = b[sortBy]
+      let va: any = a[sortBy] ?? 0
+      let vb: any = b[sortBy] ?? 0
       if (sortBy === 'ultimo_acceso' || sortBy === 'created_at') {
         va = new Date(va).getTime()
         vb = new Date(vb).getTime()
