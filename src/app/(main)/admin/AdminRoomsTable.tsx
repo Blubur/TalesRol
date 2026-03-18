@@ -217,8 +217,9 @@ export default function AdminRoomsTable({ rooms }: { rooms: RoomWithOwner[] }) {
                 </td>
                 <td>
                   <div className="tags-cell">
-                    {room.tags?.slice(0, 3).map(tag => <span key={tag} className="tag-pill">{tag}</span>)}
-                  </div>
+{(Array.isArray(room.tags) ? room.tags.slice(0, 3) : []).map(tag => (
+  <span key={String(tag)} className="tag-pill">{String(tag)}</span>
+))}                  </div>
                 </td>
                 <td>
                   <span className="date-cell">
