@@ -45,7 +45,7 @@ export default function AdminRoomsTable({ rooms }: { rooms: RoomWithOwner[] }) {
   const [sortDir,   setSortDir]   = useState<SortDir>('desc')
 
   const filtered = useMemo(() => {
-    let result = localRooms
+let result = Array.isArray(localRooms) ? [...localRooms] : []
 
     if (search) {
       const q = search.toLowerCase()

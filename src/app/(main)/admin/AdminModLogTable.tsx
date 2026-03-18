@@ -49,7 +49,7 @@ export default function AdminModLogTable({ logs }: { logs: LogEntry[] }) {
   const uniqueActions = Array.from(new Set(logs.map(l => l.action)))
 
   const filtered = useMemo(() => {
-    let result = logs
+  let result = Array.isArray(logs) ? [...logs] : []
 
     if (actionFilter !== 'all')
       result = result.filter(l => l.action === actionFilter)
