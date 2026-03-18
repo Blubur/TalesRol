@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import type { Room } from '@/types/database'
-import { changeRoomStatus, deleteRoom } from '../salas/actions'
+import { changeRoomStatusFromAdmin, deleteRoomFromAdmin } from './actions'
 import {
   ArrowTopRightOnSquareIcon,
   TrashIcon,
@@ -95,7 +95,7 @@ let result = Array.isArray(localRooms) ? [...localRooms] : []
 
   async function handleStatus(roomId: string, status: string) {
     setLoading(roomId + '_status')
-    const result = await changeRoomStatus(roomId, status)
+  const result = await changeRoomStatusFromAdmin(roomId, status)
     if (!result?.error)
       setLocalRooms(prev => prev.map(r => r.id === roomId ? { ...r, status: status as any } : r))
     setLoading(null)
@@ -104,7 +104,8 @@ let result = Array.isArray(localRooms) ? [...localRooms] : []
   async function handleDelete(roomId: string) {
     if (!confirm('¿Eliminar esta sala permanentemente?')) return
     setLoading(roomId + '_del')
-    await deleteRoom(roomId)
+    const result = await deleteRoomFromAdmin(roomId)
+  if (result?.error) { /* opcional: mostrar error */ }
     setLocalRooms(prev => prev.filter(r => r.id !== roomId))
     setLoading(null)
   }

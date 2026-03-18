@@ -268,19 +268,52 @@ export default function PostsList({
   }
 
   async function handleCreate(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+  e.preventDefault()
+  setLoading(true)
+  setError(null)
 
-    const textContent = editorRef.current?.getHTML() ?? newContent
-    const hasText     = textContent && textContent.trim() !== '<p><br></p>' && textContent.replace(/<[^>]*>/g, '').trim().length > 0
-    const hasDice     = pendingRolls.length > 0
+  const textContent = editorRef.current?.getHTML() ?? newContent
+  const hasText     = textContent && textContent.trim() !== '<p><br></p>' && textContent.replace(/<[^>]*>/g, '').trim().length > 0
+  const hasDice     = pendingRolls.length > 0
 
-    if (!hasText && !hasDice) {
-      setError('El post no puede estar vacío.')
+  if (!hasText && !hasDice) {
+    setError('El post no puede estar vacío.')
+    setLoading(false)
+    return
+  }
+
+  const diceBlocks   = pendingRolls.map(r => buildDiceHTML(r)).join('\n')
+  const finalContent = hasText
+    ? textContent + (hasDice ? '\n' + diceBlocks : '')
+    : diceBlocks
+
+  const formData = new FormData()
+  formData.set('topic_id', topicId)
+  formData.set('slug', slug)
+  formData.set('content', finalContent)
+  if (selectedChar) formData.set('character_id', selectedChar)
+
+  try {
+    const result = await createPost(formData)
+    if (result?.error) {
+      setError(result.error)
       setLoading(false)
-      return
+    } else if (result?.success) {
+      editorRef.current?.setHTML('')
+      setNewContent('')
+      setPendingRolls([])
+      setSelectedChar('')
+      setLoading(false)
+      const nextPostNumber = result.postNumber ?? (totalPosts + 1)
+      forceReload(nextPostNumber)
+    } else {
+      setLoading(false)
     }
+  } catch (err) {
+    setError('Error inesperado al publicar.')
+    setLoading(false)
+  }
+}
 
     const diceBlocks   = pendingRolls.map(r => buildDiceHTML(r)).join('\n')
     const finalContent = hasText
@@ -299,8 +332,7 @@ export default function PostsList({
         setError(result.error)
         setLoading(false)
       } else if (result?.success) {
-        // postNumber viene de la Server Action; si no, estimamos totalPosts + 1
-        const nextPostNumber = result.postNumber ?? (totalPosts + 1)
+  const nextPostNumber = result.postNumber ?? (totalPosts + 1)
         forceReload(nextPostNumber)
       }
     } catch (err) {

@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { logModerationAction } from '@/lib/modlog'
+import { logModerationAction } from '@/lib/modlog'
 
 async function requireAdmin() {
   const supabase = await createClient()
@@ -515,4 +516,50 @@ export async function updateRoleColors(colors: Record<string, string>) {
   return { success: true }
 }
 
+export async function deleteRoomFromAdmin(roomId: string) {
+  const { error, supabase, user } = await requireAdmin()
+  if (error || !supabase || !user) return { error }
 
+  const { data: room } = await supabase
+    .from('rooms')
+    .select('title, slug')
+    .eq('id', roomId)
+    .single()
+
+  const { error: dbError } = await supabase
+    .from('rooms')
+    .update({ deleted_at: new Date().toISOString(), status: 'archived' })
+    .eq('id', roomId)
+
+  if (dbError) return { error: dbError.message }
+
+  await logModerationAction(supabase, user.id, 'delete_room', 'room', roomId, room?.title)
+
+  revalidatePath('/admin')
+  revalidatePath('/salas')
+  return { success: true }
+}
+
+export async function changeRoomStatusFromAdmin(roomId: string, status: string) {
+  const { error, supabase, user } = await requireAdmin()
+  if (error || !supabase || !user) return { error }
+
+  const { data: room } = await supabase
+    .from('rooms')
+    .select('title, slug')
+    .eq('id', roomId)
+    .single()
+
+  const { error: dbError } = await supabase
+    .from('rooms')
+    .update({ status, updated_at: new Date().toISOString() })
+    .eq('id', roomId)
+
+  if (dbError) return { error: dbError.message }
+
+  await logModerationAction(supabase, user.id, 'change_room_status', 'room', roomId, room?.title, `Nuevo estado: ${status}`)
+
+  revalidatePath('/admin')
+  revalidatePath(`/salas/${room?.slug}`)
+  return { success: true }
+}
