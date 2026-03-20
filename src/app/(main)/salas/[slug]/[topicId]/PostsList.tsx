@@ -54,7 +54,6 @@ interface Props {
   isLocked: boolean
   diceTypes: DiceType[]
   isParticipant: boolean
-  // Paginación
   currentPage: number
   totalPages: number
   totalPosts: number
@@ -129,7 +128,6 @@ function Pagination({
 
   const pathname = `/salas/${slug}/${topicId}`
 
-  // Genera la lista de números de página a mostrar (con "..." cuando hay muchas)
   function getPages(): (number | '...')[] {
     if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1)
     const pages: (number | '...')[] = [1]
@@ -219,12 +217,10 @@ export default function PostsList({
   const canHardDelete = isModerator
   const canUseDice    = canPost && isParticipant && diceTypes.length > 0
 
-  // Guardar página actual en localStorage
   useEffect(() => {
     savePageToStorage(topicId, currentPage)
   }, [topicId, currentPage])
 
-  // Scroll al hash #post-N si viene en la URL (p.ej. desde notificación)
   useEffect(() => {
     const hash = window.location.hash
     if (!hash.startsWith('#post-')) return
@@ -243,10 +239,6 @@ export default function PostsList({
     setEditContent(post.content)
   }
 
-  /**
-   * Recarga la página. Si se pasa un postNumber, calcula en qué página
-   * cae y añade el hash para el scroll automático.
-   */
   function forceReload(postNumber?: number) {
     if (postNumber) {
       const targetPage = getPageForPostNumber(postNumber)
@@ -254,7 +246,6 @@ export default function PostsList({
       const query      = targetPage > 1 ? `?page=${targetPage}` : ''
       window.location.href = `/salas/${slug}/${topicId}${query}${hash}`
     } else {
-      // Recargar en la página actual preservando el query param
       window.location.href = window.location.pathname + window.location.search
     }
   }
@@ -308,65 +299,6 @@ export default function PostsList({
         forceReload(nextPostNumber)
       } else {
         setLoading(false)
-      }
-    } catch (err) {
-      setError('Error inesperado al publicar.')
-      setLoading(false)
-    }
-  }
-
-  const diceBlocks   = pendingRolls.map(r => buildDiceHTML(r)).join('\n')
-  const finalContent = hasText
-    ? textContent + (hasDice ? '\n' + diceBlocks : '')
-    : diceBlocks
-
-  const formData = new FormData()
-  formData.set('topic_id', topicId)
-  formData.set('slug', slug)
-  formData.set('content', finalContent)
-  if (selectedChar) formData.set('character_id', selectedChar)
-
-  try {
-    const result = await createPost(formData)
-    if (result?.error) {
-      setError(result.error)
-      setLoading(false)
-    } else if (result?.success) {
-      editorRef.current?.setHTML('')
-      setNewContent('')
-      setPendingRolls([])
-      setSelectedChar('')
-      setLoading(false)
-      const nextPostNumber = result.postNumber ?? (totalPosts + 1)
-      forceReload(nextPostNumber)
-    } else {
-      setLoading(false)
-    }
-  } catch (err) {
-    setError('Error inesperado al publicar.')
-    setLoading(false)
-  }
-}
-
-    const diceBlocks   = pendingRolls.map(r => buildDiceHTML(r)).join('\n')
-    const finalContent = hasText
-      ? textContent + (hasDice ? '\n' + diceBlocks : '')
-      : diceBlocks
-
-    const formData = new FormData()
-    formData.set('topic_id', topicId)
-    formData.set('slug', slug)
-    formData.set('content', finalContent)
-    if (selectedChar) formData.set('character_id', selectedChar)
-
-    try {
-      const result = await createPost(formData)
-      if (result?.error) {
-        setError(result.error)
-        setLoading(false)
-      } else if (result?.success) {
-  const nextPostNumber = result.postNumber ?? (totalPosts + 1)
-        forceReload(nextPostNumber)
       }
     } catch (err) {
       setError('Error inesperado al publicar.')
@@ -668,7 +600,6 @@ export default function PostsList({
       ) : null}
 
       <style>{`
-        /* ── Paginador ─────────────────────────────────────────────── */
         .pagination {
           display: flex;
           align-items: center;
