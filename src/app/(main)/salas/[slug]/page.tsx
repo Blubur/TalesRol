@@ -1,7 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import WikiDeleteButton from '../WikiDeleteButton'
 import type { Room, Topic, Profile } from '@/types/database'
 import RoomActions from './RoomActions'
 import {
@@ -176,6 +175,16 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
            <IdentificationIcon style={{ width: 14, height: 14 }} /> Fichas
             </Link>
             )}
+
+            {!!user && (
+          <Link
+           href={`/salas/${slug}/calendario`}
+            className="btn-ghost btn-sm"
+             style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+             <CalendarIcon style={{ width: 14, height: 14 }} /> Calendario
+          </Link>
+            )}
+            
         </div>
       </div>
 
