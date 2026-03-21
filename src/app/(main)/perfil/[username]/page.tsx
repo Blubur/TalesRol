@@ -386,8 +386,12 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
                             <Link
                               href={`/perfil/${lastPoster.username}`}
                               className="topic-item-last-author"
-                              onClick={e => e.stopPropagation()}
-                            >
+<Link
+  href={`/perfil/${lastPoster.username}`}
+  className="topic-item-last-author"
+>
+  {lastPoster.display_name || lastPoster.username}
+</Link>                            >
                               {lastPoster.display_name || lastPoster.username}
                             </Link>
                             {' · '}
