@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { MegaphoneIcon, MapPinIcon, CalendarIcon } from '@heroicons/react/24/outline'
-import DOMPurify from 'isomorphic-dompurify'
+
 
 export const metadata = { title: 'Anuncios — TalesRol' }
 
@@ -109,10 +109,10 @@ function AnnouncementCard({ ann, pinned, delay }: { ann: any; pinned: boolean; d
         <span className="ann-card-date">{date}</span>
       </div>
 
-      <div
-        className="ann-card-content ql-output"
-        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(ann.content ?? '') }}
-      />
+     <div
+  className="ann-card-content ql-output"
+  dangerouslySetInnerHTML={{ __html: ann.content ?? '' }}
+/>
 
       {author && (
         <div className="ann-card-footer">
