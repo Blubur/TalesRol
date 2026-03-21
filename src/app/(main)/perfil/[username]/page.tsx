@@ -7,7 +7,6 @@ import {
   PencilIcon,
   EnvelopeIcon,
   CalendarIcon,
-  ClockIcon,
   BookOpenIcon,
   UserGroupIcon,
   LockClosedIcon,
@@ -22,6 +21,7 @@ import {
   UserIcon,
   UsersIcon,
   ShieldCheckIcon,
+  ChatBubbleLeftEllipsisIcon,
 } from '@heroicons/react/24/outline'
 
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -95,6 +95,37 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
     .eq('author_id', profile.id).is('deleted_at', null)
     .order('created_at', { ascending: false }).limit(5) : { data: [] }
 
+  // Temas abiertos por el usuario
+  const { data: userTopics } = showPosts ? await supabase
+    .from('topics')
+    .select('id, title, created_at, rooms!inner(slug, title)')
+    .eq('author_id', profile.id)
+    .is('deleted_at', null)
+    .order('created_at', { ascending: false })
+    .limit(10) : { data: [] }
+
+  // Último posteador por tema
+  const topicIds = (userTopics ?? []).map((t: any) => t.id)
+  const lastPosterMap: Record<string, { username: string; display_name: string | null; created_at: string }> = {}
+  if (topicIds.length > 0) {
+    const { data: lastPosts } = await supabase
+      .from('posts')
+      .select('topic_id, created_at, profiles!posts_author_id_fkey(username, display_name)')
+      .in('topic_id', topicIds)
+      .is('deleted_at', null)
+      .order('created_at', { ascending: false })
+
+    ;(lastPosts ?? []).forEach((p: any) => {
+      if (!lastPosterMap[p.topic_id]) {
+        lastPosterMap[p.topic_id] = {
+          username: p.profiles?.username ?? '',
+          display_name: p.profiles?.display_name ?? null,
+          created_at: p.created_at,
+        }
+      }
+    })
+  }
+
   // Salas
   const showRooms = canSeeAll || profile.privacy_rooms !== false
   const { data: roomActivity } = showRooms ? await supabase
@@ -102,7 +133,6 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
     .eq('author_id', profile.id).is('deleted_at', null).limit(50) : { data: [] }
 
   const roomsMap = new Map()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   roomActivity?.forEach((p: any) => {
     const room = p.topics?.rooms
     if (room && !roomsMap.has(room.id)) roomsMap.set(room.id, room)
@@ -228,7 +258,6 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
             </h2>
             {visibleBadges && visibleBadges.length > 0 ? (
               <div className="badges-list">
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {visibleBadges.map((ub: any) => {
                   const def = ub.badge_definitions
                   if (!def) return null
@@ -305,7 +334,6 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
               </p>
             ) : rooms.length > 0 ? (
               <div className="rooms-list">
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {rooms.map((room: any) => (
                   <Link href={`/salas/${room.slug}`} key={room.id} className="room-item">
                     {room.cover_url
@@ -322,8 +350,62 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
             )}
           </div>
 
-          {/* Posts recientes */}
+          {/* Temas abiertos */}
           <div className="profile-card animate-enter" style={{ animationDelay: '0.2s' }}>
+            <h2 className="profile-card-title">
+              <ChatBubbleLeftEllipsisIcon style={{ width: 14, height: 14 }} /> Temas abiertos
+              {!showPosts && <LockClosedIcon style={{ width: 12, height: 12, marginLeft: 'auto', color: 'var(--text-muted)' }} />}
+            </h2>
+            {!showPosts ? (
+              <p className="empty-text private-notice">
+                <LockClosedIcon style={{ width: 13, height: 13 }} /> Este usuario ha ocultado su actividad.
+              </p>
+            ) : userTopics && userTopics.length > 0 ? (
+              <div className="topics-list">
+                {(userTopics as any[]).map(topic => {
+                  const room = topic.rooms
+                  const lastPoster = lastPosterMap[topic.id]
+                  return (
+                    <Link
+                      key={topic.id}
+                      href={room ? `/salas/${room.slug}/${topic.id}` : '#'}
+                      className="topic-item"
+                    >
+                      <div className="topic-item-main">
+                        <span className="topic-item-title">{topic.title}</span>
+                        <span className="topic-item-room">{room?.title ?? '—'}</span>
+                      </div>
+                      <div className="topic-item-meta">
+                        <span className="topic-item-date">
+                          <CalendarIcon style={{ width: 10, height: 10 }} />
+                          {new Date(topic.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </span>
+                        {lastPoster && (
+                          <span className="topic-item-last">
+                            Último post:{' '}
+                            <Link
+                              href={`/perfil/${lastPoster.username}`}
+                              className="topic-item-last-author"
+                              onClick={e => e.stopPropagation()}
+                            >
+                              {lastPoster.display_name || lastPoster.username}
+                            </Link>
+                            {' · '}
+                            {new Date(lastPoster.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  )
+                })}
+              </div>
+            ) : (
+              <p className="empty-text">No ha abierto ningún tema aún.</p>
+            )}
+          </div>
+
+          {/* Posts recientes */}
+          <div className="profile-card animate-enter" style={{ animationDelay: '0.25s' }}>
             <h2 className="profile-card-title">
               <PencilIcon style={{ width: 14, height: 14 }} /> Posts recientes
             </h2>
@@ -333,8 +415,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
               </p>
             ) : recentPosts && recentPosts.length > 0 ? (
               <div className="recent-posts-list">
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                {recentPosts.map((post: any) => {
+                {(recentPosts as any[]).map((post) => {
                   const topic = post.topics
                   const room = topic?.rooms
                   const preview = post.content.replace(/<[^>]*>/g, '').trim().slice(0, 120)
@@ -416,6 +497,20 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
         .room-status.active   { color: var(--color-success); background: var(--color-success-bg); }
         .room-status.paused   { color: var(--color-warning); background: var(--color-warning-bg); }
         .room-status.closed, .room-status.archived { color: var(--text-muted); background: var(--bg-elevated); }
+
+        /* Temas abiertos */
+        .topics-list { display: flex; flex-direction: column; gap: var(--space-2); }
+        .topic-item { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); border-radius: var(--radius-sm); background: var(--bg-secondary); border: 1px solid var(--border-subtle); text-decoration: none; transition: border-color var(--transition-base); }
+        .topic-item:hover { border-color: var(--color-crimson); }
+        .topic-item-main { display: flex; flex-direction: column; gap: 2px; }
+        .topic-item-title { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 600; color: var(--text-primary); letter-spacing: 0.03em; }
+        .topic-item-room { font-size: var(--text-xs); color: var(--color-crimson); font-family: var(--font-display); letter-spacing: 0.04em; }
+        .topic-item-meta { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-1); }
+        .topic-item-date { display: flex; align-items: center; gap: 3px; font-size: var(--text-xs); color: var(--text-muted); font-family: var(--font-display); letter-spacing: 0.03em; }
+        .topic-item-last { font-size: var(--text-xs); color: var(--text-muted); font-family: var(--font-display); letter-spacing: 0.03em; }
+        .topic-item-last-author { color: var(--text-secondary); text-decoration: none; transition: color var(--transition-fast); }
+        .topic-item-last-author:hover { color: var(--color-crimson); }
+
         .recent-posts-list { display: flex; flex-direction: column; gap: var(--space-2); }
         .recent-post-item { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); border-radius: var(--radius-sm); background: var(--bg-secondary); border: 1px solid var(--border-subtle); text-decoration: none; transition: border-color var(--transition-base); }
         .recent-post-item:hover { border-color: var(--color-crimson); }
