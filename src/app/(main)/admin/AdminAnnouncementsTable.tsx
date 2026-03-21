@@ -1,8 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { createAnnouncement, updateAnnouncement, deleteAnnouncement, togglePinAnnouncement } from './actions'
 import { PlusIcon, TrashIcon, PencilSquareIcon, CheckIcon, XMarkIcon, MapPinIcon } from '@heroicons/react/24/outline'
+import DOMPurify from 'dompurify'
+
+const QuillEditor = dynamic(() => import('@/components/editor/quilleditor'), { ssr: false })
 
 export default function AdminAnnouncementsTable({ announcements, currentUserId }: { announcements: any[]; currentUserId: string }) {
   const [local, setLocal]         = useState(announcements)
@@ -76,12 +80,11 @@ export default function AdminAnnouncementsTable({ announcements, currentUserId }
             placeholder="Título del anuncio"
             autoFocus
           />
-          <textarea
-            className="ann-textarea"
-            value={newData.content}
-            onChange={e => setNewData(p => ({ ...p, content: e.target.value }))}
-            placeholder="Contenido del anuncio..."
-            rows={4}
+          <QuillEditor
+            name="new-content"
+            defaultValue={newData.content}
+            onChange={(val: string) => setNewData(p => ({ ...p, content: val }))}
+            height={180}
           />
           <div className="ann-form-actions">
             <button className="action-btn success" onClick={handleCreate} disabled={loading === 'create'}>
@@ -110,12 +113,12 @@ export default function AdminAnnouncementsTable({ announcements, currentUserId }
                   placeholder="Título"
                   autoFocus
                 />
-                <textarea
-                  className="ann-textarea"
-                  value={editData.content}
-                  onChange={e => setEditData(p => ({ ...p, content: e.target.value }))}
-                  placeholder="Contenido"
-                  rows={4}
+                <QuillEditor
+                  key={editingId}
+                  name="edit-content"
+                  defaultValue={editData.content}
+                  onChange={(val: string) => setEditData(p => ({ ...p, content: val }))}
+                  height={180}
                 />
                 <div className="ann-form-actions">
                   <button className="action-btn success" onClick={() => handleSaveEdit(ann.id)} disabled={loading === ann.id}>
@@ -137,7 +140,10 @@ export default function AdminAnnouncementsTable({ announcements, currentUserId }
                     {new Date(ann.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </span>
                 </div>
-                <p className="ann-card-content">{ann.content}</p>
+                <div
+                  className="ann-card-content ql-output"
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(ann.content ?? '') }}
+                />
                 {ann.profiles && (
                   <span className="ann-card-author">Por {ann.profiles.display_name || ann.profiles.username}</span>
                 )}
@@ -175,8 +181,6 @@ export default function AdminAnnouncementsTable({ announcements, currentUserId }
         .ann-form-card { background: var(--bg-secondary); border: 1px solid var(--color-crimson); border-radius: 6px; padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
         .ann-input { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 0.5rem 0.75rem; font-size: 0.9rem; font-family: var(--font-cinzel); letter-spacing: 0.03em; color: var(--text-primary); outline: none; transition: border-color 0.2s; width: 100%; box-sizing: border-box; }
         .ann-input:focus { border-color: var(--color-crimson); }
-        .ann-textarea { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 0.5rem 0.75rem; font-size: 0.88rem; color: var(--text-primary); outline: none; transition: border-color 0.2s; width: 100%; box-sizing: border-box; resize: vertical; font-family: inherit; line-height: 1.6; }
-        .ann-textarea:focus { border-color: var(--color-crimson); }
         .ann-form-actions { display: flex; gap: 0.5rem; }
 
         .ann-list { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -187,7 +191,13 @@ export default function AdminAnnouncementsTable({ announcements, currentUserId }
         .ann-pin-icon { width: 14px; height: 14px; color: var(--color-crimson); flex-shrink: 0; }
         .ann-card-title { font-family: var(--font-cinzel); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em; margin: 0; }
         .ann-card-date { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-cinzel); white-space: nowrap; }
-        .ann-card-content { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0; white-space: pre-line; }
+        .ann-card-content { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+        .ann-card-content.ql-output p { margin: 0 0 0.5em; }
+        .ann-card-content.ql-output ul, .ann-card-content.ql-output ol { padding-left: 1.5rem; margin: 0.4em 0; }
+        .ann-card-content.ql-output strong { color: var(--text-primary); }
+        .ann-card-content.ql-output em { font-style: italic; }
+        .ann-card-content.ql-output a { color: var(--color-crimson); text-decoration: underline; }
+        .ann-card-content.ql-output blockquote { border-left: 3px solid var(--border-medium); padding-left: 0.75rem; color: var(--text-muted); margin: 0.5em 0; font-style: italic; }
         .ann-card-author { font-size: 0.72rem; color: var(--text-muted); }
         .ann-card-actions { display: flex; gap: 0.4rem; padding-top: 0.25rem; border-top: 1px solid var(--border-subtle); }
 
