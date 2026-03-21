@@ -383,15 +383,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
                         {lastPoster && (
                           <span className="topic-item-last">
                             Último post:{' '}
-                            <Link
-                              href={`/perfil/${lastPoster.username}`}
-                              className="topic-item-last-author"
-<Link
-  href={`/perfil/${lastPoster.username}`}
-  className="topic-item-last-author"
->
-  {lastPoster.display_name || lastPoster.username}
-</Link>                            >
+                            <Link href={`/perfil/${lastPoster.username}`} className="topic-item-last-author">
                               {lastPoster.display_name || lastPoster.username}
                             </Link>
                             {' · '}
