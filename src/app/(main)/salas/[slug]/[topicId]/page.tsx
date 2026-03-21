@@ -76,7 +76,7 @@ export default async function TopicPage({
     .update({ view_count: (topic.view_count ?? 0) + 1 } as Partial<Topic>)
     .eq('id', topicId)
 
-  // Registrar participantes
+  // Registrar participantes y marcar visita
   if (user) {
     await supabase
       .from('topic_participants')
@@ -84,6 +84,10 @@ export default async function TopicPage({
     await supabase
       .from('room_participants')
       .upsert({ room_id: room.id, user_id: user.id }, { onConflict: 'room_id,user_id' })
+    // Marcar última visita al tema
+    await supabase
+      .from('topic_visits')
+      .upsert({ user_id: user.id, topic_id: topicId, last_seen_at: new Date().toISOString() }, { onConflict: 'user_id,topic_id' })
   }
 
   // Cargar posts de la página actual

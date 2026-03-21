@@ -23,10 +23,11 @@ export default async function SalasPage() {
     .order('ultima_actividad', { ascending: false })
 
   const allRooms = (rooms ?? []) as Room[]
+  const roomIds  = allRooms.map(r => r.id)
 
-  const roomIds = allRooms.map(r => r.id)
   const topicCounts: Record<string, number> = {}
-  const postCounts: Record<string, number> = {}
+  const postCounts:  Record<string, number> = {}
+  const newPostCounts: Record<string, number> = {}
 
   if (roomIds.length > 0) {
     const { data: topicsData } = await supabase
@@ -44,14 +45,36 @@ export default async function SalasPage() {
     if (topicIds.length > 0) {
       const { data: postsData } = await supabase
         .from('posts')
-        .select('id, topic_id, topics!inner(room_id)')
+        .select('id, topic_id, created_at, topics!inner(room_id)')
         .in('topic_id', topicIds)
         .is('deleted_at', null)
 
-      ;(postsData ?? []).forEach((p: any) => {
+      const allPosts = postsData ?? []
+
+      allPosts.forEach((p: any) => {
         const roomId = p.topics?.room_id
         if (roomId) postCounts[roomId] = (postCounts[roomId] ?? 0) + 1
       })
+
+      // Calcular posts nuevos por sala
+      if (user) {
+        const { data: visitsData } = await supabase
+          .from('topic_visits')
+          .select('topic_id, last_seen_at')
+          .eq('user_id', user.id)
+          .in('topic_id', topicIds)
+
+        const visitMap: Record<string, string> = {}
+        ;(visitsData ?? []).forEach((v: any) => { visitMap[v.topic_id] = v.last_seen_at })
+
+        allPosts.forEach((p: any) => {
+          const roomId  = p.topics?.room_id
+          const lastSeen = visitMap[p.topic_id]
+          if (roomId && (!lastSeen || new Date(p.created_at) > new Date(lastSeen))) {
+            newPostCounts[roomId] = (newPostCounts[roomId] ?? 0) + 1
+          }
+        })
+      }
     }
   }
 
@@ -88,20 +111,21 @@ export default async function SalasPage() {
         </div>
       ) : (
         <div className="salas-sections">
-          {pending.length > 0  && <SalasSection title="Próximamente" rooms={pending}  dot="pending"  delay={0.1}  topicCounts={topicCounts} postCounts={postCounts} />}
-          {active.length > 0   && <SalasSection title="Activas"      rooms={active}   dot="active"   delay={0.15} topicCounts={topicCounts} postCounts={postCounts} />}
-          {paused.length > 0   && <SalasSection title="En Pausa"     rooms={paused}   dot="paused"   delay={0.2}  topicCounts={topicCounts} postCounts={postCounts} />}
-          {finished.length > 0 && <SalasSection title="Finalizadas"  rooms={finished} dot="finished" delay={0.25} topicCounts={topicCounts} postCounts={postCounts} />}
-          {closed.length > 0   && <SalasSection title="Cerradas"     rooms={closed}   dot="closed"   delay={0.3}  topicCounts={topicCounts} postCounts={postCounts} />}
+          {pending.length > 0  && <SalasSection title="Próximamente" rooms={pending}  dot="pending"  delay={0.1}  topicCounts={topicCounts} postCounts={postCounts} newPostCounts={newPostCounts} />}
+          {active.length > 0   && <SalasSection title="Activas"      rooms={active}   dot="active"   delay={0.15} topicCounts={topicCounts} postCounts={postCounts} newPostCounts={newPostCounts} />}
+          {paused.length > 0   && <SalasSection title="En Pausa"     rooms={paused}   dot="paused"   delay={0.2}  topicCounts={topicCounts} postCounts={postCounts} newPostCounts={newPostCounts} />}
+          {finished.length > 0 && <SalasSection title="Finalizadas"  rooms={finished} dot="finished" delay={0.25} topicCounts={topicCounts} postCounts={postCounts} newPostCounts={newPostCounts} />}
+          {closed.length > 0   && <SalasSection title="Cerradas"     rooms={closed}   dot="closed"   delay={0.3}  topicCounts={topicCounts} postCounts={postCounts} newPostCounts={newPostCounts} />}
         </div>
       )}
     </div>
   )
 }
 
-function SalasSection({ title, rooms, dot, delay, topicCounts, postCounts }: {
+function SalasSection({ title, rooms, dot, delay, topicCounts, postCounts, newPostCounts }: {
   title: string; rooms: Room[]; dot: 'active' | 'paused' | 'closed' | 'pending' | 'finished'
   delay: number; topicCounts: Record<string, number>; postCounts: Record<string, number>
+  newPostCounts: Record<string, number>
 }) {
   return (
     <div className="salas-section animate-enter" style={{ animationDelay: `${delay}s` }}>
@@ -111,24 +135,40 @@ function SalasSection({ title, rooms, dot, delay, topicCounts, postCounts }: {
       </h2>
       <div className="salas-grid">
         {rooms.map((room, i) => (
-          <RoomCard key={room.id} room={room} delay={i * 0.04} topicCount={topicCounts[room.id] ?? 0} postCount={postCounts[room.id] ?? 0} />
+          <RoomCard
+            key={room.id}
+            room={room}
+            delay={i * 0.04}
+            topicCount={topicCounts[room.id] ?? 0}
+            postCount={postCounts[room.id] ?? 0}
+            newPostCount={newPostCounts[room.id] ?? 0}
+          />
         ))}
       </div>
     </div>
   )
 }
 
-function RoomCard({ room, delay, topicCount, postCount }: { room: Room; delay: number; topicCount: number; postCount: number }) {
+function RoomCard({ room, delay, topicCount, postCount, newPostCount }: {
+  room: Room; delay: number; topicCount: number; postCount: number; newPostCount: number
+}) {
   const timeAgo = getTimeAgo(room.ultima_actividad)
   return (
-    <Link href={`/salas/${room.slug}`} className="room-card animate-enter" style={{ animationDelay: `${delay}s` }}>
+    <Link href={`/salas/${room.slug}`} className={`room-card animate-enter ${newPostCount > 0 ? 'has-new' : ''}`} style={{ animationDelay: `${delay}s` }}>
       {room.cover_url ? (
         <div className="room-card-cover">
           <img src={room.cover_url} alt={room.title} />
           <div className="room-card-cover-overlay" />
+          {newPostCount > 0 && (
+            <span className="room-new-badge">{newPostCount} nuevo{newPostCount !== 1 ? 's' : ''}</span>
+          )}
         </div>
       ) : (
-        <div className="room-card-cover-placeholder" />
+        <div className="room-card-cover-placeholder" style={{ position: 'relative' }}>
+          {newPostCount > 0 && (
+            <span className="room-new-badge">{newPostCount} nuevo{newPostCount !== 1 ? 's' : ''}</span>
+          )}
+        </div>
       )}
       <div className="room-card-body">
         <h3 className="room-card-title">{room.title}</h3>
@@ -162,6 +202,18 @@ function RoomCard({ room, delay, topicCount, postCount }: { room: Room; delay: n
           <span className="room-card-arrow">Entrar →</span>
         </div>
       </div>
+
+      <style>{`
+        .room-card.has-new { border-color: var(--color-crimson); }
+        .room-new-badge {
+          position: absolute; top: 0.5rem; right: 0.5rem;
+          background: var(--color-crimson); color: #fff;
+          font-size: 0.65rem; font-family: var(--font-cinzel);
+          letter-spacing: 0.06em; font-weight: 600;
+          padding: 0.15rem 0.5rem; border-radius: 999px;
+          white-space: nowrap; z-index: 2;
+        }
+      `}</style>
     </Link>
   )
 }

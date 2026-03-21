@@ -13,13 +13,11 @@ import {
   UserIcon,
   CalendarIcon,
   BookOpenIcon,
-  UsersIcon, 
+  UsersIcon,
   IdentificationIcon,
 } from '@heroicons/react/24/outline'
 import ReportRoomButton from './ReportRoomButton'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-
-
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -67,12 +65,37 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
 
   const topicIds = topics.map(t => t.id)
   const postCounts: Record<string, number> = {}
+  const newPostCounts: Record<string, number> = {}
+
   if (topicIds.length > 0) {
     const { data: postsData } = await supabase
-      .from('posts').select('id, topic_id').in('topic_id', topicIds).is('deleted_at', null)
-    ;(postsData ?? []).forEach((p: any) => {
+      .from('posts').select('id, topic_id, created_at').in('topic_id', topicIds).is('deleted_at', null)
+    const allPosts = postsData ?? []
+
+    allPosts.forEach((p: any) => {
       postCounts[p.topic_id] = (postCounts[p.topic_id] ?? 0) + 1
     })
+
+    // Calcular posts nuevos desde la última visita
+    if (user) {
+      const { data: visitsData } = await supabase
+        .from('topic_visits')
+        .select('topic_id, last_seen_at')
+        .eq('user_id', user.id)
+        .in('topic_id', topicIds)
+
+      const visitMap: Record<string, string> = {}
+      ;(visitsData ?? []).forEach((v: any) => { visitMap[v.topic_id] = v.last_seen_at })
+
+      allPosts.forEach((p: any) => {
+        const lastSeen = visitMap[p.topic_id]
+        // Si nunca visitó el tema, todos los posts son nuevos
+        // Si visitó, contar los posteriores a la última visita
+        if (!lastSeen || new Date(p.created_at) > new Date(lastSeen)) {
+          newPostCounts[p.topic_id] = (newPostCounts[p.topic_id] ?? 0) + 1
+        }
+      })
+    }
   }
 
   const isOwner = user?.id === room.owner_id
@@ -129,14 +152,12 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
         </div>
       </div>
 
-{room.moderation_status && (
-  <div className={`sala-moderation-notice ${room.moderation_status}`}>
-    <ExclamationTriangleIcon style={{ width: 16, height: 16, flexShrink: 0 }} />
-    <span>{room.moderation_message ?? 'Esta sala está bajo revisión de moderación.'}</span>
-  </div>
-)}
-
-
+      {room.moderation_status && (
+        <div className={`sala-moderation-notice ${room.moderation_status}`}>
+          <ExclamationTriangleIcon style={{ width: 16, height: 16, flexShrink: 0 }} />
+          <span>{room.moderation_message ?? 'Esta sala está bajo revisión de moderación.'}</span>
+        </div>
+      )}
 
       {/* Nav */}
       <div className="sala-nav animate-enter" style={{ animationDelay: '0.1s' }}>
@@ -146,7 +167,7 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
         <div className="sala-nav-actions">
           {canEdit && <RoomActions roomId={room.id} slug={room.slug} currentStatus={room.status} />}
           {user && !isOwner && !isAdmin && (
-          <ReportRoomButton roomId={room.id} slug={room.slug} />
+            <ReportRoomButton roomId={room.id} slug={room.slug} />
           )}
           {canPost && (
             <Link href={`/salas/${slug}/nuevo-tema`} className="btn-primary" style={{ padding: '0.4rem 1rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
@@ -154,43 +175,27 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
             </Link>
           )}
           {canEdit && (
-             <Link href={`/salas/${slug}/miembros`} className="btn-ghost btn-sm"
-             style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            <UsersIcon style={{ width: 14, height: 14 }} /> Miembros
-          </Link>
+            <Link href={`/salas/${slug}/miembros`} className="btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <UsersIcon style={{ width: 14, height: 14 }} /> Miembros
+            </Link>
           )}
           {!!user && (
-          <Link
-           href={`/salas/${slug}/wiki`}
-            className="btn-ghost btn-sm"
-             style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            <BookOpenIcon style={{ width: 14, height: 14 }} /> Wiki
+            <Link href={`/salas/${slug}/wiki`} className="btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <BookOpenIcon style={{ width: 14, height: 14 }} /> Wiki
             </Link>
-              )}
-
+          )}
           {canEdit && (
-           <Link href={`/salas/${slug}/fichas`}
-           className="btn-ghost btn-sm"
-           style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-           <IdentificationIcon style={{ width: 14, height: 14 }} /> Fichas
+            <Link href={`/salas/${slug}/fichas`} className="btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <IdentificationIcon style={{ width: 14, height: 14 }} /> Fichas
             </Link>
-            )}
-
-            {!!user && (
-          <Link
-           href={`/salas/${slug}/calendario`}
-            className="btn-ghost btn-sm"
-             style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-             <CalendarIcon style={{ width: 14, height: 14 }} /> Calendario
-          </Link>
-            )}
-            
+          )}
+          {!!user && (
+            <Link href={`/salas/${slug}/calendario`} className="btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <CalendarIcon style={{ width: 14, height: 14 }} /> Calendario
+            </Link>
+          )}
         </div>
       </div>
-
-
-
-
 
       {/* Descripción */}
       {room.description && (
@@ -221,19 +226,25 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
         ) : (
           <div className="topics-list">
             {topics.map((topic, i) => {
-              const pCount = postCounts[topic.id] ?? 0
+              const pCount  = postCounts[topic.id] ?? 0
+              const newCount = newPostCounts[topic.id] ?? 0
               return (
                 <Link
                   key={topic.id}
                   href={`/salas/${slug}/${topic.id}`}
-                  className={`topic-row animate-enter ${topic.is_pinned ? 'pinned' : ''}`}
+                  className={`topic-row animate-enter ${topic.is_pinned ? 'pinned' : ''} ${newCount > 0 ? 'has-new' : ''}`}
                   style={{ animationDelay: `${0.2 + i * 0.04}s` }}
                 >
                   <div className="topic-row-left">
                     {topic.is_pinned && <MapPinIcon className="topic-icon pin" title="Fijado" />}
                     {topic.is_locked && <LockClosedIcon className="topic-icon lock" title="Bloqueado" />}
                     <div className="topic-info">
-                      <span className="topic-title">{topic.title}</span>
+                      <div className="topic-title-row">
+                        <span className="topic-title">{topic.title}</span>
+                        {newCount > 0 && (
+                          <span className="topic-new-badge">{newCount} nuevo{newCount !== 1 ? 's' : ''}</span>
+                        )}
+                      </div>
                       {topic.profiles && (
                         <span className="topic-author">
                           por <strong>{topic.profiles.display_name || topic.profiles.username}</strong>
@@ -260,6 +271,19 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
           </div>
         )}
       </div>
+
+      <style>{`
+        .topic-title-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+        .topic-new-badge {
+          display: inline-flex; align-items: center;
+          background: var(--color-crimson); color: #fff;
+          font-size: 0.65rem; font-family: var(--font-cinzel);
+          letter-spacing: 0.06em; font-weight: 600;
+          padding: 0.1rem 0.45rem; border-radius: 999px;
+          white-space: nowrap;
+        }
+        .topic-row.has-new { border-left: 3px solid var(--color-crimson); }
+      `}</style>
     </div>
   )
 }
