@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { ChevronLeftIcon, ChevronRightIcon, PlusIcon, CalendarIcon, ClockIcon, LinkIcon, UserIcon, CheckIcon, XMarkIcon, QuestionMarkCircleIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { createEvent, updateEvent, deleteEvent, upsertRsvp } from './calendaractions'
 
@@ -18,7 +19,7 @@ type Event = {
   topics: Topic | null
   session_rsvps: Rsvp[]
 }
-type Room = { id: string; name: string; slug: string }
+type Room = { id: string; title: string; slug: string }
 type Profile = { id: string; username: string; role: string } | null
 
 interface Props {
@@ -37,11 +38,11 @@ function getDaysInMonth(year: number, month: number) {
   return new Date(year, month + 1, 0).getDate()
 }
 function getFirstDayOfMonth(year: number, month: number) {
-  // 0=lunes
   return (new Date(year, month, 1).getDay() + 6) % 7
 }
 
 export default function CalendarView({ events, topics, room, profile, canManage, slug }: Props) {
+  const router = useRouter()
   const today = new Date()
   const [currentYear, setCurrentYear] = useState(today.getFullYear())
   const [currentMonth, setCurrentMonth] = useState(today.getMonth())
@@ -50,7 +51,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
   const [editingEvent, setEditingEvent] = useState<Event | null>(null)
   const [loading, setLoading] = useState(false)
 
-  // Form state
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -71,7 +71,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
   const daysInMonth = getDaysInMonth(currentYear, currentMonth)
   const firstDay = getFirstDayOfMonth(currentYear, currentMonth)
 
-  // Eventos del mes actual
   const eventsThisMonth = events.filter(e => {
     const d = new Date(e.starts_at)
     return d.getFullYear() === currentYear && d.getMonth() === currentMonth
@@ -110,6 +109,7 @@ export default function CalendarView({ events, topics, room, profile, canManage,
         await createEvent({ room_id: room.id, slug, ...form, ends_at: form.ends_at || undefined, topic_id: form.topic_id || undefined })
       }
       setShowModal(false)
+      router.refresh()
     } finally {
       setLoading(false)
     }
@@ -121,6 +121,7 @@ export default function CalendarView({ events, topics, room, profile, canManage,
     try {
       await deleteEvent(id, slug)
       setSelectedEvent(null)
+      router.refresh()
     } finally {
       setLoading(false)
     }
@@ -131,6 +132,7 @@ export default function CalendarView({ events, topics, room, profile, canManage,
     setLoading(true)
     try {
       await upsertRsvp(event_id, slug, status)
+      router.refresh()
     } finally {
       setLoading(false)
     }
@@ -207,12 +209,10 @@ export default function CalendarView({ events, topics, room, profile, canManage,
 
       {/* Grid calendario */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 2 }}>
-        {/* Celdas vacías inicio */}
         {Array.from({ length: firstDay }).map((_, i) => (
           <div key={`empty-${i}`} style={{ minHeight: 80, background: 'var(--bg-secondary)', borderRadius: 'var(--radius-sm)', opacity: 0.3 }} />
         ))}
 
-        {/* Días */}
         {Array.from({ length: daysInMonth }).map((_, i) => {
           const day = i + 1
           const isToday = day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()
@@ -296,7 +296,7 @@ export default function CalendarView({ events, topics, room, profile, canManage,
         )}
       </div>
 
-      {/* ── DETALLE EVENTO (panel lateral/modal) ── */}
+      {/* ── DETALLE EVENTO ── */}
       {selectedEvent && (
         <div style={{
           position: 'fixed', inset: 0, background: 'var(--bg-overlay)',
@@ -308,7 +308,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
             borderRadius: 'var(--radius-lg)', padding: 'var(--space-6)',
             width: '100%', maxWidth: 480, boxShadow: 'var(--shadow-lg)',
           }}>
-            {/* Cabecera detalle */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-4)' }}>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-lg)', color: 'var(--text-primary)', margin: 0 }}>
                 {selectedEvent.title}
@@ -330,7 +329,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
               </div>
             </div>
 
-            {/* Info */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', marginBottom: 'var(--space-5)' }}>
               <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}>
                 <ClockIcon style={{ width: 14, height: 14, color: 'var(--color-crimson)', flexShrink: 0 }} />
@@ -362,7 +360,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
               )}
             </div>
 
-            {/* RSVP */}
             {profile && (
               <div>
                 <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-body)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-3)' }}>
@@ -414,7 +411,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              {/* Título */}
               <label style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
                 <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-body)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Título *</span>
                 <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
@@ -422,7 +418,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
                 />
               </label>
 
-              {/* Descripción */}
               <label style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
                 <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-body)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Descripción</span>
                 <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
@@ -430,7 +425,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
                 />
               </label>
 
-              {/* Fechas */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)' }}>
                 <label style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
                   <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-body)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Inicio *</span>
@@ -446,7 +440,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
                 </label>
               </div>
 
-              {/* Tema enlazado */}
               <label style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
                 <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontFamily: 'var(--font-body)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Tema relacionado</span>
                 <select value={form.topic_id} onChange={e => setForm(f => ({ ...f, topic_id: e.target.value }))}
@@ -458,7 +451,6 @@ export default function CalendarView({ events, topics, room, profile, canManage,
               </label>
             </div>
 
-            {/* Acciones modal */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-3)', marginTop: 'var(--space-6)' }}>
               <button onClick={() => setShowModal(false)} style={{
                 background: 'none', border: '1px solid var(--border-subtle)',
