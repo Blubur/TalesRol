@@ -4,6 +4,18 @@ import { notFound } from 'next/navigation'
 import type { Profile, Topic, Room } from '@/types/database'
 import PostsList from './PostsList'
 import { parsePage, getRange, getTotalPages } from '@/lib/pagination'
+import { notFound, redirect } from 'next/navigation'
+
+export default async function TopicPage({ params }: { params: Promise<{ slug: string; topicId: string }> }) {
+  const { slug, topicId } = await params
+
+  // Evitar colisión con rutas estáticas
+  if (topicId === 'calendario') redirect(`/salas/${slug}/calendario`)
+  if (topicId === 'wiki') redirect(`/salas/${slug}/wiki`)
+  if (topicId === 'fichas') redirect(`/salas/${slug}/fichas`)
+  if (topicId === 'miembros') redirect(`/salas/${slug}/miembros`)
+  if (topicId === 'editar') redirect(`/salas/${slug}/editar`)
+
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; topicId: string }> }) {
   const { topicId } = await params
