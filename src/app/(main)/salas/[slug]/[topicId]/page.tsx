@@ -1,10 +1,16 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'  // ← una sola línea
 import type { Profile, Topic, Room } from '@/types/database'
 import PostsList from './PostsList'
 import { parsePage, getRange, getTotalPages } from '@/lib/pagination'
-import { notFound, redirect } from 'next/navigation'
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string; topicId: string }> }) {
+  const { topicId } = await params
+  const supabase = await createClient()
+  const { data } = await supabase.from('topics').select('title').eq('id', topicId).single()
+  return { title: data?.title ?? 'Tema' }
+}
 
 export default async function TopicPage({ params }: { params: Promise<{ slug: string; topicId: string }> }) {
   const { slug, topicId } = await params
@@ -17,12 +23,7 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
   if (topicId === 'editar') redirect(`/salas/${slug}/editar`)
 
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string; topicId: string }> }) {
-  const { topicId } = await params
-  const supabase = await createClient()
-  const { data } = await supabase.from('topics').select('title').eq('id', topicId).single()
-  return { title: data?.title ?? 'Tema' }
-}
+
 
 export default async function TopicPage({
   params,
