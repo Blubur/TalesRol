@@ -10,11 +10,11 @@ export default async function CalendarioPage({
   const supabase = await createClient()
 
   // Sala
-  const { data: room } = await supabase
-    .from('rooms')
-    .select('id, name, slug')
-    .eq('slug', params.slug)
-    .single()
+ const { data: room } = await supabase
+  .from('rooms')
+  .select('id, title, slug')
+  .eq('slug', params.slug)
+  .single()
 
   if (!room) notFound()
 
