@@ -5,16 +5,17 @@ import CalendarView from './CalendarView'
 export default async function CalendarioPage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
+  const { slug } = await params
   const supabase = await createClient()
 
   // Sala
- const { data: room } = await supabase
-  .from('rooms')
-  .select('id, title, slug')
-  .eq('slug', params.slug)
-  .single()
+  const { data: room } = await supabase
+    .from('rooms')
+    .select('id, title, slug')
+    .eq('slug', slug)
+    .single()
 
   if (!room) notFound()
 
@@ -62,7 +63,7 @@ export default async function CalendarioPage({
       room={room}
       profile={profile}
       canManage={canManage}
-      slug={params.slug}
+      slug={slug}
     />
   )
 }
