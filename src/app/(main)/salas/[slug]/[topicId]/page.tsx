@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { notFound, redirect } from 'next/navigation'  // ← una sola línea
+import { notFound, redirect } from 'next/navigation'
 import type { Profile, Topic, Room } from '@/types/database'
 import PostsList from './PostsList'
 import { parsePage, getRange, getTotalPages } from '@/lib/pagination'
@@ -12,19 +12,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return { title: data?.title ?? 'Tema' }
 }
 
-export default async function TopicPage({ params }: { params: Promise<{ slug: string; topicId: string }> }) {
-  const { slug, topicId } = await params
-
-  // Evitar colisión con rutas estáticas
-  if (topicId === 'calendario') redirect(`/salas/${slug}/calendario`)
-  if (topicId === 'wiki') redirect(`/salas/${slug}/wiki`)
-  if (topicId === 'fichas') redirect(`/salas/${slug}/fichas`)
-  if (topicId === 'miembros') redirect(`/salas/${slug}/miembros`)
-  if (topicId === 'editar') redirect(`/salas/${slug}/editar`)
-
-
-
-
 export default async function TopicPage({
   params,
   searchParams,
@@ -33,7 +20,15 @@ export default async function TopicPage({
   searchParams: Promise<{ page?: string }>
 }) {
   const { slug, topicId } = await params
-  const { page: pageParam }  = await searchParams
+  const { page: pageParam } = await searchParams
+
+  // Evitar colisión con rutas estáticas
+  if (topicId === 'calendario') redirect(`/salas/${slug}/calendario`)
+  if (topicId === 'wiki')       redirect(`/salas/${slug}/wiki`)
+  if (topicId === 'fichas')     redirect(`/salas/${slug}/fichas`)
+  if (topicId === 'miembros')   redirect(`/salas/${slug}/miembros`)
+  if (topicId === 'editar')     redirect(`/salas/${slug}/editar`)
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -48,7 +43,7 @@ export default async function TopicPage({
   const room = roomData as Room
 
   // Cargar tema
-  const { data: topicData, error: topicError } = await supabase
+  const { data: topicData } = await supabase
     .from('topics')
     .select('*, profiles!topics_author_id_fkey(username, display_name, avatar_url)')
     .eq('id', topicId)
@@ -70,7 +65,6 @@ export default async function TopicPage({
   const totalCount = totalPosts ?? 0
   const totalPages = getTotalPages(totalCount)
 
-  // Validar página: si viene ?page=N mayor que el total, redirigir a la última
   const requestedPage = parsePage(pageParam)
   const currentPage   = Math.min(requestedPage, totalPages)
 
