@@ -12,8 +12,6 @@ import { buildDiceHTML } from '@/app/(main)/salas/[slug]/diceutils'
 import type { DiceRollResult } from '@/app/(main)/salas/[slug]/diceactions'
 import { getPageForPostNumber } from '@/lib/pagination'
 
-// ─── Tipos ────────────────────────────────────────────────────────────────────
-
 interface Post {
   id: string
   topic_id: string
@@ -59,8 +57,6 @@ interface Props {
   totalPosts: number
 }
 
-// ─── Constantes ───────────────────────────────────────────────────────────────
-
 const REPORT_REASONS = [
   'Contenido inapropiado',
   'Acoso o bullying',
@@ -72,8 +68,6 @@ const REPORT_REASONS = [
 
 const PRIORITY_FIELDS = ['raza', 'clase', 'edad', 'procedencia', 'origen', 'profesion', 'profesión', 'especie']
 
-// ─── Utilidades ───────────────────────────────────────────────────────────────
-
 function storageKey(topicId: string) {
   return `talesrol_page_${topicId}`
 }
@@ -81,8 +75,6 @@ function storageKey(topicId: string) {
 function savePageToStorage(topicId: string, page: number) {
   try { localStorage.setItem(storageKey(topicId), String(page)) } catch { /* noop */ }
 }
-
-// ─── Subcomponentes ───────────────────────────────────────────────────────────
 
 function CharacterSheet({ sheet }: { sheet: Record<string, unknown> }) {
   const entries = Object.entries(sheet).filter(([, v]) => v !== '' && v != null)
@@ -108,8 +100,6 @@ function CharacterSheet({ sheet }: { sheet: Record<string, unknown> }) {
     </div>
   )
 }
-
-// ─── Paginador ────────────────────────────────────────────────────────────────
 
 function Pagination({
   currentPage,
@@ -177,8 +167,6 @@ function Pagination({
     </nav>
   )
 }
-
-// ─── Componente principal ─────────────────────────────────────────────────────
 
 export default function PostsList({
   posts,
@@ -369,7 +357,6 @@ export default function PostsList({
   return (
     <div className="posts-section">
 
-      {/* Modal de reporte */}
       {reportingId && (
         <div className="report-overlay" onClick={() => setReportingId(null)}>
           <div className="report-modal" onClick={e => e.stopPropagation()}>
@@ -402,10 +389,8 @@ export default function PostsList({
         </div>
       )}
 
-      {/* Paginador superior */}
       <Pagination {...paginationProps} />
 
-      {/* Lista de posts */}
       {posts.length > 0 ? (
         <div className="posts-list">
           {posts.map(post => {
@@ -468,12 +453,13 @@ export default function PostsList({
                           <FlagIcon className="action-icon" />
                         </button>
                       )}
-{canBlock && !(isOwner && !isModerator) && !isBlocked && (                        <button className="post-action-btn warn" onClick={() => handleBlock(post.id)} title="Bloquear post">
+                      {canBlock && !isBlocked && (
+                        <button className="post-action-btn warn" onClick={() => handleBlock(post.id)} title="Bloquear post">
                           <LockClosedIcon className="action-icon" />
                         </button>
                       )}
-{canBlock && isBlocked && (
-                          <button className="post-action-btn warn" onClick={() => handleUnblock(post.id)} title="Desbloquear post">
+                      {canBlock && isBlocked && (
+                        <button className="post-action-btn warn" onClick={() => handleUnblock(post.id)} title="Desbloquear post">
                           <LockOpenIcon className="action-icon" />
                         </button>
                       )}
@@ -482,7 +468,8 @@ export default function PostsList({
                           <PencilIcon className="action-icon" />
                         </button>
                       )}
-{(isOwner || canHardDelete) && (                        <button className="post-action-btn danger" onClick={() => handleDelete(post.id)} title="Eliminar">
+                      {canDelete && (
+                        <button className="post-action-btn danger" onClick={() => handleDelete(post.id)} title="Eliminar">
                           <XMarkIcon className="action-icon" />
                         </button>
                       )}
@@ -527,10 +514,8 @@ export default function PostsList({
         <div className="posts-empty"><p>Aún no hay respuestas en este tema.</p></div>
       )}
 
-      {/* Paginador inferior */}
       <Pagination {...paginationProps} />
 
-      {/* Formulario de nuevo post */}
       {canPost ? (
         <div className="new-post-form">
           <h3 className="new-post-title">✦ Responder</h3>
