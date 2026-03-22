@@ -468,13 +468,12 @@ export default function PostsList({
                           <FlagIcon className="action-icon" />
                         </button>
                       )}
-                      {canBlock && !isOwner && !isBlocked && (
-                        <button className="post-action-btn warn" onClick={() => handleBlock(post.id)} title="Bloquear post">
+{canBlock && !(isOwner && !isModerator) && !isBlocked && (                        <button className="post-action-btn warn" onClick={() => handleBlock(post.id)} title="Bloquear post">
                           <LockClosedIcon className="action-icon" />
                         </button>
                       )}
-                      {isModerator && isBlocked && (
-                        <button className="post-action-btn warn" onClick={() => handleUnblock(post.id)} title="Desbloquear post">
+{canBlock && isBlocked && (
+                          <button className="post-action-btn warn" onClick={() => handleUnblock(post.id)} title="Desbloquear post">
                           <LockOpenIcon className="action-icon" />
                         </button>
                       )}
@@ -483,8 +482,7 @@ export default function PostsList({
                           <PencilIcon className="action-icon" />
                         </button>
                       )}
-                      {canDelete && (
-                        <button className="post-action-btn danger" onClick={() => handleDelete(post.id)} title="Eliminar">
+{(isOwner || canHardDelete) && (                        <button className="post-action-btn danger" onClick={() => handleDelete(post.id)} title="Eliminar">
                           <XMarkIcon className="action-icon" />
                         </button>
                       )}
