@@ -204,6 +204,9 @@ export default function PostsList({
   const canBlock      = isRoomOwner || isModerator
   const canHardDelete = isModerator
   const canUseDice    = canPost && isParticipant && diceTypes.length > 0
+console.log('DEBUG', { userId, roomOwnerId, userRole, isRoomOwner, isModerator, canBlock })
+
+
 
   useEffect(() => {
     savePageToStorage(topicId, currentPage)
