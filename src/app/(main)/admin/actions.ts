@@ -590,3 +590,97 @@ export async function unblockPostFromAdmin(postId: string) {
   revalidatePath('/admin')
   return { success: true }
 }
+
+
+
+
+
+
+// ── TEMAS (desde admin) ───────────────────────────────────
+
+export async function lockTopicFromAdmin(topicId: string, roomSlug: string) {
+  const { error, supabase, user } = await requireAdmin()
+  if (error || !supabase || !user) return { error }
+
+  const { data: topic } = await supabase.from('topics').select('title').eq('id', topicId).single()
+  const { error: dbError } = await supabase
+    .from('topics')
+    .update({ is_locked: true, updated_at: new Date().toISOString() })
+    .eq('id', topicId)
+  if (dbError) return { error: dbError.message }
+
+  await logModerationAction(supabase, user.id, 'lock_topic', 'topic', topicId, topic?.title, `Sala: ${roomSlug}`)
+  revalidatePath('/admin')
+  revalidatePath(`/salas/${roomSlug}`)
+  return { success: true }
+}
+
+export async function unlockTopicFromAdmin(topicId: string, roomSlug: string) {
+  const { error, supabase, user } = await requireAdmin()
+  if (error || !supabase || !user) return { error }
+
+  const { data: topic } = await supabase.from('topics').select('title').eq('id', topicId).single()
+  const { error: dbError } = await supabase
+    .from('topics')
+    .update({ is_locked: false, updated_at: new Date().toISOString() })
+    .eq('id', topicId)
+  if (dbError) return { error: dbError.message }
+
+  await logModerationAction(supabase, user.id, 'unlock_topic', 'topic', topicId, topic?.title, `Sala: ${roomSlug}`)
+  revalidatePath('/admin')
+  revalidatePath(`/salas/${roomSlug}`)
+  return { success: true }
+}
+
+export async function pinTopicFromAdmin(topicId: string, pinned: boolean, roomSlug: string) {
+  const { error, supabase, user } = await requireAdmin()
+  if (error || !supabase || !user) return { error }
+
+  const { data: topic } = await supabase.from('topics').select('title').eq('id', topicId).single()
+  const { error: dbError } = await supabase
+    .from('topics')
+    .update({ is_pinned: pinned, updated_at: new Date().toISOString() })
+    .eq('id', topicId)
+  if (dbError) return { error: dbError.message }
+
+  await logModerationAction(supabase, user.id, pinned ? 'pin_topic' : 'unpin_topic', 'topic', topicId, topic?.title)
+  revalidatePath('/admin')
+  revalidatePath(`/salas/${roomSlug}`)
+  return { success: true }
+}
+
+export async function deleteTopicFromAdmin(topicId: string, roomSlug: string) {
+  const { error, supabase, user } = await requireAdmin()
+  if (error || !supabase || !user) return { error }
+
+  const { data: topic } = await supabase.from('topics').select('title').eq('id', topicId).single()
+  const { error: dbError } = await supabase
+    .from('topics')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', topicId)
+  if (dbError) return { error: dbError.message }
+
+  await logModerationAction(supabase, user.id, 'delete_topic', 'topic', topicId, topic?.title)
+  revalidatePath('/admin')
+  revalidatePath(`/salas/${roomSlug}`)
+  return { success: true }
+}
+
+// ── WIKIS (desde admin) ───────────────────────────────────
+
+export async function deleteWikiPageFromAdmin(pageId: string, roomSlug: string) {
+  const { error, supabase, user } = await requireAdmin()
+  if (error || !supabase || !user) return { error }
+
+  const { data: page } = await supabase.from('wiki_pages').select('title').eq('id', pageId).single()
+  const { error: dbError } = await supabase
+    .from('wiki_pages')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', pageId)
+  if (dbError) return { error: dbError.message }
+
+  await logModerationAction(supabase, user.id, 'delete_wiki_page', 'wiki', pageId, page?.title, `Sala: ${roomSlug}`)
+  revalidatePath('/admin')
+  revalidatePath(`/salas/${roomSlug}/wiki`)
+  return { success: true }
+}
