@@ -562,3 +562,31 @@ export async function changeRoomStatusFromAdmin(roomId: string, status: string) 
   revalidatePath(`/salas/${room?.slug}`)
   return { success: true }
 }
+
+
+
+
+// ── POSTS BLOQUEADOS ──────────────────────────────────────
+
+export async function unblockPostFromAdmin(postId: string) {
+  const { error, supabase, user } = await requireAdmin()
+  if (error || !supabase || !user) return { error }
+
+  const { createClient: createServiceClient } = await import('@supabase/supabase-js')
+  const service = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  const { error: dbError } = await service
+    .from('posts')
+    .update({ blocked_at: null, blocked_by: null })
+    .eq('id', postId)
+
+  if (dbError) return { error: dbError.message }
+
+  await logModerationAction(supabase, user.id, 'unblock_post', 'post', postId, undefined, 'Desbloqueado desde el panel de admin')
+
+  revalidatePath('/admin')
+  return { success: true }
+}

@@ -10,6 +10,7 @@ import AdminTagsTable from './AdminTagsTable'
 import AdminAnnouncementsTable from './AdminAnnouncementsTable'
 import AdminModLogTable from './AdminModLogTable'
 import AdminEventsTable from './AdminEventsTable'
+import AdminBlockedPostsTable from './AdminBlockedPostsTable'
 import {
   UsersIcon,
   BookOpenIcon,
@@ -21,6 +22,7 @@ import {
   SpeakerWaveIcon,
   ClockIcon,
   CalendarDaysIcon,
+  LockClosedIcon,
 } from '@heroicons/react/24/outline'
 
 export const metadata = { title: 'Panel de Administración — TalesRol' }
@@ -50,6 +52,19 @@ export default async function AdminPage() {
     supabase.from('posts').select('*', { count: 'exact', head: true }).is('deleted_at', null),
     supabase.from('reports').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
   ])
+const { data: blockedPostsData } = await supabase
+  .from('posts')
+  .select(`
+    id, content, blocked_at, topic_id,
+    author:profiles!posts_author_id_fkey(username, display_name),
+    blocker:profiles!posts_blocked_by_fkey(username, display_name),
+    topic:topics!posts_topic_id_fkey(title, room:rooms!topics_room_id_fkey(slug, title))
+  `)
+  .not('blocked_at', 'is', null)
+  .is('deleted_at', null)
+  .order('blocked_at', { ascending: false })
+const blockedPosts = blockedPostsData ?? []
+
 
   const { data: roleColorsData } = await supabase
     .from('role_colors')
@@ -156,6 +171,7 @@ export default async function AdminPage() {
     { id: 'anuncios',  label: 'Anuncios',  icon: SpeakerWaveIcon },
     { id: 'eventos',   label: 'Eventos',   icon: CalendarDaysIcon },
     { id: 'modlog',    label: 'Actividad', icon: ClockIcon },
+    { id: 'bloqueados', label: 'Bloqueados', icon: LockClosedIcon },
   ]
 
   return (
@@ -255,6 +271,19 @@ export default async function AdminPage() {
         </div>
         <AdminEventsTable events={events} rooms={activeRooms} />
       </section>
+
+<section id="bloqueados" className="admin-section animate-enter" style={{ animationDelay: '0.43s' }}>
+  <div className="admin-section-header">
+    <LockClosedIcon className="admin-section-icon" />
+    <h2 className="admin-section-title">
+      Posts Bloqueados <span className="admin-count">({blockedPosts.length})</span>
+    </h2>
+  </div>
+  <AdminBlockedPostsTable posts={blockedPosts as any} />
+</section>
+
+
+
 
       <section id="modlog" className="admin-section animate-enter" style={{ animationDelay: '0.45s' }}>
         <div className="admin-section-header">
