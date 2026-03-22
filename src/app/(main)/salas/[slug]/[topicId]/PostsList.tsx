@@ -476,6 +476,19 @@ console.log('DEBUG', { userId, roomOwnerId, userRole, isRoomOwner, isModerator, 
                           <XMarkIcon className="action-icon" />
                         </button>
                       )}
+
+
+
+                      {canBlock && !isBlocked && (
+  <button 
+    className="post-action-btn warn" 
+    onClick={() => handleBlock(post.id)} 
+    title="Bloquear post"
+    style={{ display: 'flex', opacity: 1, visibility: 'visible' }}
+  >
+    <LockClosedIcon className="action-icon" />
+  </button>
+)}
                     </div>
                   </div>
 
