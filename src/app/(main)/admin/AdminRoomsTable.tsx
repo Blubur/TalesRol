@@ -349,7 +349,7 @@ export default function AdminRoomsTable({ rooms }: { rooms: RoomWithOwner[] }) {
                                     {topic.author && <span>por {topic.author.display_name || topic.author.username}</span>}
                                     {topic.last_post && (
                                       <span>
-  {'último: '}{topic.last_post.author?.display_name || topic.last_post.author?.username ?? '—'}
+  {'último: '}{topic.last_post.author?.display_name || (topic.last_post.author?.username ?? '—')}
   {' · '}{new Date(topic.last_post.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
 </span>
                                     )}
