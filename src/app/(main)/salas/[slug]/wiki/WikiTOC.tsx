@@ -13,11 +13,10 @@ export default function WikiTOC({ content }: { content: string }) {
   const [active, setActive] = useState<string>('')
 
   useEffect(() => {
-    // Parsear headings del HTML
     const parser = new DOMParser()
     const doc = parser.parseFromString(content, 'text/html')
     const headings = Array.from(doc.querySelectorAll('h1, h2, h3'))
-    
+
     const toc: TOCItem[] = headings.map((h, i) => ({
       id: `heading-${i}`,
       text: h.textContent ?? '',
@@ -50,7 +49,7 @@ export default function WikiTOC({ content }: { content: string }) {
       <ul className="wiki-toc-list">
         {items.map(item => (
           <li key={item.id} className={`wiki-toc-item level-${item.level}`}>
-            
+            <a
               href={`#${item.id}`}
               className={`wiki-toc-link ${active === item.id ? 'active' : ''}`}
               onClick={e => {
@@ -103,9 +102,8 @@ export default function WikiTOC({ content }: { content: string }) {
           letter-spacing: 0.03em;
           transition: color var(--transition-fast);
           display: block;
-          padding: 2px 0;
+          padding: 2px var(--space-2);
           border-left: 2px solid transparent;
-          padding-left: var(--space-2);
         }
         .wiki-toc-link:hover { color: var(--text-primary); }
         .wiki-toc-link.active {
