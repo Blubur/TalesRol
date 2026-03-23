@@ -2,16 +2,17 @@ import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import WikiDeleteButton from '../WikiDeleteButton'
+import WikiTOC from '../WikiTOC'
 import {
   ArrowLeftIcon,
   PencilSquareIcon,
-  TrashIcon,
   ClockIcon,
   TagIcon,
   ListBulletIcon,
 } from '@heroicons/react/24/outline'
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; pageSlug: string }> }) {
-  const { pageSlug, slug } = await params
+  const { pageSlug } = await params
   const supabase = await createClient()
   const { data } = await supabase.from('wiki_pages').select('title').eq('slug', pageSlug).single()
   return { title: `${data?.title ?? 'Wiki'} — Wiki` }
@@ -70,7 +71,7 @@ export default async function WikiPageDetail({ params }: {
     : { data: null }
   const canEdit = isOwner || isAdmin || memberData?.rank === 'codirector'
 
-  // Otras páginas de la wiki para enlaces rápidos
+  // Otras páginas de la wiki para el sidebar
   const { data: allPages } = await supabase
     .from('wiki_pages')
     .select('slug, title')
@@ -89,6 +90,7 @@ export default async function WikiPageDetail({ params }: {
 
   const toc = buildTOC(page.content)
   const contentWithIds = injectHeadingIds(page.content)
+  const hasSidebar = (allPages ?? []).length > 0 || (versions ?? []).length > 0
 
   return (
     <div className="wiki-detail-page">
@@ -111,7 +113,7 @@ export default async function WikiPageDetail({ params }: {
         )}
       </div>
 
-      <div className="wiki-detail-layout">
+      <div className={`wiki-detail-layout ${!hasSidebar ? 'no-sidebar' : ''}`}>
 
         {/* Contenido principal */}
         <div className="wiki-detail-main">
@@ -135,7 +137,7 @@ export default async function WikiPageDetail({ params }: {
             )}
           </div>
 
-          {/* TOC */}
+          {/* TOC inline (dentro del contenido, solo si hay 3+ headings) */}
           {toc.length >= 3 && (
             <div className="wiki-toc animate-enter" style={{ animationDelay: '0.08s' }}>
               <div className="wiki-toc-title">
@@ -160,40 +162,47 @@ export default async function WikiPageDetail({ params }: {
         </div>
 
         {/* Sidebar */}
-        <aside className="wiki-detail-sidebar">
+        {hasSidebar && (
+          <aside className="wiki-detail-sidebar">
 
-          {/* Otras páginas */}
-          {(allPages ?? []).length > 0 && (
-            <div className="wiki-sidebar-block animate-enter" style={{ animationDelay: '0.15s' }}>
-              <h3 className="wiki-sidebar-title">Otras páginas</h3>
-              <div className="wiki-sidebar-links">
-                {(allPages ?? []).map((p: any) => (
-                  <Link key={p.slug} href={`/salas/${slug}/wiki/${p.slug}`} className="wiki-sidebar-link">
-                    {p.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
+            {/* TOC flotante del sidebar (componente cliente con scroll spy, solo si hay 3+ headings) */}
+            {toc.length >= 3 && (
+              <WikiTOC content={page.content} />
+            )}
 
-          {/* Historial */}
-          {(versions ?? []).length > 0 && (
-            <div className="wiki-sidebar-block animate-enter" style={{ animationDelay: '0.2s' }}>
-              <h3 className="wiki-sidebar-title">Historial</h3>
-              <div className="wiki-sidebar-versions">
-                {(versions ?? []).map((v: any, i: number) => (
-                  <div key={v.id} className={`wiki-version ${i === 0 ? 'current' : ''}`}>
-                    <span className="wiki-version-title">{v.title}</span>
-                    <span className="wiki-version-meta">
-                      {v.profiles?.display_name || v.profiles?.username} · {new Date(v.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
-                    </span>
-                    {i === 0 && <span className="wiki-version-badge">Actual</span>}
-                  </div>
-                ))}
+            {/* Otras páginas */}
+            {(allPages ?? []).length > 0 && (
+              <div className="wiki-sidebar-block animate-enter" style={{ animationDelay: '0.15s' }}>
+                <h3 className="wiki-sidebar-title">Otras páginas</h3>
+                <div className="wiki-sidebar-links">
+                  {(allPages ?? []).map((p: any) => (
+                    <Link key={p.slug} href={`/salas/${slug}/wiki/${p.slug}`} className="wiki-sidebar-link">
+                      {p.title}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </aside>
+            )}
+
+            {/* Historial */}
+            {(versions ?? []).length > 0 && (
+              <div className="wiki-sidebar-block animate-enter" style={{ animationDelay: '0.2s' }}>
+                <h3 className="wiki-sidebar-title">Historial</h3>
+                <div className="wiki-sidebar-versions">
+                  {(versions ?? []).map((v: any, i: number) => (
+                    <div key={v.id} className={`wiki-version ${i === 0 ? 'current' : ''}`}>
+                      <span className="wiki-version-title">{v.title}</span>
+                      <span className="wiki-version-meta">
+                        {v.profiles?.display_name || v.profiles?.username} · {new Date(v.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                      </span>
+                      {i === 0 && <span className="wiki-version-badge">Actual</span>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </aside>
+        )}
       </div>
 
       <style>{`
@@ -205,6 +214,7 @@ export default async function WikiPageDetail({ params }: {
         .wiki-home-pill { font-size: var(--text-xs); font-family: var(--font-display); letter-spacing: 0.06em; color: var(--color-crimson); border: 1px solid var(--color-crimson-glow); border-radius: var(--radius-sm); padding: 0.15rem 0.5rem; }
 
         .wiki-detail-layout { display: grid; grid-template-columns: 1fr 240px; gap: var(--space-8); align-items: start; }
+        .wiki-detail-layout.no-sidebar { grid-template-columns: 1fr; }
 
         .wiki-detail-title { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 700; letter-spacing: 0.06em; margin: 0 0 var(--space-3); color: var(--text-primary); }
 
