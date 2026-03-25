@@ -1,21 +1,22 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { createTopic } from '../topicactions'
-import QuillEditor from '@/components/editor/quilleditor'
+import QuillEditor, { type QuillEditorHandle } from '@/components/editor/quilleditor'
 import type { Character, Room } from '@/types/database'
 
 export default function NuevoTemaPage() {
   const { slug } = useParams<{ slug: string }>()
   const supabase = createClient()
+  const starterRef = useRef<QuillEditorHandle>(null)
 
-  const [room, setRoom]           = useState<Room | null>(null)
-  const [characters, setChars]    = useState<Character[]>([])
-  const [error, setError]         = useState<string | null>(null)
-  const [loading, setLoading]     = useState(false)
+  const [room, setRoom]        = useState<Room | null>(null)
+  const [characters, setChars] = useState<Character[]>([])
+  const [error, setError]      = useState<string | null>(null)
+  const [loading, setLoading]  = useState(false)
 
   useEffect(() => {
     async function load() {
@@ -41,6 +42,11 @@ export default function NuevoTemaPage() {
     setLoading(true)
     setError(null)
     if (room) formData.set('room_id', room.id)
+
+    // FIX: leer el HTML del editor manualmente antes de enviar
+    const starterHtml = starterRef.current?.getHTML() ?? ''
+    formData.set('starter', starterHtml)
+
     const result = await createTopic(formData)
     if (result?.error) {
       setError(result.error)
@@ -88,7 +94,9 @@ export default function NuevoTemaPage() {
         {/* Starter / contenido inicial */}
         <div className="form-group">
           <label>Entrada inicial <span className="optional">(opcional)</span></label>
+          {/* FIX: ref para capturar el HTML del editor en handleSubmit */}
           <QuillEditor
+            ref={starterRef}
             name="starter"
             placeholder="Describe la escena inicial, el contexto del tema..."
             height={280}

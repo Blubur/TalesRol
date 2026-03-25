@@ -76,7 +76,6 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
       postCounts[p.topic_id] = (postCounts[p.topic_id] ?? 0) + 1
     })
 
-    // Calcular posts nuevos desde la última visita
     if (user) {
       const { data: visitsData } = await supabase
         .from('topic_visits')
@@ -89,8 +88,6 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
 
       allPosts.forEach((p: any) => {
         const lastSeen = visitMap[p.topic_id]
-        // Si nunca visitó el tema, todos los posts son nuevos
-        // Si visitó, contar los posteriores a la última visita
         if (!lastSeen || new Date(p.created_at) > new Date(lastSeen)) {
           newPostCounts[p.topic_id] = (newPostCounts[p.topic_id] ?? 0) + 1
         }
@@ -197,15 +194,15 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
         </div>
       </div>
 
-      {/* Descripción */}
-     {room.description && (
-     <div className="sala-desc-card animate-enter border-ornament" style={{ animationDelay: '0.15s' }}>
-        <h2 className="sala-desc-label">Sobre esta sala</h2>
-      <div
-      className="sala-desc-text post-content"
-      dangerouslySetInnerHTML={{ __html: room.description }}
-       />
-     </div>
+      {/* Descripción — FIX: dangerouslySetInnerHTML para renderizar HTML de Quill */}
+      {room.description && (
+        <div className="sala-desc-card animate-enter border-ornament" style={{ animationDelay: '0.15s' }}>
+          <h2 className="sala-desc-label">Sobre esta sala</h2>
+          <div
+            className="sala-desc-text post-content"
+            dangerouslySetInnerHTML={{ __html: room.description }}
+          />
+        </div>
       )}
 
       {/* Temas */}
@@ -229,7 +226,7 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
         ) : (
           <div className="topics-list">
             {topics.map((topic, i) => {
-              const pCount  = postCounts[topic.id] ?? 0
+              const pCount   = postCounts[topic.id] ?? 0
               const newCount = newPostCounts[topic.id] ?? 0
               return (
                 <Link

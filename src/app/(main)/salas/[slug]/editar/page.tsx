@@ -1,16 +1,17 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { updateRoomDescription } from '../topicactions'
-import QuillEditor from '@/components/editor/quilleditor'
+import QuillEditor, { type QuillEditorHandle } from '@/components/editor/quilleditor'
 import type { Room } from '@/types/database'
 
 export default function EditarSalaPage() {
   const { slug } = useParams<{ slug: string }>()
   const supabase = createClient()
+  const descRef = useRef<QuillEditorHandle>(null)
 
   const [room, setRoom]       = useState<Room | null>(null)
   const [loading, setLoading] = useState(true)
@@ -37,6 +38,11 @@ export default function EditarSalaPage() {
       formData.set('id', room.id)
       formData.set('slug', slug)
     }
+
+    // FIX: leer el HTML del editor manualmente antes de enviar
+    const descHtml = descRef.current?.getHTML() ?? ''
+    formData.set('description', descHtml)
+
     const result = await updateRoomDescription(formData)
     if (result?.error) { setError(result.error); setSaving(false) }
   }
@@ -73,7 +79,9 @@ export default function EditarSalaPage() {
 
         <div className="form-group">
           <label>Descripción <span className="optional">(HTML permitido)</span></label>
+          {/* FIX: ref para capturar el HTML del editor en handleSubmit */}
           <QuillEditor
+            ref={descRef}
             name="description"
             defaultValue={room.description ?? ''}
             placeholder="Describe el mundo, la ambientación..."
