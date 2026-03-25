@@ -198,11 +198,14 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
       </div>
 
       {/* Descripción */}
-      {room.description && (
-        <div className="sala-desc-card animate-enter border-ornament" style={{ animationDelay: '0.15s' }}>
-          <h2 className="sala-desc-label">Sobre esta sala</h2>
-          <p className="sala-desc-text">{room.description}</p>
-        </div>
+     {room.description && (
+     <div className="sala-desc-card animate-enter border-ornament" style={{ animationDelay: '0.15s' }}>
+        <h2 className="sala-desc-label">Sobre esta sala</h2>
+      <div
+      className="sala-desc-text post-content"
+      dangerouslySetInnerHTML={{ __html: room.description }}
+       />
+     </div>
       )}
 
       {/* Temas */}
