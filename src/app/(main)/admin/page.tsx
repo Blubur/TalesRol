@@ -11,9 +11,6 @@ import AdminAnnouncementsTable from './AdminAnnouncementsTable'
 import AdminModLogTable from './AdminModLogTable'
 import AdminEventsTable from './AdminEventsTable'
 import AdminBlockedPostsTable from './AdminBlockedPostsTable'
-import AdminCssEditor from './AdminCssEditor'
-import { getCustomCss, getCssVersions } from './cssactions'
-
 import {
   UsersIcon,
   BookOpenIcon,
@@ -165,7 +162,10 @@ const blockedPosts = blockedPostsData ?? []
     { label: 'Posts',     value: totalPosts  ?? 0, icon: ChatBubbleLeftEllipsisIcon, color: '#c1c1c1' },
     { label: 'Reportes pendientes', value: pendingReports ?? 0, icon: FlagIcon,
       color: (pendingReports ?? 0) > 0 ? '#ff6b6b' : '#9ca3af' },
-  ]
+    <a href="/admin/css" className="btn btn-secondary btn-sm">
+     CSS
+    </a>
+]
 
   const navSections = [
     { id: 'reportes',  label: 'Reportes',  icon: FlagIcon },
@@ -179,11 +179,6 @@ const blockedPosts = blockedPostsData ?? []
     { id: 'bloqueados', label: 'Bloqueados', icon: LockClosedIcon },
   ]
 
-//css personalizado
-const [currentCss, cssVersions] = await Promise.all([
-  getCustomCss(),
-  getCssVersions(),
-])
 
 
   return (
@@ -310,12 +305,6 @@ const [currentCss, cssVersions] = await Promise.all([
 
 
 
-
-
-
-<section className="admin-section">
-  <AdminCssEditor initialCss={currentCss} versions={cssVersions} />
-</section>
       <style>{`
         .admin-page { max-width: 100%; display: flex; flex-direction: column; gap: 2rem; background: var(--bg-elevated); border: 8px solid var(--color-crimson-glow); padding: var(--space-10); }
 
