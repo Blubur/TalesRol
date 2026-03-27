@@ -11,6 +11,9 @@ import AdminAnnouncementsTable from './AdminAnnouncementsTable'
 import AdminModLogTable from './AdminModLogTable'
 import AdminEventsTable from './AdminEventsTable'
 import AdminBlockedPostsTable from './AdminBlockedPostsTable'
+import AdminCssEditor from './AdminCssEditor'
+import { getCustomCss, getCssVersions } from './cssactions'
+
 import {
   UsersIcon,
   BookOpenIcon,
@@ -29,6 +32,8 @@ export const metadata = { title: 'Panel de Administración — TalesRol' }
 export const dynamic = 'force-dynamic'
 
 export default async function AdminPage() {
+
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
@@ -174,6 +179,13 @@ const blockedPosts = blockedPostsData ?? []
     { id: 'bloqueados', label: 'Bloqueados', icon: LockClosedIcon },
   ]
 
+//css personalizado
+const [currentCss, cssVersions] = await Promise.all([
+  getCustomCss(),
+  getCssVersions(),
+])
+
+
   return (
     <div className="admin-page">
 
@@ -295,6 +307,15 @@ const blockedPosts = blockedPostsData ?? []
         <AdminModLogTable logs={modLogs ?? []} />
       </section>
 
+
+
+
+
+
+
+<section className="admin-section">
+  <AdminCssEditor initialCss={currentCss} versions={cssVersions} />
+</section>
       <style>{`
         .admin-page { max-width: 100%; display: flex; flex-direction: column; gap: 2rem; background: var(--bg-elevated); border: 8px solid var(--color-crimson-glow); padding: var(--space-10); }
 
