@@ -162,9 +162,7 @@ const blockedPosts = blockedPostsData ?? []
     { label: 'Posts',     value: totalPosts  ?? 0, icon: ChatBubbleLeftEllipsisIcon, color: '#c1c1c1' },
     { label: 'Reportes pendientes', value: pendingReports ?? 0, icon: FlagIcon,
       color: (pendingReports ?? 0) > 0 ? '#ff6b6b' : '#9ca3af' },
-    <a href="/admin/css" className="btn btn-secondary btn-sm">
-     CSS
-    </a>
+   
 ]
 
   const navSections = [
@@ -177,6 +175,7 @@ const blockedPosts = blockedPostsData ?? []
     { id: 'eventos',   label: 'Eventos',   icon: CalendarDaysIcon },
     { id: 'modlog',    label: 'Actividad', icon: ClockIcon },
     { id: 'bloqueados', label: 'Bloqueados', icon: LockClosedIcon },
+    { id: 'css',        label: 'CSS',       icon: ShieldCheckIcon },
   ]
 
 
@@ -216,6 +215,9 @@ const blockedPosts = blockedPostsData ?? []
             {s.label}
           </a>
         ))}
+        <a href="/admin/css" className="admin-nav-link">
+         CSS
+        </a>
       </nav>
 
       <section id="reportes" className="admin-section animate-enter" style={{ animationDelay: '0.15s' }}>
