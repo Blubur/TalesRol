@@ -23,13 +23,13 @@ import {
   ClockIcon,
   CalendarDaysIcon,
   LockClosedIcon,
+  PaintBrushIcon,
 } from '@heroicons/react/24/outline'
 
 export const metadata = { title: 'Panel de Administración — TalesRol' }
 export const dynamic = 'force-dynamic'
 
 export default async function AdminPage() {
-
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -54,19 +54,19 @@ export default async function AdminPage() {
     supabase.from('posts').select('*', { count: 'exact', head: true }).is('deleted_at', null),
     supabase.from('reports').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
   ])
-const { data: blockedPostsData } = await supabase
-  .from('posts')
-  .select(`
-    id, content, blocked_at, topic_id,
-    author:profiles!posts_author_id_fkey(username, display_name),
-    blocker:profiles!posts_blocked_by_fkey(username, display_name),
-    topic:topics!posts_topic_id_fkey(title, room:rooms!topics_room_id_fkey(slug, title))
-  `)
-  .not('blocked_at', 'is', null)
-  .is('deleted_at', null)
-  .order('blocked_at', { ascending: false })
-const blockedPosts = blockedPostsData ?? []
 
+  const { data: blockedPostsData } = await supabase
+    .from('posts')
+    .select(`
+      id, content, blocked_at, topic_id,
+      author:profiles!posts_author_id_fkey(username, display_name),
+      blocker:profiles!posts_blocked_by_fkey(username, display_name),
+      topic:topics!posts_topic_id_fkey(title, room:rooms!topics_room_id_fkey(slug, title))
+    `)
+    .not('blocked_at', 'is', null)
+    .is('deleted_at', null)
+    .order('blocked_at', { ascending: false })
+  const blockedPosts = blockedPostsData ?? []
 
   const { data: roleColorsData } = await supabase
     .from('role_colors')
@@ -96,7 +96,6 @@ const blockedPosts = blockedPostsData ?? []
     email: emailMap[u.id] ?? '',
   })) as (Profile & { email: string })[]
 
-  // Salas — usada tanto para AdminRoomsTable como para AdminEventsTable
   const { data: roomsData } = await supabase
     .from('rooms')
     .select('*, owner:profiles!rooms_owner_id_fkey(username, display_name, avatar_url)')
@@ -106,7 +105,6 @@ const blockedPosts = blockedPostsData ?? []
     owner: { username: string; display_name: string | null; avatar_url: string | null } | null
   })[]
 
-  // Lista simplificada de salas activas para el selector de eventos
   const { data: activeRoomsData } = await supabase
     .from('rooms')
     .select('id, title, slug')
@@ -157,28 +155,24 @@ const blockedPosts = blockedPostsData ?? []
   const events = eventsData ?? []
 
   const stats = [
-    { label: 'Usuarios',  value: totalUsers  ?? 0, icon: UsersIcon,                  color: '#60a5fa' },
-    { label: 'Salas',     value: totalRooms  ?? 0, icon: BookOpenIcon,               color: '#34d399' },
-    { label: 'Posts',     value: totalPosts  ?? 0, icon: ChatBubbleLeftEllipsisIcon, color: '#c1c1c1' },
+    { label: 'Usuarios',            value: totalUsers     ?? 0, icon: UsersIcon,                  color: '#60a5fa' },
+    { label: 'Salas',               value: totalRooms     ?? 0, icon: BookOpenIcon,               color: '#34d399' },
+    { label: 'Posts',               value: totalPosts     ?? 0, icon: ChatBubbleLeftEllipsisIcon, color: '#c1c1c1' },
     { label: 'Reportes pendientes', value: pendingReports ?? 0, icon: FlagIcon,
       color: (pendingReports ?? 0) > 0 ? '#ff6b6b' : '#9ca3af' },
-   
-]
-
-  const navSections = [
-    { id: 'reportes',  label: 'Reportes',  icon: FlagIcon },
-    { id: 'usuarios',  label: 'Usuarios',  icon: UsersIcon },
-    { id: 'salas',     label: 'Salas',     icon: BookOpenIcon },
-    { id: 'dados',     label: 'Dados',     icon: CubeIcon },
-    { id: 'etiquetas', label: 'Etiquetas', icon: TagIcon },
-    { id: 'anuncios',  label: 'Anuncios',  icon: SpeakerWaveIcon },
-    { id: 'eventos',   label: 'Eventos',   icon: CalendarDaysIcon },
-    { id: 'modlog',    label: 'Actividad', icon: ClockIcon },
-    { id: 'bloqueados', label: 'Bloqueados', icon: LockClosedIcon },
-    { id: 'css',        label: 'CSS',       icon: ShieldCheckIcon },
   ]
 
-
+  const navSections = [
+    { id: 'reportes',   label: 'Reportes',   icon: FlagIcon },
+    { id: 'usuarios',   label: 'Usuarios',   icon: UsersIcon },
+    { id: 'salas',      label: 'Salas',      icon: BookOpenIcon },
+    { id: 'dados',      label: 'Dados',      icon: CubeIcon },
+    { id: 'etiquetas',  label: 'Etiquetas',  icon: TagIcon },
+    { id: 'anuncios',   label: 'Anuncios',   icon: SpeakerWaveIcon },
+    { id: 'eventos',    label: 'Eventos',    icon: CalendarDaysIcon },
+    { id: 'modlog',     label: 'Actividad',  icon: ClockIcon },
+    { id: 'bloqueados', label: 'Bloqueados', icon: LockClosedIcon },
+  ]
 
   return (
     <div className="admin-page">
@@ -216,7 +210,8 @@ const blockedPosts = blockedPostsData ?? []
           </a>
         ))}
         <a href="/admin/css" className="admin-nav-link">
-         CSS
+          <PaintBrushIcon className="admin-nav-icon" />
+          CSS
         </a>
       </nav>
 
@@ -281,18 +276,15 @@ const blockedPosts = blockedPostsData ?? []
         <AdminEventsTable events={events} rooms={activeRooms} />
       </section>
 
-<section id="bloqueados" className="admin-section animate-enter" style={{ animationDelay: '0.43s' }}>
-  <div className="admin-section-header">
-    <LockClosedIcon className="admin-section-icon" />
-    <h2 className="admin-section-title">
-      Posts Bloqueados <span className="admin-count">({blockedPosts.length})</span>
-    </h2>
-  </div>
-  <AdminBlockedPostsTable posts={blockedPosts as any} />
-</section>
-
-
-
+      <section id="bloqueados" className="admin-section animate-enter" style={{ animationDelay: '0.43s' }}>
+        <div className="admin-section-header">
+          <LockClosedIcon className="admin-section-icon" />
+          <h2 className="admin-section-title">
+            Posts Bloqueados <span className="admin-count">({blockedPosts.length})</span>
+          </h2>
+        </div>
+        <AdminBlockedPostsTable posts={blockedPosts as any} />
+      </section>
 
       <section id="modlog" className="admin-section animate-enter" style={{ animationDelay: '0.45s' }}>
         <div className="admin-section-header">
@@ -303,9 +295,6 @@ const blockedPosts = blockedPostsData ?? []
         </div>
         <AdminModLogTable logs={modLogs ?? []} />
       </section>
-
-
-
 
       <style>{`
         .admin-page { max-width: 100%; display: flex; flex-direction: column; gap: 2rem; background: var(--bg-elevated); border: 8px solid var(--color-crimson-glow); padding: var(--space-10); }
