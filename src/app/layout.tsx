@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { createServiceClient } from '@/lib/supabase/service'
+import { createClient } from '@supabase/supabase-js'
 
 export const metadata: Metadata = {
   title: { template: '%s | TalesRol', default: 'TalesRol — Plataforma de Roleplay' },
@@ -9,7 +9,10 @@ export const metadata: Metadata = {
 
 async function getCustomCss(): Promise<string> {
   try {
-    const supabase = createServiceClient()
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
     const { data } = await supabase
       .from('custom_css')
       .select('css')

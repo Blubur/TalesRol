@@ -1,36 +1,47 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { createServiceClient } from '@/lib/supabase/service'   // igual que en otras actions
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 
-// Lee el CSS activo (para el editor en el PA)
+function createServiceClient() {
+  return createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
+
 export async function getCustomCss(): Promise<string> {
-  const supabase = createServiceClient()
-  const { data } = await supabase
-    .from('custom_css')
-    .select('css')
-    .eq('id', 1)
-    .single()
-  return data?.css ?? ''
+  try {
+    const supabase = createServiceClient()
+    const { data } = await supabase
+      .from('custom_css')
+      .select('css')
+      .eq('id', 1)
+      .single()
+    return data?.css ?? ''
+  } catch {
+    return ''
+  }
 }
 
-// Lee las últimas 20 versiones
 export async function getCssVersions() {
-  const supabase = createServiceClient()
-  const { data } = await supabase
-    .from('custom_css_versions')
-    .select('id, css, saved_at, saved_by')
-    .order('saved_at', { ascending: false })
-    .limit(20)
-  return data ?? []
+  try {
+    const supabase = createServiceClient()
+    const { data } = await supabase
+      .from('custom_css_versions')
+      .select('id, css, saved_at, saved_by')
+      .order('saved_at', { ascending: false })
+      .limit(20)
+    return data ?? []
+  } catch {
+    return []
+  }
 }
 
-// Guarda el CSS y crea una versión
 export async function saveCustomCss(css: string) {
   const supabase = await createClient()
 
-  // Verificar que es admin
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado' }
 
@@ -67,7 +78,6 @@ export async function saveCustomCss(css: string) {
     }
   }
 
-  // Actualizar CSS activo
   const { error } = await service
     .from('custom_css')
     .update({ css, updated_at: new Date().toISOString(), updated_by: user.id })
@@ -75,6 +85,6 @@ export async function saveCustomCss(css: string) {
 
   if (error) return { error: error.message }
 
-  revalidatePath('/', 'layout')   // invalida toda la app para que el nuevo CSS se aplique
+  revalidatePath('/', 'layout')
   return { ok: true }
 }
