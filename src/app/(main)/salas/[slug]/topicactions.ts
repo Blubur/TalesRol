@@ -185,7 +185,8 @@ export async function createPost(formData: FormData) {
   const content = sanitize(contentRaw)
   const service = getServiceClient()
 
-  const { error } = await service
+  // FIX: select post_number tras insertar para poder hacer scroll al post nuevo
+  const { data: inserted, error } = await service
     .from('posts')
     .insert({
       topic_id,
@@ -193,11 +194,13 @@ export async function createPost(formData: FormData) {
       character_id: character_id || null,
       content,
     })
+    .select('post_number')
+    .single()
 
   if (error) return { error: error.message }
 
   revalidatePath(`/salas/${slug}/${topic_id}`)
-  return { success: true }
+  return { success: true, postNumber: inserted?.post_number ?? null }
 }
 
 export async function updatePost(formData: FormData) {

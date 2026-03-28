@@ -204,9 +204,6 @@ export default function PostsList({
   const canBlock      = isRoomOwner || isModerator
   const canHardDelete = isModerator
   const canUseDice    = canPost && isParticipant && diceTypes.length > 0
-console.log('DEBUG', { userId, roomOwnerId, userRole, isRoomOwner, isModerator, canBlock })
-
-
 
   useEffect(() => {
     savePageToStorage(topicId, currentPage)
@@ -292,7 +289,9 @@ console.log('DEBUG', { userId, roomOwnerId, userRole, isRoomOwner, isModerator, 
         setLoading(false)
       }
     } catch (err) {
-      setError('Error inesperado al publicar.')
+      // FIX: loguear el error real para depuración
+      console.error('[PostsList] createPost error:', err)
+      setError(err instanceof Error ? err.message : 'Error inesperado al publicar.')
       setLoading(false)
     }
   }
@@ -310,8 +309,9 @@ console.log('DEBUG', { userId, roomOwnerId, userRole, isRoomOwner, isModerator, 
       const result = await updatePost(formData)
       if (result?.error) { setError(result.error); setLoading(false) }
       else if (result?.success) { forceReload() }
-    } catch {
-      setError('Error inesperado al guardar.')
+    } catch (err) {
+      console.error('[PostsList] updatePost error:', err)
+      setError(err instanceof Error ? err.message : 'Error inesperado al guardar.')
       setLoading(false)
     }
   }
@@ -476,7 +476,6 @@ console.log('DEBUG', { userId, roomOwnerId, userRole, isRoomOwner, isModerator, 
                           <XMarkIcon className="action-icon" />
                         </button>
                       )}
-
                     </div>
                   </div>
 
