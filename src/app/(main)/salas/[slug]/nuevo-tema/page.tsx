@@ -10,8 +10,9 @@ import type { Character, Room } from '@/types/database'
 
 export default function NuevoTemaPage() {
   const { slug } = useParams<{ slug: string }>()
-  const supabase = createClient()
+  const supabase  = createClient()
   const starterRef = useRef<QuillEditorHandle>(null)
+  const formRef    = useRef<HTMLFormElement>(null)
 
   const [room, setRoom]        = useState<Room | null>(null)
   const [characters, setChars] = useState<Character[]>([])
@@ -43,9 +44,10 @@ export default function NuevoTemaPage() {
     setError(null)
     if (room) formData.set('room_id', room.id)
 
-    // FIX: leer el HTML del editor manualmente antes de enviar
-    const starterHtml = starterRef.current?.getHTML() ?? ''
-    formData.set('starter', starterHtml)
+    // Leer HTML del editor: ref primero, luego input hidden como fallback
+    const fromRef    = starterRef.current?.getHTML() ?? ''
+    const fromHidden = (formRef.current?.elements.namedItem('starter') as HTMLInputElement | null)?.value ?? ''
+    formData.set('starter', fromRef || fromHidden)
 
     const result = await createTopic(formData)
     if (result?.error) {
@@ -61,40 +63,29 @@ export default function NuevoTemaPage() {
         <h1 className="topic-form-title">Nuevo Tema</h1>
       </div>
 
-      <form action={handleSubmit} className="topic-form animate-enter border-ornament" style={{ animationDelay: '0.1s' }}>
+      <form ref={formRef} action={handleSubmit} className="topic-form animate-enter border-ornament" style={{ animationDelay: '0.1s' }}>
 
-        {/* Título */}
         <div className="form-group">
           <label htmlFor="title">Título del Tema *</label>
           <input
-            id="title"
-            name="title"
-            type="text"
+            id="title" name="title" type="text"
             placeholder="Ej: El encuentro en la taberna"
-            className="input-base"
-            required
-            maxLength={120}
-            autoFocus
+            className="input-base" required maxLength={120} autoFocus
           />
         </div>
 
-        {/* Personaje */}
         {characters.length > 0 && (
           <div className="form-group">
             <label htmlFor="character_id">Publicar como personaje <span className="optional">(opcional)</span></label>
             <select id="character_id" name="character_id" className="input-base">
               <option value="">— Yo mismo —</option>
-              {characters.map(c => (
-                <option key={c.id} value={c.id}>{c.name}</option>
-              ))}
+              {characters.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </div>
         )}
 
-        {/* Starter / contenido inicial */}
         <div className="form-group">
           <label>Entrada inicial <span className="optional">(opcional)</span></label>
-          {/* FIX: ref para capturar el HTML del editor en handleSubmit */}
           <QuillEditor
             ref={starterRef}
             name="starter"
@@ -103,9 +94,7 @@ export default function NuevoTemaPage() {
           />
         </div>
 
-        {error && (
-          <div className="auth-error"><span>⚠</span> {error}</div>
-        )}
+        {error && <div className="auth-error"><span>⚠</span> {error}</div>}
 
         <div className="topic-form-actions">
           <Link href={`/salas/${slug}`} className="btn-ghost">Cancelar</Link>

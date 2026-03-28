@@ -4,6 +4,14 @@ import { notFound, redirect } from 'next/navigation'
 import type { Profile, Topic, Room } from '@/types/database'
 import PostsList from './PostsList'
 import { parsePage, getRange, getTotalPages } from '@/lib/pagination'
+import {
+  MapPinIcon,
+  LockClosedIcon,
+  PencilSquareIcon,
+  EyeIcon,
+  ChatBubbleLeftEllipsisIcon,
+  CalendarDaysIcon,
+} from '@heroicons/react/24/outline'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; topicId: string }> }) {
   const { topicId } = await params
@@ -84,7 +92,6 @@ export default async function TopicPage({
     await supabase
       .from('room_participants')
       .upsert({ room_id: room.id, user_id: user.id }, { onConflict: 'room_id,user_id' })
-    // Marcar última visita al tema
     await supabase
       .from('topic_visits')
       .upsert({ user_id: user.id, topic_id: topicId, last_seen_at: new Date().toISOString() }, { onConflict: 'user_id,topic_id' })
@@ -157,8 +164,18 @@ export default async function TopicPage({
       {/* Cabecera del tema */}
       <div className="topic-header animate-enter border-ornament" style={{ animationDelay: '0.05s' }}>
         <div className="topic-header-left">
-          {topic.is_pinned && <span className="topic-badge pin">📌 Fijado</span>}
-          {topic.is_locked && <span className="topic-badge lock">🔒 Bloqueado</span>}
+          <div className="topic-badges">
+            {topic.is_pinned && (
+              <span className="topic-badge pin">
+                <MapPinIcon className="topic-badge-icon" /> Fijado
+              </span>
+            )}
+            {topic.is_locked && (
+              <span className="topic-badge lock">
+                <LockClosedIcon className="topic-badge-icon" /> Bloqueado
+              </span>
+            )}
+          </div>
           <h1 className="topic-title">{topic.title}</h1>
           <div className="topic-meta">
             {topic.profiles && (
@@ -171,13 +188,20 @@ export default async function TopicPage({
                 <span>{topic.profiles.display_name || topic.profiles.username}</span>
               </Link>
             )}
-            <span className="topic-date">
+            <span className="topic-meta-item">
+              <CalendarDaysIcon className="topic-meta-icon" />
               {new Date(topic.created_at).toLocaleDateString('es-ES', {
                 day: 'numeric', month: 'long', year: 'numeric',
               })}
             </span>
-            <span className="topic-views">👁 {topic.view_count + 1} lecturas</span>
-            <span className="topic-count">💬 {totalCount} post{totalCount !== 1 ? 's' : ''}</span>
+            <span className="topic-meta-item">
+              <EyeIcon className="topic-meta-icon" />
+              {topic.view_count + 1} lecturas
+            </span>
+            <span className="topic-meta-item">
+              <ChatBubbleLeftEllipsisIcon className="topic-meta-icon" />
+              {totalCount} post{totalCount !== 1 ? 's' : ''}
+            </span>
           </div>
         </div>
         {canEdit && (
@@ -185,9 +209,9 @@ export default async function TopicPage({
             <Link
               href={`/salas/${slug}/${topicId}/editar`}
               className="btn-ghost"
-              style={{ padding: '0.4rem 0.85rem', fontSize: '0.78rem' }}
+              style={{ padding: '0.4rem 0.85rem', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
             >
-              ✎ Editar
+              <PencilSquareIcon style={{ width: 14, height: 14 }} /> Editar
             </Link>
           </div>
         )}
@@ -221,22 +245,34 @@ export default async function TopicPage({
 
       <style>{`
         .topic-page { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+
         .topic-breadcrumb { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-family: var(--font-cinzel); letter-spacing: 0.05em; flex-wrap: wrap; }
         .bc-link { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
         .bc-link:hover { color: var(--color-crimson); }
         .bc-sep { color: var(--text-muted); }
         .bc-current { color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 300px; }
+
         .topic-header { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 6px; padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
         .topic-header-left { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
-        .topic-badge { font-size: 0.72rem; font-family: var(--font-cinzel); letter-spacing: 0.06em; color: var(--text-muted); }
+        .topic-header-actions { flex-shrink: 0; }
+
+        .topic-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .topic-badge { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.7rem; font-family: var(--font-cinzel); letter-spacing: 0.06em; padding: 0.15rem 0.5rem; border-radius: 999px; }
+        .topic-badge-icon { width: 12px; height: 12px; flex-shrink: 0; }
+        .topic-badge.pin { color: #d4820a; background: rgba(212,130,10,0.1); border: 1px solid rgba(212,130,10,0.25); }
+        .topic-badge.lock { color: var(--text-muted); background: var(--bg-elevated); border: 1px solid var(--border-subtle); }
+
         .topic-title { font-family: var(--font-cinzel); font-size: 1.4rem; font-weight: 700; margin: 0; letter-spacing: 0.05em; }
+
         .topic-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
         .topic-author { display: flex; align-items: center; gap: 0.4rem; text-decoration: none; color: var(--text-secondary); font-size: 0.82rem; transition: color 0.2s; }
         .topic-author:hover { color: var(--color-crimson); }
         .topic-author-avatar { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--border-subtle); }
-        .topic-date, .topic-views, .topic-count { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-cinzel); letter-spacing: 0.04em; }
-        .topic-header-actions { flex-shrink: 0; }
+        .topic-meta-item { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-cinzel); letter-spacing: 0.04em; }
+        .topic-meta-icon { width: 13px; height: 13px; flex-shrink: 0; }
+
         .topic-starter { background: var(--bg-card); border: 1px solid var(--border-subtle); border-left: 3px solid var(--color-crimson); border-radius: 6px; padding: 1.5rem; }
+
         @media (max-width: 600px) {
           .topic-header { flex-direction: column; }
           .bc-current { max-width: 180px; }
