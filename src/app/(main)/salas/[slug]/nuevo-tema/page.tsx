@@ -39,15 +39,18 @@ export default function NuevoTemaPage() {
     load()
   }, [slug])
 
-  async function handleSubmit(formData: FormData) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
     setLoading(true)
     setError(null)
+
+    const form = formRef.current!
+    const formData = new FormData(form)
     if (room) formData.set('room_id', room.id)
 
-    // Leer HTML del editor: ref primero, luego input hidden como fallback
-    const fromRef    = starterRef.current?.getHTML() ?? ''
-    const fromHidden = (formRef.current?.elements.namedItem('starter') as HTMLInputElement | null)?.value ?? ''
-    formData.set('starter', fromRef || fromHidden)
+    // Leer HTML directamente del ref del editor
+    const html = starterRef.current?.getHTML() ?? ''
+    formData.set('starter', html)
 
     const result = await createTopic(formData)
     if (result?.error) {
@@ -63,7 +66,7 @@ export default function NuevoTemaPage() {
         <h1 className="topic-form-title">Nuevo Tema</h1>
       </div>
 
-      <form ref={formRef} action={handleSubmit} className="topic-form animate-enter border-ornament" style={{ animationDelay: '0.1s' }}>
+      <form ref={formRef} onSubmit={handleSubmit} className="topic-form animate-enter border-ornament" style={{ animationDelay: '0.1s' }}>
 
         <div className="form-group">
           <label htmlFor="title">Título del Tema *</label>
