@@ -95,7 +95,26 @@ export default function NuevoTemaPage() {
             placeholder="Describe la escena inicial, el contexto del tema..."
             height={280}
           />
+
+
+<div className="form-group">
+  <label>Entrada inicial <span className="optional">(opcional)</span></label>
+  <QuillEditor
+    ref={starterRef}
+    name="starter"
+    placeholder="Describe la escena inicial, el contexto del tema..."
+    height={280}
+  />
+  <p className="form-hint">
+    Para insertar HTML con formato, usa el botón <strong>&lt;/&gt; HTML</strong>, pega el contenido y vuelve a <strong>✦ Visual</strong>.
+  </p>
+</div>
+
+
+
         </div>
+
+
 
         {error && <div className="auth-error"><span>⚠</span> {error}</div>}
 
@@ -122,6 +141,8 @@ export default function NuevoTemaPage() {
         .topic-form-actions { display: flex; justify-content: flex-end; gap: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle); }
         .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .form-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem; line-height: 1.5; }
+.form-hint strong { color: var(--text-secondary); font-weight: 600; }
       `}</style>
     </div>
   )
