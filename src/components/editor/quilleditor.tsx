@@ -30,7 +30,6 @@ interface MentionState {
   top: number
   left: number
   selectedIndex: number
-  // posición del cursor donde empezó la mención
   atIndex: number
 }
 
@@ -95,7 +94,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     if (query.length < 1) { syncMention({ users: [], loading: false }); return }
     syncMention({ loading: true })
     try {
-  const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=6`)
+      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=6`)
       if (!res.ok) throw new Error()
       const data: MentionUser[] = await res.json()
       syncMention({ users: data, loading: false, selectedIndex: 0 })
@@ -113,21 +112,17 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     const range = q.getSelection()
     const cursorIndex = range?.index ?? q.getLength()
 
-    // Borrar desde @ hasta cursor
     const deleteLen = cursorIndex - atIndex
     if (deleteLen > 0) q.deleteText(atIndex, deleteLen)
 
-    // Insertar el texto de mención y un espacio
     const mentionText = `@${user.username}`
     q.insertText(atIndex, mentionText, { link: `/perfil/${user.username}`, 'mention-user': user.username })
     q.insertText(atIndex + mentionText.length, ' ')
     q.setSelection(atIndex + mentionText.length + 1)
 
-    // Reescribir el span como <a class="mention"> porque Quill puede no preservar clases custom
     setTimeout(() => {
       if (!q) return
       const html = q.root.innerHTML
-      // Reemplazar los <a href="/perfil/X"> que Quill genera con nuestra clase
       const fixed = html.replace(
         /(<a[^>]+href="\/perfil\/([^"]+)"[^>]*>)(@[^<]+)(<\/a>)/g,
         (_, open, uname, text, close) => {
@@ -137,7 +132,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
       )
       q.root.innerHTML = fixed
       updateValue(q.root.innerHTML)
-      // Mover cursor al final de la mención
       q.setSelection(q.getLength())
     }, 0)
 
@@ -171,8 +165,13 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         modules: { toolbar: toolbarRef.current },
       })
 
-      if (defaultValue) q.root.innerHTML = defaultValue
-      if (hiddenRef.current) hiddenRef.current.value = defaultValue
+      // FIX: usar updateValue() en lugar de asignar directamente al DOM y al hidden
+      // por separado. Así htmlValueRef, htmlValue state y el input hidden quedan
+      // sincronizados desde el principio, incluso si el usuario no toca el editor.
+      if (defaultValue) {
+        q.root.innerHTML = defaultValue
+        updateValue(defaultValue)
+      }
 
       q.on('text-change', () => {
         if (destroyedRef.current) return
@@ -202,18 +201,14 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
     const cursorIndex = range.index
     const text = q.getText(0, cursorIndex)
-
-    // Buscar el @ más reciente sin espacio desde el cursor
     const match = text.match(/@([a-zA-Z0-9_]*)$/)
 
     if (match) {
       const atIndex = cursorIndex - match[0].length
       const query   = match[1]
 
-      // Calcular posición del dropdown
-      const bounds = q.getBoundingClientRect?.() ?? { top: 0, left: 0 }
       const cursorBounds = q.getBounds(cursorIndex)
-      const wrapRect = wrapperRef.current?.getBoundingClientRect() ?? { top: 0, left: 0 }
+      const wrapRect  = wrapperRef.current?.getBoundingClientRect()  ?? { top: 0, left: 0 }
       const editorRect = editorElRef.current?.getBoundingClientRect() ?? { top: 0, left: 0 }
 
       const top  = (editorRect.top - wrapRect.top) + cursorBounds.top + cursorBounds.height + 4
@@ -321,7 +316,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
       <input ref={hiddenRef} type="hidden" name={name} value={htmlValue} onChange={() => {}} />
 
-      {/* ── Dropdown de menciones ── */}
       {mention.open && (
         <div
           ref={dropdownRef}
@@ -383,8 +377,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         .qe-wrapper .ql-editor a.mention { color: var(--color-crimson); font-weight: 600; background: rgba(193,6,6,0.08); border-radius: 3px; padding: 0 3px; text-decoration: none; }
         .qe-html-textarea { width: 100%; background: #0d1117; color: #a8d8a8; border: none; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; resize: vertical; box-sizing: border-box; display: block; }
         .qe-html-textarea:focus { outline: none; }
-
-        /* ── Dropdown menciones ── */
         .mention-dropdown { position: absolute; z-index: 9999; min-width: 220px; max-width: 300px; background: var(--bg-elevated); border: 1px solid var(--border-medium); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); overflow: hidden; }
         .mention-loading, .mention-empty { padding: 0.6rem 1rem; font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
         .mention-item { display: flex; align-items: center; gap: 0.6rem; width: 100%; background: transparent; border: none; padding: 0.5rem 0.75rem; cursor: pointer; text-align: left; transition: background 0.1s; }
