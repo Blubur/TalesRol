@@ -18,7 +18,7 @@ const navItems = [
   { href: '/admin/config/textos',        label: 'Textos del sitio',    icon: DocumentTextIcon },
   { href: '/admin/config/roles',         label: 'Roles y permisos',    icon: ShieldCheckIcon },
   { href: '/admin/config/puntos',        label: 'Puntos e insignias',  icon: TrophyIcon },
-  { href: '/admin/config/css',           label: 'CSS personalizado',   icon: PaintBrushIcon },
+  { href: '/admin/css',                  label: 'CSS personalizado',   icon: PaintBrushIcon },
 ]
 
 export default async function ConfigLayout({ children }: { children: React.ReactNode }) {
