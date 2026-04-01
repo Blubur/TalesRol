@@ -24,6 +24,7 @@ import {
   CalendarDaysIcon,
   LockClosedIcon,
   PaintBrushIcon,
+  Cog6ToothIcon,
 } from '@heroicons/react/24/outline'
 
 export const metadata = { title: 'Panel de Administración — TalesRol' }
@@ -209,9 +210,14 @@ export default async function AdminPage() {
             {s.label}
           </a>
         ))}
+        {/* Páginas externas — no son secciones ancla */}
         <a href="/admin/css" className="admin-nav-link">
           <PaintBrushIcon className="admin-nav-icon" />
           CSS
+        </a>
+        <a href="/admin/config" className="admin-nav-link">
+          <Cog6ToothIcon className="admin-nav-icon" />
+          Configuración
         </a>
       </nav>
 
