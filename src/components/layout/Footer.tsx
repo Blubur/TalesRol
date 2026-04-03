@@ -1,6 +1,12 @@
 import Link from 'next/link'
 
-export default function Footer() {
+interface FooterProps {
+  footerText?: string
+}
+
+export default function Footer({ footerText }: FooterProps) {
+  const text = footerText || `© ${new Date().getFullYear()} — Plataforma de Roleplay`
+
   return (
     <footer className="footer">
       <div className="footer-inner">
@@ -9,7 +15,7 @@ export default function Footer() {
             <span className="footer-symbol">✦</span>
             TalesRol
           </span>
-          <span className="footer-copy">© {new Date().getFullYear()} — Plataforma de Roleplay</span>
+          <span className="footer-copy">{text}</span>
         </div>
         <div className="footer-links">
           <Link href="/normas">Normas</Link>
