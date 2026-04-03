@@ -56,6 +56,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
           rel="stylesheet"
         />
+        <link
+  rel="stylesheet"
+  href="https://nagoshiashumari.github.io/Rpg-Awesome/stylesheets/rpg-awesome.min.css"
+/>
         {customCss && (
           <style id="custom-css" dangerouslySetInnerHTML={{ __html: customCss }} />
         )}
