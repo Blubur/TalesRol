@@ -35,7 +35,11 @@ interface Notification {
   created_at: string
 }
 
-export default function Navbar() {
+interface NavbarProps {
+  siteName?: string
+}
+
+export default function Navbar({ siteName = 'TalesRol' }: NavbarProps) {
   const [profile, setProfile]               = useState<Profile | null>(null)
   const [menuOpen, setMenuOpen]             = useState(false)
   const [mobileOpen, setMobileOpen]         = useState(false)
@@ -50,7 +54,6 @@ export default function Navbar() {
   const pathname = usePathname()
   const supabase = createClient()
 
-  // Inicializar tema desde localStorage
   useEffect(() => {
     const saved = localStorage.getItem('talesrol-theme') as 'dark' | 'light' | null
     const initial = saved ?? 'dark'
@@ -65,7 +68,6 @@ export default function Navbar() {
     localStorage.setItem('talesrol-theme', next)
   }
 
-  // Cargar perfil y notificaciones
   useEffect(() => {
     async function loadProfile() {
       const { data: { user } } = await supabase.auth.getUser()
@@ -89,7 +91,6 @@ export default function Navbar() {
     setUnreadCount((data ?? []).filter((n: Notification) => !n.read_at).length)
   }
 
-  // Realtime notificaciones
   useEffect(() => {
     if (!userId) return
     const channel = supabase
@@ -106,7 +107,6 @@ export default function Navbar() {
     return () => { supabase.removeChannel(channel) }
   }, [userId])
 
-  // Cerrar dropdowns al clic fuera
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false)
@@ -116,7 +116,6 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
-  // Cerrar al cambiar ruta
   useEffect(() => {
     setMobileOpen(false)
     setNotifOpen(false)
@@ -169,7 +168,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="navbar-logo">
             <span className="navbar-logo-symbol">✦</span>
-            <span className="navbar-logo-text">TalesRol</span>
+            <span className="navbar-logo-text">{siteName}</span>
           </Link>
 
           {/* Links desktop */}
@@ -185,7 +184,6 @@ export default function Navbar() {
           {/* Derecha */}
           <div className="navbar-right">
 
-            {/* Toggle tema */}
             <button
               className="navbar-icon-btn"
               onClick={toggleTheme}
@@ -199,7 +197,6 @@ export default function Navbar() {
 
             {profile ? (
               <>
-                {/* Notificaciones */}
                 <div className="navbar-user" ref={notifRef}>
                   <button className="navbar-icon-btn" onClick={() => setNotifOpen(v => !v)} title="Notificaciones">
                     <BellIcon width={16} height={16} />
@@ -247,12 +244,10 @@ export default function Navbar() {
                   )}
                 </div>
 
-                {/* Mensajes */}
                 <Link href="/mensajes" className="navbar-icon-btn" title="Mensajes">
                   <EnvelopeIcon width={16} height={16} />
                 </Link>
 
-                {/* Avatar + menú */}
                 <div className="navbar-user" ref={menuRef}>
                   <button className="navbar-avatar-btn" onClick={() => setMenuOpen(!menuOpen)}>
                     <img
@@ -322,7 +317,6 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Hamburguesa */}
             <button className="navbar-hamburger" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menú">
               {mobileOpen
                 ? <XMarkIcon width={18} height={18} />
