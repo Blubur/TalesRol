@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import sanitizeHtml from 'sanitize-html'
+import { awardPointsAndBadges } from '@/app/(main)/admin/config/puntos/puntosactions'
 
 /**
  * Extrae los @usernames del HTML de un post y envía notificaciones.
@@ -185,7 +186,6 @@ export async function createPost(formData: FormData) {
   const content = sanitize(contentRaw)
   const service = getServiceClient()
 
-  // FIX: select post_number tras insertar para poder hacer scroll al post nuevo
   const { data: inserted, error } = await service
     .from('posts')
     .insert({
@@ -198,6 +198,9 @@ export async function createPost(formData: FormData) {
     .single()
 
   if (error) return { error: error.message }
+
+  // Asignar puntos e insignias automáticas (en background, no bloquea la respuesta)
+  awardPointsAndBadges(user.id).catch(() => {})
 
   revalidatePath(`/salas/${slug}/${topic_id}`)
   return { success: true, postNumber: inserted?.post_number ?? null }
