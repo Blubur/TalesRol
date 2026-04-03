@@ -1,14 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  savePointsPerPost,
-  saveLevel,
-  deleteLevel,
-  saveBadge,
-  deleteBadge,
-  CONDITION_OPTIONS,
-} from './puntosactions'
+import { savePointsPerPost, saveLevel, deleteLevel, saveBadge, deleteBadge } from './puntosactions'
+import { CONDITION_OPTIONS } from './puntosConstants'
 
 type Level = { id: number; name: string; min_points: number; icon: string }
 type Badge = { id: string; name: string; description: string; icon_url: string | null; condition_key: string }
