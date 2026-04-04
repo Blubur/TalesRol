@@ -2,25 +2,34 @@
 
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 
-/** Llamar tras crear un post, sala o personaje */
-export async function awardPoints(action: 'post' | 'sala' | 'personaje') {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return
-
-  await supabase.rpc('award_points_and_badges', {
-    p_user_id: user.id,
-    p_action: action,
-  })
+function service() {
+  return createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
 }
 
 /** Obtener badges desbloqueados por un usuario */
 export async function getUserBadges(userId: string) {
-  const supabase = await createClient()
-  const { data } = await supabase
+  const { data } = await service()
     .from('user_badges')
-    .select('*, badge_definitions(*)')
+    .select(`
+      badge_id,
+      is_visible,
+      unlocked_at,
+      badges (
+        id,
+        name,
+        description,
+        icon_url,
+        category,
+        color,
+        is_manual,
+        condition_key
+      )
+    `)
     .eq('user_id', userId)
     .order('unlocked_at', { ascending: true })
   return data ?? []
@@ -28,10 +37,23 @@ export async function getUserBadges(userId: string) {
 
 /** Obtener badges visibles (para perfil público) */
 export async function getVisibleBadges(userId: string) {
-  const supabase = await createClient()
-  const { data } = await supabase
+  const { data } = await service()
     .from('user_badges')
-    .select('*, badge_definitions(*)')
+    .select(`
+      badge_id,
+      is_visible,
+      unlocked_at,
+      badges (
+        id,
+        name,
+        description,
+        icon_url,
+        category,
+        color,
+        is_manual,
+        condition_key
+      )
+    `)
     .eq('user_id', userId)
     .eq('is_visible', true)
     .order('unlocked_at', { ascending: true })
@@ -44,7 +66,7 @@ export async function toggleBadgeVisibility(badgeId: string, visible: boolean) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado.' }
 
-  const { error } = await supabase
+  const { error } = await service()
     .from('user_badges')
     .update({ is_visible: visible })
     .eq('user_id', user.id)
@@ -52,7 +74,6 @@ export async function toggleBadgeVisibility(badgeId: string, visible: boolean) {
 
   if (error) return { error: error.message }
 
-  revalidatePath(`/perfil/${user.id}`)
   revalidatePath('/perfil/badges')
   return { success: true }
 }
