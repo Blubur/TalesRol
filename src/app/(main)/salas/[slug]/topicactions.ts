@@ -4,7 +4,6 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
-import sanitizeHtml from 'sanitize-html'
 import { awardPointsAndBadges } from '@/app/(main)/admin/config/puntos/puntosactions'
 
 /**
@@ -52,23 +51,6 @@ async function notifyMentions(
   }
 }
 
-function sanitize(html: string): string {
-  return sanitizeHtml(html, {
-    allowedTags: [
-      'p', 'br', 'strong', 'em', 'u', 's',
-      'h1', 'h2', 'h3', 'ul', 'ol', 'li',
-      'blockquote', 'hr', 'span', 'div', 'a', 'img'
-    ],
-    allowedAttributes: {
-      'a':   ['href', 'target', 'rel', 'class'],
-      'img': ['src', 'alt'],
-      '*':   ['class', 'style', 'data-verified', 'data-dice', 'data-result'],
-    },
-    allowedSchemes: ['https', 'http'],
-    disallowedTagsMode: 'discard',
-  })
-}
-
 function getServiceClient() {
   return createServiceClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -92,7 +74,7 @@ export async function createTopic(formData: FormData) {
     return { error: 'El título debe tener al menos 3 caracteres.' }
   }
 
-  const starter = starterRaw ? sanitize(starterRaw) : null
+  const starter = starterRaw || null
 
   const { data, error } = await supabase
     .from('topics')
@@ -139,7 +121,7 @@ export async function updateTopic(formData: FormData) {
     return { error: 'No tienes permiso para editar este tema.' }
   }
 
-  const starter = starterRaw ? sanitize(starterRaw) : null
+  const starter = starterRaw || null
 
   await supabase
     .from('topics')
@@ -183,7 +165,7 @@ export async function createPost(formData: FormData) {
     return { error: 'El post no puede estar vacío.' }
   }
 
-  const content = sanitize(contentRaw)
+  const content = contentRaw
   const service = getServiceClient()
 
   const { data: inserted, error } = await service
@@ -219,7 +201,7 @@ export async function updatePost(formData: FormData) {
   const { data: post } = await supabase.from('posts').select('author_id').eq('id', id).single()
   if (post?.author_id !== user.id) return { error: 'No tienes permiso.' }
 
-  const content = sanitize(contentRaw)
+  const content = contentRaw
   const service = getServiceClient()
 
   const { error } = await service
@@ -279,7 +261,7 @@ export async function updateRoomDescription(formData: FormData) {
     return { error: 'No tienes permiso.' }
   }
 
-  const description = descRaw ? sanitize(descRaw) : null
+  const description = descRaw || null
   const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : []
 
   const service = getServiceClient()
