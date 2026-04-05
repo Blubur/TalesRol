@@ -137,21 +137,7 @@ export default async function WikiPageDetail({ params }: {
             )}
           </div>
 
-          {/* TOC inline (dentro del contenido, solo si hay 3+ headings) */}
-          {toc.length >= 3 && (
-            <div className="wiki-toc animate-enter" style={{ animationDelay: '0.08s' }}>
-              <div className="wiki-toc-title">
-                <ListBulletIcon style={{ width: 14, height: 14 }} /> Contenido
-              </div>
-              <ol className="wiki-toc-list">
-                {toc.map((item, i) => (
-                  <li key={i} className={`wiki-toc-item level-${item.level}`}>
-                    <a href={`#${item.id}`} className="wiki-toc-link">{item.text}</a>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
+          
 
           {/* Contenido de la página */}
           <div
