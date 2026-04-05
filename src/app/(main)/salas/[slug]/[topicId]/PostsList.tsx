@@ -278,7 +278,7 @@ export default function PostsList({
         setError(result.error)
         setLoading(false)
       } else if (result?.success) {
-        editorRef.current?.setHTML('')
+        editorRef.current?.clear()  // ← corregido: era setHTML('')
         setNewContent('')
         setPendingRolls([])
         setSelectedChar('')
@@ -289,7 +289,6 @@ export default function PostsList({
         setLoading(false)
       }
     } catch (err) {
-      // FIX: loguear el error real para depuración
       console.error('[PostsList] createPost error:', err)
       setError(err instanceof Error ? err.message : 'Error inesperado al publicar.')
       setLoading(false)
