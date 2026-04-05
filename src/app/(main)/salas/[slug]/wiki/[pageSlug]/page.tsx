@@ -8,9 +8,8 @@ import {
   PencilSquareIcon,
   ClockIcon,
   TagIcon,
-  ListBulletIcon,
 } from '@heroicons/react/24/outline'
-import WikiHistoryToggle from '../WikiHistoryToggle'
+import WikiHistoryToggle from './WikiHistoryToggle'
 
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; pageSlug: string }> }) {
