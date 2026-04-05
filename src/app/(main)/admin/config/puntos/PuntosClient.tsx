@@ -15,9 +15,9 @@ import {
 } from './puntosactions'
 import { CONDITION_OPTIONS } from './puntosConstants'
 
-type Level  = { id: number; name: string; min_points: number; icon: string }
-type Badge  = { id: string; name: string; description: string; icon_url: string | null; condition_key: string; is_manual: boolean }
-type User   = { id: string; username: string; display_name: string | null; avatar_url: string | null }
+type Level    = { id: number; name: string; min_points: number; icon: string }
+type Badge    = { id: string; name: string; description: string; icon_url: string | null; condition_key: string; is_manual: boolean }
+type User     = { id: string; username: string; display_name: string | null; avatar_url: string | null }
 type UserBadge = { badge_id: string; earned_at: string; badges: { id: string; name: string; icon_url: string | null; is_manual: boolean } | null }
 
 type Props = {
@@ -44,6 +44,23 @@ const inputStyle: React.CSSProperties = {
   boxSizing: 'border-box' as const,
 }
 
+const addBtnStyle: React.CSSProperties = {
+  marginTop: '0.75rem',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '0.35rem',
+  padding: '0.4rem 0.9rem',
+  background: 'transparent',
+  border: '1px dashed var(--border-medium)',
+  borderRadius: '4px',
+  color: 'var(--text-muted)',
+  fontSize: '0.8rem',
+  fontFamily: 'var(--font-cinzel)',
+  letterSpacing: '0.05em',
+  cursor: 'pointer',
+  transition: 'all 0.15s',
+}
+
 function Msg({ msg }: { msg: { ok: boolean; text: string } | null }) {
   if (!msg) return null
   return (
@@ -56,9 +73,9 @@ function Msg({ msg }: { msg: { ok: boolean; text: string } | null }) {
 // ─── PUNTOS ──────────────────────────────────────────────────────────────────
 
 function PuntosSection({ initial }: { initial: number }) {
-  const [pts, setPts]     = useState(initial)
+  const [pts, setPts]       = useState(initial)
   const [saving, setSaving] = useState(false)
-  const [msg, setMsg]     = useState<{ ok: boolean; text: string } | null>(null)
+  const [msg, setMsg]       = useState<{ ok: boolean; text: string } | null>(null)
 
   async function handleSave() {
     setSaving(true); setMsg(null)
@@ -141,12 +158,12 @@ function LevelRow({ level, onSaved, onDeleted }: {
 }
 
 function NewLevelRow({ onCreated }: { onCreated: () => void }) {
-  const [open, setOpen]   = useState(false)
-  const [name, setName]   = useState('')
-  const [pts, setPts]     = useState(0)
-  const [icon, setIcon]   = useState('⭐')
+  const [open, setOpen]     = useState(false)
+  const [name, setName]     = useState('')
+  const [pts, setPts]       = useState(0)
+  const [icon, setIcon]     = useState('⭐')
   const [saving, setSaving] = useState(false)
-  const [msg, setMsg]     = useState<{ ok: boolean; text: string } | null>(null)
+  const [msg, setMsg]       = useState<{ ok: boolean; text: string } | null>(null)
 
   async function handleCreate() {
     if (!name.trim()) { setMsg({ ok: false, text: 'El nombre es obligatorio.' }); return }
@@ -159,7 +176,12 @@ function NewLevelRow({ onCreated }: { onCreated: () => void }) {
   }
 
   if (!open) return (
-    <button onClick={() => setOpen(true)} className="btn btn-secondary btn-sm" style={{ marginTop: '0.75rem' }}>
+    <button
+      onClick={() => setOpen(true)}
+      style={addBtnStyle}
+      onMouseEnter={e => { (e.target as HTMLElement).style.color = 'var(--text-primary)'; (e.target as HTMLElement).style.borderColor = 'var(--border-medium)' }}
+      onMouseLeave={e => { (e.target as HTMLElement).style.color = 'var(--text-muted)'; (e.target as HTMLElement).style.borderColor = 'var(--border-medium)' }}
+    >
       + Nuevo nivel
     </button>
   )
@@ -234,7 +256,7 @@ function BadgeForm({ badge, onSaved, onCancel }: {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <BadgeIcon icon={icon || null} size={24} />
           <input value={icon} onChange={e => setIcon(e.target.value)}
-            placeholder="🏅 o ra-sword o ra-crown"
+            placeholder="🏅 o PencilIcon o ra-sword"
             style={{ ...inputStyle, width: '180px' }} />
         </div>
         <input value={name} onChange={e => setName(e.target.value)} placeholder="Nombre"
@@ -242,14 +264,12 @@ function BadgeForm({ badge, onSaved, onCancel }: {
       </div>
       <input value={desc} onChange={e => setDesc(e.target.value)} placeholder="Descripción"
         style={inputStyle} />
-
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', cursor: 'pointer' }}>
           <input type="checkbox" checked={isManual} onChange={e => setIsManual(e.target.checked)} />
           Insignia manual (asignada por admin)
         </label>
       </div>
-
       {!isManual && (
         <select value={condition} onChange={e => setCondition(e.target.value)} style={inputStyle}>
           {CONDITION_OPTIONS.map(o => (
@@ -257,7 +277,6 @@ function BadgeForm({ badge, onSaved, onCancel }: {
           ))}
         </select>
       )}
-
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <button onClick={handleSave} disabled={saving} className="btn btn-primary btn-sm">
           {saving ? '…' : badge ? 'Guardar' : 'Crear insignia'}
@@ -312,8 +331,6 @@ function BadgesSection({ initial }: { initial: Badge[] }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-
-      {/* Automáticas */}
       <div style={cardStyle}>
         <p style={{ margin: '0 0 0.25rem', fontWeight: 600, fontSize: '0.9rem' }}>Insignias automáticas</p>
         <p style={{ margin: '0 0 0.75rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -327,7 +344,12 @@ function BadgesSection({ initial }: { initial: Badge[] }) {
           />
         ))}
         {!creating && (
-          <button onClick={() => setCreating(true)} className="btn btn-secondary btn-sm" style={{ marginTop: '0.75rem' }}>
+          <button
+            onClick={() => setCreating(true)}
+            style={addBtnStyle}
+            onMouseEnter={e => { (e.target as HTMLElement).style.color = 'var(--text-primary)' }}
+            onMouseLeave={e => { (e.target as HTMLElement).style.color = 'var(--text-muted)' }}
+          >
             + Nueva insignia automática
           </button>
         )}
@@ -341,7 +363,6 @@ function BadgesSection({ initial }: { initial: Badge[] }) {
         )}
       </div>
 
-      {/* Manuales */}
       <div style={cardStyle}>
         <p style={{ margin: '0 0 0.25rem', fontWeight: 600, fontSize: '0.9rem' }}>Insignias manuales</p>
         <p style={{ margin: '0 0 0.75rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -363,14 +384,14 @@ function BadgesSection({ initial }: { initial: Badge[] }) {
 // ─── ASIGNACIÓN MANUAL ────────────────────────────────────────────────────────
 
 function ManualAssignSection({ manualBadges }: { manualBadges: Badge[] }) {
-  const [query, setQuery]           = useState('')
-  const [results, setResults]       = useState<User[]>([])
+  const [query, setQuery]               = useState('')
+  const [results, setResults]           = useState<User[]>([])
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [userBadges, setUserBadges] = useState<UserBadge[]>([])
+  const [userBadges, setUserBadges]     = useState<UserBadge[]>([])
   const [selectedBadge, setSelectedBadge] = useState(manualBadges[0]?.id ?? '')
-  const [searching, setSearching]   = useState(false)
-  const [assigning, setAssigning]   = useState(false)
-  const [msg, setMsg]               = useState<{ ok: boolean; text: string } | null>(null)
+  const [searching, setSearching]       = useState(false)
+  const [assigning, setAssigning]       = useState(false)
+  const [msg, setMsg]                   = useState<{ ok: boolean; text: string } | null>(null)
 
   async function handleSearch() {
     if (query.trim().length < 2) return
@@ -417,8 +438,6 @@ function ManualAssignSection({ manualBadges }: { manualBadges: Badge[] }) {
   return (
     <div style={{ marginTop: '1rem', borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem' }}>
       <p style={{ margin: '0 0 0.75rem', fontWeight: 600, fontSize: '0.85rem' }}>Asignar insignia a usuario</p>
-
-      {/* Buscador */}
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
         <input
           value={query}
@@ -432,7 +451,6 @@ function ManualAssignSection({ manualBadges }: { manualBadges: Badge[] }) {
         </button>
       </div>
 
-      {/* Resultados búsqueda */}
       {results.length > 0 && (
         <div style={{ border: '1px solid var(--border-medium)', borderRadius: '4px', marginBottom: '0.5rem', overflow: 'hidden' }}>
           {results.map(u => (
@@ -447,7 +465,6 @@ function ManualAssignSection({ manualBadges }: { manualBadges: Badge[] }) {
         </div>
       )}
 
-      {/* Usuario seleccionado */}
       {selectedUser && (
         <div style={{ marginBottom: '0.75rem' }}>
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
@@ -460,8 +477,6 @@ function ManualAssignSection({ manualBadges }: { manualBadges: Badge[] }) {
               {assigning ? '…' : 'Asignar'}
             </button>
           </div>
-
-          {/* Insignias actuales del usuario */}
           {userBadges.length > 0 && (
             <div>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', margin: '0 0 0.35rem' }}>
@@ -484,7 +499,6 @@ function ManualAssignSection({ manualBadges }: { manualBadges: Badge[] }) {
           )}
         </div>
       )}
-
       <Msg msg={msg} />
     </div>
   )
