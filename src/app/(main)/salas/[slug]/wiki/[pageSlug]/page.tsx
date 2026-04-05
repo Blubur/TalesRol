@@ -10,6 +10,8 @@ import {
   TagIcon,
   ListBulletIcon,
 } from '@heroicons/react/24/outline'
+import WikiHistoryToggle from '../WikiHistoryToggle'
+
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; pageSlug: string }> }) {
   const { pageSlug } = await params
@@ -151,24 +153,7 @@ export default async function WikiPageDetail({ params }: {
         {hasSidebar && (
           <aside className="wiki-detail-sidebar">
 
-            {/* Historial */}
-            {(versions ?? []).length > 0 && (
-              <div className="wiki-sidebar-block animate-enter" style={{ animationDelay: '0.2s' }}>
-                <h3 className="wiki-sidebar-title">Historial</h3>
-                <div className="wiki-sidebar-versions">
-                  {(versions ?? []).map((v: any, i: number) => (
-                    <div key={v.id} className={`wiki-version ${i === 0 ? 'current' : ''}`}>
-                      <span className="wiki-version-title">{v.title}</span>
-                      <span className="wiki-version-meta">
-                        {v.profiles?.display_name || v.profiles?.username} · {new Date(v.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
-                      </span>
-                      {i === 0 && <span className="wiki-version-badge">Actual</span>}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
+        <WikiHistoryToggle versions={versions ?? []} />
 
             {/* TOC flotante del sidebar (componente cliente con scroll spy, solo si hay 3+ headings) */}
             {toc.length >= 3 && (
