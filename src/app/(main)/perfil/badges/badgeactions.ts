@@ -11,53 +11,60 @@ function service() {
   )
 }
 
-/** Obtener badges desbloqueados por un usuario */
+/**
+ * Obtener badges de un usuario.
+ * user_badges.badge_id puede ser:
+ *   - condition_key (ej: "posts_gte_1") para badges automáticas
+ *   - UUID para badges manuales
+ * Por eso no hacemos join directo — cargamos por separado y unimos en JS.
+ */
 export async function getUserBadges(userId: string) {
-  const { data } = await service()
+  const db = service()
+
+  const { data: userBadges } = await db
     .from('user_badges')
-    .select(`
-      badge_id,
-      is_visible,
-      unlocked_at,
-      badges (
-        id,
-        name,
-        description,
-        icon_url,
-        category,
-        color,
-        is_manual,
-        condition_key
-      )
-    `)
+    .select('badge_id, is_visible, unlocked_at, earned_at')
     .eq('user_id', userId)
     .order('unlocked_at', { ascending: true })
-  return data ?? []
-}
+
+  if (!userBadges || userBadges.length === 0) return []
+
+  const { data: allBadges } = await db
+    .from('badges')
+    .select('id, name, description, icon_url, category, color, is_manual, condition_key')
+
+  if (!allBadges) return []
+
+  return userBadges.map(ub => {
+    const badge = allBadges.find(
+      b => b.condition_key === ub.badge_id || b.id === ub.badge_id
+    )
+    return {
+      badge_id:    ub.badge_id,
+      is_visible:  ub.is_visible,
+      unlocked_at: ub.unlocked_at ?? ub.earned_at,
+      badges:      badge ?? null,
+    }
+}).filter(ub => ub.badges != null) as {
+    badge_id: string
+    is_visible: boolean
+    unlocked_at: string
+    badges: {
+      id: string
+      name: string
+      description: string
+      icon_url: string | null
+      category: string
+      color: string
+      is_manual: boolean
+      condition_key: string
+    }
+  }[]}
 
 /** Obtener badges visibles (para perfil público) */
 export async function getVisibleBadges(userId: string) {
-  const { data } = await service()
-    .from('user_badges')
-    .select(`
-      badge_id,
-      is_visible,
-      unlocked_at,
-      badges (
-        id,
-        name,
-        description,
-        icon_url,
-        category,
-        color,
-        is_manual,
-        condition_key
-      )
-    `)
-    .eq('user_id', userId)
-    .eq('is_visible', true)
-    .order('unlocked_at', { ascending: true })
-  return data ?? []
+  const all = await getUserBadges(userId)
+  return all.filter(b => b.is_visible)
 }
 
 /** Cambiar visibilidad de un badge */

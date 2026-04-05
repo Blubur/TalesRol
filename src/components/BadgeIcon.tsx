@@ -1,9 +1,38 @@
-/**
- * BadgeIcon — detecta el tipo de icono y lo renderiza:
- *   - "ra-sword"  → RPG Awesome  <i class="ra ra-sword">
- *   - emoji       → <span>🏅</span>
- *   - URL http    → <img src="...">
- */
+import {
+  PencilIcon,
+  DocumentTextIcon,
+  BookOpenIcon,
+  ArchiveBoxIcon,
+  SparklesIcon,
+  MapIcon,
+  BuildingLibraryIcon,
+  GlobeAltIcon,
+  UserIcon,
+  UsersIcon,
+  UserGroupIcon,
+  ClockIcon,
+  CalendarIcon,
+  ShieldCheckIcon,
+  TrophyIcon,
+} from '@heroicons/react/24/outline'
+
+const HEROICON_MAP: Record<string, React.ComponentType<{ style?: React.CSSProperties; className?: string }>> = {
+  PencilIcon,
+  DocumentTextIcon,
+  BookOpenIcon,
+  ArchiveBoxIcon,
+  SparklesIcon,
+  MapIcon,
+  BuildingLibraryIcon,
+  GlobeAltIcon,
+  UserIcon,
+  UsersIcon,
+  UserGroupIcon,
+  ClockIcon,
+  CalendarIcon,
+  ShieldCheckIcon,
+  TrophyIcon,
+}
 
 interface BadgeIconProps {
   icon: string | null
@@ -13,10 +42,16 @@ interface BadgeIconProps {
 
 export default function BadgeIcon({ icon, size = 20, className = '' }: BadgeIconProps) {
   if (!icon || icon.trim() === '') {
-    return <span style={{ fontSize: size, lineHeight: 1 }} className={className}>🏅</span>
+    return <TrophyIcon style={{ width: size, height: size }} className={className} />
   }
 
   const trimmed = icon.trim()
+
+  // Heroicon por nombre (ej: "PencilIcon", "CalendarIcon")
+  if (trimmed in HEROICON_MAP) {
+    const Icon = HEROICON_MAP[trimmed]
+    return <Icon style={{ width: size, height: size }} className={className} />
+  }
 
   // RPG Awesome: empieza por "ra-"
   if (trimmed.startsWith('ra-')) {
