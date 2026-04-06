@@ -416,7 +416,7 @@ export default function WikiIndexClient({
         .wiki-mod-toggle:hover { color: var(--color-crimson); border-color: var(--color-crimson-glow); }
 
         /* Portada */
-        .wiki-home-row { display: flex; align-items: center; gap: var(--space-3); }
+        .wiki-home-row {align-items: center; gap: var(--space-3); }
         .wiki-home-card {
           flex: 1; display: flex; align-items: center; gap: var(--space-4);
           background: var(--color-crimson-subtle); border: 1px solid var(--color-crimson-glow);
