@@ -1,7 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { saveCustomCss } from './cssactions'
+import { EditorView, basicSetup } from 'codemirror'
+import { css } from '@codemirror/lang-css'
+import { oneDark } from '@codemirror/theme-one-dark'
+import { color } from '@uiw/codemirror-extensions-color'
 
 type Version = {
   id: number
@@ -15,15 +19,50 @@ type Props = {
 }
 
 export default function AdminCssEditor({ initialCss, versions }: Props) {
-  const [css, setCss] = useState(initialCss)
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
   const [showVersions, setShowVersions] = useState(false)
+  const editorRef = useRef<HTMLDivElement>(null)
+  const viewRef = useRef<EditorView | null>(null)
+
+  useEffect(() => {
+    if (!editorRef.current) return
+
+    const view = new EditorView({
+      doc: initialCss,
+      extensions: [
+        basicSetup,
+        css(),
+        color,
+        oneDark,
+        EditorView.theme({
+          '&': { minHeight: '420px', fontSize: '0.85rem' },
+          '.cm-scroller': { fontFamily: 'monospace', lineHeight: '1.6' },
+        }),
+      ],
+      parent: editorRef.current,
+    })
+
+    viewRef.current = view
+    return () => view.destroy()
+  }, [])
+
+  function getContent() {
+    return viewRef.current?.state.doc.toString() ?? ''
+  }
+
+  function setContent(value: string) {
+    const view = viewRef.current
+    if (!view) return
+    view.dispatch({
+      changes: { from: 0, to: view.state.doc.length, insert: value },
+    })
+  }
 
   async function handleSave() {
     setSaving(true)
     setMsg(null)
-    const res = await saveCustomCss(css)
+    const res = await saveCustomCss(getContent())
     setSaving(false)
     if (res?.error) {
       setMsg({ ok: false, text: res.error })
@@ -33,7 +72,7 @@ export default function AdminCssEditor({ initialCss, versions }: Props) {
   }
 
   function handleRestore(versionCss: string) {
-    setCss(versionCss)
+    setContent(versionCss)
     setShowVersions(false)
     setMsg({ ok: true, text: 'Versión restaurada en el editor. Guarda para aplicarla.' })
   }
@@ -43,17 +82,10 @@ export default function AdminCssEditor({ initialCss, versions }: Props) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
         <h2 style={{ margin: 0 }}>CSS personalizado</h2>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button
-            onClick={() => setShowVersions(!showVersions)}
-            className="btn btn-secondary btn-sm"
-          >
+          <button onClick={() => setShowVersions(!showVersions)} className="btn btn-secondary btn-sm">
             {showVersions ? 'Ocultar historial' : `Historial (${versions.length})`}
           </button>
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="btn btn-primary btn-sm"
-          >
+          <button onClick={handleSave} disabled={saving} className="btn btn-primary btn-sm">
             {saving ? 'Guardando…' : 'Guardar y aplicar'}
           </button>
         </div>
@@ -65,24 +97,9 @@ export default function AdminCssEditor({ initialCss, versions }: Props) {
         </p>
       )}
 
-      <textarea
-        value={css}
-        onChange={(e) => setCss(e.target.value)}
-        spellCheck={false}
-        style={{
-          width: '100%',
-          minHeight: '420px',
-          fontFamily: 'monospace',
-          fontSize: '0.85rem',
-          padding: '1rem',
-          borderRadius: '6px',
-          border: '1px solid var(--border-color, #ccc)',
-          background: 'var(--code-bg, #1e1e1e)',
-          color: 'var(--code-fg, #d4d4d4)',
-          resize: 'vertical',
-          lineHeight: 1.6,
-        }}
-        placeholder={`/* Escribe aquí tu CSS personalizado */\n\nbody {\n  font-family: 'Georgia', serif;\n}\n\n.navbar {\n  background: #1a1a2e;\n}`}
+      <div
+        ref={editorRef}
+        style={{ borderRadius: '6px', overflow: 'hidden', border: '1px solid var(--border-color, #ccc)' }}
       />
 
       {showVersions && versions.length > 0 && (
@@ -93,13 +110,10 @@ export default function AdminCssEditor({ initialCss, versions }: Props) {
               <div
                 key={v.id}
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
+                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                   padding: '0.5rem 0.75rem',
                   border: '1px solid var(--border-color, #ccc)',
-                  borderRadius: '4px',
-                  fontSize: '0.85rem',
+                  borderRadius: '4px', fontSize: '0.85rem',
                 }}
               >
                 <span>
@@ -108,14 +122,9 @@ export default function AdminCssEditor({ initialCss, versions }: Props) {
                     hour: '2-digit', minute: '2-digit',
                   })}
                   {' — '}
-                  <span style={{ color: 'var(--text-muted, #888)' }}>
-                    {v.css.length} caracteres
-                  </span>
+                  <span style={{ color: 'var(--text-muted, #888)' }}>{v.css.length} caracteres</span>
                 </span>
-                <button
-                  onClick={() => handleRestore(v.css)}
-                  className="btn btn-secondary btn-sm"
-                >
+                <button onClick={() => handleRestore(v.css)} className="btn btn-secondary btn-sm">
                   Restaurar
                 </button>
               </div>
