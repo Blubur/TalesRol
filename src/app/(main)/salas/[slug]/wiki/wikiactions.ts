@@ -4,20 +4,6 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
-import sanitizeHtml from 'sanitize-html'
-
-function sanitize(html: string): string {
-  return sanitizeHtml(html, {
-    allowedTags: ['p','br','strong','em','u','s','h1','h2','h3','ul','ol','li',
-      'blockquote','hr','span','div','a','img'],
-    allowedAttributes: {
-      'a': ['href', 'target'],
-      'img': ['src', 'alt'],
-      '*': ['class', 'style'],
-    },
-  })
-}
-
 function toSlug(title: string): string {
   return title
     .toLowerCase()
@@ -37,7 +23,7 @@ async function canEditWiki(supabase: any, roomId: string, userId: string): Promi
   const { data: room } = await supabase.from('rooms').select('owner_id').eq('id', roomId).single()
   if (room?.owner_id === userId) return true
   const { data: profile } = await supabase.from('profiles').select('role').eq('id', userId).single()
-  if (profile?.role === 'admin') return true
+  if (profile?.role === 'admin' || profile?.role === 'master') return true
   const { data: member } = await supabase
     .from('room_members')
     .select('rank')
@@ -54,45 +40,41 @@ export async function createWikiPage(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado.' }
 
-  const roomId     = formData.get('room_id') as string
-  const slug_param = formData.get('slug') as string
-  const title      = (formData.get('title') as string)?.trim()
-  const contentRaw = formData.get('content') as string
+  const roomId        = formData.get('room_id') as string
+  const slug_param    = formData.get('slug') as string
+  const title         = (formData.get('title') as string)?.trim()
+  const contentRaw    = formData.get('content') as string
   const categoriesRaw = formData.get('categories') as string
-  const isHome     = formData.get('is_home') === 'true'
-  const roomSlug   = formData.get('room_slug') as string
+  const isHome        = formData.get('is_home') === 'true'
+  const roomSlug      = formData.get('room_slug') as string
 
   if (!title || title.length < 2) return { error: 'El título debe tener al menos 2 caracteres.' }
 
   const allowed = await canEditWiki(supabase, roomId, user.id)
   if (!allowed) return { error: 'Sin permiso para editar la wiki.' }
 
-  const content = sanitize(contentRaw || '')
-  const excerpt = extractExcerpt(content)
-  const pageSlug = slug_param?.trim() || toSlug(title)
+  const content    = contentRaw || ''
+  const excerpt    = extractExcerpt(content)
+  const pageSlug   = slug_param?.trim() || toSlug(title)
   const categories = categoriesRaw
     ? categoriesRaw.split(',').map(c => c.trim()).filter(Boolean)
     : []
 
-  // Si es home, quitar home de otras páginas
   if (isHome) {
-    await supabase
-      .from('wiki_pages')
-      .update({ is_home: false })
-      .eq('room_id', roomId)
+    await supabase.from('wiki_pages').update({ is_home: false }).eq('room_id', roomId)
   }
 
   const { data: page, error } = await supabase
     .from('wiki_pages')
     .insert({
-      room_id: roomId,
-      slug: pageSlug,
+      room_id:        roomId,
+      slug:           pageSlug,
       title,
       content,
       excerpt,
-      is_home: isHome,
+      is_home:        isHome,
       categories,
-      author_id: user.id,
+      author_id:      user.id,
       last_editor_id: user.id,
     })
     .select('id, slug')
@@ -103,7 +85,6 @@ export async function createWikiPage(formData: FormData) {
     return { error: error.message }
   }
 
-  // Guardar versión inicial
   await supabase.from('wiki_page_versions').insert({
     page_id:   page.id,
     content,
@@ -122,13 +103,13 @@ export async function updateWikiPage(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado.' }
 
-  const pageId     = formData.get('page_id') as string
-  const title      = (formData.get('title') as string)?.trim()
-  const contentRaw = formData.get('content') as string
+  const pageId        = formData.get('page_id') as string
+  const title         = (formData.get('title') as string)?.trim()
+  const contentRaw    = formData.get('content') as string
   const categoriesRaw = formData.get('categories') as string
-  const isHome     = formData.get('is_home') === 'true'
-  const roomSlug   = formData.get('room_slug') as string
-  const pageSlug   = formData.get('page_slug') as string
+  const isHome        = formData.get('is_home') === 'true'
+  const roomSlug      = formData.get('room_slug') as string
+  const pageSlug      = formData.get('page_slug') as string
 
   if (!title || title.length < 2) return { error: 'El título debe tener al menos 2 caracteres.' }
 
@@ -139,30 +120,26 @@ export async function updateWikiPage(formData: FormData) {
   const allowed = await canEditWiki(supabase, existingPage.room_id, user.id)
   if (!allowed) return { error: 'Sin permiso.' }
 
-  const content = sanitize(contentRaw || '')
-  const excerpt = extractExcerpt(content)
+  const content    = contentRaw || ''
+  const excerpt    = extractExcerpt(content)
   const categories = categoriesRaw
     ? categoriesRaw.split(',').map(c => c.trim()).filter(Boolean)
     : []
 
   if (isHome) {
-    await supabase
-      .from('wiki_pages')
-      .update({ is_home: false })
-      .eq('room_id', existingPage.room_id)
+    await supabase.from('wiki_pages').update({ is_home: false }).eq('room_id', existingPage.room_id)
   }
 
   await supabase.from('wiki_pages').update({
     title,
     content,
     excerpt,
-    is_home: isHome,
+    is_home:        isHome,
     categories,
     last_editor_id: user.id,
-    updated_at: new Date().toISOString(),
+    updated_at:     new Date().toISOString(),
   }).eq('id', pageId)
 
-  // Guardar versión solo si el contenido cambió
   if (content !== existingPage.content || title !== existingPage.title) {
     await supabase.from('wiki_page_versions').insert({
       page_id:   pageId,
@@ -190,6 +167,59 @@ export async function deleteWikiPage(pageId: string, roomSlug: string, roomId: s
   await supabase.from('wiki_pages')
     .update({ deleted_at: new Date().toISOString() })
     .eq('id', pageId)
+
+  revalidatePath(`/salas/${roomSlug}/wiki`)
+  return { success: true }
+}
+
+// ── Eliminar múltiples páginas ──────────────────────────────
+
+export async function deleteManyWikiPages(pageIds: string[], roomSlug: string, roomId: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No autenticado.' }
+
+  const allowed = await canEditWiki(supabase, roomId, user.id)
+  if (!allowed) return { error: 'Sin permiso.' }
+
+  if (!pageIds.length) return { error: 'No hay páginas seleccionadas.' }
+
+  const { error } = await supabase.from('wiki_pages')
+    .update({ deleted_at: new Date().toISOString() })
+    .in('id', pageIds)
+
+  if (error) return { error: error.message }
+
+  revalidatePath(`/salas/${roomSlug}/wiki`)
+  return { success: true, count: pageIds.length }
+}
+
+// ── Mover páginas de categoría ──────────────────────────────
+
+export async function moveWikiPagesToCategory(
+  pageIds: string[],
+  newCategory: string,
+  roomSlug: string,
+  roomId: string
+) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No autenticado.' }
+
+  const allowed = await canEditWiki(supabase, roomId, user.id)
+  if (!allowed) return { error: 'Sin permiso.' }
+
+  if (!pageIds.length) return { error: 'No hay páginas seleccionadas.' }
+
+  // Para cada página, reemplazar todas sus categorías por la nueva
+  const { error } = await supabase.from('wiki_pages')
+    .update({
+      categories:  newCategory ? [newCategory] : [],
+      updated_at:  new Date().toISOString(),
+    })
+    .in('id', pageIds)
+
+  if (error) return { error: error.message }
 
   revalidatePath(`/salas/${roomSlug}/wiki`)
   return { success: true }
