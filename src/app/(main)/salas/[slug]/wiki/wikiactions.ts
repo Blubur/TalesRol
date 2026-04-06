@@ -3,6 +3,14 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
+
+function getServiceClient() {
+  return createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 function toSlug(title: string): string {
   return title
@@ -53,6 +61,7 @@ export async function createWikiPage(formData: FormData) {
   const allowed = await canEditWiki(supabase, roomId, user.id)
   if (!allowed) return { error: 'Sin permiso para editar la wiki.' }
 
+  const service    = getServiceClient()
   const content    = contentRaw || ''
   const excerpt    = extractExcerpt(content)
   const pageSlug   = slug_param?.trim() || toSlug(title)
@@ -61,10 +70,10 @@ export async function createWikiPage(formData: FormData) {
     : []
 
   if (isHome) {
-    await supabase.from('wiki_pages').update({ is_home: false }).eq('room_id', roomId)
+    await service.from('wiki_pages').update({ is_home: false }).eq('room_id', roomId)
   }
 
-  const { data: page, error } = await supabase
+  const { data: page, error } = await service
     .from('wiki_pages')
     .insert({
       room_id:        roomId,
@@ -85,7 +94,7 @@ export async function createWikiPage(formData: FormData) {
     return { error: error.message }
   }
 
-  await supabase.from('wiki_page_versions').insert({
+  await service.from('wiki_page_versions').insert({
     page_id:   page.id,
     content,
     title,
@@ -120,6 +129,7 @@ export async function updateWikiPage(formData: FormData) {
   const allowed = await canEditWiki(supabase, existingPage.room_id, user.id)
   if (!allowed) return { error: 'Sin permiso.' }
 
+  const service    = getServiceClient()
   const content    = contentRaw || ''
   const excerpt    = extractExcerpt(content)
   const categories = categoriesRaw
@@ -127,10 +137,10 @@ export async function updateWikiPage(formData: FormData) {
     : []
 
   if (isHome) {
-    await supabase.from('wiki_pages').update({ is_home: false }).eq('room_id', existingPage.room_id)
+    await service.from('wiki_pages').update({ is_home: false }).eq('room_id', existingPage.room_id)
   }
 
-  await supabase.from('wiki_pages').update({
+  await service.from('wiki_pages').update({
     title,
     content,
     excerpt,
@@ -141,7 +151,7 @@ export async function updateWikiPage(formData: FormData) {
   }).eq('id', pageId)
 
   if (content !== existingPage.content || title !== existingPage.title) {
-    await supabase.from('wiki_page_versions').insert({
+    await service.from('wiki_page_versions').insert({
       page_id:   pageId,
       content,
       title,
@@ -164,7 +174,8 @@ export async function deleteWikiPage(pageId: string, roomSlug: string, roomId: s
   const allowed = await canEditWiki(supabase, roomId, user.id)
   if (!allowed) return { error: 'Sin permiso.' }
 
-  await supabase.from('wiki_pages')
+  const service = getServiceClient()
+  await service.from('wiki_pages')
     .update({ deleted_at: new Date().toISOString() })
     .eq('id', pageId)
 
@@ -184,7 +195,8 @@ export async function deleteManyWikiPages(pageIds: string[], roomSlug: string, r
 
   if (!pageIds.length) return { error: 'No hay páginas seleccionadas.' }
 
-  const { error } = await supabase.from('wiki_pages')
+  const service = getServiceClient()
+  const { error } = await service.from('wiki_pages')
     .update({ deleted_at: new Date().toISOString() })
     .in('id', pageIds)
 
@@ -211,11 +223,11 @@ export async function moveWikiPagesToCategory(
 
   if (!pageIds.length) return { error: 'No hay páginas seleccionadas.' }
 
-  // Para cada página, reemplazar todas sus categorías por la nueva
-  const { error } = await supabase.from('wiki_pages')
+  const service = getServiceClient()
+  const { error } = await service.from('wiki_pages')
     .update({
-      categories:  newCategory ? [newCategory] : [],
-      updated_at:  new Date().toISOString(),
+      categories: newCategory ? [newCategory] : [],
+      updated_at: new Date().toISOString(),
     })
     .in('id', pageIds)
 

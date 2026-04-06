@@ -68,11 +68,10 @@ export default function WikiIndexClient({
   const grouped: Record<string, WikiPage[]> = {}
   if (!q && !cat) {
     for (const page of filtered) {
-      const cats = page.categories?.length ? page.categories : ['Sin categoría']
-      for (const c of cats) {
-        if (!grouped[c]) grouped[c] = []
-        grouped[c].push(page)
-      }
+      // Cada página va solo al grupo de su PRIMERA categoría para evitar duplicados
+      const primaryCat = page.categories?.length ? page.categories[0] : 'Sin categoría'
+      if (!grouped[primaryCat]) grouped[primaryCat] = []
+      grouped[primaryCat].push(page)
     }
   }
   const groupedKeys = Object.keys(grouped).sort((a, b) => {
