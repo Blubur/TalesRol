@@ -60,6 +60,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   rel="stylesheet"
   href="https://nagoshiashumari.github.io/Rpg-Awesome/stylesheets/rpg-awesome.min.css"
 />
+
+<link rel="icon" href="/api/favicon" />
         {customCss && (
           <style id="custom-css" dangerouslySetInnerHTML={{ __html: customCss }} />
         )}

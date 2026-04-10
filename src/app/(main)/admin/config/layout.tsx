@@ -9,6 +9,7 @@ import {
   ShieldCheckIcon,
   TrophyIcon,
   DocumentTextIcon,
+  PhotoIcon,
 } from '@heroicons/react/24/outline'
 
 const navItems = [
@@ -63,6 +64,7 @@ export default async function ConfigLayout({ children }: { children: React.React
             <Link
               key={item.href}
               href={item.href}
+              { href: '/admin/config/favicon', label: 'Favicon', icon: PhotoIcon },
               style={{
                 display: 'flex',
                 alignItems: 'center',
