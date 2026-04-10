@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import type { Profile } from '@/types/database'
 import ReportButton from '@/components/ReportButton'
+import BadgeIcon from '@/components/BadgeIcon'
 import {
   PencilIcon,
   EnvelopeIcon,
@@ -11,41 +12,15 @@ import {
   UserGroupIcon,
   LockClosedIcon,
   TrophyIcon,
-  PencilSquareIcon,
-  DocumentTextIcon,
-  ArchiveBoxIcon,
-  SparklesIcon,
-  MapIcon,
-  BuildingLibraryIcon,
-  GlobeAltIcon,
-  UserIcon,
-  UsersIcon,
-  ShieldCheckIcon,
   ChatBubbleLeftEllipsisIcon,
 } from '@heroicons/react/24/outline'
-
-const ICON_MAP: Record<string, React.ReactNode> = {
-  PencilIcon:           <PencilIcon style={{ width: 11, height: 11 }} />,
-  DocumentTextIcon:     <DocumentTextIcon style={{ width: 11, height: 11 }} />,
-  BookOpenIcon:         <BookOpenIcon style={{ width: 11, height: 11 }} />,
-  ArchiveBoxIcon:       <ArchiveBoxIcon style={{ width: 11, height: 11 }} />,
-  SparklesIcon:         <SparklesIcon style={{ width: 11, height: 11 }} />,
-  MapIcon:              <MapIcon style={{ width: 11, height: 11 }} />,
-  BuildingLibraryIcon:  <BuildingLibraryIcon style={{ width: 11, height: 11 }} />,
-  GlobeAltIcon:         <GlobeAltIcon style={{ width: 11, height: 11 }} />,
-  UserIcon:             <UserIcon style={{ width: 11, height: 11 }} />,
-  UsersIcon:            <UsersIcon style={{ width: 11, height: 11 }} />,
-  UserGroupIcon:        <UserGroupIcon style={{ width: 11, height: 11 }} />,
-  CalendarIcon:         <CalendarIcon style={{ width: 11, height: 11 }} />,
-  ShieldCheckIcon:      <ShieldCheckIcon style={{ width: 11, height: 11 }} />,
-  TrophyIcon:           <TrophyIcon style={{ width: 11, height: 11 }} />,
-  PencilSquareIcon:     <PencilSquareIcon style={{ width: 11, height: 11 }} />,
-}
 
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
   admin:    { label: 'Administrador', color: 'var(--color-role-admin)' },
   master:   { label: 'Moderador',     color: 'var(--color-role-master)' },
   director: { label: 'Director',      color: 'var(--color-role-director)' },
+  jugador:  { label: 'Jugador',       color: 'var(--color-role-jugador)' },
+  miembro:  { label: 'Miembro',       color: 'var(--color-role-miembro)' },
   player:   { label: 'Jugador',       color: 'var(--color-role-jugador)' },
   guest:    { label: 'Invitado',      color: 'var(--color-role-miembro)' },
 }
@@ -143,13 +118,24 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
     .from('posts').select('*', { count: 'exact', head: true })
     .eq('author_id', profile.id).is('deleted_at', null)
 
-  // Badges visibles
-  const { data: visibleBadges } = await supabase
+  // Badges visibles — usando tabla badges unificada
+  const { data: rawVisibleBadges } = await supabase
     .from('user_badges')
-    .select('badge_id, badge_definitions(id, name, icon, color)')
+    .select('badge_id, unlocked_at, earned_at')
     .eq('user_id', profile.id)
     .eq('is_visible', true)
     .order('unlocked_at', { ascending: true })
+
+  const { data: allBadgesData } = await supabase
+    .from('badges')
+    .select('id, name, icon_url, color, condition_key')
+
+  const visibleBadges = (rawVisibleBadges ?? []).map(ub => {
+    const badge = (allBadgesData ?? []).find(
+      b => b.condition_key === ub.badge_id || b.id === ub.badge_id
+    )
+    return badge ? { badge_id: ub.badge_id, badge } : null
+  }).filter(Boolean) as { badge_id: string; badge: { name: string; icon_url: string | null; color: string } }[]
 
   const roleInfo = ROLE_LABELS[profile.role] ?? ROLE_LABELS.guest
   const avatarUrl = profile.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${profile.username}`
@@ -256,18 +242,17 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
             <h2 className="profile-card-title">
               <TrophyIcon style={{ width: 13, height: 13 }} /> Insignias
             </h2>
-            {visibleBadges && visibleBadges.length > 0 ? (
+            {visibleBadges.length > 0 ? (
               <div className="badges-list">
-                {visibleBadges.map((ub: any) => {
-                  const def = ub.badge_definitions
-                  if (!def) return null
+                {visibleBadges.map(ub => {
+                  const def = ub.badge
                   return (
                     <span
                       key={ub.badge_id}
                       className={`profile-badge ${def.color === 'gold' ? 'gold' : def.color === 'purple' ? 'purple' : def.color === 'crimson' ? 'crimson' : ''}`}
                       title={def.name}
                     >
-                      {ICON_MAP[def.icon] ?? <TrophyIcon style={{ width: 11, height: 11 }} />}
+                      <BadgeIcon icon={def.icon_url} size={11} />
                       {def.name}
                     </span>
                   )
@@ -493,8 +478,6 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
         .room-status.active   { color: var(--color-success); background: var(--color-success-bg); }
         .room-status.paused   { color: var(--color-warning); background: var(--color-warning-bg); }
         .room-status.closed, .room-status.archived { color: var(--text-muted); background: var(--bg-elevated); }
-
-        /* Temas abiertos */
         .topics-list { display: flex; flex-direction: column; gap: var(--space-2); }
         .topic-item { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); border-radius: var(--radius-sm); background: var(--bg-secondary); border: 1px solid var(--border-subtle); text-decoration: none; transition: border-color var(--transition-base); }
         .topic-item:hover { border-color: var(--color-crimson); }
@@ -506,7 +489,6 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
         .topic-item-last { font-size: var(--text-xs); color: var(--text-muted); font-family: var(--font-display); letter-spacing: 0.03em; }
         .topic-item-last-author { color: var(--text-secondary); text-decoration: none; transition: color var(--transition-fast); }
         .topic-item-last-author:hover { color: var(--color-crimson); }
-
         .recent-posts-list { display: flex; flex-direction: column; gap: var(--space-2); }
         .recent-post-item { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); border-radius: var(--radius-sm); background: var(--bg-secondary); border: 1px solid var(--border-subtle); text-decoration: none; transition: border-color var(--transition-base); }
         .recent-post-item:hover { border-color: var(--color-crimson); }
