@@ -13,13 +13,14 @@ import {
 } from '@heroicons/react/24/outline'
 
 const navItems = [
-  { href: '/admin/config/general',       label: 'Ajustes globales',    icon: Cog6ToothIcon },
-  { href: '/admin/config/mantenimiento', label: 'Mantenimiento',       icon: WrenchScrewdriverIcon },
-  { href: '/admin/config/banner',        label: 'Banner de aviso',     icon: MegaphoneIcon },
-  { href: '/admin/config/textos',        label: 'Textos del sitio',    icon: DocumentTextIcon },
-  { href: '/admin/config/roles',         label: 'Roles y permisos',    icon: ShieldCheckIcon },
-  { href: '/admin/config/puntos',        label: 'Puntos e insignias',  icon: TrophyIcon },
-  { href: '/admin/css',                  label: 'CSS personalizado',   icon: PaintBrushIcon },
+  { href: '/admin/config/general',       label: 'Ajustes globales',   icon: Cog6ToothIcon },
+  { href: '/admin/config/mantenimiento', label: 'Mantenimiento',      icon: WrenchScrewdriverIcon },
+  { href: '/admin/config/banner',        label: 'Banner de aviso',    icon: MegaphoneIcon },
+  { href: '/admin/config/textos',        label: 'Textos del sitio',   icon: DocumentTextIcon },
+  { href: '/admin/config/favicon',       label: 'Favicon',            icon: PhotoIcon },
+  { href: '/admin/config/roles',         label: 'Roles y permisos',   icon: ShieldCheckIcon },
+  { href: '/admin/config/puntos',        label: 'Puntos e insignias', icon: TrophyIcon },
+  { href: '/admin/css',                  label: 'CSS personalizado',  icon: PaintBrushIcon },
 ]
 
 export default async function ConfigLayout({ children }: { children: React.ReactNode }) {
@@ -64,7 +65,6 @@ export default async function ConfigLayout({ children }: { children: React.React
             <Link
               key={item.href}
               href={item.href}
-              { href: '/admin/config/favicon', label: 'Favicon', icon: PhotoIcon },
               style={{
                 display: 'flex',
                 alignItems: 'center',
