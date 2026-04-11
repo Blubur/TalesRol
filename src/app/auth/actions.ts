@@ -3,6 +3,14 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
+
+function service() {
+  return createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -23,7 +31,6 @@ export async function login(formData: FormData) {
     return { error: error.message }
   }
 
-  // Actualizar ultimo_acceso
   const { data: { user } } = await supabase.auth.getUser()
   if (user) {
     await supabase
@@ -60,7 +67,6 @@ export async function register(formData: FormData) {
     return { error: 'La contraseña debe tener al menos 8 caracteres.' }
   }
 
-  // Verificar si el username ya existe
   const { data: existing } = await supabase
     .from('profiles')
     .select('username')
@@ -87,6 +93,43 @@ export async function register(formData: FormData) {
       return { error: 'Ese email ya está registrado.' }
     }
     return { error: error.message }
+  }
+
+  // Esperar un momento para que el trigger de Supabase cree el perfil
+  await new Promise(r => setTimeout(r, 800))
+
+  // Obtener el usuario recién creado y su rol
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user) {
+    const db = service()
+
+    const { data: profile } = await db
+      .from('profiles')
+      .select('id, role')
+      .eq('id', user.id)
+      .single()
+
+    if (profile) {
+      // Leer el mensaje de bienvenida configurado para su rol
+      const roleKey = `welcome_msg_${profile.role}`
+      const { data: configRow } = await db
+        .from('site_config')
+        .select('value')
+        .eq('key', roleKey)
+        .single()
+
+      const welcomeMsg = configRow?.value?.trim()
+
+      if (welcomeMsg) {
+        await db.from('notifications').insert({
+          user_id: profile.id,
+          type:    'sistema',
+          title:   '¡Bienvenido a TalesRol!',
+          body:    welcomeMsg,
+          link:    null,
+        })
+      }
+    }
   }
 
   revalidatePath('/', 'layout')
