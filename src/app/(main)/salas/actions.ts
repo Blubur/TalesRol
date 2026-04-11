@@ -3,20 +3,20 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { hasPermission } from '@/lib/permissions'
 
 export async function createRoom(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado.' }
 
-  // Solo admins y directores pueden crear salas
   const { data: profile } = await supabase
     .from('profiles')
     .select('role')
     .eq('id', user.id)
     .single()
 
-  if (!profile || !['admin', 'director', 'master'].includes(profile.role)) {
+  if (!profile || !await hasPermission(profile.role, 'perm_create_rooms')) {
     return { error: 'No tienes permiso para crear salas.' }
   }
 
@@ -29,7 +29,6 @@ export async function createRoom(formData: FormData) {
     return { error: 'El título debe tener al menos 3 caracteres.' }
   }
 
-  // Generar slug desde el título
   const slug = title
     .toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -38,7 +37,6 @@ export async function createRoom(formData: FormData) {
     .replace(/-+/g, '-')
     .trim()
 
-  // Verificar slug único
   const { data: existing } = await supabase
     .from('rooms')
     .select('slug')
@@ -95,10 +93,10 @@ export async function updateRoom(formData: FormData) {
     .eq('id', user.id)
     .single()
 
-  const isOwner = room?.owner_id === user.id
-  const isAdmin = profile?.role === 'admin'
+  const isOwner   = room?.owner_id === user.id
+  const canEdit   = await hasPermission(profile?.role ?? '', 'perm_edit_rooms')
 
-  if (!isOwner && !isAdmin) {
+  if (!isOwner && !canEdit) {
     return { error: 'No tienes permiso para editar esta sala.' }
   }
 

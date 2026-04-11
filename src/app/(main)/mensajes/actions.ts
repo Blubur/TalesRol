@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
+import { hasPermission } from '@/lib/permissions'
 
 function getServiceClient() {
   return createServiceClient(
@@ -11,13 +12,19 @@ function getServiceClient() {
   )
 }
 
-// Obtener o crear conversación entre dos usuarios
 export async function getOrCreateConversation(otherUsername: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado.' }
 
-  // Buscar el perfil del otro usuario
+  // Comprobar permiso
+  const { data: myProfile } = await supabase
+    .from('profiles').select('role').eq('id', user.id).single()
+
+  if (!myProfile || !await hasPermission(myProfile.role, 'perm_messages')) {
+    return { error: 'No tienes permiso para enviar mensajes privados.' }
+  }
+
   const { data: otherProfile } = await supabase
     .from('profiles')
     .select('id')
@@ -29,7 +36,6 @@ export async function getOrCreateConversation(otherUsername: string) {
 
   const service = getServiceClient()
 
-  // Buscar conversación existente (en cualquier orden)
   const { data: existing } = await service
     .from('conversations')
     .select('id')
@@ -38,7 +44,6 @@ export async function getOrCreateConversation(otherUsername: string) {
 
   if (existing) return { conversationId: existing.id }
 
-  // Crear nueva conversación
   const { data: newConv, error } = await service
     .from('conversations')
     .insert({ user_a: user.id, user_b: otherProfile.id })
@@ -49,11 +54,18 @@ export async function getOrCreateConversation(otherUsername: string) {
   return { conversationId: newConv.id }
 }
 
-// Enviar mensaje
 export async function sendMessage(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado.' }
+
+  // Comprobar permiso
+  const { data: myProfile } = await supabase
+    .from('profiles').select('role').eq('id', user.id).single()
+
+  if (!myProfile || !await hasPermission(myProfile.role, 'perm_messages')) {
+    return { error: 'No tienes permiso para enviar mensajes privados.' }
+  }
 
   const conversation_id = formData.get('conversation_id') as string
   const content         = (formData.get('content') as string)?.trim()
@@ -68,11 +80,10 @@ export async function sendMessage(formData: FormData) {
 
   if (error) return { error: error.message }
 
-  revalidatePath(`/mensajes`)
+  revalidatePath('/mensajes')
   return { success: true }
 }
 
-// Eliminar mensaje (soft delete)
 export async function deleteMessage(messageId: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -89,7 +100,6 @@ export async function deleteMessage(messageId: string) {
   return { success: true }
 }
 
-// Marcar mensajes como leídos
 export async function markAsRead(conversationId: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
+import { hasPermission } from '@/lib/permissions'
 
 export interface DiceRollResult {
   diceType: string
@@ -16,11 +17,12 @@ export interface DiceRollResult {
 export async function rollDice(diceTypeId: string, quantity: number): Promise<{ result?: DiceRollResult; error?: string }> {
   if (quantity < 1 || quantity > 20) return { error: 'Cantidad inválida (1-20).' }
 
-  // Comprobar si los dados están habilitados globalmente
   const service = createServiceClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
+
+  // Comprobar si los dados están habilitados globalmente
   const { data: configRow } = await service
     .from('site_config')
     .select('value')
@@ -35,7 +37,17 @@ export async function rollDice(diceTypeId: string, quantity: number): Promise<{ 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado.' }
 
-  // Verificar que el dado existe
+  // Comprobar permiso por rol
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+
+  if (!profile || !await hasPermission(profile.role, 'perm_use_dice')) {
+    return { error: 'No tienes permiso para usar dados.' }
+  }
+
   const { data: diceType } = await supabase
     .from('dice_types')
     .select('id, name, faces')
@@ -45,14 +57,13 @@ export async function rollDice(diceTypeId: string, quantity: number): Promise<{ 
   if (!diceType) return { error: 'Tipo de dado no encontrado.' }
   if (diceType.faces < 2 || diceType.faces > 1000) return { error: 'Dado inválido.' }
 
-  // Tirada verificada en el servidor
   const rolls: number[] = []
   for (let i = 0; i < quantity; i++) {
     rolls.push(Math.floor(Math.random() * diceType.faces) + 1)
   }
   const total = rolls.reduce((a, b) => a + b, 0)
 
-  const { data: profile } = await supabase
+  const { data: profileData } = await supabase
     .from('profiles')
     .select('username, display_name')
     .eq('id', user.id)
@@ -65,7 +76,7 @@ export async function rollDice(diceTypeId: string, quantity: number): Promise<{ 
       quantity,
       rolls,
       total,
-      rolledBy: profile?.display_name ?? profile?.username ?? 'Anónimo',
+      rolledBy: profileData?.display_name ?? profileData?.username ?? 'Anónimo',
       rolledAt: new Date().toISOString(),
     }
   }

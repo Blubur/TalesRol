@@ -1,6 +1,11 @@
+import { getRolePermissions } from './rolesactions'
+import RolesForm from './RolesForm'
+
 export const metadata = { title: 'Roles y permisos' }
 
-export default function RolesPage() {
+export default async function RolesPage() {
+  const permissions = await getRolePermissions()
+
   return (
     <div>
       <div style={{ marginBottom: '1.5rem' }}>
@@ -11,17 +16,7 @@ export default function RolesPage() {
           Configura qué puede hacer cada rol en la plataforma.
         </p>
       </div>
-      <div style={{
-        background: 'var(--bg-card)',
-        border: '1px solid var(--border-subtle)',
-        borderRadius: '6px',
-        padding: '2rem',
-        textAlign: 'center',
-        color: 'var(--text-muted)',
-        fontSize: '0.9rem',
-      }}>
-        🚧 En construcción — próximamente
-      </div>
+      <RolesForm initialPermissions={permissions} />
     </div>
   )
 }
