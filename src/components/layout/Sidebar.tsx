@@ -148,10 +148,7 @@ export default function Sidebar() {
                 <ShieldCheckIcon width={13} height={13} className="sidebar-quick-icon" />
                 Normas
               </Link>
-              <Link href="/personajes" className={`sidebar-quick-link ${pathname === '/personajes' ? 'active' : ''}`}>
-                <BookOpenIcon width={13} height={13} className="sidebar-quick-icon" />
-                Personajes
-              </Link>
+             
               <Link href="/usuarios" className={`sidebar-quick-link ${pathname === '/usuarios' ? 'active' : ''}`}>
   <UsersIcon width={13} height={13} className="sidebar-quick-icon" />
   Usuarios
