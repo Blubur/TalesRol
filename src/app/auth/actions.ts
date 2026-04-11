@@ -45,11 +45,13 @@ export async function login(formData: FormData) {
 
 export async function register(formData: FormData) {
   const supabase = await createClient()
+  const db = service()
 
   const email       = formData.get('email') as string
   const password    = formData.get('password') as string
   const username    = formData.get('username') as string
   const displayName = formData.get('display_name') as string
+  const inviteCode  = (formData.get('invite_code') as string)?.trim() ?? ''
 
   if (!email || !password || !username) {
     return { error: 'Email, nombre de usuario y contraseña son requeridos.' }
@@ -67,6 +69,29 @@ export async function register(formData: FormData) {
     return { error: 'La contraseña debe tener al menos 8 caracteres.' }
   }
 
+  // Comprobar si el registro está abierto
+  const { data: regOpenRow } = await db
+    .from('site_config').select('value').eq('key', 'registration_open').single()
+  if (regOpenRow?.value === 'false') {
+    return { error: 'El registro está cerrado temporalmente.' }
+  }
+
+  // Comprobar modo invitación
+  const { data: inviteOnlyRow } = await db
+    .from('site_config').select('value').eq('key', 'invite_only').single()
+  if (inviteOnlyRow?.value === 'true') {
+    const { data: inviteCodeRow } = await db
+      .from('site_config').select('value').eq('key', 'invite_code').single()
+    const validCode = inviteCodeRow?.value?.trim() ?? ''
+    if (!validCode) {
+      return { error: 'El registro con invitación está activo pero no hay código configurado. Contacta con un administrador.' }
+    }
+    if (inviteCode !== validCode) {
+      return { error: 'Código de invitación incorrecto.' }
+    }
+  }
+
+  // Verificar username único
   const { data: existing } = await supabase
     .from('profiles')
     .select('username')
@@ -95,14 +120,12 @@ export async function register(formData: FormData) {
     return { error: error.message }
   }
 
-  // Esperar un momento para que el trigger de Supabase cree el perfil
+  // Esperar a que el trigger de Supabase cree el perfil
   await new Promise(r => setTimeout(r, 800))
 
-  // Obtener el usuario recién creado y su rol
+  // Enviar notificación de bienvenida según el rol
   const { data: { user } } = await supabase.auth.getUser()
   if (user) {
-    const db = service()
-
     const { data: profile } = await db
       .from('profiles')
       .select('id, role')
@@ -110,16 +133,11 @@ export async function register(formData: FormData) {
       .single()
 
     if (profile) {
-      // Leer el mensaje de bienvenida configurado para su rol
       const roleKey = `welcome_msg_${profile.role}`
       const { data: configRow } = await db
-        .from('site_config')
-        .select('value')
-        .eq('key', roleKey)
-        .single()
+        .from('site_config').select('value').eq('key', roleKey).single()
 
       const welcomeMsg = configRow?.value?.trim()
-
       if (welcomeMsg) {
         await db.from('notifications').insert({
           user_id: profile.id,

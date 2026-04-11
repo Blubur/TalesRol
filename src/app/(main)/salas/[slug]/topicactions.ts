@@ -4,12 +4,9 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
+import sanitizeHtml from 'sanitize-html'
 import { awardPointsAndBadges } from '@/app/(main)/admin/config/puntos/puntosactions'
 
-/**
- * Extrae los @usernames del HTML de un post y envía notificaciones.
- * Nunca notifica al propio autor.
- */
 async function notifyMentions(
   supabase: any,
   content: string,
@@ -51,6 +48,23 @@ async function notifyMentions(
   }
 }
 
+function sanitize(html: string): string {
+  return sanitizeHtml(html, {
+    allowedTags: [
+      'p', 'br', 'strong', 'em', 'u', 's',
+      'h1', 'h2', 'h3', 'ul', 'ol', 'li',
+      'blockquote', 'hr', 'span', 'div', 'a', 'img'
+    ],
+    allowedAttributes: {
+      'a':   ['href', 'target', 'rel', 'class'],
+      'img': ['src', 'alt'],
+      '*':   ['class', 'style', 'data-verified', 'data-dice', 'data-result'],
+    },
+    allowedSchemes: ['https', 'http'],
+    disallowedTagsMode: 'discard',
+  })
+}
+
 function getServiceClient() {
   return createServiceClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -74,7 +88,7 @@ export async function createTopic(formData: FormData) {
     return { error: 'El título debe tener al menos 3 caracteres.' }
   }
 
-  const starter = starterRaw || null
+  const starter = starterRaw ? sanitize(starterRaw) : null
 
   const { data, error } = await supabase
     .from('topics')
@@ -121,7 +135,7 @@ export async function updateTopic(formData: FormData) {
     return { error: 'No tienes permiso para editar este tema.' }
   }
 
-  const starter = starterRaw || null
+  const starter = starterRaw ? sanitize(starterRaw) : null
 
   await supabase
     .from('topics')
@@ -165,8 +179,32 @@ export async function createPost(formData: FormData) {
     return { error: 'El post no puede estar vacío.' }
   }
 
-  const content = contentRaw
+  // Comprobar longitud mínima
   const service = getServiceClient()
+  const { data: minLengthRow } = await service
+    .from('site_config').select('value').eq('key', 'min_post_length').single()
+  const { data: minMsgRow } = await service
+    .from('site_config').select('value').eq('key', 'min_post_message').single()
+
+  const minLength = parseInt(minLengthRow?.value ?? '0', 10)
+  const plainText = contentRaw.replace(/<[^>]*>/g, '').trim()
+
+  if (minLength > 0 && plainText.length < minLength) {
+    const msgTemplate = minMsgRow?.value ?? 'Tu post es demasiado corto. Escribe al menos {min} caracteres.'
+    const errorMsg = msgTemplate.replace('{min}', String(minLength))
+    return { error: errorMsg }
+  }
+
+  // Comprobar longitud máxima
+  const { data: maxLengthRow } = await service
+    .from('site_config').select('value').eq('key', 'max_post_length').single()
+  const maxLength = parseInt(maxLengthRow?.value ?? '0', 10)
+
+  if (maxLength > 0 && plainText.length > maxLength) {
+    return { error: `El post supera el máximo de ${maxLength} caracteres.` }
+  }
+
+  const content = sanitize(contentRaw)
 
   const { data: inserted, error } = await service
     .from('posts')
@@ -181,7 +219,7 @@ export async function createPost(formData: FormData) {
 
   if (error) return { error: error.message }
 
-  // Asignar puntos e insignias automáticas (en background, no bloquea la respuesta)
+  // Asignar puntos e insignias automáticas (background)
   awardPointsAndBadges(user.id).catch(() => {})
 
   revalidatePath(`/salas/${slug}/${topic_id}`)
@@ -201,7 +239,7 @@ export async function updatePost(formData: FormData) {
   const { data: post } = await supabase.from('posts').select('author_id').eq('id', id).single()
   if (post?.author_id !== user.id) return { error: 'No tienes permiso.' }
 
-  const content = contentRaw
+  const content = sanitize(contentRaw)
   const service = getServiceClient()
 
   const { error } = await service
@@ -239,8 +277,6 @@ export async function deletePost(id: string, topic_id: string, slug: string) {
   return { success: true }
 }
 
-// ── SALA: actualizar descripción con HTML ──────────────────────────────────────
-
 export async function updateRoomDescription(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -261,7 +297,7 @@ export async function updateRoomDescription(formData: FormData) {
     return { error: 'No tienes permiso.' }
   }
 
-  const description = descRaw || null
+  const description = descRaw ? sanitize(descRaw) : null
   const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : []
 
   const service = getServiceClient()
