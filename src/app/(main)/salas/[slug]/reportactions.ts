@@ -30,11 +30,46 @@ export async function reportPost(postId: string, reason: string, topicId: string
 
   if (reportError) return { error: reportError.message }
 
-  // Notificar a moderadores y admins
+  // Comprobar bloqueo automático por número de reportes
+  const { data: maxRow } = await service
+    .from('site_config').select('value').eq('key', 'max_reports_auto_block').single()
+  const maxReports = parseInt(maxRow?.value ?? '0', 10)
+
+  if (maxReports > 0) {
+    const { count } = await service
+      .from('reports')
+      .select('*', { count: 'exact', head: true })
+      .eq('target_post_id', postId)
+      .eq('status', 'pending')
+
+    if ((count ?? 0) >= maxReports) {
+      // Bloquear automáticamente
+      await service
+        .from('posts')
+        .update({ blocked_at: new Date().toISOString(), blocked_by: null })
+        .eq('id', postId)
+
+      // Notificar a moderadores
+      const { data: staff } = await service
+        .from('profiles').select('id').in('role', ['admin', 'master'])
+
+      if (staff && staff.length > 0) {
+        await service.from('notifications').insert(
+          staff.map((s: { id: string }) => ({
+            user_id: s.id,
+            type:    'report',
+            title:   '🔒 Post bloqueado automáticamente',
+            body:    `Un post ha sido bloqueado al alcanzar ${maxReports} reportes. Revísalo en el panel.`,
+            link:    `/salas/${slug}/${topicId}`,
+          }))
+        )
+      }
+    }
+  }
+
+  // Notificar a moderadores del nuevo reporte
   const { data: staff } = await service
-    .from('profiles')
-    .select('id')
-    .in('role', ['admin', 'master'])
+    .from('profiles').select('id').in('role', ['admin', 'master'])
 
   if (staff && staff.length > 0) {
     await service.from('notifications').insert(
@@ -51,7 +86,7 @@ export async function reportPost(postId: string, reason: string, topicId: string
   return { success: true }
 }
 
-// ── BLOQUEAR POST (director de sala, moderador, admin) ─
+// ── BLOQUEAR POST ──────────────────────────────────────
 
 export async function blockPost(postId: string, topicId: string, slug: string, roomId: string) {
   const supabase = await createClient()
@@ -59,17 +94,10 @@ export async function blockPost(postId: string, topicId: string, slug: string, r
   if (!user) return { error: 'No autenticado.' }
 
   const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single()
+    .from('profiles').select('role').eq('id', user.id).single()
 
-  // Comprobar si es owner de la sala o moderador/admin
   const { data: room } = await supabase
-    .from('rooms')
-    .select('owner_id')
-    .eq('id', roomId)
-    .single()
+    .from('rooms').select('owner_id').eq('id', roomId).single()
 
   const isRoomOwner = room?.owner_id === user.id
   const isModerator = ['master', 'admin'].includes(profile?.role ?? '')
@@ -87,7 +115,6 @@ export async function blockPost(postId: string, topicId: string, slug: string, r
 
   if (error) return { error: error.message }
 
-  // Reporte automático para que moderación lo revise
   await service.from('reports').insert({
     reporter_id:    user.id,
     target_post_id: postId,
@@ -95,11 +122,8 @@ export async function blockPost(postId: string, topicId: string, slug: string, r
     status:         'pending',
   })
 
-  // Notificar a moderadores y admins
   const { data: staff } = await service
-    .from('profiles')
-    .select('id')
-    .in('role', ['admin', 'master'])
+    .from('profiles').select('id').in('role', ['admin', 'master'])
 
   if (staff && staff.length > 0) {
     await service.from('notifications').insert(
@@ -116,7 +140,7 @@ export async function blockPost(postId: string, topicId: string, slug: string, r
   return { success: true }
 }
 
-// ── DESBLOQUEAR POST (moderador, admin) ────────────────
+// ── DESBLOQUEAR POST ───────────────────────────────────
 
 export async function unblockPost(postId: string, topicId: string, slug: string) {
   const supabase = await createClient()
@@ -124,10 +148,7 @@ export async function unblockPost(postId: string, topicId: string, slug: string)
   if (!user) return { error: 'No autenticado.' }
 
   const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single()
+    .from('profiles').select('role').eq('id', user.id).single()
 
   if (!['master', 'admin'].includes(profile?.role ?? '')) {
     return { error: 'No tienes permiso para desbloquear posts.' }
@@ -145,8 +166,7 @@ export async function unblockPost(postId: string, topicId: string, slug: string)
   return { success: true }
 }
 
-
-// ── REPORTAR USUARIO ──────────────────────────────────────
+// ── REPORTAR USUARIO ───────────────────────────────────
 
 export async function reportUser(targetUserId: string, reason: string) {
   const supabase = await createClient()
@@ -167,11 +187,8 @@ export async function reportUser(targetUserId: string, reason: string) {
 
   if (reportError) return { error: reportError.message }
 
-  // Notificar a moderadores y admins
   const { data: staff } = await service
-    .from('profiles')
-    .select('id')
-    .in('role', ['admin', 'master'])
+    .from('profiles').select('id').in('role', ['admin', 'master'])
 
   if (staff && staff.length > 0) {
     await service.from('notifications').insert(
@@ -187,7 +204,6 @@ export async function reportUser(targetUserId: string, reason: string) {
 
   return { success: true }
 }
-
 
 // ── REPORTAR SALA ──────────────────────────────────────
 
@@ -210,9 +226,7 @@ export async function reportRoom(roomId: string, slug: string, reason: string) {
   if (reportError) return { error: reportError.message }
 
   const { data: staff } = await service
-    .from('profiles')
-    .select('id')
-    .in('role', ['admin', 'master'])
+    .from('profiles').select('id').in('role', ['admin', 'master'])
 
   if (staff && staff.length > 0) {
     await service.from('notifications').insert(

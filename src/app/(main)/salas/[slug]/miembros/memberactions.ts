@@ -2,10 +2,17 @@
 
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
+
+function service() {
+  return createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 type MemberRank = 'espectador' | 'jugador' | 'codirector'
 
-/** Añadir un miembro por username */
 export async function addRoomMember(roomId: string, username: string, rank: MemberRank = 'jugador') {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -26,6 +33,23 @@ export async function addRoomMember(roomId: string, username: string, rank: Memb
 
   if (target.id === room?.owner_id) return { error: 'El director ya gestiona la sala.' }
 
+  // Comprobar límite de salas por participante
+  const db = service()
+  const { data: maxRow } = await db
+    .from('site_config').select('value').eq('key', 'max_rooms_joined').single()
+  const maxRooms = parseInt(maxRow?.value ?? '0', 10)
+
+  if (maxRooms > 0) {
+    const { count } = await db
+      .from('room_members')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', target.id)
+
+    if ((count ?? 0) >= maxRooms) {
+      return { error: `El usuario ya participa en el máximo de salas permitido (${maxRooms}).` }
+    }
+  }
+
   const { error } = await supabase.from('room_members').upsert(
     { room_id: roomId, user_id: target.id, rank, invited_by: user.id },
     { onConflict: 'room_id,user_id' }
@@ -43,16 +67,15 @@ export async function addRoomMember(roomId: string, username: string, rank: Memb
   return {
     success: true,
     member: {
-      room_id: roomId,
-      user_id: target.id,
+      room_id:    roomId,
+      user_id:    target.id,
       rank,
-      joined_at: new Date().toISOString(),
-      profiles: targetProfile ?? null,
+      joined_at:  new Date().toISOString(),
+      profiles:   targetProfile ?? null,
     }
   }
-}  // ← esta llave faltaba
+}
 
-/** Cambiar el rango de un miembro */
 export async function updateMemberRank(roomId: string, memberId: string, rank: MemberRank) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -77,7 +100,6 @@ export async function updateMemberRank(roomId: string, memberId: string, rank: M
   return { success: true }
 }
 
-/** Expulsar a un miembro */
 export async function removeRoomMember(roomId: string, memberId: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -107,7 +129,6 @@ export async function removeRoomMember(roomId: string, memberId: string) {
   return { success: true }
 }
 
-/** Obtener miembros de una sala (para server components) */
 export async function getRoomMembers(roomId: string) {
   const supabase = await createClient()
   const { data, error } = await supabase
