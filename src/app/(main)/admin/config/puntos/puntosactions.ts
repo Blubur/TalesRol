@@ -211,6 +211,11 @@ export async function getUserBadges(userId: string) {
 export async function awardPointsAndBadges(userId: string) {
   const db = service()
 
+  // Comprobar si las insignias están habilitadas globalmente
+  const { data: badgesEnabledRow } = await db
+    .from('site_config').select('value').eq('key', 'badges_enabled').single()
+  if (badgesEnabledRow?.value === 'false') return
+
   // 1. Puntos por post
   const { data: configRow } = await db
     .from('site_config').select('value').eq('key', 'points_per_post').single()
