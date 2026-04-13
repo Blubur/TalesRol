@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
-import { notFound } from 'next/navigation'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
+import { notFound, redirect } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpenIcon, ArrowLeftIcon, PlusIcon } from '@heroicons/react/24/outline'
 import WikiIndexClient from './WikiIndexClient'
@@ -15,9 +16,19 @@ export default async function WikiIndexPage({ params, searchParams }: {
   params: Promise<{ slug: string }>
   searchParams: Promise<{ q?: string; cat?: string }>
 }) {
-  const { slug }  = await params
+  const { slug }   = await params
   const { q, cat } = await searchParams
-  const supabase  = await createClient()
+
+  // Comprobar si la wiki está habilitada globalmente
+  const db = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+  const { data: configRow } = await db
+    .from('site_config').select('value').eq('key', 'wiki_enabled').single()
+  if (configRow?.value === 'false') redirect(`/salas/${slug}`)
+
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   const { data: roomData } = await supabase
@@ -28,8 +39,8 @@ export default async function WikiIndexPage({ params, searchParams }: {
     ? await supabase.from('profiles').select('role').eq('id', user.id).single()
     : { data: null }
 
-  const isOwner = user?.id === roomData.owner_id
-  const isAdmin = profile?.role === 'admin'
+  const isOwner  = user?.id === roomData.owner_id
+  const isAdmin  = profile?.role === 'admin'
   const isMaster = profile?.role === 'master'
 
   const { data: memberData } = user
@@ -37,9 +48,8 @@ export default async function WikiIndexPage({ params, searchParams }: {
     : { data: null }
 
   const canEdit     = isOwner || isAdmin || memberData?.rank === 'codirector'
-  const canModerate = isOwner || isAdmin || isMaster  // puede usar selección múltiple y editar inline
+  const canModerate = isOwner || isAdmin || isMaster
 
-  // Cargar todas las páginas (sin filtros server-side, los filtros son client-side)
   const { data: pagesData } = await supabase
     .from('wiki_pages')
     .select('id, slug, title, excerpt, is_home, categories, updated_at, profiles!wiki_pages_last_editor_id_fkey(username, display_name)')
@@ -54,8 +64,6 @@ export default async function WikiIndexPage({ params, searchParams }: {
 
   return (
     <div className="wiki-index-page">
-
-      {/* Cabecera */}
       <div className="wiki-header animate-enter">
         <div className="wiki-header-left">
           <BookOpenIcon className="wiki-header-icon" />
@@ -76,7 +84,6 @@ export default async function WikiIndexPage({ params, searchParams }: {
         </div>
       </div>
 
-      {/* Todo lo interactivo va al cliente */}
       <WikiIndexClient
         pages={pages}
         slug={slug}

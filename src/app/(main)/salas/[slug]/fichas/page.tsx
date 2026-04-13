@@ -1,10 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { notFound, redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getOrCreateTemplate } from './sheetactions'
 import {
   ArrowLeftIcon,
-  UserIcon,
   PlusIcon,
   IdentificationIcon,
 } from '@heroicons/react/24/outline'
@@ -18,6 +18,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function FichasPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+
+  // Comprobar si las fichas están habilitadas globalmente
+  const db = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+  const { data: configRow } = await db
+    .from('site_config').select('value').eq('key', 'sheets_enabled').single()
+  if (configRow?.value === 'false') redirect(`/salas/${slug}`)
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
@@ -34,11 +44,10 @@ export default async function FichasPage({ params }: { params: Promise<{ slug: s
   const { data: profile } = await supabase
     .from('profiles').select('role').eq('id', user.id).single()
 
-  const isOwner = user.id === roomData.owner_id
-  const isAdmin = profile?.role === 'admin'
+  const isOwner   = user.id === roomData.owner_id
+  const isAdmin   = profile?.role === 'admin'
   const canManage = isOwner || isAdmin
 
-  // Obtener o crear plantilla
   if (canManage) {
     await getOrCreateTemplate(roomData.id)
   }
@@ -49,13 +58,11 @@ export default async function FichasPage({ params }: { params: Promise<{ slug: s
     .eq('room_id', roomData.id)
     .single()
 
-  // Miembros de la sala con sus fichas
   const { data: members } = await supabase
     .from('room_members')
     .select('user_id, rank, profiles(id, username, display_name, avatar_url)')
     .eq('room_id', roomData.id)
 
-  // Añadir owner si no está
   const memberIds = (members ?? []).map((m: any) => m.user_id)
   const allUsers: { user_id: string; rank: string; profiles: any }[] = [...(members ?? [])]
   if (!memberIds.includes(roomData.owner_id)) {
@@ -64,7 +71,6 @@ export default async function FichasPage({ params }: { params: Promise<{ slug: s
     if (ownerProfile) allUsers.unshift({ user_id: roomData.owner_id, rank: 'owner', profiles: ownerProfile })
   }
 
-  // Fichas existentes
   const { data: sheets } = await supabase
     .from('room_sheets')
     .select('user_id, updated_at')
@@ -81,7 +87,6 @@ export default async function FichasPage({ params }: { params: Promise<{ slug: s
   return (
     <div className="fichas-page">
 
-      {/* Header */}
       <div className="fichas-header animate-enter">
         <div className="fichas-header-left">
           <IdentificationIcon className="fichas-header-icon" />
@@ -102,7 +107,6 @@ export default async function FichasPage({ params }: { params: Promise<{ slug: s
         </div>
       </div>
 
-      {/* Lista de miembros con fichas */}
       {allUsers.length === 0 ? (
         <div className="fichas-empty animate-enter">
           <IdentificationIcon className="fichas-empty-icon" />
@@ -112,10 +116,10 @@ export default async function FichasPage({ params }: { params: Promise<{ slug: s
         <div className="fichas-grid animate-enter" style={{ animationDelay: '0.1s' }}>
           {allUsers.map((m, i) => {
             const p = m.profiles
-            const avatar = p?.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${p?.username}`
+            const avatar   = p?.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${p?.username}`
             const hasSheet = !!sheetMap[m.user_id]
-            const isMe = m.user_id === user.id
-            const canView = canManage || isMe
+            const isMe     = m.user_id === user.id
+            const canView  = canManage || isMe
 
             return (
               <div
@@ -141,7 +145,7 @@ export default async function FichasPage({ params }: { params: Promise<{ slug: s
                   >
                     {hasSheet
                       ? (isMe ? 'Ver / editar mi ficha' : `Ver ficha de ${p?.username}`)
-                      : (isMe ? 'Crear mi ficha' : `Crear ficha para ${p?.username}`)
+                      : (isMe ? 'Crear mi ficha'        : `Crear ficha para ${p?.username}`)
                     }
                   </Link>
                 )}
@@ -150,8 +154,6 @@ export default async function FichasPage({ params }: { params: Promise<{ slug: s
           })}
         </div>
       )}
-
-
     </div>
   )
 }

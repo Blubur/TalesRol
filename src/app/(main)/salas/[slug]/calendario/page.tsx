@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
-import { notFound } from 'next/navigation'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
+import { notFound, redirect } from 'next/navigation'
 import CalendarView from './CalendarView'
 
 export default async function CalendarioPage({
@@ -9,6 +10,15 @@ export default async function CalendarioPage({
 }) {
   const { slug } = await params
   const supabase = await createClient()
+
+  // Comprobar si el calendario está habilitado globalmente
+  const db = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+  const { data: configRow } = await db
+    .from('site_config').select('value').eq('key', 'calendar_enabled').single()
+  if (configRow?.value === 'false') redirect(`/salas/${slug}`)
 
   // Sala
   const { data: room } = await supabase
