@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Room, Topic, Profile } from '@/types/database'
@@ -15,9 +16,10 @@ import {
   BookOpenIcon,
   UsersIcon,
   IdentificationIcon,
+  ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline'
 import ReportRoomButton from './ReportRoomButton'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { hasPermission } from '@/lib/permissions'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -26,16 +28,36 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return { title: data?.title ?? 'Sala de Rol' }
 }
 
+async function getSiteConfig(): Promise<Record<string, string>> {
+  try {
+    const db = createServiceClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+    const { data } = await db.from('site_config').select('key, value')
+    return Object.fromEntries((data ?? []).map((r: any) => [r.key, r.value]))
+  } catch {
+    return {}
+  }
+}
+
 export default async function SalaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const { data: roomData } = await supabase
-    .from('rooms').select('*').eq('slug', slug).is('deleted_at', null).single()
+  const [{ data: roomData }, config] = await Promise.all([
+    supabase.from('rooms').select('*').eq('slug', slug).is('deleted_at', null).single(),
+    getSiteConfig(),
+  ])
 
   if (!roomData) notFound()
   const room = roomData as Room
+
+  // Funcionalidades habilitadas
+  const wikiEnabled     = config.wiki_enabled     !== 'false'
+  const calendarEnabled = config.calendar_enabled !== 'false'
+  const sheetsEnabled   = config.sheets_enabled   !== 'false'
 
   let profile: Profile | null = null
   if (user) {
@@ -61,7 +83,9 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
     .order('is_pinned', { ascending: false })
     .order('created_at', { ascending: false })
 
-  const topics = (topicsData ?? []) as (Topic & { profiles: Pick<Profile, 'username' | 'display_name' | 'avatar_url'> | null })[]
+  const topics = (topicsData ?? []) as (Topic & {
+    profiles: Pick<Profile, 'username' | 'display_name' | 'avatar_url'> | null
+  })[]
 
   const topicIds = topics.map(t => t.id)
   const postCounts: Record<string, number> = {}
@@ -99,11 +123,21 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
   const isAdmin = profile?.role === 'admin'
   const canEdit = isOwner || isAdmin
   const canPost = !!user && room.status === 'active'
+
+  // Permiso para crear temas
+  const canCreateTopic = canPost && profile
+    ? await hasPermission(profile.role, 'perm_create_topics')
+    : false
+
   const totalPosts = Object.values(postCounts).reduce((a, b) => a + b, 0)
 
   const STATUS_LABEL: Record<string, string> = {
-    active: 'Activa', paused: 'En pausa', closed: 'Cerrada',
-    pending: 'Pendiente', finished: 'Finalizada', archived: 'Archivada',
+    active:   'Activa',
+    paused:   'En pausa',
+    closed:   'Cerrada',
+    pending:  'Pendiente',
+    finished: 'Finalizada',
+    archived: 'Archivada',
   }
 
   return (
@@ -166,8 +200,12 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
           {user && !isOwner && !isAdmin && (
             <ReportRoomButton roomId={room.id} slug={room.slug} />
           )}
-          {canPost && (
-            <Link href={`/salas/${slug}/nuevo-tema`} className="btn-primary" style={{ padding: '0.4rem 1rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+          {canCreateTopic && (
+            <Link
+              href={`/salas/${slug}/nuevo-tema`}
+              className="btn-primary"
+              style={{ padding: '0.4rem 1rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            >
               <PlusIcon style={{ width: 14, height: 14 }} /> Nuevo Tema
             </Link>
           )}
@@ -176,17 +214,17 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
               <UsersIcon style={{ width: 14, height: 14 }} /> Miembros
             </Link>
           )}
-          {!!user && (
+          {!!user && wikiEnabled && (
             <Link href={`/salas/${slug}/wiki`} className="btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
               <BookOpenIcon style={{ width: 14, height: 14 }} /> Wiki
             </Link>
           )}
-          {canEdit && (
+          {canEdit && sheetsEnabled && (
             <Link href={`/salas/${slug}/fichas`} className="btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
               <IdentificationIcon style={{ width: 14, height: 14 }} /> Fichas
             </Link>
           )}
-          {!!user && (
+          {!!user && calendarEnabled && (
             <Link href={`/salas/${slug}/calendario`} className="btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
               <CalendarIcon style={{ width: 14, height: 14 }} /> Calendario
             </Link>
@@ -194,7 +232,7 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
         </div>
       </div>
 
-      {/* Descripción — FIX: dangerouslySetInnerHTML para renderizar HTML de Quill */}
+      {/* Descripción */}
       {room.description && (
         <div className="sala-desc-card animate-enter border-ornament" style={{ animationDelay: '0.15s' }}>
           <h2 className="sala-desc-label">Sobre esta sala</h2>
@@ -217,7 +255,7 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
           <div className="sala-topics-empty">
             <BookOpenIcon className="topics-empty-icon" />
             <p>Esta sala aún no tiene temas.</p>
-            {canPost && (
+            {canCreateTopic && (
               <Link href={`/salas/${slug}/nuevo-tema`} className="btn-primary" style={{ marginTop: '1rem' }}>
                 Crear el primer tema
               </Link>
