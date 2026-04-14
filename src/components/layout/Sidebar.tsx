@@ -14,9 +14,48 @@ import {
   DocumentTextIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   UsersIcon,
   TrophyIcon,
 } from '@heroicons/react/24/outline'
+
+function SidebarSection({
+  icon,
+  title,
+  right,
+  defaultOpen = true,
+  children,
+}: {
+  icon: React.ReactNode
+  title: string
+  right?: React.ReactNode
+  defaultOpen?: boolean
+  children: React.ReactNode
+}) {
+  const [open, setOpen] = useState(defaultOpen)
+
+  return (
+    <div className="sidebar-section">
+      <button
+        className="sidebar-section-header"
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+      >
+        <span className="sidebar-section-icon-svg">{icon}</span>
+        <span className="sidebar-section-title">{title}</span>
+        {right && <span onClick={e => e.stopPropagation()}>{right}</span>}
+        <span className="sidebar-section-chevron">
+          {open
+            ? <ChevronUpIcon width={10} height={10} />
+            : <ChevronDownIcon width={10} height={10} />
+          }
+        </span>
+      </button>
+      {open && <div className="sidebar-section-body">{children}</div>}
+    </div>
+  )
+}
 
 export default function Sidebar() {
   const [rooms, setRooms]         = useState<Room[]>([])
@@ -58,7 +97,7 @@ export default function Sidebar() {
   return (
     <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
 
-      {/* Toggle */}
+      {/* Toggle colapsar sidebar completo */}
       <button
         className="sidebar-toggle"
         onClick={() => setCollapsed(!collapsed)}
@@ -72,14 +111,14 @@ export default function Sidebar() {
 
       {!collapsed && (
         <>
-          {/* Panel admin */}
+          {/* Administración */}
           {isAdmin && (
             <>
-              <div className="sidebar-section">
-                <div className="sidebar-section-header">
-                  <Cog6ToothIcon className="sidebar-section-icon-svg" />
-                  <span className="sidebar-section-title">Administración</span>
-                </div>
+              <SidebarSection
+                icon={<Cog6ToothIcon width={13} height={13} />}
+                title="Administración"
+                defaultOpen
+              >
                 <div className="sidebar-quick">
                   <Link
                     href="/admin"
@@ -89,19 +128,20 @@ export default function Sidebar() {
                     Panel de Admin
                   </Link>
                 </div>
-              </div>
+              </SidebarSection>
               <div className="sidebar-divider" />
             </>
           )}
 
           {/* Salas activas */}
-          <div className="sidebar-section">
-            <div className="sidebar-section-header">
-              <Squares2X2Icon className="sidebar-section-icon-svg" />
-              <span className="sidebar-section-title">Salas Activas</span>
+          <SidebarSection
+            icon={<Squares2X2Icon width={13} height={13} />}
+            title="Salas Activas"
+            right={
               <Link href="/salas" className="sidebar-see-all">Ver todas</Link>
-            </div>
-
+            }
+            defaultOpen
+          >
             {loading ? (
               <div className="sidebar-loading">
                 {[...Array(4)].map((_, i) => (
@@ -129,16 +169,16 @@ export default function Sidebar() {
                 ))}
               </div>
             )}
-          </div>
+          </SidebarSection>
 
           <div className="sidebar-divider" />
 
           {/* Accesos rápidos */}
-          <div className="sidebar-section">
-            <div className="sidebar-section-header">
-              <DocumentTextIcon className="sidebar-section-icon-svg" />
-              <span className="sidebar-section-title">Accesos Rápidos</span>
-            </div>
+          <SidebarSection
+            icon={<DocumentTextIcon width={13} height={13} />}
+            title="Accesos Rápidos"
+            defaultOpen={false}
+          >
             <div className="sidebar-quick">
               <Link href="/anuncios" className={`sidebar-quick-link ${pathname === '/anuncios' ? 'active' : ''}`}>
                 <SpeakerWaveIcon width={13} height={13} className="sidebar-quick-icon" />
@@ -148,17 +188,16 @@ export default function Sidebar() {
                 <ShieldCheckIcon width={13} height={13} className="sidebar-quick-icon" />
                 Normas
               </Link>
-             
               <Link href="/usuarios" className={`sidebar-quick-link ${pathname === '/usuarios' ? 'active' : ''}`}>
-  <UsersIcon width={13} height={13} className="sidebar-quick-icon" />
-  Usuarios
-</Link>
-<Link href="/insignias" className={`sidebar-quick-link ${pathname === '/insignias' ? 'active' : ''}`}>
-  <TrophyIcon width={13} height={13} className="sidebar-quick-icon" />
-  Insignias
-</Link>
+                <UsersIcon width={13} height={13} className="sidebar-quick-icon" />
+                Usuarios
+              </Link>
+              <Link href="/insignias" className={`sidebar-quick-link ${pathname === '/insignias' ? 'active' : ''}`}>
+                <TrophyIcon width={13} height={13} className="sidebar-quick-icon" />
+                Insignias
+              </Link>
             </div>
-          </div>
+          </SidebarSection>
         </>
       )}
 
@@ -194,16 +233,25 @@ export default function Sidebar() {
         }
         .sidebar-toggle:hover { border-color: var(--color-crimson); color: var(--color-crimson); }
 
-        .sidebar-section { padding: 0 0.75rem; margin-bottom: 0.5rem; }
+        .sidebar-section { margin-bottom: 0.25rem; }
+
         .sidebar-section-header {
           display: flex;
           align-items: center;
           gap: 0.4rem;
-          margin-bottom: 0.5rem;
-          padding-bottom: 0.4rem;
+          width: 100%;
+          padding: 0.4rem 0.75rem;
+          background: transparent;
+          border: none;
           border-bottom: 1px solid var(--border-subtle);
+          cursor: pointer;
+          text-align: left;
+          transition: background var(--transition-fast);
+          margin-bottom: 0;
         }
-        .sidebar-section-icon-svg { width: 13px; height: 13px; color: var(--text-muted); flex-shrink: 0; }
+        .sidebar-section-header:hover { background: var(--color-crimson-subtle); }
+
+        .sidebar-section-icon-svg { color: var(--text-muted); flex-shrink: 0; display: flex; }
         .sidebar-section-title {
           font-family: var(--font-display);
           font-size: var(--text-xs);
@@ -213,6 +261,10 @@ export default function Sidebar() {
           color: var(--text-muted);
           flex: 1;
         }
+        .sidebar-section-chevron { color: var(--text-muted); display: flex; flex-shrink: 0; }
+
+        .sidebar-section-body { padding: 0.4rem 0.75rem 0.5rem; }
+
         .sidebar-see-all {
           font-size: var(--text-xs);
           color: var(--color-crimson);
@@ -264,10 +316,9 @@ export default function Sidebar() {
 
         .sidebar-loading { display: flex; flex-direction: column; gap: 6px; }
         .sidebar-skeleton { height: 36px; border-radius: var(--radius-sm); }
-
         .sidebar-empty { font-size: var(--text-sm); color: var(--text-muted); text-align: center; padding: 1rem 0; }
 
-        .sidebar-divider { height: 1px; background: var(--border-subtle); margin: 0.75rem 0; }
+        .sidebar-divider { height: 1px; background: var(--border-subtle); margin: 0.25rem 0; }
 
         .sidebar-quick { display: flex; flex-direction: column; gap: 2px; }
         .sidebar-quick-link {
