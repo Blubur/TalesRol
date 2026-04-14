@@ -124,16 +124,7 @@ export default function Sidebar() {
                     <span className="admin-dot" />
                     Panel de Admin
                   </Link>
-                </div>
-              </SidebarSection>
 
-              <div className="sidebar-divider" />
-
-              <SidebarSection
-                icon={<Cog6ToothIcon width={13} height={13} />}
-                title="Configuración"
-              >
-                <div className="sidebar-quick">
                   <Link
                     href="/admin/config/general"
                     className={`sidebar-quick-link admin ${pathname.startsWith('/admin/config') ? 'active' : ''}`}
@@ -145,6 +136,7 @@ export default function Sidebar() {
               </SidebarSection>
 
               <div className="sidebar-divider" />
+
             </>
           )}
 
