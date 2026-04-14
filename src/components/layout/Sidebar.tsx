@@ -152,6 +152,7 @@ export default function Sidebar() {
               </SidebarSection>
               <div className="sidebar-divider" />
             </>
+            )}
           )}
 
           {/* Salas activas */}
