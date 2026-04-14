@@ -10,7 +10,6 @@ import {
   ShieldCheckIcon,
   Squares2X2Icon,
   SpeakerWaveIcon,
-  BookOpenIcon,
   DocumentTextIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -58,10 +57,10 @@ function SidebarSection({
 }
 
 export default function Sidebar() {
-  const [rooms, setRooms]         = useState<Room[]>([])
-  const [loading, setLoading]     = useState(true)
+  const [rooms, setRooms] = useState<Room[]>([])
+  const [loading, setLoading] = useState(true)
   const [collapsed, setCollapsed] = useState(false)
-  const [isAdmin, setIsAdmin]     = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   const pathname = usePathname()
   const supabase = createClient()
 
@@ -97,7 +96,6 @@ export default function Sidebar() {
   return (
     <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
 
-      {/* Toggle colapsar sidebar completo */}
       <button
         className="sidebar-toggle"
         onClick={() => setCollapsed(!collapsed)}
@@ -111,13 +109,12 @@ export default function Sidebar() {
 
       {!collapsed && (
         <>
-          {/* Administración */}
+          {/* ADMIN COMPLETO */}
           {isAdmin && (
             <>
               <SidebarSection
                 icon={<Cog6ToothIcon width={13} height={13} />}
                 title="Administración"
-                defaultOpen
               >
                 <div className="sidebar-quick">
                   <Link
@@ -129,45 +126,38 @@ export default function Sidebar() {
                   </Link>
                 </div>
               </SidebarSection>
-              <div className="sidebar-divider" />
-            </>
 
-             {/* configuracion */}
-          {isAdmin && (
-            <>
+              <div className="sidebar-divider" />
+
               <SidebarSection
                 icon={<Cog6ToothIcon width={13} height={13} />}
                 title="Configuración"
-                defaultOpen
               >
                 <div className="sidebar-quick">
                   <Link
                     href="/admin/config/general"
-                    className={`sidebar-quick-link admin ${pathname.startsWith('/admin/config/general') ? 'active' : ''}`}
+                    className={`sidebar-quick-link admin ${pathname.startsWith('/admin/config') ? 'active' : ''}`}
                   >
                     <span className="admin-dot" />
                     Configuración
                   </Link>
                 </div>
               </SidebarSection>
+
               <div className="sidebar-divider" />
             </>
-            )}
           )}
 
-          {/* Salas activas */}
+          {/* Salas */}
           <SidebarSection
             icon={<Squares2X2Icon width={13} height={13} />}
             title="Salas Activas"
-            right={
-              <Link href="/salas" className="sidebar-see-all">Ver todas</Link>
-            }
-            defaultOpen
+            right={<Link href="/salas" className="sidebar-see-all">Ver todas</Link>}
           >
             {loading ? (
               <div className="sidebar-loading">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="sidebar-skeleton skeleton" style={{ animationDelay: `${i * 0.1}s` }} />
+                  <div key={i} className="sidebar-skeleton skeleton" />
                 ))}
               </div>
             ) : rooms.length === 0 ? (
@@ -183,7 +173,7 @@ export default function Sidebar() {
                     <div className="sidebar-room-indicator" />
                     <div className="sidebar-room-info">
                       <span className="sidebar-room-title">{room.title}</span>
-                      {room.tags && room.tags.length > 0 && (
+                      {room.tags?.length > 0 && (
                         <span className="sidebar-room-tag">{room.tags[0]}</span>
                       )}
                     </div>
@@ -224,6 +214,9 @@ export default function Sidebar() {
       )}
 
       <style>{`
+       
+        .sidebar-divider { height: 1px; background: var(--border-subtle); margin: 0.25rem 0; }
+
         .sidebar {
           width: 220px;
           flex-shrink: 0;
