@@ -131,6 +131,27 @@ export default function Sidebar() {
               </SidebarSection>
               <div className="sidebar-divider" />
             </>
+
+             {/* configuracion */}
+          {isAdmin && (
+            <>
+              <SidebarSection
+                icon={<Cog6ToothIcon width={13} height={13} />}
+                title="Configuración"
+                defaultOpen
+              >
+                <div className="sidebar-quick">
+                  <Link
+                    href="/admin/config/general"
+                    className={`sidebar-quick-link admin ${pathname.startsWith('/admin/config/general') ? 'active' : ''}`}
+                  >
+                    <span className="admin-dot" />
+                    Configuración
+                  </Link>
+                </div>
+              </SidebarSection>
+              <div className="sidebar-divider" />
+            </>
           )}
 
           {/* Salas activas */}
