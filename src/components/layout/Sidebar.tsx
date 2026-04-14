@@ -129,7 +129,7 @@ export default function Sidebar() {
                     href="/admin/config/general"
                     className={`sidebar-quick-link admin ${pathname.startsWith('/admin/config') ? 'active' : ''}`}
                   >
-                    <span className="admin-dot" />
+                    <span className="confi-dot" />
                     Configuración
                   </Link>
                 </div>
@@ -353,6 +353,13 @@ export default function Sidebar() {
           border-radius: 50%;
           background: #fbbf24;
           box-shadow: 0 0 6px rgba(251,191,36,0.5);
+          flex-shrink: 0;
+        }
+          .confi-dot {
+          width: 7px; height: 7px;
+          border-radius: 50%;
+          background: #c924fb;
+          box-shadow: 0 0 6px rgba(98, 22, 115, 0.5);
           flex-shrink: 0;
         }
 
