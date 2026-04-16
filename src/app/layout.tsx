@@ -45,26 +45,55 @@ async function getCustomCss(): Promise<string> {
 /** Genera el bloque <style> con las variables CSS del tema */
 function buildThemeCss(config: Record<string, string>): string {
   const v = (key: string, fallback: string) => config[key] ?? fallback
-  return `:root {
-  --bg-base:        ${v('theme_bg_base',        '#0f0f1a')};
-  --bg-card:        ${v('theme_bg_card',        '#1a1a2e')};
-  --accent:         ${v('theme_accent',         '#c9a84c')};
-  --text-primary:   ${v('theme_text_primary',   '#e0e0e0')};
-  --text-muted:     ${v('theme_text_muted',     '#888888')};
-  --navbar-bg:      ${v('theme_navbar_bg',      '#0a0a14')};
-  --footer-bg:      ${v('theme_footer_bg',      '#0a0a14')};
-  --font-headings:  '${v('theme_font_headings', 'Cinzel')}', serif;
-  --font-body:      '${v('theme_font_body',     'Crimson Pro')}', serif;
-  --font-size-base: ${v('theme_font_size_base', '16')}px;
-  --font-size-h1:   ${v('theme_font_size_h1',   '2')}rem;
+  const displayFont = v('theme_font_display', 'Texturina')
+  const bodyFont    = v('theme_font_body',    'Radio Canada')
+  const crimson     = v('theme_color_crimson', '#C10606')
+  // Genera rgba de glow y subtle a partir del crimson principal
+  const hex2rgb = (h: string) => {
+    const r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16)
+    return `${r},${g},${b}`
+  }
+  const rgb = crimson.startsWith('#') && crimson.length === 7 ? hex2rgb(crimson) : '193,6,6'
+
+  return `:root, [data-theme="dark"] {
+  --color-crimson:        ${crimson};
+  --color-crimson-dim:    ${v('theme_color_crimson_dim',   '#8a0404')};
+  --color-crimson-light:  ${v('theme_color_crimson_light', '#e53535')};
+  --color-crimson-glow:   rgba(${rgb},0.4);
+  --color-crimson-subtle: rgba(${rgb},0.08);
+
+  --bg-primary:   ${v('theme_bg_primary',   '#0a0a0a')};
+  --bg-secondary: ${v('theme_bg_secondary', '#111111')};
+  --bg-card:      ${v('theme_bg_card',      '#161616')};
+  --bg-elevated:  ${v('theme_bg_elevated',  '#1e1e1e')};
+
+  --text-primary:   ${v('theme_text_primary',   '#e8e0d0')};
+  --text-secondary: ${v('theme_text_secondary', '#9a9080')};
+  --text-muted:     ${v('theme_text_muted',     '#5a5248')};
+
+  --font-display:     '${displayFont}', Georgia, serif;
+  --font-body:        '${bodyFont}', sans-serif;
+  --font-cinzel:      '${displayFont}', Georgia, serif;
+  --font-crimson-pro: '${bodyFont}', Georgia, serif;
+
+  --color-success:        ${v('theme_color_success', '#4a9e6b')};
+  --color-warning:        ${v('theme_color_warning', '#d4820a')};
+  --color-error:          ${v('theme_color_error',   '#e53535')};
+  --color-info:           ${v('theme_color_info',    '#5b8fd4')};
+
+  --color-role-admin:    ${v('theme_role_admin',    '#ff4444')};
+  --color-role-director: ${v('theme_role_director', '#d4820a')};
+  --color-role-master:   ${v('theme_role_master',   '#7b9bda')};
+  --color-role-jugador:  ${v('theme_role_jugador',  '#6db56d')};
+  --color-role-miembro:  ${v('theme_role_miembro',  '#9a9080')};
 }`
 }
 
 /** Genera la URL de Google Fonts para las fuentes del tema */
 function buildGoogleFontsUrl(config: Record<string, string>): string | null {
-  const headings = config.theme_font_headings ?? 'Cinzel'
-  const body     = config.theme_font_body     ?? 'Crimson Pro'
-  const fonts = [...new Set([headings, body])]
+  const display = config.theme_font_display ?? 'Texturina'
+  const body    = config.theme_font_body    ?? 'Radio Canada'
+  const fonts = [...new Set([display, body])]
     .filter(Boolean)
     .map(f => f.replace(/ /g, '+'))
     .join('&family=')
