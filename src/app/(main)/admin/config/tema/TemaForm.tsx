@@ -95,11 +95,13 @@ export default function TemaForm({ config }: Props) {
     setSaving(true)
     setError('')
     try {
-      for (const [key, value] of Object.entries(values)) {
-        await saveConfig(key, value)
+      const result = await saveConfig(values)
+      if (result?.error) {
+        setError(result.error)
+      } else {
+        setSaved(true)
+        setTimeout(() => setSaved(false), 3000)
       }
-      setSaved(true)
-      setTimeout(() => setSaved(false), 3000)
     } catch {
       setError('Error al guardar. Inténtalo de nuevo.')
     } finally {
