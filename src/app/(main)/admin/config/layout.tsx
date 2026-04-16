@@ -20,6 +20,7 @@ const navItems = [
   { href: '/admin/config/favicon',       label: 'Favicon',            icon: PhotoIcon },
   { href: '/admin/config/roles',         label: 'Roles y permisos',   icon: ShieldCheckIcon },
   { href: '/admin/config/puntos',        label: 'Puntos e insignias', icon: TrophyIcon },
+  { href: '/admin/config/tema',          label: 'Tema Rápido',        icon: PaintBrushIcon },
   { href: '/admin/css',                  label: 'CSS personalizado',  icon: PaintBrushIcon },
 ]
 
