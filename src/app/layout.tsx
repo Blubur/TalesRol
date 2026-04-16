@@ -21,7 +21,9 @@ async function getSiteConfig(): Promise<Record<string, string>> {
     const { data } = await getServiceClient()
       .from('site_config')
       .select('key, value')
-    return Object.fromEntries((data ?? []).map((r: { key: string; value: string }) => [r.key, r.value]))
+    return Object.fromEntries(
+      (data ?? []).map((r: { key: string; value: string }) => [r.key, r.value])
+    )
   } catch {
     return {}
   }
@@ -40,6 +42,44 @@ async function getCustomCss(): Promise<string> {
   }
 }
 
+/** Genera el bloque <style> con las variables CSS del tema */
+function buildThemeCss(config: Record<string, string>): string {
+  const v = (key: string, fallback: string) => config[key] ?? fallback
+  return `:root {
+  --bg-base:        ${v('theme_bg_base',        '#0f0f1a')};
+  --bg-card:        ${v('theme_bg_card',        '#1a1a2e')};
+  --accent:         ${v('theme_accent',         '#c9a84c')};
+  --text-primary:   ${v('theme_text_primary',   '#e0e0e0')};
+  --text-muted:     ${v('theme_text_muted',     '#888888')};
+  --navbar-bg:      ${v('theme_navbar_bg',      '#0a0a14')};
+  --footer-bg:      ${v('theme_footer_bg',      '#0a0a14')};
+  --font-headings:  '${v('theme_font_headings', 'Cinzel')}', serif;
+  --font-body:      '${v('theme_font_body',     'Crimson Pro')}', serif;
+  --font-size-base: ${v('theme_font_size_base', '16')}px;
+  --font-size-h1:   ${v('theme_font_size_h1',   '2')}rem;
+}`
+}
+
+/** Genera la URL de Google Fonts para las fuentes del tema */
+function buildGoogleFontsUrl(config: Record<string, string>): string | null {
+  const headings = config.theme_font_headings ?? 'Cinzel'
+  const body     = config.theme_font_body     ?? 'Crimson Pro'
+  const fonts = [...new Set([headings, body])]
+    .filter(Boolean)
+    .map(f => f.replace(/ /g, '+'))
+    .join('&family=')
+  return fonts ? `https://fonts.googleapis.com/css2?family=${fonts}:wght@400;500;600;700&display=swap` : null
+}
+
+/** Extrae y sanitiza las etiquetas <link> del campo de links externos */
+function extractExtraLinks(raw: string): string[] {
+  if (!raw) return []
+  return raw
+    .split('\n')
+    .map(l => l.trim())
+    .filter(l => l.startsWith('<link') && l.includes('stylesheet'))
+}
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [config, customCss] = await Promise.all([getSiteConfig(), getCustomCss()])
 
@@ -49,8 +89,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const bannerBg      = config.banner_color      ?? '#e63946'
   const bannerText    = config.banner_text_color ?? '#ffffff'
 
+  const themeCss       = buildThemeCss(config)
+  const googleFontsUrl = buildGoogleFontsUrl(config)
+  const extraLinks     = extractExtraLinks(config.theme_font_extra_links ?? '')
+
   // Comprobar si el usuario actual es admin para saltarse el mantenimiento.
-  // Solo se ejecuta si el mantenimiento está activo, para no añadir latencia innecesaria.
+  // Solo se ejecuta si el mantenimiento está activo.
   let isAdmin = false
   if (maintenanceOn) {
     try {
@@ -70,7 +114,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         isAdmin = profile?.role === 'admin'
       }
     } catch {
-      // Si falla la comprobación, no es admin — se muestra mantenimiento
+      // Si falla la comprobación, no es admin
     }
   }
 
@@ -79,15 +123,37 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* Fuentes del tema (Google Fonts dinámico) */}
+        {googleFontsUrl && (
+          <link href={googleFontsUrl} rel="stylesheet" />
+        )}
+
+        {/* Fuentes estáticas que siempre cargamos como fallback */}
         <link
           href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
           rel="stylesheet"
         />
+
+        {/* Links de fuentes externos adicionales configurados desde el PA */}
+        {extraLinks.map((link, i) => (
+          <link
+            key={i}
+            rel="stylesheet"
+            href={link.match(/href="([^"]+)"/)?.[1] ?? ''}
+          />
+        ))}
+
         <link
           rel="stylesheet"
           href="https://nagoshiashumari.github.io/Rpg-Awesome/stylesheets/rpg-awesome.min.css"
         />
         <link rel="icon" href="/api/favicon" />
+
+        {/* Variables CSS del tema — se inyectan antes que el CSS custom */}
+        <style id="theme-vars" dangerouslySetInnerHTML={{ __html: themeCss }} />
+
+        {/* CSS personalizado del admin (puede sobreescribir variables) */}
         {customCss && (
           <style id="custom-css" dangerouslySetInnerHTML={{ __html: customCss }} />
         )}
@@ -137,7 +203,7 @@ function MaintenancePage({ message }: { message?: string }) {
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" opacity={0.4}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z" />
       </svg>
-      <h1 style={{ fontFamily: 'var(--font-cinzel, serif)', fontSize: '1.8rem', fontWeight: 700, margin: 0 }}>
+      <h1 style={{ fontFamily: 'var(--font-headings, serif)', fontSize: '1.8rem', fontWeight: 700, margin: 0 }}>
         En mantenimiento
       </h1>
       <p style={{ color: 'var(--text-muted, #888)', maxWidth: '420px', lineHeight: 1.6, margin: 0 }}>
