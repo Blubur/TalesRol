@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { createClient } from '@supabase/supabase-js'
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
   title: { template: '%s | TalesRol', default: 'TalesRol — Plataforma de Roleplay' },
@@ -47,6 +49,31 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const bannerBg      = config.banner_color      ?? '#e63946'
   const bannerText    = config.banner_text_color ?? '#ffffff'
 
+  // Comprobar si el usuario actual es admin para saltarse el mantenimiento.
+  // Solo se ejecuta si el mantenimiento está activo, para no añadir latencia innecesaria.
+  let isAdmin = false
+  if (maintenanceOn) {
+    try {
+      const cookieStore = await cookies()
+      const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        { cookies: { getAll: () => cookieStore.getAll() } }
+      )
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        const { data: profile } = await getServiceClient()
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single()
+        isAdmin = profile?.role === 'admin'
+      }
+    } catch {
+      // Si falla la comprobación, no es admin — se muestra mantenimiento
+    }
+  }
+
   return (
     <html lang="es">
       <head>
@@ -57,11 +84,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           rel="stylesheet"
         />
         <link
-  rel="stylesheet"
-  href="https://nagoshiashumari.github.io/Rpg-Awesome/stylesheets/rpg-awesome.min.css"
-/>
-
-<link rel="icon" href="/api/favicon" />
+          rel="stylesheet"
+          href="https://nagoshiashumari.github.io/Rpg-Awesome/stylesheets/rpg-awesome.min.css"
+        />
+        <link rel="icon" href="/api/favicon" />
         {customCss && (
           <style id="custom-css" dangerouslySetInnerHTML={{ __html: customCss }} />
         )}
@@ -85,7 +111,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {bannerMsg}
           </div>
         )}
-        {maintenanceOn ? <MaintenancePage message={config.maintenance_message} /> : children}
+        {maintenanceOn && !isAdmin
+          ? <MaintenancePage message={config.maintenance_message} />
+          : children
+        }
       </body>
     </html>
   )
