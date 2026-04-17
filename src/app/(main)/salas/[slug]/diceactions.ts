@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { hasPermission } from '@/lib/permissions'
 
+
 export interface DiceRollResult {
   diceType: string
   faces: number
@@ -29,7 +30,8 @@ export async function rollDice(diceTypeId: string, quantity: number): Promise<{ 
     .eq('key', 'dice_enabled')
     .single()
 
-  if (configRow?.value === 'false') {
+  // Si la fila no existe o el valor no es explícitamente 'true', bloqueamos
+  if (!configRow || configRow.value !== 'true') {
     return { error: 'Las tiradas de dado están desactivadas temporalmente.' }
   }
 
