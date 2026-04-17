@@ -45,22 +45,32 @@ async function getCustomCss(): Promise<string> {
 /** Genera el bloque <style> con las variables CSS del tema */
 function buildThemeCss(config: Record<string, string>): string {
   const v = (key: string, fallback: string) => config[key] ?? fallback
-  const displayFont = v('theme_font_display', 'Texturina')
-  const bodyFont    = v('theme_font_body',    'Radio Canada')
-  const crimson     = v('theme_color_crimson', '#C10606')
-  // Genera rgba de glow y subtle a partir del crimson principal
+
   const hex2rgb = (h: string) => {
+    if (!h.startsWith('#') || h.length !== 7) return null
     const r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16)
     return `${r},${g},${b}`
   }
-  const rgb = crimson.startsWith('#') && crimson.length === 7 ? hex2rgb(crimson) : '193,6,6'
 
-  return `:root, [data-theme="dark"] {
-  --color-crimson:        ${crimson};
+  const displayFont = v('theme_font_display', 'Texturina')
+  const bodyFont    = v('theme_font_body',    'Radio Canada')
+
+  // Modo oscuro
+  const darkCrimson = v('theme_color_crimson', '#C10606')
+  const darkRgb     = hex2rgb(darkCrimson) ?? '193,6,6'
+
+  // Modo claro
+  const lightCrimson = v('theme_light_color_crimson', '#a80505')
+  const lightRgb     = hex2rgb(lightCrimson) ?? '168,5,5'
+
+  return `
+:root,
+[data-theme="dark"] {
+  --color-crimson:        ${darkCrimson};
   --color-crimson-dim:    ${v('theme_color_crimson_dim',   '#8a0404')};
   --color-crimson-light:  ${v('theme_color_crimson_light', '#e53535')};
-  --color-crimson-glow:   rgba(${rgb},0.4);
-  --color-crimson-subtle: rgba(${rgb},0.08);
+  --color-crimson-glow:   rgba(${darkRgb},0.4);
+  --color-crimson-subtle: rgba(${darkRgb},0.08);
 
   --bg-primary:   ${v('theme_bg_primary',   '#0a0a0a')};
   --bg-secondary: ${v('theme_bg_secondary', '#111111')};
@@ -76,10 +86,43 @@ function buildThemeCss(config: Record<string, string>): string {
   --font-cinzel:      '${displayFont}', Georgia, serif;
   --font-crimson-pro: '${bodyFont}', Georgia, serif;
 
-  --color-success:        ${v('theme_color_success', '#4a9e6b')};
-  --color-warning:        ${v('theme_color_warning', '#d4820a')};
-  --color-error:          ${v('theme_color_error',   '#e53535')};
-  --color-info:           ${v('theme_color_info',    '#5b8fd4')};
+  --color-success: ${v('theme_color_success', '#4a9e6b')};
+  --color-warning: ${v('theme_color_warning', '#d4820a')};
+  --color-error:   ${v('theme_color_error',   '#e53535')};
+  --color-info:    ${v('theme_color_info',    '#5b8fd4')};
+
+  --color-role-admin:    ${v('theme_role_admin',    '#ff4444')};
+  --color-role-director: ${v('theme_role_director', '#d4820a')};
+  --color-role-master:   ${v('theme_role_master',   '#7b9bda')};
+  --color-role-jugador:  ${v('theme_role_jugador',  '#6db56d')};
+  --color-role-miembro:  ${v('theme_role_miembro',  '#9a9080')};
+}
+
+[data-theme="light"] {
+  --color-crimson:        ${lightCrimson};
+  --color-crimson-dim:    ${v('theme_light_color_crimson_dim',   '#7a0303')};
+  --color-crimson-light:  ${v('theme_light_color_crimson_light', '#c52020')};
+  --color-crimson-glow:   rgba(${lightRgb},0.25);
+  --color-crimson-subtle: rgba(${lightRgb},0.06);
+
+  --bg-primary:   ${v('theme_light_bg_primary',   '#f5f0eb')};
+  --bg-secondary: ${v('theme_light_bg_secondary', '#ede8e2')};
+  --bg-card:      ${v('theme_light_bg_card',      '#faf7f4')};
+  --bg-elevated:  ${v('theme_light_bg_elevated',  '#ffffff')};
+
+  --text-primary:   ${v('theme_light_text_primary',   '#1a1410')};
+  --text-secondary: ${v('theme_light_text_secondary', '#5a4e44')};
+  --text-muted:     ${v('theme_light_text_muted',     '#9a8e84')};
+
+  --font-display:     '${displayFont}', Georgia, serif;
+  --font-body:        '${bodyFont}', sans-serif;
+  --font-cinzel:      '${displayFont}', Georgia, serif;
+  --font-crimson-pro: '${bodyFont}', Georgia, serif;
+
+  --color-success: ${v('theme_color_success', '#4a9e6b')};
+  --color-warning: ${v('theme_color_warning', '#d4820a')};
+  --color-error:   ${v('theme_color_error',   '#e53535')};
+  --color-info:    ${v('theme_color_info',    '#5b8fd4')};
 
   --color-role-admin:    ${v('theme_role_admin',    '#ff4444')};
   --color-role-director: ${v('theme_role_director', '#d4820a')};
