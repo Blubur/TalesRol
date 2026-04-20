@@ -1,4 +1,3 @@
-cat > "src/app/(main)/admin/config/general/GeneralConfigForm.tsx" << 'EOF'
 'use client'
 
 import { useState } from 'react'
