@@ -1,0 +1,22 @@
+{
+  "name": "talesrol-tests",
+  "version": "1.0.0",
+  "description": "Tests automatizados para TalesRol con Playwright",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:auth": "playwright test tests/auth.spec.ts",
+    "test:nav": "playwright test tests/navegacion.spec.ts",
+    "test:salas": "playwright test tests/salas.spec.ts",
+    "test:personajes": "playwright test \"tests/personajes perfil.spec.ts\"",
+    "test:admin": "playwright test tests/admin.spec.ts",
+    "test:bugs": "playwright test \"tests/bugs conocidos.spec.ts\"",
+    "report": "playwright show-report test-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "typescript": "^5.0.0"
+  }
+}
