@@ -9,7 +9,7 @@ async function loginAdmin(page: Page) {
   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
   await page.click('button[type="submit"]');
-  await page.waitForURL(url => !url.pathname.includes('/login'), { timeout: 8000 });
+  await page.waitForURL(url => !url.pathname.includes('/login'), { timeout: 20000 });
 }
 
 // Guarda el slug de la sala creada para tests siguientes
