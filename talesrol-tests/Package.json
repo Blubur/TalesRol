@@ -14,9 +14,11 @@
     "test:admin": "playwright test tests/admin.spec.ts",
     "test:bugs": "playwright test \"tests/bugs conocidos.spec.ts\"",
     "report": "playwright show-report test-report"
+    "dashboard": "BASE_URL=https://tales-rol.vercel.app npx playwright test --reporter=json > test-results.json ; node generate-report.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.0",
     "typescript": "^5.0.0"
   }
+
 }

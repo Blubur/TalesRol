@@ -78,21 +78,19 @@ test.describe('Login', () => {
   });
 
   test('logout funciona', async ({ page }) => {
-    // Login primero
-    await page.goto('/auth/login');
-    await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
-    await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
-    await page.click('button[type="submit"]');
-    await page.waitForURL(url => !url.pathname.includes('/login'), { timeout: 8000 });
+  await page.goto('/auth/login');
+  await page.fill('input[name="email"]', ADMIN.email);
+  await page.fill('input[name="password"]', ADMIN.password);
+  await page.click('button[type="submit"]');
+  await page.waitForURL(url => !url.pathname.includes('/login'), { timeout: 20000 });
 
-    // Busca el botón de cerrar sesión
-    const logoutBtn = page.locator('button:has-text("Salir"), button:has-text("Cerrar"), a:has-text("Salir"), a:has-text("Cerrar sesión")');
-    if (await logoutBtn.count() > 0) {
-      await logoutBtn.first().click();
-      await expect(page).toHaveURL(/\/auth\/login|^\/$/, { timeout: 5000 });
-      console.log('✅ Logout OK');
-    } else {
-      console.log('⚠️  Botón de logout no encontrado — revisa el selector');
-    }
-  });
+  // Abre el menú de usuario
+  await page.click('.navbar-avatar-btn');
+  await page.waitForTimeout(300);
+
+  // Click en Cerrar Sesión
+  await page.click('button.dropdown-item.logout');
+  await expect(page).toHaveURL(/\/auth\/login|^\/$/, { timeout: 10000 });
+  console.log('✅ Logout OK');
+});
 });
