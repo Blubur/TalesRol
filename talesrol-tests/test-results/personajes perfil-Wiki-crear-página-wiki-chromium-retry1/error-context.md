@@ -110,133 +110,24 @@ Call log:
           - generic [ref=e97]: Accesos Rápidos
           - img [ref=e99]
       - main [ref=e101]:
-        - generic [ref=e102]:
-          - generic [ref=e103]:
-            - generic [ref=e104]:
-              - img [ref=e105]
-              - generic [ref=e107]:
-                - heading "Nueva página" [level=1] [ref=e108]
-                - paragraph [ref=e109]: A la media noche pasó
-            - link "Wiki" [ref=e110] [cursor=pointer]:
-              - /url: /salas/a-la-media-noche-paso/wiki
-              - img [ref=e111]
-              - text: Wiki
-          - generic [ref=e113]:
-            - generic [ref=e114]:
-              - generic [ref=e115]:
-                - generic [ref=e116]: Título de la página
-                - 'textbox "Ej: Historia del reino, PNJs importantes..." [ref=e117]'
-              - generic [ref=e118]:
-                - generic [ref=e119]: Contenido
-                - generic [ref=e120]:
-                  - generic [ref=e121]:
-                    - button "✦ Visual" [ref=e122] [cursor=pointer]
-                    - button "</> HTML" [ref=e123] [cursor=pointer]
-                  - generic [ref=e124]:
-                    - generic [ref=e126]:
-                      - button "Normal" [ref=e127] [cursor=pointer]:
-                        - text: Normal
-                        - img [ref=e128]
-                      - text: Heading 1 Heading 2 Heading 3 Normal
-                    - generic [ref=e131]:
-                      - button [ref=e132] [cursor=pointer]:
-                        - img [ref=e133]
-                      - button [ref=e136] [cursor=pointer]:
-                        - img [ref=e137]
-                      - button [ref=e139] [cursor=pointer]:
-                        - img [ref=e140]
-                      - button [ref=e143] [cursor=pointer]:
-                        - img [ref=e144]
-                    - generic [ref=e148]:
-                      - button [ref=e149] [cursor=pointer]:
-                        - img [ref=e150]
-                      - button [ref=e154] [cursor=pointer]:
-                        - img [ref=e155]
-                    - generic [ref=e156]:
-                      - button [ref=e157] [cursor=pointer]:
-                        - img [ref=e158]
-                      - button [ref=e163] [cursor=pointer]:
-                        - img [ref=e164]
-                    - button [ref=e169] [cursor=pointer]:
-                      - img [ref=e170]
-                  - generic [ref=e175]:
-                    - generic [ref=e176]:
-                      - text: Escribe el contenido de esta página de la wiki...
-                      - paragraph [ref=e177]
-                    - text: "Visit URL: EditRemove"
-              - generic [ref=e178]:
-                - generic [ref=e179]:
-                  - img [ref=e180]
-                  - text: Categorías (separadas por coma)
-                - 'textbox "Ej: Lore, Personajes, Reglas" [ref=e183]'
-              - generic [ref=e184] [cursor=pointer]:
-                - checkbox "Establecer como portada de la wiki" [ref=e185]
-                - img [ref=e186]
-                - generic [ref=e188]: Establecer como portada de la wiki
-              - generic [ref=e189]:
-                - link "Cancelar" [ref=e190] [cursor=pointer]:
-                  - /url: /salas/a-la-media-noche-paso/wiki
-                - button "Crear página" [ref=e191] [cursor=pointer]:
-                  - img [ref=e192]
-                  - text: Crear página
-            - complementary [ref=e194]:
-              - generic [ref=e195]:
-                - generic [ref=e196]: Referencia rápida
-                - generic [ref=e197]: Etiquetas HTML disponibles
-              - generic [ref=e198]:
-                - generic [ref=e199]:
-                  - generic [ref=e201]: Título H1
-                  - code [ref=e202]: <h1>Texto</h1>
-                  - generic [ref=e203]: Título principal
-                - generic [ref=e204]:
-                  - generic [ref=e206]: Título H2
-                  - code [ref=e207]: <h2>Texto</h2>
-                  - generic [ref=e208]: Subtítulo
-                - generic [ref=e209]:
-                  - generic [ref=e211]: Negrita
-                  - code [ref=e212]: <strong>Texto</strong>
-                  - strong [ref=e214]: texto en negrita
-                - generic [ref=e215]:
-                  - generic [ref=e217]: Cursiva
-                  - code [ref=e218]: <em>Texto</em>
-                  - emphasis [ref=e220]: texto en cursiva
-                - generic [ref=e221]:
-                  - generic [ref=e223]: Cita
-                  - code [ref=e224]: <blockquote>Texto</blockquote>
-                  - generic [ref=e226]: Una cita memorable
-                - generic [ref=e227]:
-                  - generic [ref=e229]: Lista
-                  - code [ref=e230]: <ul> <li>Item 1</li> <li>Item 2</li> </ul>
-                  - list [ref=e232]:
-                    - listitem [ref=e233]: Item 1
-                    - listitem [ref=e234]: Item 2
-                - generic [ref=e235]:
-                  - generic [ref=e237]: Enlace
-                  - code [ref=e238]: <a href="/salas/slug/wiki/pagina">Título</a>
-                  - generic [ref=e239]: Enlace a otra página
-                - generic [ref=e240]:
-                  - generic [ref=e242]: Separador
-                  - code [ref=e243]: <hr>
-                  - separator [ref=e245]
-              - paragraph [ref=e246]:
-                - text: El editor Quill aplica estos estilos automáticamente. También puedes escribir HTML directamente usando el botón
-                - strong [ref=e247]: </>
-                - text: de la barra del editor.
-    - contentinfo [ref=e248]:
-      - generic [ref=e249]:
-        - generic [ref=e250]:
-          - generic [ref=e251]:
-            - generic [ref=e252]: ✦
+        - generic [ref=e103]:
+          - heading "404" [level=1] [ref=e104]
+          - heading "This page could not be found." [level=2] [ref=e106]
+    - contentinfo [ref=e107]:
+      - generic [ref=e108]:
+        - generic [ref=e109]:
+          - generic [ref=e110]:
+            - generic [ref=e111]: ✦
             - text: TalesRol
-          - generic [ref=e253]: © 2026 — Plataforma de Roleplay en español
-        - generic [ref=e254]:
-          - link "Normas" [ref=e255] [cursor=pointer]:
+          - generic [ref=e112]: © 2026 — Plataforma de Roleplay en español
+        - generic [ref=e113]:
+          - link "Normas" [ref=e114] [cursor=pointer]:
             - /url: /normas
-          - link "Privacidad" [ref=e256] [cursor=pointer]:
+          - link "Privacidad" [ref=e115] [cursor=pointer]:
             - /url: /privacidad
-          - link "Contacto" [ref=e257] [cursor=pointer]:
+          - link "Contacto" [ref=e116] [cursor=pointer]:
             - /url: /contacto
-  - alert [ref=e258]
+  - alert [ref=e117]
 ```
 
 # Test source
