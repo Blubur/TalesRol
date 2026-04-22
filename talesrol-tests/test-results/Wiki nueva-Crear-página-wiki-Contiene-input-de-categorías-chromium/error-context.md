@@ -88,51 +88,54 @@ Call log:
             - img [ref=e67]
           - generic [ref=e70]:
             - link "Sala de prueba automatizada" [ref=e71] [cursor=pointer]:
-              - /url: /salas/sala-de-prueba-automatizada
+              - /url: /salas/sala-de-prueba-automatizada-1776864887068
               - generic [ref=e74]: Sala de prueba automatizada
-            - link "A la media noche pasó solo noche" [ref=e75] [cursor=pointer]:
+            - link "Sala de prueba automatizada" [ref=e75] [cursor=pointer]:
+              - /url: /salas/sala-de-prueba-automatizada
+              - generic [ref=e78]: Sala de prueba automatizada
+            - link "A la media noche pasó solo noche" [ref=e79] [cursor=pointer]:
               - /url: /salas/a-la-media-noche-paso
-              - generic [ref=e77]:
-                - generic [ref=e78]: A la media noche pasó
-                - generic [ref=e79]: solo noche
-            - link "Cenizas blancas Fantasia angelical" [ref=e80] [cursor=pointer]:
+              - generic [ref=e81]:
+                - generic [ref=e82]: A la media noche pasó
+                - generic [ref=e83]: solo noche
+            - link "Cenizas blancas Fantasia angelical" [ref=e84] [cursor=pointer]:
               - /url: /salas/cenizas-blancas
-              - generic [ref=e82]:
-                - generic [ref=e83]: Cenizas blancas
-                - generic [ref=e84]: Fantasia angelical
-            - link "Perihelio tardío sci fi" [ref=e85] [cursor=pointer]:
+              - generic [ref=e86]:
+                - generic [ref=e87]: Cenizas blancas
+                - generic [ref=e88]: Fantasia angelical
+            - link "Perihelio tardío sci fi" [ref=e89] [cursor=pointer]:
               - /url: /salas/perihelio-tardio
-              - generic [ref=e87]:
-                - generic [ref=e88]: Perihelio tardío
-                - generic [ref=e89]: sci fi
-            - 'link "Josepa y Camila se van a Benidorm TW: Josepa en bañador" [ref=e90] [cursor=pointer]':
+              - generic [ref=e91]:
+                - generic [ref=e92]: Perihelio tardío
+                - generic [ref=e93]: sci fi
+            - 'link "Josepa y Camila se van a Benidorm TW: Josepa en bañador" [ref=e94] [cursor=pointer]':
               - /url: /salas/josepa-y-camila-se-van-a-benidorm
-              - generic [ref=e92]:
-                - generic [ref=e93]: Josepa y Camila se van a Benidorm
-                - generic [ref=e94]: "TW: Josepa en bañador"
-        - button "Accesos Rápidos" [ref=e97] [cursor=pointer]:
-          - img [ref=e99]
-          - generic [ref=e101]: Accesos Rápidos
+              - generic [ref=e96]:
+                - generic [ref=e97]: Josepa y Camila se van a Benidorm
+                - generic [ref=e98]: "TW: Josepa en bañador"
+        - button "Accesos Rápidos" [ref=e101] [cursor=pointer]:
           - img [ref=e103]
-      - main [ref=e105]:
-        - generic [ref=e107]:
-          - heading "404" [level=1] [ref=e108]
-          - heading "This page could not be found." [level=2] [ref=e110]
-    - contentinfo [ref=e111]:
-      - generic [ref=e112]:
-        - generic [ref=e113]:
-          - generic [ref=e114]:
-            - generic [ref=e115]: ✦
-            - text: TalesRol
-          - generic [ref=e116]: © 2026 — Plataforma de Roleplay en español
+          - generic [ref=e105]: Accesos Rápidos
+          - img [ref=e107]
+      - main [ref=e109]:
+        - generic [ref=e111]:
+          - heading "404" [level=1] [ref=e112]
+          - heading "This page could not be found." [level=2] [ref=e114]
+    - contentinfo [ref=e115]:
+      - generic [ref=e116]:
         - generic [ref=e117]:
-          - link "Normas" [ref=e118] [cursor=pointer]:
+          - generic [ref=e118]:
+            - generic [ref=e119]: ✦
+            - text: TalesRol
+          - generic [ref=e120]: © 2026 — Plataforma de Roleplay en español
+        - generic [ref=e121]:
+          - link "Normas" [ref=e122] [cursor=pointer]:
             - /url: /normas
-          - link "Privacidad" [ref=e119] [cursor=pointer]:
+          - link "Privacidad" [ref=e123] [cursor=pointer]:
             - /url: /privacidad
-          - link "Contacto" [ref=e120] [cursor=pointer]:
+          - link "Contacto" [ref=e124] [cursor=pointer]:
             - /url: /contacto
-  - alert [ref=e121]
+  - alert [ref=e125]
 ```
 
 # Test source

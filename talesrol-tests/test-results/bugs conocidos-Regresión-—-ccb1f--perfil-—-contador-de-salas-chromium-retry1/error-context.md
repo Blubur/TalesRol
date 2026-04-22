@@ -81,368 +81,382 @@ Call log:
               - /url: /salas
             - img [ref=e67]
           - generic [ref=e70]:
-            - link "A la media noche pasó solo noche" [ref=e71] [cursor=pointer]:
+            - link "Sala de prueba automatizada" [ref=e71] [cursor=pointer]:
+              - /url: /salas/sala-de-prueba-automatizada
+              - generic [ref=e74]: Sala de prueba automatizada
+            - link "A la media noche pasó solo noche" [ref=e75] [cursor=pointer]:
               - /url: /salas/a-la-media-noche-paso
-              - generic [ref=e73]:
-                - generic [ref=e74]: A la media noche pasó
-                - generic [ref=e75]: solo noche
-            - link "Cenizas blancas Fantasia angelical" [ref=e76] [cursor=pointer]:
+              - generic [ref=e77]:
+                - generic [ref=e78]: A la media noche pasó
+                - generic [ref=e79]: solo noche
+            - link "Cenizas blancas Fantasia angelical" [ref=e80] [cursor=pointer]:
               - /url: /salas/cenizas-blancas
-              - generic [ref=e78]:
-                - generic [ref=e79]: Cenizas blancas
-                - generic [ref=e80]: Fantasia angelical
-            - link "Perihelio tardío sci fi" [ref=e81] [cursor=pointer]:
+              - generic [ref=e82]:
+                - generic [ref=e83]: Cenizas blancas
+                - generic [ref=e84]: Fantasia angelical
+            - link "Perihelio tardío sci fi" [ref=e85] [cursor=pointer]:
               - /url: /salas/perihelio-tardio
-              - generic [ref=e83]:
-                - generic [ref=e84]: Perihelio tardío
-                - generic [ref=e85]: sci fi
-            - 'link "Josepa y Camila se van a Benidorm TW: Josepa en bañador" [ref=e86] [cursor=pointer]':
+              - generic [ref=e87]:
+                - generic [ref=e88]: Perihelio tardío
+                - generic [ref=e89]: sci fi
+            - 'link "Josepa y Camila se van a Benidorm TW: Josepa en bañador" [ref=e90] [cursor=pointer]':
               - /url: /salas/josepa-y-camila-se-van-a-benidorm
-              - generic [ref=e88]:
-                - generic [ref=e89]: Josepa y Camila se van a Benidorm
-                - generic [ref=e90]: "TW: Josepa en bañador"
-        - button "Accesos Rápidos" [ref=e93] [cursor=pointer]:
-          - img [ref=e95]
-          - generic [ref=e97]: Accesos Rápidos
+              - generic [ref=e92]:
+                - generic [ref=e93]: Josepa y Camila se van a Benidorm
+                - generic [ref=e94]: "TW: Josepa en bañador"
+        - button "Accesos Rápidos" [ref=e97] [cursor=pointer]:
           - img [ref=e99]
-      - main [ref=e101]:
-        - generic [ref=e102]:
-          - generic [ref=e105]:
-            - generic [ref=e106]:
-              - img "aventurera" [ref=e107]
-              - generic "Administrador" [ref=e108]
-            - generic [ref=e109]:
-              - heading "aventurera" [level=1] [ref=e110]
-              - generic [ref=e111]: "@aventurera"
-              - generic [ref=e112]: Administrador
+          - generic [ref=e101]: Accesos Rápidos
+          - img [ref=e103]
+      - main [ref=e105]:
+        - generic [ref=e106]:
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - img "aventurera" [ref=e111]
+              - generic "Administrador" [ref=e112]
             - generic [ref=e113]:
-              - link "Editar perfil" [ref=e114] [cursor=pointer]:
+              - heading "aventurera" [level=1] [ref=e114]
+              - generic [ref=e115]: "@aventurera"
+              - generic [ref=e116]: Administrador
+            - generic [ref=e117]:
+              - link "Editar perfil" [ref=e118] [cursor=pointer]:
                 - /url: /perfil/editar
-                - img [ref=e115]
+                - img [ref=e119]
                 - text: Editar perfil
-              - link "Privacidad" [ref=e117] [cursor=pointer]:
+              - link "Privacidad" [ref=e121] [cursor=pointer]:
                 - /url: /perfil/privacidad
-                - img [ref=e118]
+                - img [ref=e122]
                 - text: Privacidad
-          - generic [ref=e120]:
-            - complementary [ref=e121]:
-              - generic [ref=e122]:
-                - heading "Sobre mí" [level=2] [ref=e123]
-                - paragraph [ref=e124]: No se que contar la verdad
-              - generic [ref=e125]:
-                - heading "Estadísticas" [level=2] [ref=e126]
-                - generic [ref=e127]:
-                  - generic [ref=e128]:
-                    - generic [ref=e129]: "76"
-                    - generic [ref=e130]: Posts
-                  - generic [ref=e131]:
-                    - generic [ref=e132]: "85"
-                    - generic [ref=e133]: Puntos
-                  - generic [ref=e134]:
-                    - generic [ref=e135]: "6"
-                    - generic [ref=e136]: Personajes
-                  - generic [ref=e137]:
-                    - generic [ref=e138]: "6"
-                    - generic [ref=e139]: Salas
-              - generic [ref=e140]:
-                - heading "Actividad" [level=2] [ref=e141]
-                - generic [ref=e142]:
-                  - generic [ref=e143]:
-                    - img [ref=e144]
-                    - generic [ref=e146]:
-                      - generic [ref=e147]: Registrado
-                      - generic [ref=e148]: 7 de marzo de 2026
-                  - generic [ref=e149]:
-                    - img [ref=e150]
-                    - generic [ref=e152]:
-                      - generic [ref=e153]: Último acceso
-                      - generic [ref=e154]: 22 de abril de 2026
-              - generic [ref=e155]:
-                - heading "Insignias" [level=2] [ref=e156]:
-                  - img [ref=e157]
+          - generic [ref=e124]:
+            - complementary [ref=e125]:
+              - generic [ref=e126]:
+                - heading "Sobre mí" [level=2] [ref=e127]
+                - paragraph [ref=e128]: No se que contar la verdad
+              - generic [ref=e129]:
+                - heading "Estadísticas" [level=2] [ref=e130]
+                - generic [ref=e131]:
+                  - generic [ref=e132]:
+                    - generic [ref=e133]: "76"
+                    - generic [ref=e134]: Posts
+                  - generic [ref=e135]:
+                    - generic [ref=e136]: "85"
+                    - generic [ref=e137]: Puntos
+                  - generic [ref=e138]:
+                    - generic [ref=e139]: "7"
+                    - generic [ref=e140]: Personajes
+                  - generic [ref=e141]:
+                    - generic [ref=e142]: "7"
+                    - generic [ref=e143]: Salas
+              - generic [ref=e144]:
+                - heading "Actividad" [level=2] [ref=e145]
+                - generic [ref=e146]:
+                  - generic [ref=e147]:
+                    - img [ref=e148]
+                    - generic [ref=e150]:
+                      - generic [ref=e151]: Registrado
+                      - generic [ref=e152]: 7 de marzo de 2026
+                  - generic [ref=e153]:
+                    - img [ref=e154]
+                    - generic [ref=e156]:
+                      - generic [ref=e157]: Último acceso
+                      - generic [ref=e158]: 22 de abril de 2026
+              - generic [ref=e159]:
+                - heading "Insignias" [level=2] [ref=e160]:
+                  - img [ref=e161]
                   - text: Insignias
-                - generic [ref=e159]:
-                  - generic "trasto" [ref=e160]:
-                    - img [ref=e161]
+                - generic [ref=e163]:
+                  - generic "trasto" [ref=e164]:
+                    - img [ref=e165]
                     - text: trasto
-                  - generic "Primer trazo" [ref=e163]:
-                    - img [ref=e164]
+                  - generic "Primer trazo" [ref=e167]:
+                    - img [ref=e168]
                     - text: Primer trazo
-                  - generic "Escribano" [ref=e166]:
-                    - img [ref=e167]
+                  - generic "Escribano" [ref=e170]:
+                    - img [ref=e171]
                     - text: Escribano
-                  - generic "Narrador" [ref=e169]:
-                    - img [ref=e170]
+                  - generic "Narrador" [ref=e173]:
+                    - img [ref=e174]
                     - text: Narrador
-                  - generic "Primer escenario" [ref=e172]:
-                    - img [ref=e173]
+                  - generic "Primer escenario" [ref=e176]:
+                    - img [ref=e177]
                     - text: Primer escenario
-                  - generic "Arquitecto" [ref=e175]:
-                    - img [ref=e176]
+                  - generic "Arquitecto" [ref=e179]:
+                    - img [ref=e180]
                     - text: Arquitecto
-                  - generic "Primer alter ego" [ref=e178]:
-                    - img [ref=e179]
+                  - generic "Primer alter ego" [ref=e182]:
+                    - img [ref=e183]
                     - text: Primer alter ego
-                  - generic "Intérprete" [ref=e181]:
-                    - img [ref=e182]
+                  - generic "Intérprete" [ref=e185]:
+                    - img [ref=e186]
                     - text: Intérprete
-                  - generic "Veterano" [ref=e184]:
-                    - img [ref=e185]
+                  - generic "Veterano" [ref=e188]:
+                    - img [ref=e189]
                     - text: Veterano
-                - link "Gestionar insignias →" [ref=e187] [cursor=pointer]:
+                - link "Gestionar insignias →" [ref=e191] [cursor=pointer]:
                   - /url: /perfil/badges
-            - main [ref=e188]:
-              - generic [ref=e189]:
-                - heading "Personajes" [level=2] [ref=e190]:
-                  - img [ref=e191]
+            - main [ref=e192]:
+              - generic [ref=e193]:
+                - heading "Personajes" [level=2] [ref=e194]:
+                  - img [ref=e195]
                   - text: Personajes
-                - generic [ref=e193]:
-                  - link "Personaje Bot Personaje Bot Personaje creado automáticamente para tests." [ref=e194] [cursor=pointer]:
+                - generic [ref=e197]:
+                  - link "Personaje Bot Personaje Bot Personaje creado automáticamente para tests." [ref=e198] [cursor=pointer]:
+                    - /url: /personajes/ae85acd7-2cf1-465e-b851-fdd6a3723e37
+                    - img "Personaje Bot" [ref=e199]
+                    - generic [ref=e200]:
+                      - generic [ref=e201]: Personaje Bot
+                      - generic [ref=e202]: Personaje creado automáticamente para tests.
+                  - link "Personaje Bot Personaje Bot Personaje creado automáticamente para tests." [ref=e203] [cursor=pointer]:
                     - /url: /personajes/2ab31d12-809b-4437-9364-b2ec80f33349
-                    - img "Personaje Bot" [ref=e195]
-                    - generic [ref=e196]:
-                      - generic [ref=e197]: Personaje Bot
-                      - generic [ref=e198]: Personaje creado automáticamente para tests.
-                  - link "Personaje Bot Personaje Bot Personaje creado automáticamente para tests." [ref=e199] [cursor=pointer]:
+                    - img "Personaje Bot" [ref=e204]
+                    - generic [ref=e205]:
+                      - generic [ref=e206]: Personaje Bot
+                      - generic [ref=e207]: Personaje creado automáticamente para tests.
+                  - link "Personaje Bot Personaje Bot Personaje creado automáticamente para tests." [ref=e208] [cursor=pointer]:
                     - /url: /personajes/2b0f4b59-5821-46d5-8fcd-64175e94a35b
-                    - img "Personaje Bot" [ref=e200]
-                    - generic [ref=e201]:
-                      - generic [ref=e202]: Personaje Bot
-                      - generic [ref=e203]: Personaje creado automáticamente para tests.
-                  - link "Personaje Bot Personaje Bot Personaje creado automáticamente para tests." [ref=e204] [cursor=pointer]:
+                    - img "Personaje Bot" [ref=e209]
+                    - generic [ref=e210]:
+                      - generic [ref=e211]: Personaje Bot
+                      - generic [ref=e212]: Personaje creado automáticamente para tests.
+                  - link "Personaje Bot Personaje Bot Personaje creado automáticamente para tests." [ref=e213] [cursor=pointer]:
                     - /url: /personajes/013ad3b8-dfba-4b21-a8fe-200c0d96e2af
-                    - img "Personaje Bot" [ref=e205]
-                    - generic [ref=e206]:
-                      - generic [ref=e207]: Personaje Bot
-                      - generic [ref=e208]: Personaje creado automáticamente para tests.
-                  - link "Personaje Bot Personaje Bot Personaje creado automáticamente para tests." [ref=e209] [cursor=pointer]:
+                    - img "Personaje Bot" [ref=e214]
+                    - generic [ref=e215]:
+                      - generic [ref=e216]: Personaje Bot
+                      - generic [ref=e217]: Personaje creado automáticamente para tests.
+                  - link "Personaje Bot Personaje Bot Personaje creado automáticamente para tests." [ref=e218] [cursor=pointer]:
                     - /url: /personajes/4adccfe3-c515-4b0e-8d70-43261fdbd719
-                    - img "Personaje Bot" [ref=e210]
-                    - generic [ref=e211]:
-                      - generic [ref=e212]: Personaje Bot
-                      - generic [ref=e213]: Personaje creado automáticamente para tests.
-                  - link "Luxana Luxana Serafina esplendorosa" [ref=e214] [cursor=pointer]:
+                    - img "Personaje Bot" [ref=e219]
+                    - generic [ref=e220]:
+                      - generic [ref=e221]: Personaje Bot
+                      - generic [ref=e222]: Personaje creado automáticamente para tests.
+                  - link "Luxana Luxana Serafina esplendorosa" [ref=e223] [cursor=pointer]:
                     - /url: /personajes/f297c4ac-a142-49fa-86d7-c0d2ba6c1ec1
-                    - img "Luxana" [ref=e215]
-                    - generic [ref=e216]:
-                      - generic [ref=e217]: Luxana
-                      - generic [ref=e218]: Serafina esplendorosa
-                  - link "Lyra doce Lyra doce Magdalenas con halvah. Algodón de azúcar danés, gominolas da…" [ref=e219] [cursor=pointer]:
+                    - img "Luxana" [ref=e224]
+                    - generic [ref=e225]:
+                      - generic [ref=e226]: Luxana
+                      - generic [ref=e227]: Serafina esplendorosa
+                  - link "Lyra doce Lyra doce Magdalenas con halvah. Algodón de azúcar danés, gominolas da…" [ref=e228] [cursor=pointer]:
                     - /url: /personajes/25903e40-9a6a-4a16-9b43-7d5b7762b15a
-                    - img "Lyra doce" [ref=e220]
-                    - generic [ref=e221]:
-                      - generic [ref=e222]: Lyra doce
-                      - generic [ref=e223]: Magdalenas con halvah. Algodón de azúcar danés, gominolas da…
-              - generic [ref=e224]:
-                - heading "Salas en las que participa" [level=2] [ref=e225]:
-                  - img [ref=e226]
+                    - img "Lyra doce" [ref=e229]
+                    - generic [ref=e230]:
+                      - generic [ref=e231]: Lyra doce
+                      - generic [ref=e232]: Magdalenas con halvah. Algodón de azúcar danés, gominolas da…
+              - generic [ref=e233]:
+                - heading "Salas en las que participa" [level=2] [ref=e234]:
+                  - img [ref=e235]
                   - text: Salas en las que participa
-                - generic [ref=e228]:
-                  - link "A la media noche pasó A la media noche pasó active" [ref=e229] [cursor=pointer]:
+                - generic [ref=e237]:
+                  - link "A la media noche pasó A la media noche pasó active" [ref=e238] [cursor=pointer]:
                     - /url: /salas/a-la-media-noche-paso
-                    - img "A la media noche pasó" [ref=e230]
-                    - generic [ref=e231]: A la media noche pasó
-                    - generic [ref=e232]: active
-                  - link "Perihelio tardío Perihelio tardío active" [ref=e233] [cursor=pointer]:
+                    - img "A la media noche pasó" [ref=e239]
+                    - generic [ref=e240]: A la media noche pasó
+                    - generic [ref=e241]: active
+                  - link "Perihelio tardío Perihelio tardío active" [ref=e242] [cursor=pointer]:
                     - /url: /salas/perihelio-tardio
-                    - img "Perihelio tardío" [ref=e234]
-                    - generic [ref=e235]: Perihelio tardío
-                    - generic [ref=e236]: active
-                  - link "Viento y fuego Viento y fuego finished" [ref=e237] [cursor=pointer]:
+                    - img "Perihelio tardío" [ref=e243]
+                    - generic [ref=e244]: Perihelio tardío
+                    - generic [ref=e245]: active
+                  - link "Sala de prueba automatizada active" [ref=e246] [cursor=pointer]:
+                    - /url: /salas/sala-de-prueba-automatizada
+                    - img [ref=e248]
+                    - generic [ref=e250]: Sala de prueba automatizada
+                    - generic [ref=e251]: active
+                  - link "Viento y fuego Viento y fuego finished" [ref=e252] [cursor=pointer]:
                     - /url: /salas/viento-y-fuego
-                    - img "Viento y fuego" [ref=e238]
-                    - generic [ref=e239]: Viento y fuego
-                    - generic [ref=e240]: finished
-                  - link "Castillos del agua Castillos del agua closed" [ref=e241] [cursor=pointer]:
+                    - img "Viento y fuego" [ref=e253]
+                    - generic [ref=e254]: Viento y fuego
+                    - generic [ref=e255]: finished
+                  - link "Castillos del agua Castillos del agua closed" [ref=e256] [cursor=pointer]:
                     - /url: /salas/castillos-del-agua
-                    - img "Castillos del agua" [ref=e242]
-                    - generic [ref=e243]: Castillos del agua
-                    - generic [ref=e244]: closed
-                  - link "La casa del cura La casa del cura paused" [ref=e245] [cursor=pointer]:
+                    - img "Castillos del agua" [ref=e257]
+                    - generic [ref=e258]: Castillos del agua
+                    - generic [ref=e259]: closed
+                  - link "La casa del cura La casa del cura paused" [ref=e260] [cursor=pointer]:
                     - /url: /salas/la-casa-del-cura
-                    - img "La casa del cura" [ref=e246]
-                    - generic [ref=e247]: La casa del cura
-                    - generic [ref=e248]: paused
-                  - link "Cenizas blancas Cenizas blancas active" [ref=e249] [cursor=pointer]:
+                    - img "La casa del cura" [ref=e261]
+                    - generic [ref=e262]: La casa del cura
+                    - generic [ref=e263]: paused
+                  - link "Cenizas blancas Cenizas blancas active" [ref=e264] [cursor=pointer]:
                     - /url: /salas/cenizas-blancas
-                    - img "Cenizas blancas" [ref=e250]
-                    - generic [ref=e251]: Cenizas blancas
-                    - generic [ref=e252]: active
-              - generic [ref=e253]:
-                - heading "Temas abiertos" [level=2] [ref=e254]:
-                  - img [ref=e255]
+                    - img "Cenizas blancas" [ref=e265]
+                    - generic [ref=e266]: Cenizas blancas
+                    - generic [ref=e267]: active
+              - generic [ref=e268]:
+                - heading "Temas abiertos" [level=2] [ref=e269]:
+                  - img [ref=e270]
                   - text: Temas abiertos
-                - generic [ref=e257]:
-                  - link "Tema de prueba automatizada A la media noche pasó 21 abr 2026" [ref=e258] [cursor=pointer]:
+                - generic [ref=e272]:
+                  - link "Tema de prueba automatizada A la media noche pasó 21 abr 2026" [ref=e273] [cursor=pointer]:
                     - /url: /salas/a-la-media-noche-paso/d439123d-8bd6-4ea7-b559-3039ea720415
-                    - generic [ref=e259]:
-                      - generic [ref=e260]: Tema de prueba automatizada
-                      - generic [ref=e261]: A la media noche pasó
-                    - generic [ref=e263]:
-                      - img [ref=e264]
+                    - generic [ref=e274]:
+                      - generic [ref=e275]: Tema de prueba automatizada
+                      - generic [ref=e276]: A la media noche pasó
+                    - generic [ref=e278]:
+                      - img [ref=e279]
                       - text: 21 abr 2026
-                  - link "Tema de prueba automatizada A la media noche pasó 21 abr 2026" [ref=e266] [cursor=pointer]:
+                  - link "Tema de prueba automatizada A la media noche pasó 21 abr 2026" [ref=e281] [cursor=pointer]:
                     - /url: /salas/a-la-media-noche-paso/67b6c5ba-1c29-4830-b92f-f452166fa6e2
-                    - generic [ref=e267]:
-                      - generic [ref=e268]: Tema de prueba automatizada
-                      - generic [ref=e269]: A la media noche pasó
-                    - generic [ref=e271]:
-                      - img [ref=e272]
+                    - generic [ref=e282]:
+                      - generic [ref=e283]: Tema de prueba automatizada
+                      - generic [ref=e284]: A la media noche pasó
+                    - generic [ref=e286]:
+                      - img [ref=e287]
                       - text: 21 abr 2026
-                  - link "Tema de prueba automatizada A la media noche pasó 21 abr 2026" [ref=e274] [cursor=pointer]:
+                  - link "Tema de prueba automatizada A la media noche pasó 21 abr 2026" [ref=e289] [cursor=pointer]:
                     - /url: /salas/a-la-media-noche-paso/90575307-3503-43a4-b2ec-0e8b6fa60ac5
-                    - generic [ref=e275]:
-                      - generic [ref=e276]: Tema de prueba automatizada
-                      - generic [ref=e277]: A la media noche pasó
-                    - generic [ref=e279]:
-                      - img [ref=e280]
+                    - generic [ref=e290]:
+                      - generic [ref=e291]: Tema de prueba automatizada
+                      - generic [ref=e292]: A la media noche pasó
+                    - generic [ref=e294]:
+                      - img [ref=e295]
                       - text: 21 abr 2026
-                  - link "Trece Cenizas blancas 6 abr 2026" [ref=e282] [cursor=pointer]:
+                  - link "Trece Cenizas blancas 6 abr 2026" [ref=e297] [cursor=pointer]:
                     - /url: /salas/cenizas-blancas/dd732e1f-cbf8-415a-9e13-97a23fa1fc06
-                    - generic [ref=e283]:
-                      - generic [ref=e284]: Trece
-                      - generic [ref=e285]: Cenizas blancas
-                    - generic [ref=e287]:
-                      - img [ref=e288]
-                      - text: 6 abr 2026
-                  - link "Probando starter Perihelio tardío 30 mar 2026" [ref=e290] [cursor=pointer]:
-                    - /url: /salas/perihelio-tardio/7304c068-7238-46f7-9f12-2ae47f644186
-                    - generic [ref=e291]:
-                      - generic [ref=e292]: Probando starter
-                      - generic [ref=e293]: Perihelio tardío
-                    - generic [ref=e295]:
-                      - img [ref=e296]
-                      - text: 30 mar 2026
-                  - 'link "Laralalá Perihelio tardío 25 mar 2026 Último post: aventurera · 30 mar" [ref=e298] [cursor=pointer]':
-                    - /url: /salas/perihelio-tardio/466cd177-f0b0-4e2f-8362-d9cad4f89af7
-                    - generic [ref=e299]:
-                      - generic [ref=e300]: Laralalá
-                      - generic [ref=e301]: Perihelio tardío
+                    - generic [ref=e298]:
+                      - generic [ref=e299]: Trece
+                      - generic [ref=e300]: Cenizas blancas
                     - generic [ref=e302]:
-                      - generic [ref=e303]:
-                        - img [ref=e304]
+                      - img [ref=e303]
+                      - text: 6 abr 2026
+                  - link "Probando starter Perihelio tardío 30 mar 2026" [ref=e305] [cursor=pointer]:
+                    - /url: /salas/perihelio-tardio/7304c068-7238-46f7-9f12-2ae47f644186
+                    - generic [ref=e306]:
+                      - generic [ref=e307]: Probando starter
+                      - generic [ref=e308]: Perihelio tardío
+                    - generic [ref=e310]:
+                      - img [ref=e311]
+                      - text: 30 mar 2026
+                  - 'link "Laralalá Perihelio tardío 25 mar 2026 Último post: aventurera · 30 mar" [ref=e313] [cursor=pointer]':
+                    - /url: /salas/perihelio-tardio/466cd177-f0b0-4e2f-8362-d9cad4f89af7
+                    - generic [ref=e314]:
+                      - generic [ref=e315]: Laralalá
+                      - generic [ref=e316]: Perihelio tardío
+                    - generic [ref=e317]:
+                      - generic [ref=e318]:
+                        - img [ref=e319]
                         - text: 25 mar 2026
-                      - generic [ref=e306]:
+                      - generic [ref=e321]:
                         - text: "Último post:"
-                        - link "aventurera" [ref=e307]:
+                        - link "aventurera" [ref=e322]:
                           - /url: /perfil/aventurera
                         - text: · 30 mar
-                  - 'link "A las 12 A la media noche pasó 18 mar 2026 Último post: aventurera · 21 abr" [ref=e308] [cursor=pointer]':
+                  - 'link "A las 12 A la media noche pasó 18 mar 2026 Último post: aventurera · 21 abr" [ref=e323] [cursor=pointer]':
                     - /url: /salas/a-la-media-noche-paso/8e673c4b-0849-4a4f-95e3-c6e0f026e408
-                    - generic [ref=e309]:
-                      - generic [ref=e310]: A las 12
-                      - generic [ref=e311]: A la media noche pasó
-                    - generic [ref=e312]:
-                      - generic [ref=e313]:
-                        - img [ref=e314]
+                    - generic [ref=e324]:
+                      - generic [ref=e325]: A las 12
+                      - generic [ref=e326]: A la media noche pasó
+                    - generic [ref=e327]:
+                      - generic [ref=e328]:
+                        - img [ref=e329]
                         - text: 18 mar 2026
-                      - generic [ref=e316]:
+                      - generic [ref=e331]:
                         - text: "Último post:"
-                        - link "aventurera" [ref=e317]:
+                        - link "aventurera" [ref=e332]:
                           - /url: /perfil/aventurera
                         - text: · 21 abr
-                  - 'link "Probemos html La casa del cura 16 mar 2026 Último post: aventurera · 17 mar" [ref=e318] [cursor=pointer]':
+                  - 'link "Probemos html La casa del cura 16 mar 2026 Último post: aventurera · 17 mar" [ref=e333] [cursor=pointer]':
                     - /url: /salas/la-casa-del-cura/e1421ced-43dc-4de9-90eb-8b490d5d3ca0
-                    - generic [ref=e319]:
-                      - generic [ref=e320]: Probemos html
-                      - generic [ref=e321]: La casa del cura
-                    - generic [ref=e322]:
-                      - generic [ref=e323]:
-                        - img [ref=e324]
+                    - generic [ref=e334]:
+                      - generic [ref=e335]: Probemos html
+                      - generic [ref=e336]: La casa del cura
+                    - generic [ref=e337]:
+                      - generic [ref=e338]:
+                        - img [ref=e339]
                         - text: 16 mar 2026
-                      - generic [ref=e326]:
+                      - generic [ref=e341]:
                         - text: "Último post:"
-                        - link "aventurera" [ref=e327]:
+                        - link "aventurera" [ref=e342]:
                           - /url: /perfil/aventurera
                         - text: · 17 mar
-                  - 'link "prueba Viento y fuego 9 mar 2026 Último post: aventurera · 10 mar" [ref=e328] [cursor=pointer]':
+                  - 'link "prueba Viento y fuego 9 mar 2026 Último post: aventurera · 10 mar" [ref=e343] [cursor=pointer]':
                     - /url: /salas/viento-y-fuego/9e21e719-a7db-4f3b-8577-396405107d0a
-                    - generic [ref=e329]:
-                      - generic [ref=e330]: prueba
-                      - generic [ref=e331]: Viento y fuego
-                    - generic [ref=e332]:
-                      - generic [ref=e333]:
-                        - img [ref=e334]
+                    - generic [ref=e344]:
+                      - generic [ref=e345]: prueba
+                      - generic [ref=e346]: Viento y fuego
+                    - generic [ref=e347]:
+                      - generic [ref=e348]:
+                        - img [ref=e349]
                         - text: 9 mar 2026
-                      - generic [ref=e336]:
+                      - generic [ref=e351]:
                         - text: "Último post:"
-                        - link "aventurera" [ref=e337]:
+                        - link "aventurera" [ref=e352]:
                           - /url: /perfil/aventurera
                         - text: · 10 mar
-                  - 'link "fdf Viento y fuego 9 mar 2026 Último post: aventurera · 16 mar" [ref=e338] [cursor=pointer]':
+                  - 'link "fdf Viento y fuego 9 mar 2026 Último post: aventurera · 16 mar" [ref=e353] [cursor=pointer]':
                     - /url: /salas/viento-y-fuego/5d4adb5d-e2de-4c2a-9534-65bba1ab4e9d
-                    - generic [ref=e339]:
-                      - generic [ref=e340]: fdf
-                      - generic [ref=e341]: Viento y fuego
-                    - generic [ref=e342]:
-                      - generic [ref=e343]:
-                        - img [ref=e344]
+                    - generic [ref=e354]:
+                      - generic [ref=e355]: fdf
+                      - generic [ref=e356]: Viento y fuego
+                    - generic [ref=e357]:
+                      - generic [ref=e358]:
+                        - img [ref=e359]
                         - text: 9 mar 2026
-                      - generic [ref=e346]:
+                      - generic [ref=e361]:
                         - text: "Último post:"
-                        - link "aventurera" [ref=e347]:
+                        - link "aventurera" [ref=e362]:
                           - /url: /perfil/aventurera
                         - text: · 16 mar
-              - generic [ref=e348]:
-                - heading "Posts recientes" [level=2] [ref=e349]:
-                  - img [ref=e350]
+              - generic [ref=e363]:
+                - heading "Posts recientes" [level=2] [ref=e364]:
+                  - img [ref=e365]
                   - text: Posts recientes
-                - generic [ref=e352]:
-                  - link "A la media noche pasó › A las 12 21 abr 2026 gfgfgd" [ref=e353] [cursor=pointer]:
+                - generic [ref=e367]:
+                  - link "A la media noche pasó › A las 12 21 abr 2026 gfgfgd" [ref=e368] [cursor=pointer]:
                     - /url: /salas/a-la-media-noche-paso/8e673c4b-0849-4a4f-95e3-c6e0f026e408#post-6
-                    - generic [ref=e354]:
-                      - generic [ref=e355]: A la media noche pasó
-                      - generic [ref=e356]: ›
-                      - generic [ref=e357]: A las 12
-                      - generic [ref=e358]: 21 abr 2026
-                    - paragraph [ref=e359]: gfgfgd
-                  - link "A la media noche pasó › A las 12 10 abr 2026 adfadfads 🎲 2d6 [1, 3] → 4 por aventurera · 23:03 🎲 1d10" [ref=e360] [cursor=pointer]:
+                    - generic [ref=e369]:
+                      - generic [ref=e370]: A la media noche pasó
+                      - generic [ref=e371]: ›
+                      - generic [ref=e372]: A las 12
+                      - generic [ref=e373]: 21 abr 2026
+                    - paragraph [ref=e374]: gfgfgd
+                  - link "A la media noche pasó › A las 12 10 abr 2026 adfadfads 🎲 2d6 [1, 3] → 4 por aventurera · 23:03 🎲 1d10" [ref=e375] [cursor=pointer]:
                     - /url: /salas/a-la-media-noche-paso/8e673c4b-0849-4a4f-95e3-c6e0f026e408#post-5
-                    - generic [ref=e361]:
-                      - generic [ref=e362]: A la media noche pasó
-                      - generic [ref=e363]: ›
-                      - generic [ref=e364]: A las 12
-                      - generic [ref=e365]: 10 abr 2026
-                    - paragraph [ref=e366]: adfadfads 🎲 2d6 [1, 3] → 4 por aventurera · 23:03 🎲 1d10
-                  - link "A la media noche pasó › A las 12 5 abr 2026 El viento azotaba las murallas del castillo mientras la tormenta se aproximaba desde el norte. — No deberíamos estar" [ref=e367] [cursor=pointer]:
+                    - generic [ref=e376]:
+                      - generic [ref=e377]: A la media noche pasó
+                      - generic [ref=e378]: ›
+                      - generic [ref=e379]: A las 12
+                      - generic [ref=e380]: 10 abr 2026
+                    - paragraph [ref=e381]: adfadfads 🎲 2d6 [1, 3] → 4 por aventurera · 23:03 🎲 1d10
+                  - link "A la media noche pasó › A las 12 5 abr 2026 El viento azotaba las murallas del castillo mientras la tormenta se aproximaba desde el norte. — No deberíamos estar" [ref=e382] [cursor=pointer]:
                     - /url: /salas/a-la-media-noche-paso/8e673c4b-0849-4a4f-95e3-c6e0f026e408#post-4
-                    - generic [ref=e368]:
-                      - generic [ref=e369]: A la media noche pasó
-                      - generic [ref=e370]: ›
-                      - generic [ref=e371]: A las 12
-                      - generic [ref=e372]: 5 abr 2026
-                    - paragraph [ref=e373]: El viento azotaba las murallas del castillo mientras la tormenta se aproximaba desde el norte. — No deberíamos estar
-                  - link "A la media noche pasó › A las 12 1 abr 2026 bum 🎲 1d6 → 4 por aventurera · 00:32" [ref=e374] [cursor=pointer]:
+                    - generic [ref=e383]:
+                      - generic [ref=e384]: A la media noche pasó
+                      - generic [ref=e385]: ›
+                      - generic [ref=e386]: A las 12
+                      - generic [ref=e387]: 5 abr 2026
+                    - paragraph [ref=e388]: El viento azotaba las murallas del castillo mientras la tormenta se aproximaba desde el norte. — No deberíamos estar
+                  - link "A la media noche pasó › A las 12 1 abr 2026 bum 🎲 1d6 → 4 por aventurera · 00:32" [ref=e389] [cursor=pointer]:
                     - /url: /salas/a-la-media-noche-paso/8e673c4b-0849-4a4f-95e3-c6e0f026e408#post-3
-                    - generic [ref=e375]:
-                      - generic [ref=e376]: A la media noche pasó
-                      - generic [ref=e377]: ›
-                      - generic [ref=e378]: A las 12
-                      - generic [ref=e379]: 1 abr 2026
-                    - paragraph [ref=e380]: bum 🎲 1d6 → 4 por aventurera · 00:32
-                  - link "Perihelio tardío › Laralalá 30 mar 2026 pru 🎲 1d4 → 1 por aventurera · 15:32 🎲 1d4 → 3" [ref=e381] [cursor=pointer]:
+                    - generic [ref=e390]:
+                      - generic [ref=e391]: A la media noche pasó
+                      - generic [ref=e392]: ›
+                      - generic [ref=e393]: A las 12
+                      - generic [ref=e394]: 1 abr 2026
+                    - paragraph [ref=e395]: bum 🎲 1d6 → 4 por aventurera · 00:32
+                  - link "Perihelio tardío › Laralalá 30 mar 2026 pru 🎲 1d4 → 1 por aventurera · 15:32 🎲 1d4 → 3" [ref=e396] [cursor=pointer]:
                     - /url: /salas/perihelio-tardio/466cd177-f0b0-4e2f-8362-d9cad4f89af7#post-7
-                    - generic [ref=e382]:
-                      - generic [ref=e383]: Perihelio tardío
-                      - generic [ref=e384]: ›
-                      - generic [ref=e385]: Laralalá
-                      - generic [ref=e386]: 30 mar 2026
-                    - paragraph [ref=e387]: pru 🎲 1d4 → 1 por aventurera · 15:32 🎲 1d4 → 3
-    - contentinfo [ref=e388]:
-      - generic [ref=e389]:
-        - generic [ref=e390]:
-          - generic [ref=e391]:
-            - generic [ref=e392]: ✦
+                    - generic [ref=e397]:
+                      - generic [ref=e398]: Perihelio tardío
+                      - generic [ref=e399]: ›
+                      - generic [ref=e400]: Laralalá
+                      - generic [ref=e401]: 30 mar 2026
+                    - paragraph [ref=e402]: pru 🎲 1d4 → 1 por aventurera · 15:32 🎲 1d4 → 3
+    - contentinfo [ref=e403]:
+      - generic [ref=e404]:
+        - generic [ref=e405]:
+          - generic [ref=e406]:
+            - generic [ref=e407]: ✦
             - text: TalesRol
-          - generic [ref=e393]: © 2026 — Plataforma de Roleplay en español
-        - generic [ref=e394]:
-          - link "Normas" [ref=e395] [cursor=pointer]:
+          - generic [ref=e408]: © 2026 — Plataforma de Roleplay en español
+        - generic [ref=e409]:
+          - link "Normas" [ref=e410] [cursor=pointer]:
             - /url: /normas
-          - link "Privacidad" [ref=e396] [cursor=pointer]:
+          - link "Privacidad" [ref=e411] [cursor=pointer]:
             - /url: /privacidad
-          - link "Contacto" [ref=e397] [cursor=pointer]:
+          - link "Contacto" [ref=e412] [cursor=pointer]:
             - /url: /contacto
-  - alert [ref=e398]: aventurera — TalesRol | TalesRol
+  - alert [ref=e413]: aventurera — TalesRol | TalesRol
 ```
 
 # Test source

@@ -80,12 +80,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 33434,
+                      "duration": 17587,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:15:05.564Z",
+                      "startTime": "2026-04-22T13:31:46.020Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -114,12 +114,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 29673,
+                      "duration": 12638,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:15:40.434Z",
+                      "startTime": "2026-04-22T13:32:05.202Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -148,12 +148,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 31017,
+                      "duration": 14771,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:10.220Z",
+                      "startTime": "2026-04-22T13:32:17.915Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -182,12 +182,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 10433,
+                      "duration": 10011,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:41.299Z",
+                      "startTime": "2026-04-22T13:32:32.747Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -216,12 +216,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 10773,
+                      "duration": 9344,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:51.824Z",
+                      "startTime": "2026-04-22T13:32:42.844Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -249,18 +249,71 @@
                     {
                       "workerIndex": 0,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 20434,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 26226,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button.sort-th:has-text(\"Acción\")').first() to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button.sort-th:has-text(\"Acción\")').first() to be visible\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Admin modlog.spec.ts:26:69",
+                        "location": {
+                          "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Admin modlog.spec.ts",
+                          "column": 69,
+                          "line": 26
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`${BASE_URL}/admin`\u001b[39m)\n \u001b[90m 25 |\u001b[39m     \u001b[90m// Esperar al sort-th \"Acción\" del modlog (único en la página)\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'button.sort-th:has-text(\"Acción\")'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\n \u001b[90m    |\u001b[39m                                                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 27 |\u001b[39m   })\n \u001b[90m 28 |\u001b[39m\n \u001b[90m 29 |\u001b[39m   test(\u001b[32m'La tabla de log está visible'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Admin modlog.spec.ts",
+                            "column": 69,
+                            "line": 26
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button.sort-th:has-text(\"Acción\")').first() to be visible\u001b[22m\n\n\n\u001b[0m \u001b[90m 24 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`${BASE_URL}/admin`\u001b[39m)\n \u001b[90m 25 |\u001b[39m     \u001b[90m// Esperar al sort-th \"Acción\" del modlog (único en la página)\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'button.sort-th:has-text(\"Acción\")'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\n \u001b[90m    |\u001b[39m                                                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 27 |\u001b[39m   })\n \u001b[90m 28 |\u001b[39m\n \u001b[90m 29 |\u001b[39m   test(\u001b[32m'La tabla de log está visible'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Admin modlog.spec.ts:26:69\u001b[22m"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:02.734Z",
+                      "startTime": "2026-04-22T13:32:52.249Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\veint\\talesrol\\talesrol-tests\\test-results\\Admin modlog-Log-de-modera-d62d1-duce-o-mantiene-el-contador-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\veint\\talesrol\\talesrol-tests\\test-results\\Admin modlog-Log-de-modera-d62d1-duce-o-mantiene-el-contador-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\veint\\talesrol\\talesrol-tests\\test-results\\Admin modlog-Log-de-modera-d62d1-duce-o-mantiene-el-contador-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Admin modlog.spec.ts",
+                        "column": 69,
+                        "line": 26
+                      }
+                    },
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15438,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-04-22T13:33:21.852Z",
                       "annotations": [],
                       "attachments": []
                     }
                   ],
-                  "status": "expected"
+                  "status": "flaky"
                 }
               ],
               "id": "c51a20ef233639ee78e9-ced0b1abb262e4c5afc8",
@@ -281,10 +334,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 6,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 18411,
+                      "duration": 13716,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mB\u001b[27maneo\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mDesb\u001b[27maneo\"\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mB\u001b[27maneo\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mDesb\u001b[27maneo\"\u001b[39m\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Admin modlog.spec.ts:81:61",
@@ -308,7 +361,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:23.383Z",
+                      "startTime": "2026-04-22T13:33:38.149Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -334,10 +387,10 @@
                       }
                     },
                     {
-                      "workerIndex": 5,
+                      "workerIndex": 9,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 17336,
+                      "duration": 15789,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mB\u001b[27maneo\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mDesb\u001b[27maneo\"\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mB\u001b[27maneo\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mDesb\u001b[27maneo\"\u001b[39m\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Admin modlog.spec.ts:81:61",
@@ -361,7 +414,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:17:49.273Z",
+                      "startTime": "2026-04-22T13:33:56.954Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -408,15 +461,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 7,
+                      "workerIndex": 10,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 9433,
+                      "duration": 14297,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:18:12.423Z",
+                      "startTime": "2026-04-22T13:34:16.933Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -442,15 +495,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 7,
+                      "workerIndex": 10,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 10463,
+                      "duration": 29038,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:18:22.752Z",
+                      "startTime": "2026-04-22T13:34:31.827Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -476,15 +529,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 7,
+                      "workerIndex": 10,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 13133,
+                      "duration": 14573,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:18:33.396Z",
+                      "startTime": "2026-04-22T13:35:00.910Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -510,15 +563,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 7,
+                      "workerIndex": 10,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 14976,
+                      "duration": 11298,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:18:46.714Z",
+                      "startTime": "2026-04-22T13:35:15.536Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -544,15 +597,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 7,
+                      "workerIndex": 10,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 14733,
+                      "duration": 19329,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:19:01.818Z",
+                      "startTime": "2026-04-22T13:35:27.045Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -578,15 +631,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 7,
+                      "workerIndex": 10,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 13562,
+                      "duration": 10005,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:19:16.809Z",
+                      "startTime": "2026-04-22T13:35:46.440Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -612,57 +665,20 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 7,
-                      "parallelIndex": 0,
-                      "status": "timedOut",
-                      "duration": 40707,
-                      "error": {
-                        "message": "\u001b[31mTearing down \"context\" exceeded the test timeout of 30000ms.\u001b[39m",
-                        "stack": "\u001b[31mTearing down \"context\" exceeded the test timeout of 30000ms.\u001b[39m"
-                      },
-                      "errors": [
-                        {
-                          "message": "\u001b[31mTearing down \"context\" exceeded the test timeout of 30000ms.\u001b[39m"
-                        }
-                      ],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-22T08:19:30.531Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\veint\\talesrol\\talesrol-tests\\test-results\\Admin modlog-Log-de-modera-5aa56-se-muestra-el-mensaje-vacío-chromium\\test-failed-1.png"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "C:\\Users\\veint\\talesrol\\talesrol-tests\\test-results\\Admin modlog-Log-de-modera-5aa56-se-muestra-el-mensaje-vacío-chromium\\error-context.md"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\veint\\talesrol\\talesrol-tests\\test-results\\Admin modlog-Log-de-modera-5aa56-se-muestra-el-mensaje-vacío-chromium\\video.webm"
-                        }
-                      ]
-                    },
-                    {
-                      "workerIndex": 13,
+                      "workerIndex": 10,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 25336,
+                      "duration": 9465,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
-                      "retry": 1,
-                      "startTime": "2026-04-22T08:21:05.574Z",
+                      "retry": 0,
+                      "startTime": "2026-04-22T13:35:56.517Z",
                       "annotations": [],
                       "attachments": []
                     }
                   ],
-                  "status": "flaky"
+                  "status": "expected"
                 }
               ],
               "id": "c51a20ef233639ee78e9-ef48c41b7fda6df5cacc",
@@ -703,12 +719,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 33494,
+                      "duration": 16357,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:15:05.360Z",
+                      "startTime": "2026-04-22T13:31:45.974Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -737,12 +753,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 26760,
+                      "duration": 14658,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:15:40.355Z",
+                      "startTime": "2026-04-22T13:32:03.959Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -771,12 +787,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 19171,
+                      "duration": 15487,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:07.569Z",
+                      "startTime": "2026-04-22T13:32:18.681Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -805,12 +821,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 9527,
+                      "duration": 8016,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:27.149Z",
+                      "startTime": "2026-04-22T13:32:34.240Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -839,12 +855,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 13137,
+                      "duration": 7489,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:37.088Z",
+                      "startTime": "2026-04-22T13:32:42.308Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -890,12 +906,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 33335,
+                      "duration": 6449,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:15:05.361Z",
+                      "startTime": "2026-04-22T13:31:45.991Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -924,12 +940,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 18269,
+                      "duration": 23866,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:15:40.551Z",
+                      "startTime": "2026-04-22T13:31:53.925Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -958,12 +974,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 26773,
+                      "duration": 10923,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:15:59.042Z",
+                      "startTime": "2026-04-22T13:32:17.929Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1000,7 +1016,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 16008,
+                      "duration": 12230,
                       "errors": [],
                       "stdout": [
                         {
@@ -1009,7 +1025,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:26.587Z",
+                      "startTime": "2026-04-22T13:32:28.922Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1038,7 +1054,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 15684,
+                      "duration": 8654,
                       "errors": [],
                       "stdout": [
                         {
@@ -1047,7 +1063,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:42.965Z",
+                      "startTime": "2026-04-22T13:32:41.203Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1076,7 +1092,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 11653,
+                      "duration": 11850,
                       "errors": [],
                       "stdout": [
                         {
@@ -1085,7 +1101,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:58.701Z",
+                      "startTime": "2026-04-22T13:32:49.894Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1131,7 +1147,7 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 33003,
+                      "duration": 17663,
                       "errors": [],
                       "stdout": [
                         {
@@ -1140,7 +1156,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:15:05.491Z",
+                      "startTime": "2026-04-22T13:31:46.055Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1169,7 +1185,7 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 28425,
+                      "duration": 12978,
                       "errors": [],
                       "stdout": [
                         {
@@ -1178,7 +1194,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:15:40.752Z",
+                      "startTime": "2026-04-22T13:32:05.202Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1207,7 +1223,7 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "failed",
-                      "duration": 19307,
+                      "duration": 15631,
                       "error": {
                         "message": "Error: locator.textContent: Error: strict mode violation: locator('main') resolved to 2 elements:\n    1) <main class=\"app-main\">…</main> aka getByRole('main').filter({ hasText: 'aventurera@' })\n    2) <main class=\"profile-main\">…</main> aka getByRole('main').filter({ hasText: 'aventurera@' }).getByRole('main')\n\nCall log:\n\u001b[2m  - waiting for locator('main')\u001b[22m\n",
                         "stack": "Error: locator.textContent: Error: strict mode violation: locator('main') resolved to 2 elements:\n    1) <main class=\"app-main\">…</main> aka getByRole('main').filter({ hasText: 'aventurera@' })\n    2) <main class=\"profile-main\">…</main> aka getByRole('main').filter({ hasText: 'aventurera@' }).getByRole('main')\n\nCall log:\n\u001b[2m  - waiting for locator('main')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\bugs conocidos.spec.ts:81:52",
@@ -1231,7 +1247,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:09.520Z",
+                      "startTime": "2026-04-22T13:32:18.235Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1260,7 +1276,7 @@
                       "workerIndex": 4,
                       "parallelIndex": 3,
                       "status": "failed",
-                      "duration": 14642,
+                      "duration": 17984,
                       "error": {
                         "message": "Error: locator.textContent: Error: strict mode violation: locator('main') resolved to 2 elements:\n    1) <main class=\"app-main\">…</main> aka getByRole('main').filter({ hasText: 'aventurera@' })\n    2) <main class=\"profile-main\">…</main> aka getByRole('main').filter({ hasText: 'aventurera@' }).getByRole('main')\n\nCall log:\n\u001b[2m  - waiting for locator('main')\u001b[22m\n",
                         "stack": "Error: locator.textContent: Error: strict mode violation: locator('main') resolved to 2 elements:\n    1) <main class=\"app-main\">…</main> aka getByRole('main').filter({ hasText: 'aventurera@' })\n    2) <main class=\"profile-main\">…</main> aka getByRole('main').filter({ hasText: 'aventurera@' }).getByRole('main')\n\nCall log:\n\u001b[2m  - waiting for locator('main')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\bugs conocidos.spec.ts:81:52",
@@ -1284,7 +1300,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:17:47.439Z",
+                      "startTime": "2026-04-22T13:32:55.369Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1331,49 +1347,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 11,
-                      "parallelIndex": 3,
-                      "status": "timedOut",
-                      "duration": 46206,
-                      "error": {
-                        "message": "\u001b[31mTearing down \"context\" exceeded the test timeout of 30000ms.\u001b[39m",
-                        "stack": "\u001b[31mTearing down \"context\" exceeded the test timeout of 30000ms.\u001b[39m"
-                      },
-                      "errors": [
-                        {
-                          "message": "\u001b[31mTearing down \"context\" exceeded the test timeout of 30000ms.\u001b[39m"
-                        },
-                        {
-                          "message": "Error: browserContext.close: Test ended.\nBrowser logs:\n\n<launching> C:\\Users\\veint\\AppData\\Local\\ms-playwright\\chromium-1217\\chrome-win64\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --user-data-dir=C:\\Users\\veint\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-dXI92v --remote-debugging-pipe --no-startup-window\n<launched> pid=18872\n[pid=18872][err] [18872:14224:0422/101950.820:ERROR:google_apis\\gcm\\engine\\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT\n[pid=18872][err] [18872:14224:0422/102017.833:ERROR:google_apis\\gcm\\engine\\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT\n[pid=18872] <gracefully close start>"
-                        }
-                      ],
-                      "stdout": [
-                        {
-                          "text": "✅ Sin errores de hidratación en portada\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-22T08:19:32.232Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\veint\\talesrol\\talesrol-tests\\test-results\\bugs conocidos-Regresión-—-97f14--error-de-hidratación-React-chromium\\test-failed-1.png"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "C:\\Users\\veint\\talesrol\\talesrol-tests\\test-results\\bugs conocidos-Regresión-—-97f14--error-de-hidratación-React-chromium\\error-context.md"
-                        }
-                      ]
-                    },
-                    {
-                      "workerIndex": 12,
+                      "workerIndex": 5,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 17235,
+                      "duration": 14596,
                       "errors": [],
                       "stdout": [
                         {
@@ -1381,13 +1358,13 @@
                         }
                       ],
                       "stderr": [],
-                      "retry": 1,
-                      "startTime": "2026-04-22T08:20:45.171Z",
+                      "retry": 0,
+                      "startTime": "2026-04-22T13:33:21.384Z",
                       "annotations": [],
                       "attachments": []
                     }
                   ],
-                  "status": "flaky"
+                  "status": "expected"
                 }
               ],
               "id": "81a8dd50fe15582f5818-54dbbca09e15c9462bfb",
@@ -1408,10 +1385,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 12,
+                      "workerIndex": 5,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 18232,
+                      "duration": 12336,
                       "errors": [],
                       "stdout": [
                         {
@@ -1420,7 +1397,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:21:11.572Z",
+                      "startTime": "2026-04-22T13:33:36.832Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1466,12 +1443,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 9813,
+                      "duration": 9658,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:16:50.439Z",
+                      "startTime": "2026-04-22T13:32:49.927Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1500,12 +1477,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 9120,
+                      "duration": 13807,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:00.314Z",
+                      "startTime": "2026-04-22T13:32:59.648Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1534,12 +1511,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 11912,
+                      "duration": 7576,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:09.483Z",
+                      "startTime": "2026-04-22T13:33:13.535Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1568,12 +1545,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 7115,
+                      "duration": 11040,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:21.482Z",
+                      "startTime": "2026-04-22T13:33:21.189Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1602,7 +1579,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 14792,
+                      "duration": 17569,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/\\/auth\\/login/\u001b[39m\nReceived string:  \u001b[31m\"https://tales-rol.vercel.app/salas/nueva\"\u001b[39m\nTimeout: 8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 8000ms\u001b[22m\n\u001b[2m    11 × unexpected value \"https://tales-rol.vercel.app/salas/nueva\"\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/\\/auth\\/login/\u001b[39m\nReceived string:  \u001b[31m\"https://tales-rol.vercel.app/salas/nueva\"\u001b[39m\nTimeout: 8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 8000ms\u001b[22m\n\u001b[2m    11 × unexpected value \"https://tales-rol.vercel.app/salas/nueva\"\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Crear sala.spec.ts:50:24",
@@ -1626,7 +1603,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:28.721Z",
+                      "startTime": "2026-04-22T13:33:32.293Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1652,10 +1629,10 @@
                       }
                     },
                     {
-                      "workerIndex": 6,
+                      "workerIndex": 7,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 17723,
+                      "duration": 19177,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/\\/auth\\/login/\u001b[39m\nReceived string:  \u001b[31m\"https://tales-rol.vercel.app/salas/nueva\"\u001b[39m\nTimeout: 8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 8000ms\u001b[22m\n\u001b[2m    11 × unexpected value \"https://tales-rol.vercel.app/salas/nueva\"\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/\\/auth\\/login/\u001b[39m\nReceived string:  \u001b[31m\"https://tales-rol.vercel.app/salas/nueva\"\u001b[39m\nTimeout: 8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 8000ms\u001b[22m\n\u001b[2m    11 × unexpected value \"https://tales-rol.vercel.app/salas/nueva\"\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Crear sala.spec.ts:50:24",
@@ -1679,7 +1656,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:18:04.759Z",
+                      "startTime": "2026-04-22T13:33:54.375Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1746,7 +1723,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 8317,
+                      "duration": 10126,
                       "errors": [],
                       "stdout": [
                         {
@@ -1755,7 +1732,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:10.496Z",
+                      "startTime": "2026-04-22T13:33:01.835Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1784,7 +1761,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 7876,
+                      "duration": 5415,
                       "errors": [],
                       "stdout": [
                         {
@@ -1793,7 +1770,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:18.888Z",
+                      "startTime": "2026-04-22T13:33:12.029Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1822,7 +1799,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 9078,
+                      "duration": 4557,
                       "errors": [],
                       "stdout": [
                         {
@@ -1831,7 +1808,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:26.963Z",
+                      "startTime": "2026-04-22T13:33:17.520Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1860,7 +1837,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 6847,
+                      "duration": 10180,
                       "errors": [],
                       "stdout": [
                         {
@@ -1869,7 +1846,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:36.151Z",
+                      "startTime": "2026-04-22T13:33:22.145Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1898,7 +1875,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 4497,
+                      "duration": 4694,
                       "errors": [],
                       "stdout": [
                         {
@@ -1907,7 +1884,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:43.062Z",
+                      "startTime": "2026-04-22T13:33:32.392Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1936,7 +1913,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "failed",
-                      "duration": 8909,
+                      "duration": 12583,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('main').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('main').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\navegacion.spec.ts:54:48",
@@ -1960,7 +1937,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:17:47.607Z",
+                      "startTime": "2026-04-22T13:33:37.135Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1989,7 +1966,7 @@
                       "workerIndex": 8,
                       "parallelIndex": 2,
                       "status": "failed",
-                      "duration": 8947,
+                      "duration": 15161,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('main').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('main').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\navegacion.spec.ts:54:48",
@@ -2013,7 +1990,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:18:23.848Z",
+                      "startTime": "2026-04-22T13:33:54.613Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2068,10 +2045,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
+                      "workerIndex": 11,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 16145,
+                      "duration": 12289,
                       "errors": [],
                       "stdout": [
                         {
@@ -2081,7 +2058,7 @@
                           "text": "✅ Link a /personajes encontrado\n"
                         },
                         {
-                          "text": "✅ Link a /mensajes encontrado\n"
+                          "text": "⚠️  Link a /mensajes NO encontrado\n"
                         },
                         {
                           "text": "⚠️  Link a /notificaciones NO encontrado\n"
@@ -2089,7 +2066,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:19:13.050Z",
+                      "startTime": "2026-04-22T13:34:16.988Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2115,10 +2092,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
+                      "workerIndex": 11,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 16683,
+                      "duration": 16325,
                       "errors": [],
                       "stdout": [
                         {
@@ -2127,7 +2104,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:19:30.943Z",
+                      "startTime": "2026-04-22T13:34:30.010Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2153,10 +2130,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
+                      "workerIndex": 11,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 28558,
+                      "duration": 14421,
                       "errors": [],
                       "stdout": [
                         {
@@ -2165,7 +2142,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:19:48.329Z",
+                      "startTime": "2026-04-22T13:34:46.406Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2191,10 +2168,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
+                      "workerIndex": 11,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 9287,
+                      "duration": 12348,
                       "errors": [],
                       "stdout": [
                         {
@@ -2203,7 +2180,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:20:17.618Z",
+                      "startTime": "2026-04-22T13:35:00.910Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2246,10 +2223,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 9585,
+                      "duration": 7209,
                       "errors": [],
                       "stdout": [
                         {
@@ -2258,7 +2235,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:18:36.079Z",
+                      "startTime": "2026-04-22T13:33:49.240Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2284,10 +2261,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 10220,
+                      "duration": 10376,
                       "errors": [],
                       "stdout": [
                         {
@@ -2296,7 +2273,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:18:46.804Z",
+                      "startTime": "2026-04-22T13:33:56.504Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2322,19 +2299,19 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 11889,
+                      "duration": 11905,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Personaje creado — URL: https://tales-rol.vercel.app/personajes/ae85acd7-2cf1-465e-b851-fdd6a3723e37\n"
+                          "text": "✅ Personaje creado — URL: https://tales-rol.vercel.app/personajes/8950ec35-ab12-4166-a11e-f083bc1cd24d\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:18:57.163Z",
+                      "startTime": "2026-04-22T13:34:06.946Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2368,10 +2345,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 9170,
+                      "duration": 11522,
                       "errors": [],
                       "stdout": [
                         {
@@ -2380,7 +2357,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:19:09.264Z",
+                      "startTime": "2026-04-22T13:34:18.906Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2406,10 +2383,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 12292,
+                      "duration": 7989,
                       "errors": [],
                       "stdout": [
                         {
@@ -2418,7 +2395,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:19:18.574Z",
+                      "startTime": "2026-04-22T13:34:30.477Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2444,10 +2421,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 20087,
+                      "duration": 15565,
                       "errors": [],
                       "stdout": [
                         {
@@ -2456,7 +2433,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:19:31.061Z",
+                      "startTime": "2026-04-22T13:34:38.546Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2482,19 +2459,19 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 35880,
+                      "duration": 8648,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Perfil público visible — URL: https://tales-rol.vercel.app/perfil/aventurera\n"
+                          "text": "✅ Perfil público visible — URL: https://tales-rol.vercel.app/usuarios\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:19:52.051Z",
+                      "startTime": "2026-04-22T13:34:54.169Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2528,10 +2505,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 8618,
+                      "duration": 10325,
                       "errors": [],
                       "stdout": [
                         {
@@ -2540,7 +2517,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:20:29.764Z",
+                      "startTime": "2026-04-22T13:35:02.888Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2566,10 +2543,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
                       "status": "failed",
-                      "duration": 14274,
+                      "duration": 14700,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[name=\"title\"], input[name=\"titulo\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[name=\"title\"], input[name=\"titulo\"]').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[name=\"title\"], input[name=\"titulo\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[name=\"title\"], input[name=\"titulo\"]').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\personajes perfil.spec.ts:125:30",
@@ -2593,7 +2570,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:20:38.578Z",
+                      "startTime": "2026-04-22T13:35:13.312Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2620,9 +2597,9 @@
                     },
                     {
                       "workerIndex": 14,
-                      "parallelIndex": 1,
+                      "parallelIndex": 3,
                       "status": "failed",
-                      "duration": 25705,
+                      "duration": 15457,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[name=\"title\"], input[name=\"titulo\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[name=\"title\"], input[name=\"titulo\"]').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[name=\"title\"], input[name=\"titulo\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[name=\"title\"], input[name=\"titulo\"]').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\personajes perfil.spec.ts:125:30",
@@ -2646,7 +2623,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:21:52.353Z",
+                      "startTime": "2026-04-22T13:35:32.171Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2710,10 +2687,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 2,
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 9718,
+                      "duration": 11895,
                       "errors": [],
                       "stdout": [
                         {
@@ -2722,7 +2699,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:20:27.492Z",
+                      "startTime": "2026-04-22T13:34:17.339Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2748,10 +2725,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 2,
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 8031,
+                      "duration": 7141,
                       "errors": [],
                       "stdout": [
                         {
@@ -2760,7 +2737,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:20:37.398Z",
+                      "startTime": "2026-04-22T13:34:31.044Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2786,10 +2763,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 2,
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 9503,
+                      "duration": 14412,
                       "errors": [],
                       "stdout": [
                         {
@@ -2798,7 +2775,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:20:45.587Z",
+                      "startTime": "2026-04-22T13:34:38.309Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2824,10 +2801,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 2,
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 8897,
+                      "duration": 10658,
                       "errors": [],
                       "stdout": [
                         {
@@ -2836,7 +2813,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:20:55.197Z",
+                      "startTime": "2026-04-22T13:34:52.790Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2870,10 +2847,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 2,
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 20312,
+                      "duration": 13331,
                       "errors": [],
                       "stdout": [
                         {
@@ -2882,7 +2859,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:21:04.471Z",
+                      "startTime": "2026-04-22T13:35:03.515Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2908,10 +2885,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 2,
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 10761,
+                      "duration": 9926,
                       "errors": [],
                       "stdout": [
                         {
@@ -2920,7 +2897,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:21:24.971Z",
+                      "startTime": "2026-04-22T13:35:16.903Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2954,10 +2931,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 2,
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 11321,
+                      "duration": 8910,
                       "errors": [],
                       "stdout": [
                         {
@@ -2966,7 +2943,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:21:35.824Z",
+                      "startTime": "2026-04-22T13:35:26.940Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -3009,10 +2986,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 12,
-                      "parallelIndex": 3,
+                      "workerIndex": 11,
+                      "parallelIndex": 2,
                       "status": "failed",
-                      "duration": 16723,
+                      "duration": 12013,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1.users-title')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1.users-title')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1.users-title')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1.users-title')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:17:50",
@@ -3036,7 +3013,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:21:30.706Z",
+                      "startTime": "2026-04-22T13:35:13.389Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3062,10 +3039,10 @@
                       }
                     },
                     {
-                      "workerIndex": 15,
+                      "workerIndex": 13,
                       "parallelIndex": 2,
                       "status": "failed",
-                      "duration": 26601,
+                      "duration": 17065,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1.users-title')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1.users-title')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1.users-title')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1.users-title')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:17:50",
@@ -3089,7 +3066,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:21:53.626Z",
+                      "startTime": "2026-04-22T13:35:30.215Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3136,10 +3113,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 17,
+                      "workerIndex": 15,
                       "parallelIndex": 2,
                       "status": "failed",
-                      "duration": 8817,
+                      "duration": 8804,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.users-search')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.users-search')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.users-search')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.users-search')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:24:26",
@@ -3163,7 +3140,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:22:25.146Z",
+                      "startTime": "2026-04-22T13:35:51.361Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3189,10 +3166,10 @@
                       }
                     },
                     {
-                      "workerIndex": 19,
+                      "workerIndex": 17,
                       "parallelIndex": 2,
                       "status": "failed",
-                      "duration": 9385,
+                      "duration": 8544,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.users-search')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.users-search')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.users-search')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.users-search')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:24:26",
@@ -3216,7 +3193,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:22:38.585Z",
+                      "startTime": "2026-04-22T13:36:03.614Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3263,10 +3240,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 21,
+                      "workerIndex": 19,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 8640,
+                      "duration": 8193,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('button.role-filter-btn').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('button.role-filter-btn').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('button.role-filter-btn').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('button.role-filter-btn').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:33:66",
@@ -3290,7 +3267,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:22:55.132Z",
+                      "startTime": "2026-04-22T13:36:14.400Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3316,10 +3293,10 @@
                       }
                     },
                     {
-                      "workerIndex": 23,
+                      "workerIndex": 20,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 8739,
+                      "duration": 7651,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('button.role-filter-btn').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('button.role-filter-btn').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('button.role-filter-btn').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('button.role-filter-btn').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:33:66",
@@ -3343,7 +3320,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:23:09.101Z",
+                      "startTime": "2026-04-22T13:36:24.529Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3390,10 +3367,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 24,
+                      "workerIndex": 22,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 11448,
+                      "duration": 11250,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.users-grid')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.users-grid')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.users-grid')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.users-grid')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:40:47",
@@ -3417,7 +3394,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:23:21.593Z",
+                      "startTime": "2026-04-22T13:36:34.294Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3443,10 +3420,10 @@
                       }
                     },
                     {
-                      "workerIndex": 26,
+                      "workerIndex": 23,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 12214,
+                      "duration": 11300,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.users-grid')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.users-grid')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.users-grid')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.users-grid')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:40:47",
@@ -3470,7 +3447,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:23:38.280Z",
+                      "startTime": "2026-04-22T13:36:47.282Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3517,10 +3494,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 28,
+                      "workerIndex": 25,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 12305,
+                      "duration": 12169,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('a.user-card').first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('a.user-card').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('a.user-card').first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('a.user-card').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:48:29",
@@ -3544,7 +3521,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:23:55.164Z",
+                      "startTime": "2026-04-22T13:37:00.533Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3570,10 +3547,10 @@
                       }
                     },
                     {
-                      "workerIndex": 30,
+                      "workerIndex": 27,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 12509,
+                      "duration": 11279,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('a.user-card').first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('a.user-card').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('a.user-card').first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('a.user-card').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:48:29",
@@ -3597,7 +3574,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:24:11.955Z",
+                      "startTime": "2026-04-22T13:37:14.531Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3644,15 +3621,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 32,
+                      "workerIndex": 29,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 4996,
+                      "duration": 2988,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:24:29.227Z",
+                      "startTime": "2026-04-22T13:37:27.713Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -3695,10 +3672,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 13,
-                      "parallelIndex": 0,
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 16311,
+                      "duration": 15201,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1.wiki-form-title')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1.wiki-form-title')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1.wiki-form-title')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1.wiki-form-title')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:28:54",
@@ -3722,7 +3699,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:21:32.968Z",
+                      "startTime": "2026-04-22T13:35:35.956Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3749,9 +3726,9 @@
                     },
                     {
                       "workerIndex": 16,
-                      "parallelIndex": 0,
+                      "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 27123,
+                      "duration": 14483,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1.wiki-form-title')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1.wiki-form-title')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1.wiki-form-title')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1.wiki-form-title')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:28:54",
@@ -3775,7 +3752,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:21:54.009Z",
+                      "startTime": "2026-04-22T13:35:53.663Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3825,7 +3802,7 @@
                       "workerIndex": 18,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 15417,
+                      "duration": 13359,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.wpf-input').first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.wpf-input').first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:36:30",
@@ -3849,7 +3826,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:22:25.293Z",
+                      "startTime": "2026-04-22T13:36:10.302Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3875,10 +3852,10 @@
                       }
                     },
                     {
-                      "workerIndex": 20,
+                      "workerIndex": 21,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 14425,
+                      "duration": 22276,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.wpf-input').first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input').first()\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.wpf-input').first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input').first()\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:36:30",
@@ -3902,7 +3879,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:22:44.913Z",
+                      "startTime": "2026-04-22T13:36:25.778Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3949,10 +3926,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 22,
+                      "workerIndex": 24,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 15260,
+                      "duration": 15137,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.ql-editor')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.ql-editor')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.ql-editor')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.ql-editor')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:43:46",
@@ -3976,7 +3953,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:23:04.085Z",
+                      "startTime": "2026-04-22T13:36:49.583Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4002,10 +3979,10 @@
                       }
                     },
                     {
-                      "workerIndex": 25,
+                      "workerIndex": 26,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 16427,
+                      "duration": 15697,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.ql-editor')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.ql-editor')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.ql-editor')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.ql-editor')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:43:46",
@@ -4029,7 +4006,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:23:23.481Z",
+                      "startTime": "2026-04-22T13:37:06.755Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4076,10 +4053,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 27,
+                      "workerIndex": 28,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 14353,
+                      "duration": 13113,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('input.wpf-input')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input')\u001b[22m\n\u001b[2m    11 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('input.wpf-input')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input')\u001b[22m\n\u001b[2m    11 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:50:26",
@@ -4103,7 +4080,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:23:43.907Z",
+                      "startTime": "2026-04-22T13:37:24.143Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4129,13 +4106,13 @@
                       }
                     },
                     {
-                      "workerIndex": 29,
+                      "workerIndex": 30,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 13995,
+                      "duration": 13096,
                       "error": {
-                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('input.wpf-input')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input')\u001b[22m\n\u001b[2m    11 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('input.wpf-input')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input')\u001b[22m\n\u001b[2m    11 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:50:26",
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('input.wpf-input')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input')\u001b[22m\n\u001b[2m    12 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('input.wpf-input')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input')\u001b[22m\n\u001b[2m    12 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:50:26",
                         "location": {
                           "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts",
                           "column": 26,
@@ -4150,13 +4127,13 @@
                             "column": 26,
                             "line": 50
                           },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('input.wpf-input')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input')\u001b[22m\n\u001b[2m    11 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n\u001b[0m \u001b[90m 48 |\u001b[39m     \u001b[90m// El segundo input.wpf-input es categorías\u001b[39m\n \u001b[90m 49 |\u001b[39m     \u001b[36mconst\u001b[39m inputs \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'input.wpf-input'\u001b[39m)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 50 |\u001b[39m     \u001b[36mawait\u001b[39m expect(inputs)\u001b[33m.\u001b[39mtoHaveCount(\u001b[35m2\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m8000\u001b[39m })\n \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 51 |\u001b[39m     \u001b[36mawait\u001b[39m expect(inputs\u001b[33m.\u001b[39mnth(\u001b[35m1\u001b[39m))\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'placeholder'\u001b[39m\u001b[33m,\u001b[39m \u001b[35m/categorías|lore/i\u001b[39m)\n \u001b[90m 52 |\u001b[39m   })\n \u001b[90m 53 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:50:26\u001b[22m"
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('input.wpf-input')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-input')\u001b[22m\n\u001b[2m    12 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n\u001b[0m \u001b[90m 48 |\u001b[39m     \u001b[90m// El segundo input.wpf-input es categorías\u001b[39m\n \u001b[90m 49 |\u001b[39m     \u001b[36mconst\u001b[39m inputs \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'input.wpf-input'\u001b[39m)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 50 |\u001b[39m     \u001b[36mawait\u001b[39m expect(inputs)\u001b[33m.\u001b[39mtoHaveCount(\u001b[35m2\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m8000\u001b[39m })\n \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 51 |\u001b[39m     \u001b[36mawait\u001b[39m expect(inputs\u001b[33m.\u001b[39mnth(\u001b[35m1\u001b[39m))\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'placeholder'\u001b[39m\u001b[33m,\u001b[39m \u001b[35m/categorías|lore/i\u001b[39m)\n \u001b[90m 52 |\u001b[39m   })\n \u001b[90m 53 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:50:26\u001b[22m"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:24:02.520Z",
+                      "startTime": "2026-04-22T13:37:38.764Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4206,7 +4183,7 @@
                       "workerIndex": 31,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 13751,
+                      "duration": 13468,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('button.btn-primary')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('button.btn-primary')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('button.btn-primary')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('button.btn-primary')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:57:27",
@@ -4230,7 +4207,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:24:21.037Z",
+                      "startTime": "2026-04-22T13:37:53.356Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4256,10 +4233,10 @@
                       }
                     },
                     {
-                      "workerIndex": 33,
+                      "workerIndex": 32,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 13142,
+                      "duration": 14370,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('button.btn-primary')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('button.btn-primary')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('button.btn-primary')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('button.btn-primary')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:57:27",
@@ -4283,7 +4260,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:24:38.349Z",
+                      "startTime": "2026-04-22T13:38:08.330Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4330,10 +4307,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 34,
+                      "workerIndex": 33,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 5952,
+                      "duration": 6050,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"/salas/salas/wiki\"\u001b[39m\nReceived string:    \u001b[31m\"/auth/login\"\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"/salas/salas/wiki\"\u001b[39m\nReceived string:    \u001b[31m\"/auth/login\"\u001b[39m\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:67:18",
@@ -4357,7 +4334,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:24:54.632Z",
+                      "startTime": "2026-04-22T13:38:24.299Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4383,10 +4360,10 @@
                       }
                     },
                     {
-                      "workerIndex": 35,
+                      "workerIndex": 34,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 5891,
+                      "duration": 6051,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"/salas/salas/wiki\"\u001b[39m\nReceived string:    \u001b[31m\"/auth/login\"\u001b[39m",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"/salas/salas/wiki\"\u001b[39m\nReceived string:    \u001b[31m\"/auth/login\"\u001b[39m\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:67:18",
@@ -4410,7 +4387,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:25:03.470Z",
+                      "startTime": "2026-04-22T13:38:31.862Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4457,10 +4434,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 36,
+                      "workerIndex": 35,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 13926,
+                      "duration": 14268,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.wpf-checkbox')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-checkbox')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.wpf-checkbox')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-checkbox')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:72:54",
@@ -4484,7 +4461,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:25:12.179Z",
+                      "startTime": "2026-04-22T13:38:39.415Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4510,10 +4487,10 @@
                       }
                     },
                     {
-                      "workerIndex": 37,
+                      "workerIndex": 36,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 13517,
+                      "duration": 13968,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.wpf-checkbox')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-checkbox')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input.wpf-checkbox')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('input.wpf-checkbox')\u001b[22m\n\n    at C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:72:54",
@@ -4537,7 +4514,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:25:28.743Z",
+                      "startTime": "2026-04-22T13:38:55.465Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4584,10 +4561,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 38,
+                      "workerIndex": 37,
                       "parallelIndex": 0,
                       "status": "timedOut",
-                      "duration": 30653,
+                      "duration": 30501,
                       "error": {
                         "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
                         "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
@@ -4608,7 +4585,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:25:44.992Z",
+                      "startTime": "2026-04-22T13:39:10.927Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4629,10 +4606,10 @@
                       ]
                     },
                     {
-                      "workerIndex": 39,
+                      "workerIndex": 38,
                       "parallelIndex": 0,
                       "status": "timedOut",
-                      "duration": 30718,
+                      "duration": 30457,
                       "error": {
                         "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
                         "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
@@ -4653,7 +4630,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 1,
-                      "startTime": "2026-04-22T08:26:18.193Z",
+                      "startTime": "2026-04-22T13:39:42.983Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -4695,15 +4672,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 40,
+                      "workerIndex": 39,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7922,
+                      "duration": 7404,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-22T08:26:51.419Z",
+                      "startTime": "2026-04-22T13:40:14.951Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -4723,11 +4700,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-04-22T08:15:02.633Z",
-    "duration": 717973.0179999999,
-    "expected": 56,
+    "startTime": "2026-04-22T13:31:44.260Z",
+    "duration": 518888.44200000004,
+    "expected": 57,
     "skipped": 0,
     "unexpected": 18,
-    "flaky": 2
+    "flaky": 1
   }
 }

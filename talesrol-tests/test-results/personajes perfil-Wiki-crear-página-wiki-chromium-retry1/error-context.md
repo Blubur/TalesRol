@@ -86,160 +86,54 @@ Call log:
             - img [ref=e67]
           - generic [ref=e70]:
             - link "Sala de prueba automatizada" [ref=e71] [cursor=pointer]:
-              - /url: /salas/sala-de-prueba-automatizada
+              - /url: /salas/sala-de-prueba-automatizada-1776864887068
               - generic [ref=e74]: Sala de prueba automatizada
-            - link "A la media noche pasó solo noche" [ref=e75] [cursor=pointer]:
+            - link "Sala de prueba automatizada" [ref=e75] [cursor=pointer]:
+              - /url: /salas/sala-de-prueba-automatizada
+              - generic [ref=e78]: Sala de prueba automatizada
+            - link "A la media noche pasó solo noche" [ref=e79] [cursor=pointer]:
               - /url: /salas/a-la-media-noche-paso
-              - generic [ref=e77]:
-                - generic [ref=e78]: A la media noche pasó
-                - generic [ref=e79]: solo noche
-            - link "Cenizas blancas Fantasia angelical" [ref=e80] [cursor=pointer]:
+              - generic [ref=e81]:
+                - generic [ref=e82]: A la media noche pasó
+                - generic [ref=e83]: solo noche
+            - link "Cenizas blancas Fantasia angelical" [ref=e84] [cursor=pointer]:
               - /url: /salas/cenizas-blancas
-              - generic [ref=e82]:
-                - generic [ref=e83]: Cenizas blancas
-                - generic [ref=e84]: Fantasia angelical
-            - link "Perihelio tardío sci fi" [ref=e85] [cursor=pointer]:
+              - generic [ref=e86]:
+                - generic [ref=e87]: Cenizas blancas
+                - generic [ref=e88]: Fantasia angelical
+            - link "Perihelio tardío sci fi" [ref=e89] [cursor=pointer]:
               - /url: /salas/perihelio-tardio
-              - generic [ref=e87]:
-                - generic [ref=e88]: Perihelio tardío
-                - generic [ref=e89]: sci fi
-            - 'link "Josepa y Camila se van a Benidorm TW: Josepa en bañador" [ref=e90] [cursor=pointer]':
+              - generic [ref=e91]:
+                - generic [ref=e92]: Perihelio tardío
+                - generic [ref=e93]: sci fi
+            - 'link "Josepa y Camila se van a Benidorm TW: Josepa en bañador" [ref=e94] [cursor=pointer]':
               - /url: /salas/josepa-y-camila-se-van-a-benidorm
-              - generic [ref=e92]:
-                - generic [ref=e93]: Josepa y Camila se van a Benidorm
-                - generic [ref=e94]: "TW: Josepa en bañador"
-        - button "Accesos Rápidos" [ref=e97] [cursor=pointer]:
-          - img [ref=e99]
-          - generic [ref=e101]: Accesos Rápidos
+              - generic [ref=e96]:
+                - generic [ref=e97]: Josepa y Camila se van a Benidorm
+                - generic [ref=e98]: "TW: Josepa en bañador"
+        - button "Accesos Rápidos" [ref=e101] [cursor=pointer]:
           - img [ref=e103]
-      - main [ref=e105]:
-        - generic [ref=e106]:
-          - generic [ref=e107]:
-            - generic [ref=e108]:
-              - img [ref=e109]
-              - generic [ref=e111]:
-                - heading "Nueva página" [level=1] [ref=e112]
-                - paragraph [ref=e113]: Sala de prueba automatizada
-            - link "Wiki" [ref=e114] [cursor=pointer]:
-              - /url: /salas/sala-de-prueba-automatizada/wiki
-              - img [ref=e115]
-              - text: Wiki
-          - generic [ref=e117]:
-            - generic [ref=e118]:
-              - generic [ref=e119]:
-                - generic [ref=e120]: Título de la página
-                - 'textbox "Ej: Historia del reino, PNJs importantes..." [ref=e121]'
-              - generic [ref=e122]:
-                - generic [ref=e123]: Contenido
-                - generic [ref=e124]:
-                  - generic [ref=e125]:
-                    - button "✦ Visual" [ref=e126] [cursor=pointer]
-                    - button "</> HTML" [ref=e127] [cursor=pointer]
-                  - generic [ref=e128]:
-                    - generic [ref=e130]:
-                      - button "Normal" [ref=e131] [cursor=pointer]:
-                        - text: Normal
-                        - img [ref=e132]
-                      - text: Heading 1 Heading 2 Heading 3 Normal
-                    - generic [ref=e135]:
-                      - button [ref=e136] [cursor=pointer]:
-                        - img [ref=e137]
-                      - button [ref=e140] [cursor=pointer]:
-                        - img [ref=e141]
-                      - button [ref=e143] [cursor=pointer]:
-                        - img [ref=e144]
-                      - button [ref=e147] [cursor=pointer]:
-                        - img [ref=e148]
-                    - generic [ref=e152]:
-                      - button [ref=e153] [cursor=pointer]:
-                        - img [ref=e154]
-                      - button [ref=e158] [cursor=pointer]:
-                        - img [ref=e159]
-                    - generic [ref=e160]:
-                      - button [ref=e161] [cursor=pointer]:
-                        - img [ref=e162]
-                      - button [ref=e167] [cursor=pointer]:
-                        - img [ref=e168]
-                    - button [ref=e173] [cursor=pointer]:
-                      - img [ref=e174]
-                  - generic [ref=e179]:
-                    - generic [ref=e180]:
-                      - text: Escribe el contenido de esta página de la wiki...
-                      - paragraph [ref=e181]
-                    - text: "Visit URL: EditRemove"
-              - generic [ref=e182]:
-                - generic [ref=e183]:
-                  - img [ref=e184]
-                  - text: Categorías (separadas por coma)
-                - 'textbox "Ej: Lore, Personajes, Reglas" [ref=e187]'
-              - generic [ref=e188] [cursor=pointer]:
-                - checkbox "Establecer como portada de la wiki" [ref=e189]
-                - img [ref=e190]
-                - generic [ref=e192]: Establecer como portada de la wiki
-              - generic [ref=e193]:
-                - link "Cancelar" [ref=e194] [cursor=pointer]:
-                  - /url: /salas/sala-de-prueba-automatizada/wiki
-                - button "Crear página" [ref=e195] [cursor=pointer]:
-                  - img [ref=e196]
-                  - text: Crear página
-            - complementary [ref=e198]:
-              - generic [ref=e199]:
-                - generic [ref=e200]: Referencia rápida
-                - generic [ref=e201]: Etiquetas HTML disponibles
-              - generic [ref=e202]:
-                - generic [ref=e203]:
-                  - generic [ref=e205]: Título H1
-                  - code [ref=e206]: <h1>Texto</h1>
-                  - generic [ref=e207]: Título principal
-                - generic [ref=e208]:
-                  - generic [ref=e210]: Título H2
-                  - code [ref=e211]: <h2>Texto</h2>
-                  - generic [ref=e212]: Subtítulo
-                - generic [ref=e213]:
-                  - generic [ref=e215]: Negrita
-                  - code [ref=e216]: <strong>Texto</strong>
-                  - strong [ref=e218]: texto en negrita
-                - generic [ref=e219]:
-                  - generic [ref=e221]: Cursiva
-                  - code [ref=e222]: <em>Texto</em>
-                  - emphasis [ref=e224]: texto en cursiva
-                - generic [ref=e225]:
-                  - generic [ref=e227]: Cita
-                  - code [ref=e228]: <blockquote>Texto</blockquote>
-                  - generic [ref=e230]: Una cita memorable
-                - generic [ref=e231]:
-                  - generic [ref=e233]: Lista
-                  - code [ref=e234]: <ul> <li>Item 1</li> <li>Item 2</li> </ul>
-                  - list [ref=e236]:
-                    - listitem [ref=e237]: Item 1
-                    - listitem [ref=e238]: Item 2
-                - generic [ref=e239]:
-                  - generic [ref=e241]: Enlace
-                  - code [ref=e242]: <a href="/salas/slug/wiki/pagina">Título</a>
-                  - generic [ref=e243]: Enlace a otra página
-                - generic [ref=e244]:
-                  - generic [ref=e246]: Separador
-                  - code [ref=e247]: <hr>
-                  - separator [ref=e249]
-              - paragraph [ref=e250]:
-                - text: El editor Quill aplica estos estilos automáticamente. También puedes escribir HTML directamente usando el botón
-                - strong [ref=e251]: </>
-                - text: de la barra del editor.
-    - contentinfo [ref=e252]:
-      - generic [ref=e253]:
-        - generic [ref=e254]:
-          - generic [ref=e255]:
-            - generic [ref=e256]: ✦
+          - generic [ref=e105]: Accesos Rápidos
+          - img [ref=e107]
+      - main [ref=e109]:
+        - generic [ref=e111]:
+          - heading "404" [level=1] [ref=e112]
+          - heading "This page could not be found." [level=2] [ref=e114]
+    - contentinfo [ref=e115]:
+      - generic [ref=e116]:
+        - generic [ref=e117]:
+          - generic [ref=e118]:
+            - generic [ref=e119]: ✦
             - text: TalesRol
-          - generic [ref=e257]: © 2026 — Plataforma de Roleplay en español
-        - generic [ref=e258]:
-          - link "Normas" [ref=e259] [cursor=pointer]:
+          - generic [ref=e120]: © 2026 — Plataforma de Roleplay en español
+        - generic [ref=e121]:
+          - link "Normas" [ref=e122] [cursor=pointer]:
             - /url: /normas
-          - link "Privacidad" [ref=e260] [cursor=pointer]:
+          - link "Privacidad" [ref=e123] [cursor=pointer]:
             - /url: /privacidad
-          - link "Contacto" [ref=e261] [cursor=pointer]:
+          - link "Contacto" [ref=e124] [cursor=pointer]:
             - /url: /contacto
-  - alert [ref=e262]
+  - alert [ref=e125]
 ```
 
 # Test source

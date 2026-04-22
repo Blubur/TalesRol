@@ -45,85 +45,44 @@ Received string:    "/auth/login"
         - generic [ref=e19]:
           - button "Modo claro" [ref=e20] [cursor=pointer]:
             - img [ref=e21]
-          - button "Notificaciones" [ref=e24] [cursor=pointer]:
-            - img [ref=e25]
-          - link "Mensajes" [ref=e27] [cursor=pointer]:
-            - /url: /mensajes
-            - img [ref=e28]
-          - button "aventurera aventurera" [ref=e31] [cursor=pointer]:
-            - img "aventurera" [ref=e32]
-            - generic [ref=e33]: aventurera
-            - img [ref=e34]
-    - generic [ref=e36]:
-      - complementary [ref=e37]:
-        - button "Colapsar" [ref=e38] [cursor=pointer]:
-          - img [ref=e39]
-        - generic [ref=e41]:
-          - button "Administración" [expanded] [ref=e42] [cursor=pointer]:
-            - img [ref=e44]
-            - generic [ref=e47]: Administración
-            - img [ref=e49]
-          - generic [ref=e52]:
-            - link "Panel de Admin" [ref=e53] [cursor=pointer]:
-              - /url: /admin
-              - text: Panel de Admin
-            - link "Configuración" [ref=e55] [cursor=pointer]:
-              - /url: /admin/config/general
-              - text: Configuración
-        - generic [ref=e58]:
-          - button "Salas Activas Ver todas" [expanded] [ref=e59] [cursor=pointer]:
-            - img [ref=e61]
-            - generic [ref=e63]: Salas Activas
-            - link "Ver todas" [ref=e65]:
-              - /url: /salas
-            - img [ref=e67]
-          - generic [ref=e70]:
-            - link "Sala de prueba automatizada" [ref=e71] [cursor=pointer]:
-              - /url: /salas/sala-de-prueba-automatizada
-              - generic [ref=e74]: Sala de prueba automatizada
-            - link "A la media noche pasó solo noche" [ref=e75] [cursor=pointer]:
-              - /url: /salas/a-la-media-noche-paso
-              - generic [ref=e77]:
-                - generic [ref=e78]: A la media noche pasó
-                - generic [ref=e79]: solo noche
-            - link "Cenizas blancas Fantasia angelical" [ref=e80] [cursor=pointer]:
-              - /url: /salas/cenizas-blancas
-              - generic [ref=e82]:
-                - generic [ref=e83]: Cenizas blancas
-                - generic [ref=e84]: Fantasia angelical
-            - link "Perihelio tardío sci fi" [ref=e85] [cursor=pointer]:
-              - /url: /salas/perihelio-tardio
-              - generic [ref=e87]:
-                - generic [ref=e88]: Perihelio tardío
-                - generic [ref=e89]: sci fi
-            - 'link "Josepa y Camila se van a Benidorm TW: Josepa en bañador" [ref=e90] [cursor=pointer]':
-              - /url: /salas/josepa-y-camila-se-van-a-benidorm
-              - generic [ref=e92]:
-                - generic [ref=e93]: Josepa y Camila se van a Benidorm
-                - generic [ref=e94]: "TW: Josepa en bañador"
-        - button "Accesos Rápidos" [ref=e97] [cursor=pointer]:
-          - img [ref=e99]
-          - generic [ref=e101]: Accesos Rápidos
-          - img [ref=e103]
-      - main [ref=e105]:
-        - generic [ref=e107]:
-          - heading "404" [level=1] [ref=e108]
-          - heading "This page could not be found." [level=2] [ref=e110]
-    - contentinfo [ref=e111]:
-      - generic [ref=e112]:
-        - generic [ref=e113]:
-          - generic [ref=e114]:
-            - generic [ref=e115]: ✦
+          - generic [ref=e23]:
+            - link "Entrar" [ref=e24] [cursor=pointer]:
+              - /url: /auth/login
+            - link "Registrarse" [ref=e25] [cursor=pointer]:
+              - /url: /auth/register
+    - generic [ref=e26]:
+      - complementary [ref=e27]:
+        - button "Colapsar" [ref=e28] [cursor=pointer]:
+          - img [ref=e29]
+        - button "Salas Activas Ver todas" [expanded] [ref=e32] [cursor=pointer]:
+          - img [ref=e34]
+          - generic [ref=e36]: Salas Activas
+          - link "Ver todas" [ref=e38]:
+            - /url: /salas
+          - img [ref=e40]
+        - button "Accesos Rápidos" [ref=e50] [cursor=pointer]:
+          - img [ref=e52]
+          - generic [ref=e54]: Accesos Rápidos
+          - img [ref=e56]
+      - main [ref=e58]:
+        - generic [ref=e60]:
+          - heading "404" [level=1] [ref=e61]
+          - heading "This page could not be found." [level=2] [ref=e63]
+    - contentinfo [ref=e64]:
+      - generic [ref=e65]:
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - generic [ref=e68]: ✦
             - text: TalesRol
-          - generic [ref=e116]: © 2026 — Plataforma de Roleplay en español
-        - generic [ref=e117]:
-          - link "Normas" [ref=e118] [cursor=pointer]:
+          - generic [ref=e69]: © 2026 — Plataforma de Roleplay en español
+        - generic [ref=e70]:
+          - link "Normas" [ref=e71] [cursor=pointer]:
             - /url: /normas
-          - link "Privacidad" [ref=e119] [cursor=pointer]:
+          - link "Privacidad" [ref=e72] [cursor=pointer]:
             - /url: /privacidad
-          - link "Contacto" [ref=e120] [cursor=pointer]:
+          - link "Contacto" [ref=e73] [cursor=pointer]:
             - /url: /contacto
-  - alert [ref=e121]
+  - alert [ref=e74]
 ```
 
 # Test source
