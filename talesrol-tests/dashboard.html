@@ -344,23 +344,23 @@
   <div class="header-left">
     <p class="header-eyebrow">TalesRol · Automatización</p>
     <h1>Informe de Tests</h1>
-    <p class="header-date">martes, 21 de abril de 2026, 23:38</p>
+    <p class="header-date">miércoles, 22 de abril de 2026, 9:30</p>
   </div>
   <div class="stats-bar">
     <div class="stat-block s-total">
-      <div class="stat-num">54</div>
+      <div class="stat-num">72</div>
       <div class="stat-label">Total</div>
     </div>
     <div class="stat-block s-pass">
-      <div class="stat-num">49</div>
+      <div class="stat-num">45</div>
       <div class="stat-label">Pasados</div>
     </div>
     <div class="stat-block s-fail">
-      <div class="stat-num">5</div>
+      <div class="stat-num">27</div>
       <div class="stat-label">Fallidos</div>
     </div>
     <div class="stat-block s-rate">
-      <div class="stat-num">91%</div>
+      <div class="stat-num">63%</div>
       <div class="stat-label">Éxito</div>
     </div>
   </div>
@@ -368,7 +368,7 @@
 
 <div class="progress-wrap">
   <div class="progress-bar">
-    <div class="progress-fill" style="width:91%"></div>
+    <div class="progress-fill" style="width:63%"></div>
   </div>
 </div>
 
@@ -385,10 +385,10 @@
     <span class="bug-status passed">passed</span>
   </div>
   <div class="bug-row">
-    <div class="bug-icon"><svg class="icon icon-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg></div>
+    <div class="bug-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
     <div class="bug-info">
       <span class="bug-title">Próximos eventos en PA no debe lanzar error de cliente</span>
-      <span class="bug-log">⚠️  Widget de próximos eventos no encontrado en el PA</span>
+      <span class="bug-log">✅ Sin errores críticos de cliente en eventos del PA</span>
     </div>
     <span class="bug-status passed">passed</span>
   </div>
@@ -422,14 +422,143 @@
   
   <div class="suite-card">
     <div class="suite-header">
+      <div class="suite-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75c1.148 0 2.278.08 3.383.237 1.037.146 1.854.966 1.854 2.013 0 3.728-2.35 6.75-5.237 6.75S6.763 18.728 6.763 15c0-1.047.817-1.867 1.854-2.013A24.204 24.204 0 0112 12.75zm0 0c2.883 0 5.647.508 8.207 1.44a23.91 23.91 0 01-1.152 6.06M12 12.75c-2.883 0-5.647.508-8.208 1.44a23.916 23.916 0 001.152 6.06M12 8.25c.995 0 1.971-.08 2.922-.236.403-.066.74-.358.795-.762a3.778 3.778 0 00-.399-2.25M12 8.25c-.995 0-1.97-.08-2.922-.236-.402-.066-.74-.358-.795-.762a3.778 3.778 0 01.4-2.25m0 0a3.75 3.75 0 016.035 0m-6.035 0l-.001.002"/></svg></div>
+      <div class="suite-info">
+        <h2 class="suite-title">Admin modlog.spec.ts</h2>
+        <span class="suite-file">Admin modlog.spec.ts</span>
+      </div>
+      <div class="suite-badges">
+        <span class="badge badge-pass">0 ok</span>
+        <span class="badge badge-fail">14 fail</span>
+      </div>
+    </div>
+    <table class="test-table">
+      <thead><tr><th></th><th>Test</th><th>Tiempo</th><th>Log</th><th>Error</th></tr></thead>
+      <tbody>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">La tabla de log está visible</td>
+      <td class="td-duration">15.8s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">La barra de filtros está visible</td>
+      <td class="td-duration">9.7s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">El contador de entradas es visible</td>
+      <td class="td-duration">15.1s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Las cabeceras ordenables están presentes</td>
+      <td class="td-duration">17.0s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">El filtro "Todas" está activo por defecto</td>
+      <td class="td-duration">16.3s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Filtrar por tipo "Usuario" reduce o mantiene el contador</td>
+      <td class="td-duration">9.3s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Filtrar por acción "Baneo" muestra solo filas de baneo o tabla vacía</td>
+      <td class="td-duration">9.2s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Los inputs de fecha están presentes</td>
+      <td class="td-duration">9.9s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Filtrar por fecha futura da tabla vacía</td>
+      <td class="td-duration">8.9s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Limpiar filtros restaura el contador original</td>
+      <td class="td-duration">7.9s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Hacer click en "Fecha" cambia el orden</td>
+      <td class="td-duration">8.1s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Hacer click dos veces en "Acción" invierte el orden</td>
+      <td class="td-duration">9.0s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Cada fila tiene badge de acción, tipo, objetivo, admin y fecha</td>
+      <td class="td-duration">8.5s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Si no hay logs se muestra el mensaje vacío</td>
+      <td class="td-duration">8.7s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: locator.waitFor: Error: strict mode violation: locator('.admin-table-wrap') resolved to 4 elements:
+    1) &lt;di</span></td>
+    </tr></tbody>
+    </table>
+  </div>
+  <div class="suite-card">
+    <div class="suite-header">
       <div class="suite-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></div>
       <div class="suite-info">
         <h2 class="suite-title">Panel Admin</h2>
         <span class="suite-file">admin.spec.ts</span>
       </div>
       <div class="suite-badges">
-        <span class="badge badge-pass">15 ok</span>
-        <span class="badge badge-fail">2 fail</span>
+        <span class="badge badge-pass">4 ok</span>
+        <span class="badge badge-fail">1 fail</span>
       </div>
     </div>
     <table class="test-table">
@@ -437,126 +566,40 @@
       <tbody>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">Panel principal (/admin) carga sin error</td>
-      <td class="td-duration">19.5s</td>
-      <td class="td-log"><span class="log-text">✅ Panel principal — título: Panel de Administración — TalesRol | TalesRol</span></td>
+      <td class="td-title">La página carga con el editor CodeMirror</td>
+      <td class="td-duration">18.7s</td>
+      <td class="td-log"></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">CSS personalizado (/admin/css) carga sin error</td>
-      <td class="td-duration">11.7s</td>
-      <td class="td-log"><span class="log-text">✅ CSS personalizado — título: CSS personalizado | TalesRol</span></td>
+      <td class="td-title">Botones de guardar e historial están presentes</td>
+      <td class="td-duration">6.9s</td>
+      <td class="td-log"></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">Config — redirect (/admin/config) carga sin error</td>
+      <td class="td-title">Puede escribir CSS en el editor y guardar</td>
+      <td class="td-duration">23.8s</td>
+      <td class="td-log"></td>
+      <td></td>
+    </tr>
+    <tr class="test-row passed">
+      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
+      <td class="td-title">El historial se despliega al hacer click</td>
+      <td class="td-duration">8.2s</td>
+      <td class="td-log"></td>
+      <td></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Enlace de volver al panel existe</td>
       <td class="td-duration">12.5s</td>
-      <td class="td-log"><span class="log-text">✅ Config — redirect — título: Ajustes globales | TalesRol</span></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">Config — General (/admin/config/general) carga sin error</td>
-      <td class="td-duration">25.7s</td>
-      <td class="td-log"><span class="log-text">✅ Config — General — título: Ajustes globales | TalesRol</span></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">Config — Mantenimiento (/admin/config/mantenimiento) carga sin error</td>
-      <td class="td-duration">11.7s</td>
-      <td class="td-log"><span class="log-text">✅ Config — Mantenimiento — título: Modo mantenimiento | TalesRol</span></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">Config — Banner (/admin/config/banner) carga sin error</td>
-      <td class="td-duration">18.2s</td>
-      <td class="td-log"><span class="log-text">✅ Config — Banner — título: Banner de aviso | TalesRol</span></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">Config — Textos (/admin/config/textos) carga sin error</td>
-      <td class="td-duration">12.3s</td>
-      <td class="td-log"><span class="log-text">✅ Config — Textos — título: Textos del sitio | TalesRol</span></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">Config — Roles (placeholder) (/admin/config/roles) carga sin error</td>
-      <td class="td-duration">24.2s</td>
-      <td class="td-log"><span class="log-text">✅ Config — Roles (placeholder) — título: Roles y permisos | TalesRol</span></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">estadísticas del panel principal se cargan</td>
-      <td class="td-duration">12.2s</td>
-      <td class="td-log"><span class="log-text">✅ Stats visibles: 94 elementos</span></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">tabla de usuarios carga</td>
-      <td class="td-duration">12.8s</td>
-      <td class="td-log"><span class="log-text">⚠️  Tabla de usuarios no encontrada</span></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">tabla de salas carga</td>
-      <td class="td-duration">9.2s</td>
-      <td class="td-log"></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">tabla de reportes carga</td>
-      <td class="td-duration">7.6s</td>
-      <td class="td-log"></td>
-      <td></td>
-    </tr>
-    <tr class="test-row failed">
-      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
-      <td class="td-title">editor CSS guarda sin error</td>
-      <td class="td-duration">12.2s</td>
       <td class="td-log"></td>
       <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
-Locator: locator('textarea').</span></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">config general — cambio de site_name y guardar</td>
-      <td class="td-duration">6.6s</td>
-      <td class="td-log"><span class="log-text">⚠️  Campo site_name no encontrado</span></td>
-      <td></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">config banner — activar y desactivar</td>
-      <td class="td-duration">6.4s</td>
-      <td class="td-log"></td>
-      <td></td>
-    </tr>
-    <tr class="test-row failed">
-      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
-      <td class="td-title">modo mantenimiento — no se activa accidentalmente</td>
-      <td class="td-duration">10.6s</td>
-      <td class="td-log"></td>
-      <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-
-Locator: locator('form').firs</span></td>
-    </tr>
-    <tr class="test-row passed">
-      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
-      <td class="td-title">usuario no logueado no puede acceder al panel</td>
-      <td class="td-duration">3.1s</td>
-      <td class="td-log"><span class="log-text">✅ Ruta /admin protegida — redirige a: https://tales-rol.vercel.app/auth/login?redirect=%2Fadmin</span></td>
-      <td></td>
+Locator: locator('a:has-text(</span></td>
     </tr></tbody>
     </table>
   </div>
@@ -578,42 +621,42 @@ Locator: locator('form').firs</span></td>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">página de registro carga correctamente</td>
-      <td class="td-duration">18.4s</td>
+      <td class="td-duration">15.3s</td>
       <td class="td-log"></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">registro con usuario nuevo</td>
-      <td class="td-duration">14.5s</td>
+      <td class="td-duration">11.7s</td>
       <td class="td-log"></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">registro con email duplicado muestra error</td>
-      <td class="td-duration">7.2s</td>
+      <td class="td-duration">12.1s</td>
       <td class="td-log"></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">login con credenciales correctas (admin)</td>
-      <td class="td-duration">10.5s</td>
+      <td class="td-duration">9.8s</td>
       <td class="td-log"><span class="log-text">✅ Login admin OK — URL: https://tales-rol.vercel.app/</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">login con contraseña incorrecta muestra error</td>
-      <td class="td-duration">4.0s</td>
+      <td class="td-duration">4.4s</td>
       <td class="td-log"><span class="log-text">✅ Login con password erróneo rechazado correctamente</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">logout funciona</td>
-      <td class="td-duration">14.5s</td>
+      <td class="td-duration">9.5s</td>
       <td class="td-log"><span class="log-text">✅ Logout OK</span></td>
       <td></td>
     </tr></tbody>
@@ -637,36 +680,88 @@ Locator: locator('form').firs</span></td>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">[BUG] Editar sala — el HTML debe renderizarse, no verse como texto plano</td>
-      <td class="td-duration">21.1s</td>
+      <td class="td-duration">15.3s</td>
       <td class="td-log"><span class="log-text">⚠️  No se pudo determinar el estado del editor</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">[BUG] Próximos eventos en PA no debe lanzar error de cliente</td>
-      <td class="td-duration">13.5s</td>
-      <td class="td-log"><span class="log-text">⚠️  Widget de próximos eventos no encontrado en el PA</span></td>
+      <td class="td-duration">13.8s</td>
+      <td class="td-log"><span class="log-text">✅ Sin errores críticos de cliente en eventos del PA</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">[BUG] Estadísticas del perfil — contador de salas</td>
-      <td class="td-duration">7.4s</td>
+      <td class="td-duration">12.1s</td>
       <td class="td-log"></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">[BUG] Portada no muestra error de hidratación React</td>
-      <td class="td-duration">12.8s</td>
+      <td class="td-duration">16.3s</td>
       <td class="td-log"><span class="log-text">✅ Sin errores de hidratación en portada</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">[BUG] dice_enabled = false debe bloquear tiradas de dado</td>
-      <td class="td-duration">13.9s</td>
+      <td class="td-duration">6.6s</td>
       <td class="td-log"><span class="log-text">⚠️  Toggle dice_enabled no encontrado o ya estaba desactivado</span></td>
+      <td></td>
+    </tr></tbody>
+    </table>
+  </div>
+  <div class="suite-card">
+    <div class="suite-header">
+      <div class="suite-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg></div>
+      <div class="suite-info">
+        <h2 class="suite-title">Crear sala.spec.ts</h2>
+        <span class="suite-file">Crear sala.spec.ts</span>
+      </div>
+      <div class="suite-badges">
+        <span class="badge badge-pass">5 ok</span>
+        
+      </div>
+    </div>
+    <table class="test-table">
+      <thead><tr><th></th><th>Test</th><th>Tiempo</th><th>Log</th><th>Error</th></tr></thead>
+      <tbody>
+    <tr class="test-row passed">
+      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
+      <td class="td-title">La página carga con el editor CodeMirror</td>
+      <td class="td-duration">6.7s</td>
+      <td class="td-log"></td>
+      <td></td>
+    </tr>
+    <tr class="test-row passed">
+      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
+      <td class="td-title">Botones de guardar e historial están presentes</td>
+      <td class="td-duration">9.2s</td>
+      <td class="td-log"></td>
+      <td></td>
+    </tr>
+    <tr class="test-row passed">
+      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
+      <td class="td-title">Puede escribir CSS en el editor y guardar</td>
+      <td class="td-duration">10.4s</td>
+      <td class="td-log"></td>
+      <td></td>
+    </tr>
+    <tr class="test-row passed">
+      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
+      <td class="td-title">El historial se despliega al hacer click</td>
+      <td class="td-duration">10.6s</td>
+      <td class="td-log"></td>
+      <td></td>
+    </tr>
+    <tr class="test-row passed">
+      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
+      <td class="td-title">Enlace de volver al panel existe</td>
+      <td class="td-duration">6.3s</td>
+      <td class="td-log"></td>
       <td></td>
     </tr></tbody>
     </table>
@@ -689,42 +784,42 @@ Locator: locator('form').firs</span></td>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">portada carga sin errores</td>
-      <td class="td-duration">18.3s</td>
+      <td class="td-duration">5.5s</td>
       <td class="td-log"><span class="log-text">✅ Portada OK — título: TalesRol — Plataforma de Roleplay | TalesRol</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">página de normas carga</td>
-      <td class="td-duration">5.8s</td>
+      <td class="td-duration">3.5s</td>
       <td class="td-log"><span class="log-text">✅ /normas OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">página de ayuda carga</td>
-      <td class="td-duration">7.4s</td>
+      <td class="td-duration">6.0s</td>
       <td class="td-log"><span class="log-text">✅ /ayuda OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">página de anuncios carga</td>
-      <td class="td-duration">8.8s</td>
+      <td class="td-duration">4.5s</td>
       <td class="td-log"><span class="log-text">✅ /anuncios OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">listado de salas visible sin login</td>
-      <td class="td-duration">9.7s</td>
+      <td class="td-duration">4.2s</td>
       <td class="td-log"><span class="log-text">✅ /salas sin login OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row failed">
       <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
       <td class="td-title">listado de usuarios carga</td>
-      <td class="td-duration">18.3s</td>
+      <td class="td-duration">8.9s</td>
       <td class="td-log"></td>
       <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -733,31 +828,31 @@ Locator: locator('main').firs</span></td>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">sidebar o navbar contiene links principales</td>
-      <td class="td-duration">14.3s</td>
+      <td class="td-duration">13.5s</td>
       <td class="td-log"><span class="log-text">✅ Link a /salas encontrado
 ✅ Link a /personajes encontrado
-✅ Link a /mensajes encontrado
+⚠️  Link a /mensajes NO encontrado
 ⚠️  Link a /notificaciones NO encontrado</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">página de insignias carga</td>
-      <td class="td-duration">13.5s</td>
+      <td class="td-duration">6.8s</td>
       <td class="td-log"><span class="log-text">✅ /insignias OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">página de notificaciones carga</td>
-      <td class="td-duration">8.9s</td>
+      <td class="td-duration">7.6s</td>
       <td class="td-log"><span class="log-text">✅ /notificaciones OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">página de mensajes carga</td>
-      <td class="td-duration">13.6s</td>
+      <td class="td-duration">10.1s</td>
       <td class="td-log"><span class="log-text">✅ /mensajes OK</span></td>
       <td></td>
     </tr></tbody>
@@ -781,63 +876,63 @@ Locator: locator('main').firs</span></td>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">listado de personajes carga</td>
-      <td class="td-duration">9.9s</td>
+      <td class="td-duration">11.0s</td>
       <td class="td-log"><span class="log-text">✅ /personajes OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">formulario de nuevo personaje carga</td>
-      <td class="td-duration">7.5s</td>
+      <td class="td-duration">7.3s</td>
       <td class="td-log"><span class="log-text">✅ /personajes/nuevo carga OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">crear personaje nuevo</td>
-      <td class="td-duration">14.8s</td>
-      <td class="td-log"><span class="log-text">✅ Personaje creado — URL: https://tales-rol.vercel.app/personajes/2b0f4b59-5821-46d5-8fcd-64175e94a35b</span></td>
+      <td class="td-duration">13.5s</td>
+      <td class="td-log"><span class="log-text">✅ Personaje creado — URL: https://tales-rol.vercel.app/personajes/2ab31d12-809b-4437-9364-b2ec80f33349</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">editar perfil carga</td>
-      <td class="td-duration">7.9s</td>
+      <td class="td-duration">6.3s</td>
       <td class="td-log"><span class="log-text">✅ /perfil/editar OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">página de privacidad carga</td>
-      <td class="td-duration">15.2s</td>
+      <td class="td-duration">11.1s</td>
       <td class="td-log"><span class="log-text">✅ /perfil/privacidad OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">página de badges carga</td>
-      <td class="td-duration">11.5s</td>
+      <td class="td-duration">7.4s</td>
       <td class="td-log"><span class="log-text">✅ /perfil/badges OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">perfil público de admin visible</td>
-      <td class="td-duration">8.4s</td>
+      <td class="td-duration">6.4s</td>
       <td class="td-log"><span class="log-text">⚠️  No se encontró link a perfil público</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">wiki de una sala carga</td>
-      <td class="td-duration">15.5s</td>
+      <td class="td-duration">16.1s</td>
       <td class="td-log"><span class="log-text">✅ Wiki de sala OK — slug: nueva</span></td>
       <td></td>
     </tr>
     <tr class="test-row failed">
       <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
       <td class="td-title">crear página wiki</td>
-      <td class="td-duration">14.3s</td>
+      <td class="td-duration">14.6s</td>
       <td class="td-log"></td>
       <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -863,21 +958,21 @@ Locator: locator('input[name=</span></td>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">listado de salas carga</td>
-      <td class="td-duration">9.3s</td>
+      <td class="td-duration">11.9s</td>
       <td class="td-log"><span class="log-text">✅ /salas OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">formulario de nueva sala carga</td>
-      <td class="td-duration">7.6s</td>
+      <td class="td-duration">7.2s</td>
       <td class="td-log"><span class="log-text">✅ /salas/nueva carga OK</span></td>
       <td></td>
     </tr>
     <tr class="test-row failed">
       <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
       <td class="td-title">crear sala nueva</td>
-      <td class="td-duration">15.6s</td>
+      <td class="td-duration">15.5s</td>
       <td class="td-log"></td>
       <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -886,30 +981,158 @@ Locator: locator('input[name=</span></td>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">sala creada aparece en el listado</td>
-      <td class="td-duration">14.5s</td>
+      <td class="td-duration">9.9s</td>
       <td class="td-log"><span class="log-text">⚠️  Sala NO aparece en listado (puede estar paginada)</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">crear tema nuevo en la sala</td>
-      <td class="td-duration">9.4s</td>
-      <td class="td-log"><span class="log-text">✅ Tema creado — URL: https://tales-rol.vercel.app/salas/a-la-media-noche-paso/nuevo-tema</span></td>
+      <td class="td-duration">15.3s</td>
+      <td class="td-log"><span class="log-text">✅ Tema creado — URL: https://tales-rol.vercel.app/salas/nueva/nuevo-tema</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">publicar post en un tema existente</td>
-      <td class="td-duration">13.2s</td>
-      <td class="td-log"><span class="log-text">✅ Post publicado</span></td>
+      <td class="td-duration">6.7s</td>
+      <td class="td-log"><span class="log-text">⚠️  No hay temas con posts accesibles, saltando test de post</span></td>
       <td></td>
     </tr>
     <tr class="test-row passed">
       <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
       <td class="td-title">componente de dados visible en tema</td>
-      <td class="td-duration">13.0s</td>
-      <td class="td-log"><span class="log-text">✅ Componente de dados visible
-✅ Click en tirar dado ejecutado</span></td>
+      <td class="td-duration">12.3s</td>
+      <td class="td-log"><span class="log-text">⚠️  Sin temas, saltando test dado</span></td>
+      <td></td>
+    </tr></tbody>
+    </table>
+  </div>
+  <div class="suite-card">
+    <div class="suite-header">
+      <div class="suite-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75c1.148 0 2.278.08 3.383.237 1.037.146 1.854.966 1.854 2.013 0 3.728-2.35 6.75-5.237 6.75S6.763 18.728 6.763 15c0-1.047.817-1.867 1.854-2.013A24.204 24.204 0 0112 12.75zm0 0c2.883 0 5.647.508 8.207 1.44a23.91 23.91 0 01-1.152 6.06M12 12.75c-2.883 0-5.647.508-8.208 1.44a23.916 23.916 0 001.152 6.06M12 8.25c.995 0 1.971-.08 2.922-.236.403-.066.74-.358.795-.762a3.778 3.778 0 00-.399-2.25M12 8.25c-.995 0-1.97-.08-2.922-.236-.402-.066-.74-.358-.795-.762a3.778 3.778 0 01.4-2.25m0 0a3.75 3.75 0 016.035 0m-6.035 0l-.001.002"/></svg></div>
+      <div class="suite-info">
+        <h2 class="suite-title">Usuarios.spec.ts</h2>
+        <span class="suite-file">Usuarios.spec.ts</span>
+      </div>
+      <div class="suite-badges">
+        <span class="badge badge-pass">1 ok</span>
+        <span class="badge badge-fail">5 fail</span>
+      </div>
+    </div>
+    <table class="test-table">
+      <thead><tr><th></th><th>Test</th><th>Tiempo</th><th>Log</th><th>Error</th></tr></thead>
+      <tbody>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">La página carga y muestra el título Comunidad</td>
+      <td class="td-duration">15.1s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+Locator: locator('h1.users-ti</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">El buscador está visible y funciona</td>
+      <td class="td-duration">12.7s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+Locator: locator('input.users</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Los filtros de rol están presentes</td>
+      <td class="td-duration">8.8s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+Locator: locator('button.role</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">La grid de usuarios muestra al menos una tarjeta</td>
+      <td class="td-duration">11.1s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+Locator: locator('.users-grid</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Las tarjetas de usuario enlazan a perfil</td>
+      <td class="td-duration">10.7s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+Locator: locator('a.user-card</span></td>
+    </tr>
+    <tr class="test-row passed">
+      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
+      <td class="td-title">Filtrar por rol muestra resultados coherentes</td>
+      <td class="td-duration">3.6s</td>
+      <td class="td-log"></td>
+      <td></td>
+    </tr></tbody>
+    </table>
+  </div>
+  <div class="suite-card">
+    <div class="suite-header">
+      <div class="suite-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75c1.148 0 2.278.08 3.383.237 1.037.146 1.854.966 1.854 2.013 0 3.728-2.35 6.75-5.237 6.75S6.763 18.728 6.763 15c0-1.047.817-1.867 1.854-2.013A24.204 24.204 0 0112 12.75zm0 0c2.883 0 5.647.508 8.207 1.44a23.91 23.91 0 01-1.152 6.06M12 12.75c-2.883 0-5.647.508-8.208 1.44a23.916 23.916 0 001.152 6.06M12 8.25c.995 0 1.971-.08 2.922-.236.403-.066.74-.358.795-.762a3.778 3.778 0 00-.399-2.25M12 8.25c-.995 0-1.97-.08-2.922-.236-.402-.066-.74-.358-.795-.762a3.778 3.778 0 01.4-2.25m0 0a3.75 3.75 0 016.035 0m-6.035 0l-.001.002"/></svg></div>
+      <div class="suite-info">
+        <h2 class="suite-title">Wiki nueva.spec.ts</h2>
+        <span class="suite-file">Wiki nueva.spec.ts</span>
+      </div>
+      <div class="suite-badges">
+        <span class="badge badge-pass">1 ok</span>
+        <span class="badge badge-fail">4 fail</span>
+      </div>
+    </div>
+    <table class="test-table">
+      <thead><tr><th></th><th>Test</th><th>Tiempo</th><th>Log</th><th>Error</th></tr></thead>
+      <tbody>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">La página de nueva wiki carga con el formulario</td>
+      <td class="td-duration">11.3s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+
+Locator: loc</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Contiene campo de título</td>
+      <td class="td-duration">6.5s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: No se encontró input de título
+
+[2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m</span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">Contiene editor de contenido (Quill o textarea)</td>
+      <td class="td-duration">7.1s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+Expected: > </span></td>
+    </tr>
+    <tr class="test-row failed">
+      <td class="td-icon"><svg class="icon icon-fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></td>
+      <td class="td-title">El enlace de volver a la wiki existe</td>
+      <td class="td-duration">11.3s</td>
+      <td class="td-log"></td>
+      <td class="td-error"><span class="error-text">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+Locator: locator('a:has-text(</span></td>
+    </tr>
+    <tr class="test-row passed">
+      <td class="td-icon"><svg class="icon icon-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></td>
+      <td class="td-title">Sin permisos redirige a la wiki</td>
+      <td class="td-duration">7.2s</td>
+      <td class="td-log"></td>
       <td></td>
     </tr></tbody>
     </table>

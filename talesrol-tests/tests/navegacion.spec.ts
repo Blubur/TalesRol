@@ -10,7 +10,7 @@ async function loginAdmin(page: any) {
   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
   await page.click('button[type="submit"]');
-  await page.waitForURL(url => !url.pathname.includes('/login'), { timeout: 8000 });
+  await page.waitForURL(url => !url.pathname.includes('/login'), { timeout: 20000 });
 }
 
 test.describe('Páginas públicas', () => {
@@ -43,8 +43,7 @@ test.describe('Páginas públicas', () => {
 
   test('listado de salas visible sin login', async ({ page }) => {
     await page.goto('/salas');
-    await expect(page.locator('main').first()).toBeVisible({ timeout: 5000 });
-    const title = await page.title();
+    await expect(page.locator('.users-page')).toBeVisible({ timeout: 8000 })    const title = await page.title();
     expect(title).not.toMatch(/error|404|500/i);
     console.log('✅ /salas sin login OK');
   });

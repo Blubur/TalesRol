@@ -54,6 +54,5 @@ test.describe('Editor CSS personalizado', () => {
   })
 
   test('Enlace de volver al panel existe', async ({ page }) => {
-    await expect(page.locator('a:has-text("Volver al panel")')).toBeVisible()
-  })
+  await expect(page.locator('a[href="/admin"]')).toBeVisible()  })
 })
