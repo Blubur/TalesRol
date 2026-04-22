@@ -1,17 +1,17 @@
 // spec: crear página wiki — /salas/[slug]/wiki/nueva
-// El form real está en WikiPageForm.tsx (no disponible en contexto).
-// Inferimos campos estándar: title, slug, category, content (Quill).
-// Si los selectores fallan, ejecutar en /salas/[slug]/wiki/nueva:
-//   document.querySelectorAll('input, textarea, form, [contenteditable]')
-//     .forEach(e => console.log(e.tagName, e.name, e.className.slice(0,60)))
-// y actualizar en consecuencia.
-//
-// SALA DE TEST: ajustar ROOM_SLUG a una sala existente donde el admin sea owner/codirector.
+// Selectores basados en WikiPageForm.tsx:
+//   - input.wpf-input (primero = título, segundo = categorías)
+//   - .ql-editor (Quill, cargado dinámicamente)
+//   - button.btn-primary (guardar)
+//   - a.btn-ghost (cancelar/volver)
+//   - input.wpf-checkbox (portada)
+// No hay name en los inputs — usan estado React con value/onChange.
+// ROOM_SLUG: ajustar a una sala real donde el admin sea owner.
 
 import { test, expect } from '@playwright/test'
 
 const BASE_URL  = process.env.BASE_URL  ?? 'https://tales-rol.vercel.app'
-const ROOM_SLUG = process.env.ROOM_SLUG ?? 'sala-de-pruebas' // ← ajustar
+const ROOM_SLUG = process.env.ROOM_SLUG ?? 'salas'
 
 test.describe('Crear página wiki', () => {
   test.beforeEach(async ({ page }) => {
@@ -24,51 +24,75 @@ test.describe('Crear página wiki', () => {
 
   test('La página de nueva wiki carga con el formulario', async ({ page }) => {
     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+    // El título de la página usa h1.wiki-form-title
+    await expect(page.locator('h1.wiki-form-title')).toBeVisible({ timeout: 8000 })
     await expect(page.locator('h1.wiki-form-title')).toHaveText('Nueva página')
-    // Verificar que hay al menos un input de texto (título)
-    await expect(page.locator('input[type="text"], input[type="text"]').first()).toBeVisible({ timeout: 8000 })
   })
 
-  test('Contiene campo de título', async ({ page }) => {
+  test('Contiene input de título', async ({ page }) => {
     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
-    // Probar selectores en orden de probabilidad
-    const titleSelectors = [
-      'input[name="title"]',
-      'input[placeholder*="título" i]',
-      'input[placeholder*="Título" i]',
-      'input[id="title"]',
-    ]
-    let found = false
-    for (const sel of titleSelectors) {
-      const el = page.locator(sel)
-      if (await el.count() > 0) {
-        await expect(el.first()).toBeVisible()
-        found = true
-        break
-      }
-    }
-    expect(found, 'No se encontró input de título').toBe(true)
+    // El primer input.wpf-input es el título
+    const titleInput = page.locator('input.wpf-input').first()
+    await expect(titleInput).toBeVisible({ timeout: 8000 })
+    await expect(titleInput).toHaveAttribute('placeholder', /título|reino|PNJs/i)
   })
 
-  test('Contiene editor de contenido (Quill o textarea)', async ({ page }) => {
+  test('Contiene editor Quill', async ({ page }) => {
     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
-    // WikiPageForm probablemente usa Quill como el resto de la app
-    const hasQuill    = await page.locator('.ql-editor').count()
-    const hasTextarea = await page.locator('textarea').count()
-    const hasCm       = await page.locator('.cm-editor').count()
-    expect(hasQuill + hasTextarea + hasCm).toBeGreaterThan(0)
+    // Quill se carga dinámicamente (next/dynamic sin ssr)
+    await expect(page.locator('.ql-editor')).toBeVisible({ timeout: 10000 })
   })
 
-  test('El enlace de volver a la wiki existe', async ({ page }) => {
+  test('Contiene input de categorías', async ({ page }) => {
     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
-    await expect(page.locator('a:has-text("Wiki")')).toBeVisible()
+    // El segundo input.wpf-input es categorías
+    const inputs = page.locator('input.wpf-input')
+    await expect(inputs).toHaveCount(2, { timeout: 8000 })
+    await expect(inputs.nth(1)).toHaveAttribute('placeholder', /categorías|lore/i)
   })
 
-  test('Sin permisos redirige a la wiki', async ({ page, context }) => {
-    // Logout
+  test('El botón de guardar existe y está habilitado', async ({ page }) => {
+    await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+    const saveBtn = page.locator('button.btn-primary')
+    await expect(saveBtn).toBeVisible({ timeout: 8000 })
+    await expect(saveBtn).toBeEnabled()
+    await expect(saveBtn).toContainText('Crear página')
+  })
+
+  test('El enlace de cancelar vuelve a la wiki', async ({ page }) => {
+    await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+    const cancelLink = page.locator('a.btn-ghost')
+    await expect(cancelLink).toBeVisible({ timeout: 8000 })
+    const href = await cancelLink.getAttribute('href')
+    expect(href).toContain(`/salas/${ROOM_SLUG}/wiki`)
+  })
+
+  test('El checkbox de portada existe', async ({ page }) => {
+    await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+    await expect(page.locator('input.wpf-checkbox')).toBeVisible({ timeout: 8000 })
+  })
+
+  test('Puede rellenar el título y guardarlo', async ({ page }) => {
+    await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+
+    const titleInput = page.locator('input.wpf-input').first()
+    await titleInput.fill(`Página de prueba ${Date.now()}`)
+
+    // Esperar Quill y escribir contenido mínimo
+    await page.locator('.ql-editor').waitFor({ state: 'visible', timeout: 10000 })
+    await page.click('.ql-editor')
+    await page.keyboard.type('Contenido de prueba generado por Playwright.')
+
+    await page.click('button.btn-primary')
+
+    // Tras guardar redirige a la página wiki creada
+    await page.waitForURL(/\/salas\/.+\/wiki\//, { timeout: 10000 })
+    await expect(page).toHaveURL(/\/salas\/.+\/wiki\//)
+  })
+
+  test('Sin sesión redirige al login', async ({ page, context }) => {
     await context.clearCookies()
     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
-    // Sin sesión → redirige a login
     await expect(page).toHaveURL(/\/auth\/login/, { timeout: 8000 })
   })
 })

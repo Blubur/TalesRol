@@ -1,7 +1,8 @@
-// spec: log de moderación — /admin#modlog
-// FIX: .admin-table-wrap existe en TODAS las tablas del PA (usuarios, salas, dados, etc.)
-// Solución: acotar todos los selectores dentro del .admin-table-wrap que contiene
-// el botón sort-th "Acción", que es único del componente AdminModLogTable.
+// spec: log de moderación — /admin
+// FIX: .admin-table-wrap existe en 4 tablas del PA.
+// Solución: usar .filter({ has: locator('button.sort-th:has-text("Acción")') })
+// para aislar exactamente el contenedor del modlog.
+// El beforeEach espera al primer sort-th "Acción" visible, sin usar .admin-table-wrap.
 
 import { test, expect } from '@playwright/test'
 
@@ -21,6 +22,7 @@ test.describe('Log de moderación', () => {
     await page.click('button[type="submit"]')
     await page.waitForURL(`${BASE_URL}/`)
     await page.goto(`${BASE_URL}/admin`)
+    // Esperar al sort-th "Acción" del modlog (único en la página)
     await page.locator('button.sort-th:has-text("Acción")').first().waitFor({ state: 'visible', timeout: 15000 })
   })
 

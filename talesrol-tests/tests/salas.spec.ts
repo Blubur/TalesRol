@@ -36,7 +36,7 @@ test.describe('Salas', () => {
     await page.goto('/salas/nueva');
 
     // Nombre
-    const nameInput = page.locator('input[name="name"], input[name="nombre"], input[placeholder*="nombre" i]').first();
+    const nameInput = page.locator('input[name="title"]').first();
     await expect(nameInput).toBeVisible({ timeout: 5000 });
     await nameInput.fill(TEST_ROOM.name);
 
