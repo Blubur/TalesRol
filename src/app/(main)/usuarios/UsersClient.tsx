@@ -167,7 +167,8 @@ const roles = ['all', 'admin', 'master', 'director', 'jugador', 'miembro']
       ) : (
         <div className="users-grid">
           {filtered.map((u, i) => {
-            const roleInfo = ROLE_CONFIG[u.role] ?? { label: u.role, color: 'var(--text-muted)' }            const avatar = u.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${u.username}`
+const roleInfo = ROLE_CONFIG[u.role] ?? { label: u.role, color: 'var(--text-muted)' }
+const avatar = u.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${u.username}`
             const isMe = u.id === currentUserId
             const lastSeen = new Date(u.ultimo_acceso)
             const now = new Date()
