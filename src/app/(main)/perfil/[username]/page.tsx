@@ -104,15 +104,21 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
   // Salas
   const showRooms = canSeeAll || profile.privacy_rooms !== false
   const { data: roomActivity } = showRooms ? await supabase
-    .from('posts').select('topics(rooms(id, slug, title, cover_url, status))')
-    .eq('author_id', profile.id).is('deleted_at', null).limit(50) : { data: [] }
+  .from('posts').select('topics(rooms(id, slug, title, cover_url, status))')
+  .eq('author_id', profile.id).is('deleted_at', null).limit(50) : { data: [] }
 
-  const roomsMap = new Map()
-  roomActivity?.forEach((p: any) => {
-    const room = p.topics?.rooms
-    if (room && !roomsMap.has(room.id)) roomsMap.set(room.id, room)
-  })
-  const rooms = Array.from(roomsMap.values()).slice(0, 6)
+const { data: ownedRooms } = showRooms ? await supabase
+  .from('rooms').select('id, slug, title, cover_url, status')
+  .eq('owner_id', profile.id).is('deleted_at', null) : { data: [] }
+
+const roomsMap = new Map()
+ownedRooms?.forEach((r: any) => roomsMap.set(r.id, r))
+roomActivity?.forEach((p: any) => {
+  const room = p.topics?.rooms
+  if (room && !roomsMap.has(room.id)) roomsMap.set(room.id, room)
+})
+const rooms = Array.from(roomsMap.values())
+
 
   const { count: postCount } = await supabase
     .from('posts').select('*', { count: 'exact', head: true })
