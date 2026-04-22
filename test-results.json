@@ -1,0 +1,163 @@
+{
+  "config": {
+    "rootDir": "C:/Users/veint/talesrol",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/veint/talesrol/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/veint/talesrol",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Admin modlog.spec.ts:19:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Admin modlog.spec.ts",
+        "column": 6,
+        "line": 19
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\Admin modlog.spec.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m \u001b[36mconst\u001b[39m \u001b[33mBASE_URL\u001b[39m \u001b[33m=\u001b[39m process\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39m\u001b[33mBASE_URL\u001b[39m \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m'https://tales-rol.vercel.app'\u001b[39m\n \u001b[90m 18 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Log de moderación'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`${BASE_URL}/auth/login`\u001b[39m)\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[name=\"email\"]'\u001b[39m\u001b[33m,\u001b[39m process\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39m\u001b[33mADMIN_EMAIL\u001b[39m \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m'veinticuatro0792@gmail.com'\u001b[39m)\u001b[0m"
+    },
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\admin.spec.ts:10:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\admin.spec.ts",
+        "column": 6,
+        "line": 10
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\admin.spec.ts:10\n\n\u001b[0m \u001b[90m  8 |\u001b[39m \u001b[36mconst\u001b[39m \u001b[33mBASE_URL\u001b[39m \u001b[33m=\u001b[39m process\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39m\u001b[33mBASE_URL\u001b[39m \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m'https://tales-rol.vercel.app'\u001b[39m\n \u001b[90m  9 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 10 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Editor CSS personalizado'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 11 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 12 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`${BASE_URL}/auth/login`\u001b[39m)\n \u001b[90m 13 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[name=\"email\"]'\u001b[39m\u001b[33m,\u001b[39m process\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39m\u001b[33mADMIN_EMAIL\u001b[39m \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m'veinticuatro0792@gmail.com'\u001b[39m)\u001b[0m"
+    },
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\auth.spec.ts:9:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\auth.spec.ts",
+        "column": 6,
+        "line": 9
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\auth.spec.ts:9\n\n\u001b[0m \u001b[90m  7 |\u001b[39m \u001b[90m// ─── REGISTRO ────────────────────────────────────────────────────────────────\u001b[39m\n \u001b[90m  8 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  9 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Registro'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 10 |\u001b[39m   test(\u001b[32m'página de registro carga correctamente'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 11 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/auth/register'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 12 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveTitle(\u001b[35m/.+/\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+    },
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\bugs conocidos.spec.ts:15:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\bugs conocidos.spec.ts",
+        "column": 6,
+        "line": 15
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\bugs conocidos.spec.ts:15\n\n\u001b[0m \u001b[90m 13 |\u001b[39m }\n \u001b[90m 14 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 15 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Regresión — bugs documentados'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 16 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 17 |\u001b[39m     \u001b[36mawait\u001b[39m loginAdmin(page)\u001b[33m;\u001b[39m\n \u001b[90m 18 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+    },
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Crear sala.spec.ts:10:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Crear sala.spec.ts",
+        "column": 6,
+        "line": 10
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\Crear sala.spec.ts:10\n\n\u001b[0m \u001b[90m  8 |\u001b[39m \u001b[36mconst\u001b[39m \u001b[33mBASE_URL\u001b[39m \u001b[33m=\u001b[39m process\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39m\u001b[33mBASE_URL\u001b[39m \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m'https://tales-rol.vercel.app'\u001b[39m\n \u001b[90m  9 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 10 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Editor CSS personalizado'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 11 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 12 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`${BASE_URL}/auth/login`\u001b[39m)\n \u001b[90m 13 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[name=\"email\"]'\u001b[39m\u001b[33m,\u001b[39m process\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39m\u001b[33mADMIN_EMAIL\u001b[39m \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m'veinticuatro0792@gmail.com'\u001b[39m)\u001b[0m"
+    },
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\navegacion.spec.ts:16:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\navegacion.spec.ts",
+        "column": 6,
+        "line": 16
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\navegacion.spec.ts:16\n\n\u001b[0m \u001b[90m 14 |\u001b[39m }\n \u001b[90m 15 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 16 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Páginas públicas'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 17 |\u001b[39m   test(\u001b[32m'portada carga sin errores'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 18 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 19 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoHaveTitle(\u001b[35m/error|404|500/i\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+    },
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\personajes perfil.spec.ts:17:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\personajes perfil.spec.ts",
+        "column": 6,
+        "line": 17
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\personajes perfil.spec.ts:17\n\n\u001b[0m \u001b[90m 15 |\u001b[39m \u001b[90m// ─── PERSONAJES ───────────────────────────────────────────────────────────────\u001b[39m\n \u001b[90m 16 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 17 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Personajes'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 18 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 19 |\u001b[39m     \u001b[36mawait\u001b[39m loginAdmin(page)\u001b[33m;\u001b[39m\n \u001b[90m 20 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+    },
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\salas.spec.ts:18:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\salas.spec.ts",
+        "column": 6,
+        "line": 18
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\salas.spec.ts:18\n\n\u001b[0m \u001b[90m 16 |\u001b[39m \u001b[36mlet\u001b[39m roomSlug \u001b[33m=\u001b[39m \u001b[32m''\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 17 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 18 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Salas'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 19 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m loginAdmin(page)\u001b[33m;\u001b[39m\n \u001b[90m 21 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+    },
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts:14:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Usuarios.spec.ts",
+        "column": 6,
+        "line": 14
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\Usuarios.spec.ts:14\n\n\u001b[0m \u001b[90m 12 |\u001b[39m \u001b[36mconst\u001b[39m \u001b[33mBASE_URL\u001b[39m \u001b[33m=\u001b[39m process\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39m\u001b[33mBASE_URL\u001b[39m \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m'https://tales-rol.vercel.app'\u001b[39m\n \u001b[90m 13 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 14 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Listado de usuarios'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 15 |\u001b[39m   test(\u001b[32m'La página carga y muestra el título Comunidad'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 16 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`${BASE_URL}/usuarios`\u001b[39m)\n \u001b[90m 17 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'h1.users-title'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m8000\u001b[39m })\u001b[0m"
+    },
+    {
+      "message": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.",
+      "stack": "Error: Playwright Test did not expect test.describe() to be called here.\nMost common reasons include:\n- You are calling test.describe() in a configuration file.\n- You are calling test.describe() in a file that is imported by the configuration file.\n- You have two different versions of @playwright/test. This usually happens\n  when one of the dependencies in your package.json depends on @playwright/test.\n    at TestTypeImpl._currentSuite (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:75:13)\n    at TestTypeImpl._describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\common\\testType.js:115:24)\n    at Function.describe (C:\\Users\\veint\\talesrol\\talesrol-tests\\node_modules\\playwright\\lib\\transform\\transform.js:275:12)\n    at Object.<anonymous> (C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts:16:6)",
+      "location": {
+        "file": "C:\\Users\\veint\\talesrol\\talesrol-tests\\tests\\Wiki nueva.spec.ts",
+        "column": 6,
+        "line": 16
+      },
+      "snippet": "\u001b[90m   at \u001b[39mtalesrol-tests\\tests\\Wiki nueva.spec.ts:16\n\n\u001b[0m \u001b[90m 14 |\u001b[39m \u001b[36mconst\u001b[39m \u001b[33mROOM_SLUG\u001b[39m \u001b[33m=\u001b[39m process\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39m\u001b[33mROOM_SLUG\u001b[39m \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m'sala-de-pruebas'\u001b[39m \u001b[90m// ← ajustar\u001b[39m\n \u001b[90m 15 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 16 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Crear página wiki'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 17 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 18 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`${BASE_URL}/auth/login`\u001b[39m)\n \u001b[90m 19 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[name=\"email\"]'\u001b[39m\u001b[33m,\u001b[39m process\u001b[33m.\u001b[39menv\u001b[33m.\u001b[39m\u001b[33mADMIN_EMAIL\u001b[39m \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m'veinticuatro0792@gmail.com'\u001b[39m)\u001b[0m"
+    },
+    {
+      "message": "Error: No tests found",
+      "stack": "Error: No tests found"
+    }
+  ],
+  "stats": {
+    "startTime": "2026-04-22T07:22:15.079Z",
+    "duration": 1323.7949999999998,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
