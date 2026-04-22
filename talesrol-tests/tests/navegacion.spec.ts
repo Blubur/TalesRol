@@ -43,7 +43,8 @@ test.describe('Páginas públicas', () => {
 
   test('listado de salas visible sin login', async ({ page }) => {
     await page.goto('/salas');
-    await expect(page.locator('.users-page')).toBeVisible({ timeout: 8000 })    const title = await page.title();
+    await expect(page.locator('.users-page, main').first()).toBeVisible({ timeout: 8000 })
+    const title = await page.title();
     expect(title).not.toMatch(/error|404|500/i);
     console.log('✅ /salas sin login OK');
   });

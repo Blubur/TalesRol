@@ -1,59 +1,52 @@
-// spec: editor CSS — /admin/css
-// Selector corregido: textarea → .cm-content (CodeMirror 6, no hay textarea)
-// Para escribir: click en .cm-content + keyboard.type
-// Para limpiar: Ctrl+A antes de escribir
+// spec: crear sala — /salas/nueva
+// Selectores basados en el formulario de nueva sala de TalesRol.
 
 import { test, expect } from '@playwright/test'
+import { ADMIN, TEST_ROOM } from './helpers'
 
 const BASE_URL = process.env.BASE_URL ?? 'https://tales-rol.vercel.app'
 
-test.describe('Editor CSS personalizado', () => {
+test.describe('Crear sala', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(`${BASE_URL}/auth/login`)
-    await page.fill('input[name="email"]', process.env.ADMIN_EMAIL ?? 'veinticuatro0792@gmail.com')
-    await page.fill('input[name="password"]', process.env.ADMIN_PASSWORD ?? 'pilipp22')
+    await page.fill('input[name="email"]', ADMIN.email)
+    await page.fill('input[name="password"]', ADMIN.password)
     await page.click('button[type="submit"]')
-    await page.waitForURL(`${BASE_URL}/`)
-    await page.goto(`${BASE_URL}/admin/css`)
+    await page.waitForURL(`${BASE_URL}/`, { timeout: 15000 })
+    await page.goto(`${BASE_URL}/salas/nueva`)
   })
 
-  test('La página carga con el editor CodeMirror', async ({ page }) => {
-    await expect(page.locator('.cm-editor')).toBeVisible({ timeout: 8000 })
-    await expect(page.locator('.cm-content')).toBeVisible()
+  test('La página de nueva sala carga', async ({ page }) => {
+    await expect(page).not.toHaveTitle(/error|404|500/i)
+    await expect(page.locator('h1, h2').first()).toBeVisible({ timeout: 8000 })
   })
 
-  test('Botones de guardar e historial están presentes', async ({ page }) => {
-    await expect(page.locator('button:has-text("Guardar y aplicar")')).toBeVisible()
-    await expect(page.locator('button:has-text("Historial")')).toBeVisible()
+  test('El formulario de nueva sala tiene campos básicos', async ({ page }) => {
+    // Nombre / título de la sala
+    const nameInput = page.locator(
+      'input[name="name"], input[name="nombre"], input[name="title"], input[name="titulo"]'
+    ).first()
+    await expect(nameInput).toBeVisible({ timeout: 8000 })
   })
 
-  test('Puede escribir CSS en el editor y guardar', async ({ page }) => {
-    await page.locator('.cm-editor').waitFor({ state: 'visible', timeout: 8000 })
-
-    // Hacer click en el área editable de CodeMirror
-    await page.click('.cm-content')
-
-    // Seleccionar todo y escribir CSS de prueba
-    await page.keyboard.press('Control+A')
-    await page.keyboard.type('/* test Playwright */ body { color: inherit; }')
-
-    // Guardar
-    await page.click('button:has-text("Guardar y aplicar")')
-
-    // Esperar confirmación
-    await expect(page.locator('text=CSS guardado')).toBeVisible({ timeout: 6000 })
+  test('El campo de nombre acepta texto', async ({ page }) => {
+    const nameInput = page.locator(
+      'input[name="name"], input[name="nombre"], input[name="title"], input[name="titulo"]'
+    ).first()
+    await expect(nameInput).toBeVisible({ timeout: 8000 })
+    await nameInput.fill(TEST_ROOM.name)
+    await expect(nameInput).toHaveValue(TEST_ROOM.name)
   })
 
-  test('El historial se despliega al hacer click', async ({ page }) => {
-    await page.locator('.cm-editor').waitFor({ state: 'visible', timeout: 8000 })
-    await page.click('button:has-text("Historial")')
-    // Muestra versiones o mensaje de "no hay versiones"
-    const hasVersions = await page.locator('button:has-text("Restaurar")').count()
-    const hasEmpty    = await page.locator('text=no hay versiones').count()
-    expect(hasVersions + hasEmpty).toBeGreaterThan(0)
+  test('Existe botón de guardar/crear', async ({ page }) => {
+    const submitBtn = page.locator('button[type="submit"], button:has-text("Crear"), button:has-text("Guardar")').first()
+    await expect(submitBtn).toBeVisible({ timeout: 8000 })
+    await expect(submitBtn).toBeEnabled()
   })
 
-  test('Enlace de volver al panel existe', async ({ page }) => {
-    await expect(page.locator('a:has-text("Volver al panel")')).toBeVisible()
+  test('Sin sesión redirige al login', async ({ page, context }) => {
+    await context.clearCookies()
+    await page.goto(`${BASE_URL}/salas/nueva`)
+    await expect(page).toHaveURL(/\/auth\/login/, { timeout: 8000 })
   })
 })
