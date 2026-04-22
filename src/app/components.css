@@ -291,14 +291,14 @@
 .edit-html-label, .edit-preview-label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--text-muted); text-transform: uppercase; }
 .edit-html-textarea { width: 100%; background: #0d1117; color: #a8d8a8; border: 1px solid var(--border-subtle); border-radius: 4px; padding: 0.75rem; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; resize: vertical; box-sizing: border-box; }
 .edit-html-textarea:focus { outline: none; border-color: var(--color-crimson); }
-.edit-preview { background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 0.75rem 1rem; min-height: 40px; font-family: var(--font-crimson-pro); font-size: 1.05rem; line-height: 1.75; color: var(--text-primary); }
+.edit-preview { background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 0.75rem 1rem; min-height: 40px; font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.75; color: var(--text-primary); }
 
 .new-post-form { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 6px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; margin-top: 0.5rem; position: relative; overflow: hidden; }
 .new-post-form::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--color-crimson), transparent); }
 .new-post-title { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; color: var(--color-crimson); margin: 0; }
 .new-post-inner { display: flex; flex-direction: column; gap: 1rem; }
 .new-post-actions { display: flex; justify-content: flex-end; }
-.optional { text-transform: none; font-weight: 400; color: var(--text-muted); font-family: var(--font-crimson-pro); letter-spacing: 0; font-size: 0.8rem; }
+.optional { text-transform: none; font-weight: 400; color: var(--text-muted); font-family: var(--font-serif); letter-spacing: 0; font-size: 0.8rem; }
 
 .posts-empty     { text-align: center; padding: 2rem; color: var(--text-muted); background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 6px; }
 .posts-login-cta { text-align: center; padding: 1.5rem; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 6px; }

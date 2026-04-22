@@ -36,10 +36,10 @@
   --border-medium: rgba(193,6,6,0.25);
   --border-strong: rgba(193,6,6,0.5);
 
-  --font-display:     'Texturina', Georgia, serif;
-  --font-body:        'Radio Canada', sans-serif;
-  --font-mono:      "JetBrains Mono", monospace;
-  --font-crimson-pro: 'Lora', Georgia, serif;
+  --font-display: 'Texturina', Georgia, serif;
+  --font-body: 'Radio Canada', sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
+  --font-mono: "JetBrains Mono", monospace;
 
   --text-xs:   0.68rem;
   --text-sm:   0.82rem;

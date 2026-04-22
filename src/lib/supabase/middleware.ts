@@ -39,19 +39,40 @@ export async function updateSession(request: NextRequest) {
   }
 
   // Rutas protegidas — redirigir al login si no hay sesión
-  const protectedRoutes = ['/perfil', '/mensajes', '/notificaciones', '/admin']
-  const isProtected = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
+  const protectedRoutes = [
+    '/perfil',
+    '/mensajes',
+    '/notificaciones',
+    '/admin',
+    '/salas/nueva',          // crear sala
+    '/personajes/nuevo',     // crear personaje
+  ]
+
+  // Rutas protegidas por patrón (editar sala, wiki nueva, fichas, etc.)
+  const protectedPatterns = [
+    /^\/salas\/[^/]+\/editar/,
+    /^\/salas\/[^/]+\/wiki\/nueva/,
+    /^\/salas\/[^/]+\/fichas/,
+    /^\/salas\/[^/]+\/miembros/,
+    /^\/salas\/[^/]+\/nuevo-tema/,
+    /^\/personajes\/[^/]+\/editar/,
+  ]
+
+  const { pathname } = request.nextUrl
+  const isProtected =
+    protectedRoutes.some(route => pathname.startsWith(route)) ||
+    protectedPatterns.some(pattern => pattern.test(pathname))
 
   if (!user && isProtected) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
-    url.searchParams.set('redirect', request.nextUrl.pathname)
+    url.searchParams.set('redirect', pathname)
     return NextResponse.redirect(url)
   }
 
   // Si ya está logueado y va al login/register, redirigir al inicio
   const authRoutes = ['/auth/login', '/auth/register']
-  if (user && authRoutes.includes(request.nextUrl.pathname)) {
+  if (user && authRoutes.includes(pathname)) {
     const url = request.nextUrl.clone()
     url.pathname = '/'
     return NextResponse.redirect(url)

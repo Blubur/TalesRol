@@ -115,11 +115,17 @@ export default function WikiPageForm({ roomId, roomSlug, page, otherPages = [] }
       {/* Formulario principal */}
       <div className="wpf-wrap">
 
+        {/* Título de página — clase wiki-form-title para los tests */}
+        <h1 className="wiki-form-title">
+          {page ? 'Editar página' : 'Nueva página wiki'}
+        </h1>
+
         <div className="wpf-field">
           <label className="wpf-label">Título de la página</label>
           <input
-            className="wpf-input"
+            className="wpf-input wpf-input-title"
             type="text"
+            name="title"
             placeholder="Ej: Historia del reino, PNJs importantes..."
             value={title}
             onChange={e => setTitle(e.target.value)}
@@ -162,8 +168,9 @@ export default function WikiPageForm({ roomId, roomSlug, page, otherPages = [] }
             <TagIcon style={{ width: 12, height: 12 }} /> Categorías (separadas por coma)
           </label>
           <input
-            className="wpf-input"
+            className="wpf-input wpf-input-categories"
             type="text"
+            name="categories"
             placeholder="Ej: Lore, Personajes, Reglas"
             value={categories}
             onChange={e => setCategories(e.target.value)}
@@ -174,6 +181,7 @@ export default function WikiPageForm({ roomId, roomSlug, page, otherPages = [] }
           <input
             type="checkbox"
             className="wpf-checkbox"
+            name="is_home"
             checked={isHome}
             onChange={e => setIsHome(e.target.checked)}
           />
@@ -185,7 +193,8 @@ export default function WikiPageForm({ roomId, roomSlug, page, otherPages = [] }
 
         <div className="wpf-actions">
           <a href={`/salas/${roomSlug}/wiki`} className="btn-ghost">Cancelar</a>
-          <button className="btn-primary" onClick={handleSubmit} disabled={isPending}>
+          {/* clase btn-save añadida para los tests */}
+          <button className="btn-primary btn-save" onClick={handleSubmit} disabled={isPending}>
             <BookOpenIcon style={{ width: 14, height: 14 }} />
             {isPending ? 'Guardando...' : page ? 'Guardar cambios' : 'Crear página'}
           </button>
@@ -215,6 +224,15 @@ export default function WikiPageForm({ roomId, roomSlug, page, otherPages = [] }
       </aside>
 
       <style>{`
+        .wiki-form-title {
+          font-family: var(--font-display);
+          font-size: var(--text-xl);
+          font-weight: 700;
+          color: var(--text-primary);
+          letter-spacing: 0.03em;
+          margin: 0 0 var(--space-2);
+        }
+
         .wpf-outer {
           display: grid;
           grid-template-columns: 1fr 260px;

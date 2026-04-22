@@ -18,8 +18,9 @@ const ROLE_CONFIG: Record<string, { label: string; color: string }> = {
   admin:    { label: 'Admin',      color: 'var(--color-role-admin)' },
   master:   { label: 'Moderador',  color: 'var(--color-role-master)' },
   director: { label: 'Director',   color: 'var(--color-role-director)' },
-jugador:  { label: 'Jugador',    color: 'var(--color-role-jugador)' },
-miembro:  { label: 'Miembro',    color: 'var(--color-role-miembro)' },}
+  jugador:  { label: 'Jugador',    color: 'var(--color-role-jugador)' },
+  miembro:  { label: 'Miembro',    color: 'var(--color-role-miembro)' },
+}
 
 type SortKey = 'ultimo_acceso' | 'created_at' | 'level' | 'post_count' | 'badge_count'
 
@@ -49,7 +50,7 @@ export default function UsersClient({ users, currentUserId }: Props) {
   const [sortBy, setSortBy]         = useState<SortKey>('ultimo_acceso')
   const [sortDir, setSortDir]       = useState<'asc' | 'desc'>('desc')
 
-const roles = ['all', 'admin', 'master', 'director', 'jugador', 'miembro']
+  const roles = ['all', 'admin', 'master', 'director', 'jugador', 'miembro']
 
   function toggleSort(key: SortKey) {
     if (sortBy === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc')
@@ -118,7 +119,7 @@ const roles = ['all', 'admin', 'master', 'director', 'jugador', 'miembro']
           {roles.map(r => (
             <button
               key={r}
-              className={`role-filter-btn ${roleFilter === r ? 'active' : ''}`}
+              className={`role-filter-btn role-filter ${roleFilter === r ? 'active' : ''}`}
               onClick={() => setRoleFilter(r)}
               style={roleFilter === r && r !== 'all' ? {
                 color: ROLE_CONFIG[r]?.color,
@@ -167,8 +168,8 @@ const roles = ['all', 'admin', 'master', 'director', 'jugador', 'miembro']
       ) : (
         <div className="users-grid">
           {filtered.map((u, i) => {
-const roleInfo = ROLE_CONFIG[u.role] ?? { label: u.role, color: 'var(--text-muted)' }
-const avatar = u.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${u.username}`
+            const roleInfo = ROLE_CONFIG[u.role] ?? { label: u.role, color: 'var(--text-muted)' }
+            const avatar = u.avatar_url ?? `https://api.dicebear.com/7.x/gothic/svg?seed=${u.username}`
             const isMe = u.id === currentUserId
             const lastSeen = new Date(u.ultimo_acceso)
             const now = new Date()

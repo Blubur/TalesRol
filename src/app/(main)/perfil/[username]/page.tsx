@@ -104,27 +104,26 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
   // Salas
   const showRooms = canSeeAll || profile.privacy_rooms !== false
   const { data: roomActivity } = showRooms ? await supabase
-  .from('posts').select('topics(rooms(id, slug, title, cover_url, status))')
-  .eq('author_id', profile.id).is('deleted_at', null).limit(50) : { data: [] }
+    .from('posts').select('topics(rooms(id, slug, title, cover_url, status))')
+    .eq('author_id', profile.id).is('deleted_at', null).limit(50) : { data: [] }
 
-const { data: ownedRooms } = showRooms ? await supabase
-  .from('rooms').select('id, slug, title, cover_url, status')
-  .eq('owner_id', profile.id).is('deleted_at', null) : { data: [] }
+  const { data: ownedRooms } = showRooms ? await supabase
+    .from('rooms').select('id, slug, title, cover_url, status')
+    .eq('owner_id', profile.id).is('deleted_at', null) : { data: [] }
 
-const roomsMap = new Map()
-ownedRooms?.forEach((r: any) => roomsMap.set(r.id, r))
-roomActivity?.forEach((p: any) => {
-  const room = p.topics?.rooms
-  if (room && !roomsMap.has(room.id)) roomsMap.set(room.id, room)
-})
-const rooms = Array.from(roomsMap.values())
-
+  const roomsMap = new Map()
+  ownedRooms?.forEach((r: any) => roomsMap.set(r.id, r))
+  roomActivity?.forEach((p: any) => {
+    const room = p.topics?.rooms
+    if (room && !roomsMap.has(room.id)) roomsMap.set(room.id, room)
+  })
+  const rooms = Array.from(roomsMap.values())
 
   const { count: postCount } = await supabase
     .from('posts').select('*', { count: 'exact', head: true })
     .eq('author_id', profile.id).is('deleted_at', null)
 
-  // Badges visibles — usando tabla badges unificada
+  // Badges visibles
   const { data: rawVisibleBadges } = await supabase
     .from('user_badges')
     .select('badge_id, unlocked_at, earned_at')
@@ -279,8 +278,9 @@ const rooms = Array.from(roomsMap.values())
 
         </aside>
 
-        {/* MAIN */}
-        <main className="profile-main">
+        {/* Cambiado de <main> a <div> para evitar doble <main> en el DOM
+            (el layout padre ya tiene su propio <main>) */}
+        <div className="profile-main">
 
           {/* Personajes */}
           <div className="profile-card animate-enter" style={{ animationDelay: '0.1s' }}>
@@ -430,7 +430,7 @@ const rooms = Array.from(roomsMap.values())
             )}
           </div>
 
-        </main>
+        </div>
       </div>
 
       <style>{`
