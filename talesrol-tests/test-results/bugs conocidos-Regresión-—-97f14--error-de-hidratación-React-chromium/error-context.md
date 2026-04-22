@@ -1,0 +1,323 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: bugs conocidos.spec.ts >> Regresión — bugs documentados >> [BUG] Portada no muestra error de hidratación React
+- Location: tests\bugs conocidos.spec.ts:91:7
+
+# Error details
+
+```
+Tearing down "context" exceeded the test timeout of 30000ms.
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e5]:
+        - link "✦ Talesrol" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: ✦
+          - generic [ref=e8]: Talesrol
+        - generic [ref=e9]:
+          - link "Inicio" [ref=e10] [cursor=pointer]:
+            - /url: /
+            - img [ref=e11]
+            - text: Inicio
+          - link "Salas" [ref=e13] [cursor=pointer]:
+            - /url: /salas
+            - img [ref=e14]
+            - text: Salas
+          - link "Anuncios" [ref=e16] [cursor=pointer]:
+            - /url: /anuncios
+            - img [ref=e17]
+            - text: Anuncios
+        - generic [ref=e19]:
+          - button "Modo claro" [ref=e20] [cursor=pointer]:
+            - img [ref=e21]
+          - button "Notificaciones" [ref=e24] [cursor=pointer]:
+            - img [ref=e25]
+          - link "Mensajes" [ref=e27] [cursor=pointer]:
+            - /url: /mensajes
+            - img [ref=e28]
+          - button "aventurera aventurera" [ref=e31] [cursor=pointer]:
+            - img "aventurera" [ref=e32]
+            - generic [ref=e33]: aventurera
+            - img [ref=e34]
+    - generic [ref=e36]:
+      - complementary [ref=e37]:
+        - button "Colapsar" [ref=e38] [cursor=pointer]:
+          - img [ref=e39]
+        - generic [ref=e41]:
+          - button "Administración" [expanded] [ref=e42] [cursor=pointer]:
+            - img [ref=e44]
+            - generic [ref=e47]: Administración
+            - img [ref=e49]
+          - generic [ref=e52]:
+            - link "Panel de Admin" [ref=e53] [cursor=pointer]:
+              - /url: /admin
+              - text: Panel de Admin
+            - link "Configuración" [ref=e55] [cursor=pointer]:
+              - /url: /admin/config/general
+              - text: Configuración
+        - generic [ref=e58]:
+          - button "Salas Activas Ver todas" [expanded] [ref=e59] [cursor=pointer]:
+            - img [ref=e61]
+            - generic [ref=e63]: Salas Activas
+            - link "Ver todas" [ref=e65]:
+              - /url: /salas
+            - img [ref=e67]
+          - generic [ref=e70]:
+            - link "A la media noche pasó solo noche" [ref=e71] [cursor=pointer]:
+              - /url: /salas/a-la-media-noche-paso
+              - generic [ref=e73]:
+                - generic [ref=e74]: A la media noche pasó
+                - generic [ref=e75]: solo noche
+            - link "Cenizas blancas Fantasia angelical" [ref=e76] [cursor=pointer]:
+              - /url: /salas/cenizas-blancas
+              - generic [ref=e78]:
+                - generic [ref=e79]: Cenizas blancas
+                - generic [ref=e80]: Fantasia angelical
+            - link "Perihelio tardío sci fi" [ref=e81] [cursor=pointer]:
+              - /url: /salas/perihelio-tardio
+              - generic [ref=e83]:
+                - generic [ref=e84]: Perihelio tardío
+                - generic [ref=e85]: sci fi
+            - 'link "Josepa y Camila se van a Benidorm TW: Josepa en bañador" [ref=e86] [cursor=pointer]':
+              - /url: /salas/josepa-y-camila-se-van-a-benidorm
+              - generic [ref=e88]:
+                - generic [ref=e89]: Josepa y Camila se van a Benidorm
+                - generic [ref=e90]: "TW: Josepa en bañador"
+        - button "Accesos Rápidos" [ref=e93] [cursor=pointer]:
+          - img [ref=e95]
+          - generic [ref=e97]: Accesos Rápidos
+          - img [ref=e99]
+      - main [ref=e101]:
+        - generic [ref=e102]:
+          - generic [ref=e103]:
+            - generic [ref=e104]:
+              - img [ref=e105]
+              - generic [ref=e107]: Anuncios
+              - link "Ver todos →" [ref=e108] [cursor=pointer]:
+                - /url: /anuncios
+            - link "Empieza en Noviembre. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun… 9 mar" [ref=e110] [cursor=pointer]:
+              - /url: /anuncios#anuncio-96eab09a-db5d-4118-be74-18c131dce7c0
+              - img [ref=e111]
+              - generic [ref=e114]:
+                - generic [ref=e115]: Empieza en
+                - generic [ref=e116]: Noviembre. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun…
+              - generic [ref=e117]: 9 mar
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - generic [ref=e120]: "2"
+              - generic [ref=e121]: en línea
+            - generic [ref=e122]:
+              - generic [ref=e123]: "0"
+              - generic [ref=e124]: posts hoy
+            - generic [ref=e125]:
+              - generic [ref=e126]: "4"
+              - generic [ref=e127]: salas activas
+          - generic [ref=e128]:
+            - generic [ref=e129]:
+              - generic [ref=e130]: ✦
+              - heading "Bienvenido, aventurera" [level=1] [ref=e131]
+              - paragraph [ref=e132]: Plataforma de roleplay escrito — Crea personajes, únete a salas y vive tus historias
+            - complementary [ref=e133]:
+              - generic [ref=e134]:
+                - generic [ref=e135]:
+                  - generic [ref=e136]: ✦ Últimas respuestas
+                  - link "Ver salas →" [ref=e137] [cursor=pointer]:
+                    - /url: /salas
+                - list [ref=e138]:
+                  - listitem [ref=e139]:
+                    - generic [ref=e140]:
+                      - link "aventurera" [ref=e141] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e142]
+                      - link "A las 12" [ref=e144] [cursor=pointer]:
+                        - /url: /salas/a-la-media-noche-paso/8e673c4b-0849-4a4f-95e3-c6e0f026e408#post-6
+                    - generic [ref=e145]:
+                      - link "aventurera" [ref=e146] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e147]: ·
+                      - generic [ref=e148]: A la media noche pasó
+                      - generic [ref=e149]: ·
+                      - generic "21/4/2026, 22:46:00" [ref=e150]: 9h
+                  - listitem [ref=e151]:
+                    - generic [ref=e152]:
+                      - link "aventurera" [ref=e153] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e154]
+                      - link "A las 12" [ref=e156] [cursor=pointer]:
+                        - /url: /salas/a-la-media-noche-paso/8e673c4b-0849-4a4f-95e3-c6e0f026e408#post-5
+                    - generic [ref=e157]:
+                      - link "aventurera" [ref=e158] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e159]: ·
+                      - generic [ref=e160]: A la media noche pasó
+                      - generic [ref=e161]: ·
+                      - generic "10/4/2026, 21:03:20" [ref=e162]: 10 abr
+                  - listitem [ref=e163]:
+                    - generic [ref=e164]:
+                      - link "aventurera" [ref=e165] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e166]
+                      - link "A las 12" [ref=e168] [cursor=pointer]:
+                        - /url: /salas/a-la-media-noche-paso/8e673c4b-0849-4a4f-95e3-c6e0f026e408#post-4
+                    - generic [ref=e169]:
+                      - link "aventurera" [ref=e170] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e171]: ·
+                      - generic [ref=e172]: A la media noche pasó
+                      - generic [ref=e173]: ·
+                      - generic "5/4/2026, 14:56:23" [ref=e174]: 5 abr
+                  - listitem [ref=e175]:
+                    - generic [ref=e176]:
+                      - link "aventurera" [ref=e177] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e178]
+                      - link "A las 12" [ref=e180] [cursor=pointer]:
+                        - /url: /salas/a-la-media-noche-paso/8e673c4b-0849-4a4f-95e3-c6e0f026e408#post-3
+                    - generic [ref=e181]:
+                      - link "aventurera" [ref=e182] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e183]: ·
+                      - generic [ref=e184]: A la media noche pasó
+                      - generic [ref=e185]: ·
+                      - generic "1/4/2026, 22:33:02" [ref=e186]: 1 abr
+                  - listitem [ref=e187]:
+                    - generic [ref=e188]:
+                      - link "aventurera" [ref=e189] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e190]
+                      - link "Laralalá" [ref=e192] [cursor=pointer]:
+                        - /url: /salas/perihelio-tardio/466cd177-f0b0-4e2f-8362-d9cad4f89af7#post-7
+                    - generic [ref=e193]:
+                      - link "aventurera" [ref=e194] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e195]: ·
+                      - generic [ref=e196]: Perihelio tardío
+                      - generic [ref=e197]: ·
+                      - generic "30/3/2026, 13:32:56" [ref=e198]: 30 mar
+                  - listitem [ref=e199]:
+                    - generic [ref=e200]:
+                      - link "aventurera" [ref=e201] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e202]
+                      - link "Laralalá" [ref=e204] [cursor=pointer]:
+                        - /url: /salas/perihelio-tardio/466cd177-f0b0-4e2f-8362-d9cad4f89af7#post-6
+                    - generic [ref=e205]:
+                      - link "aventurera" [ref=e206] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e207]: ·
+                      - generic [ref=e208]: Perihelio tardío
+                      - generic [ref=e209]: ·
+                      - generic "30/3/2026, 13:29:36" [ref=e210]: 30 mar
+                  - listitem [ref=e211]:
+                    - generic [ref=e212]:
+                      - link "aventurera" [ref=e213] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e214]
+                      - link "Laralalá" [ref=e216] [cursor=pointer]:
+                        - /url: /salas/perihelio-tardio/466cd177-f0b0-4e2f-8362-d9cad4f89af7#post-5
+                    - generic [ref=e217]:
+                      - link "aventurera" [ref=e218] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e219]: ·
+                      - generic [ref=e220]: Perihelio tardío
+                      - generic [ref=e221]: ·
+                      - generic "30/3/2026, 13:26:59" [ref=e222]: 30 mar
+                  - listitem [ref=e223]:
+                    - generic [ref=e224]:
+                      - link "aventurera" [ref=e225] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e226]
+                      - link "Laralalá" [ref=e228] [cursor=pointer]:
+                        - /url: /salas/perihelio-tardio/466cd177-f0b0-4e2f-8362-d9cad4f89af7#post-4
+                    - generic [ref=e229]:
+                      - link "aventurera" [ref=e230] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e231]: ·
+                      - generic [ref=e232]: Perihelio tardío
+                      - generic [ref=e233]: ·
+                      - generic "27/3/2026, 9:12:54" [ref=e234]: 27 mar
+                  - listitem [ref=e235]:
+                    - generic [ref=e236]:
+                      - link "aventurera" [ref=e237] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e238]
+                      - link "Laralalá" [ref=e240] [cursor=pointer]:
+                        - /url: /salas/perihelio-tardio/466cd177-f0b0-4e2f-8362-d9cad4f89af7#post-3
+                    - generic [ref=e241]:
+                      - link "aventurera" [ref=e242] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e243]: ·
+                      - generic [ref=e244]: Perihelio tardío
+                      - generic [ref=e245]: ·
+                      - generic "27/3/2026, 9:03:01" [ref=e246]: 27 mar
+                  - listitem [ref=e247]:
+                    - generic [ref=e248]:
+                      - link "aventurera" [ref=e249] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                        - img "aventurera" [ref=e250]
+                      - link "Laralalá" [ref=e252] [cursor=pointer]:
+                        - /url: /salas/perihelio-tardio/466cd177-f0b0-4e2f-8362-d9cad4f89af7#post-2
+                    - generic [ref=e253]:
+                      - link "aventurera" [ref=e254] [cursor=pointer]:
+                        - /url: /perfil/aventurera
+                      - generic [ref=e255]: ·
+                      - generic [ref=e256]: Perihelio tardío
+                      - generic [ref=e257]: ·
+                      - generic "25/3/2026, 18:47:38" [ref=e258]: 25 mar
+          - generic [ref=e259]:
+            - link "Salas de Rol Explora mundos creados por nuestros directores →" [ref=e260] [cursor=pointer]:
+              - /url: /salas
+              - img [ref=e262]
+              - generic [ref=e264]:
+                - heading "Salas de Rol" [level=3] [ref=e265]
+                - paragraph [ref=e266]: Explora mundos creados por nuestros directores
+              - generic [ref=e267]: →
+            - link "Anuncios Noticias y novedades de la comunidad →" [ref=e268] [cursor=pointer]:
+              - /url: /anuncios
+              - img [ref=e270]
+              - generic [ref=e272]:
+                - heading "Anuncios" [level=3] [ref=e273]
+                - paragraph [ref=e274]: Noticias y novedades de la comunidad
+              - generic [ref=e275]: →
+            - link "Personajes Crea y gestiona tus personajes →" [ref=e276] [cursor=pointer]:
+              - /url: /personajes
+              - img [ref=e278]
+              - generic [ref=e280]:
+                - heading "Personajes" [level=3] [ref=e281]
+                - paragraph [ref=e282]: Crea y gestiona tus personajes
+              - generic [ref=e283]: →
+            - link "Mi Perfil Gestiona tu cuenta y tus estadísticas →" [ref=e284] [cursor=pointer]:
+              - /url: /perfil/aventurera
+              - img [ref=e286]
+              - generic [ref=e288]:
+                - heading "Mi Perfil" [level=3] [ref=e289]
+                - paragraph [ref=e290]: Gestiona tu cuenta y tus estadísticas
+              - generic [ref=e291]: →
+    - contentinfo [ref=e292]:
+      - generic [ref=e293]:
+        - generic [ref=e294]:
+          - generic [ref=e295]:
+            - generic [ref=e296]: ✦
+            - text: TalesRol
+          - generic [ref=e297]: © 2026 — Plataforma de Roleplay en español
+        - generic [ref=e298]:
+          - link "Normas" [ref=e299] [cursor=pointer]:
+            - /url: /normas
+          - link "Privacidad" [ref=e300] [cursor=pointer]:
+            - /url: /privacidad
+          - link "Contacto" [ref=e301] [cursor=pointer]:
+            - /url: /contacto
+  - alert [ref=e302]
+```

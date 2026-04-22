@@ -9,6 +9,17 @@
 - **DOMPurify** (sanitización HTML anti-XSS)
 
 ---
+## Características
+
+- Autenticación completa (registro, login, sesiones)
+- Sistema de roles (admin, director, master, player, guest)
+- Base de datos con Supabase (PostgreSQL + RLS)
+- Server Actions con Next.js 15
+- Editor enriquecido (React Quill)
+- Sanitización HTML (DOMPurify)
+- Interfaz con Tailwind CSS
+- Preparado para funcionalidades en tiempo real
+
 
 ## PASO 1 — Crear proyecto Next.js
 
