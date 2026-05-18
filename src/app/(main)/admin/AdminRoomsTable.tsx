@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { deleteRoom, changeRoomStatus } from '../actions'
 import {
   PencilSquareIcon,
   TrashIcon,
