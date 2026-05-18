@@ -14,10 +14,7 @@ export async function createRoom(formData: FormData) {
     if (!user) return { error: 'No autenticado.' }
 
     const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single()
+      .from('profiles').select('role').eq('id', user.id).single()
 
     if (!profile || !await hasPermission(profile.role, 'perm_create_rooms')) {
       return { error: 'No tienes permiso para crear salas.' }
@@ -41,16 +38,10 @@ export async function createRoom(formData: FormData) {
       .trim()
 
     const { data: existing } = await supabase
-      .from('rooms')
-      .select('slug')
-      .eq('slug', slug)
-      .single()
+      .from('rooms').select('slug').eq('slug', slug).single()
 
     const finalSlug = existing ? `${slug}-${Date.now()}` : slug
-
-    const tags = tagsRaw
-      ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean)
-      : []
+    const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : []
 
     const { data, error } = await supabase
       .from('rooms')
@@ -95,16 +86,10 @@ export async function updateRoom(formData: FormData) {
     const status      = formData.get('status') as string
 
     const { data: room } = await supabase
-      .from('rooms')
-      .select('owner_id, slug')
-      .eq('id', id)
-      .single()
+      .from('rooms').select('owner_id, slug').eq('id', id).single()
 
     const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single()
+      .from('profiles').select('role').eq('id', user.id).single()
 
     const isOwner = room?.owner_id === user.id
     const canEdit = await hasPermission(profile?.role ?? '', 'perm_edit_rooms')
@@ -113,9 +98,7 @@ export async function updateRoom(formData: FormData) {
       return { error: 'No tienes permiso para editar esta sala.' }
     }
 
-    const tags = tagsRaw
-      ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean)
-      : []
+    const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : []
 
     const { error } = await supabase
       .from('rooms')
@@ -143,25 +126,18 @@ export async function updateRoom(formData: FormData) {
   if (redirectTo) redirect(redirectTo)
 }
 
+// Sin redirect — el cliente maneja la navegación tras el borrado
 export async function deleteRoom(id: string) {
-  let shouldRedirect = false
-
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'No autenticado.' }
 
     const { data: room } = await supabase
-      .from('rooms')
-      .select('owner_id, slug')
-      .eq('id', id)
-      .single()
+      .from('rooms').select('owner_id, slug').eq('id', id).single()
 
     const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single()
+      .from('profiles').select('role').eq('id', user.id).single()
 
     if (room?.owner_id !== user.id && profile?.role !== 'admin') {
       return { error: 'No tienes permiso.' }
@@ -175,14 +151,11 @@ export async function deleteRoom(id: string) {
     if (error) return { error: error.message }
 
     revalidatePath('/salas')
-    shouldRedirect = true
+    return { success: true }
   } catch (e: unknown) {
-    if ((e as { digest?: string })?.digest?.startsWith('NEXT_REDIRECT')) throw e
     console.error('[deleteRoom]', e)
     return { error: 'Error interno del servidor.' }
   }
-
-  if (shouldRedirect) redirect('/salas')
 }
 
 export async function changeRoomStatus(roomId: string, status: string) {
@@ -192,16 +165,10 @@ export async function changeRoomStatus(roomId: string, status: string) {
     if (!user) return { error: 'No autenticado.' }
 
     const { data: room } = await supabase
-      .from('rooms')
-      .select('owner_id, slug')
-      .eq('id', roomId)
-      .single()
+      .from('rooms').select('owner_id, slug').eq('id', roomId).single()
 
     const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single()
+      .from('profiles').select('role').eq('id', user.id).single()
 
     if (room?.owner_id !== user.id && profile?.role !== 'admin') {
       return { error: 'No tienes permiso.' }
@@ -218,7 +185,6 @@ export async function changeRoomStatus(roomId: string, status: string) {
     revalidatePath('/salas')
     return { success: true }
   } catch (e: unknown) {
-    if ((e as { digest?: string })?.digest?.startsWith('NEXT_REDIRECT')) throw e
     console.error('[changeRoomStatus]', e)
     return { error: 'Error interno del servidor.' }
   }
