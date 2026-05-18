@@ -1,0 +1,3045 @@
+
+Running 76 tests using 4 workers
+
+  ok  1 [chromium] › tests\admin.spec.ts:20:7 › Editor CSS personalizado › La página carga con el editor CodeMirror (16.8s)
+  ok  4 [chromium] › tests\Admin modlog.spec.ts:29:7 › Log de moderación › La tabla de log está visible (19.8s)
+  x   3 [chromium] › tests\bugs conocidos.spec.ts:21:7 › Regresión — bugs documentados › [BUG] Editar sala — el HTML debe renderizarse, no verse como texto plano (15.8s)
+  ok  5 [chromium] › tests\admin.spec.ts:25:7 › Editor CSS personalizado › Botones de guardar e historial están presentes (9.7s)
+  ok  6 [chromium] › tests\Admin modlog.spec.ts:33:7 › Log de moderación › La barra de filtros está visible (12.3s)
+  x   2 [chromium] › tests\auth.spec.ts:10:7 › Registro › página de registro carga correctamente (17.3s)
+  ok  7 [chromium] › tests\admin.spec.ts:30:7 › Editor CSS personalizado › Puede escribir CSS en el editor y guardar (14.0s)
+  ok  9 [chromium] › tests\Admin modlog.spec.ts:39:7 › Log de moderación › El contador de entradas es visible (16.7s)
+  ok 10 [chromium] › tests\admin.spec.ts:47:7 › Editor CSS personalizado › El historial se despliega al hacer click (8.3s)
+  ok 13 [chromium] › tests\admin.spec.ts:56:7 › Editor CSS personalizado › Enlace de volver al panel existe (10.7s)
+  ok 11 [chromium] › tests\Admin modlog.spec.ts:46:7 › Log de moderación › Las cabeceras ordenables están presentes (13.1s)
+  x   8 [chromium] › tests\bugs conocidos.spec.ts:21:7 › Regresión — bugs documentados › [BUG] Editar sala — el HTML debe renderizarse, no verse como texto plano (retry #1) (9.1s)
+  ok 14 [chromium] › tests\Crear sala.spec.ts:19:7 › Crear sala › La página de nueva sala carga (7.9s)
+  ok 15 [chromium] › tests\Admin modlog.spec.ts:53:7 › Log de moderación › El filtro "Todas" está activo por defecto (11.1s)
+  x  12 [chromium] › tests\auth.spec.ts:10:7 › Registro › página de registro carga correctamente (retry #1) (7.9s)
+  ok 16 [chromium] › tests\Crear sala.spec.ts:24:7 › Crear sala › El formulario de nueva sala tiene campos básicos (9.5s)
+  x  17 [chromium] › tests\bugs conocidos.spec.ts:46:7 › Regresión — bugs documentados › [BUG] Próximos eventos en PA no debe lanzar error de cliente (6.0s)
+  ok 18 [chromium] › tests\Admin modlog.spec.ts:61:7 › Log de moderación › Filtrar por tipo "Usuario" reduce o mantiene el contador (11.5s)
+  ok 19 [chromium] › tests\Crear sala.spec.ts:32:7 › Crear sala › El campo de nombre acepta texto (8.6s)
+  ok 23 [chromium] › tests\Crear sala.spec.ts:41:7 › Crear sala › Existe botón de guardar/crear (13.1s)
+  x  22 [chromium] › tests\bugs conocidos.spec.ts:46:7 › Regresión — bugs documentados › [BUG] Próximos eventos en PA no debe lanzar error de cliente (retry #1) (11.2s)
+  x  20 [chromium] › tests\auth.spec.ts:16:7 › Registro › registro con usuario nuevo (14.1s)
+  ok 24 [chromium] › tests\Crear sala.spec.ts:47:7 › Crear sala › Sin sesión redirige al login (9.2s)
+  x  21 [chromium] › tests\Admin modlog.spec.ts:71:7 › Log de moderación › Filtrar por acción "Baneo" muestra solo filas de baneo o tabla vacía (16.6s)
+  x  25 [chromium] › tests\bugs conocidos.spec.ts:74:7 › Regresión — bugs documentados › [BUG] Estadísticas del perfil — contador de salas (4.2s)
+  x  27 [chromium] › tests\navegacion.spec.ts:17:7 › Páginas públicas › portada carga sin errores (4.2s)
+  x  26 [chromium] › tests\auth.spec.ts:16:7 › Registro › registro con usuario nuevo (retry #1) (4.5s)
+  x  29 [chromium] › tests\bugs conocidos.spec.ts:74:7 › Regresión — bugs documentados › [BUG] Estadísticas del perfil — contador de salas (retry #1) (6.4s)
+  x  28 [chromium] › tests\Admin modlog.spec.ts:71:7 › Log de moderación › Filtrar por acción "Baneo" muestra solo filas de baneo o tabla vacía (retry #1) (13.2s)
+  x  31 [chromium] › tests\navegacion.spec.ts:17:7 › Páginas públicas › portada carga sin errores (retry #1) (6.8s)
+  x  30 [chromium] › tests\auth.spec.ts:40:7 › Registro › registro con email duplicado muestra error (6.6s)
+  ok 33 [chromium] › tests\Admin modlog.spec.ts:88:7 › Log de moderación › Los inputs de fecha están presentes (10.4s)
+  x  34 [chromium] › tests\navegacion.spec.ts:26:7 › Páginas públicas › página de normas carga (6.2s)
+  x  35 [chromium] › tests\auth.spec.ts:40:7 › Registro › registro con email duplicado muestra error (retry #1) (7.6s)
+  x  32 [chromium] › tests\bugs conocidos.spec.ts:91:7 › Regresión — bugs documentados › [BUG] Portada no muestra error de hidratación React (8.2s)
+  ok 36 [chromium] › tests\Admin modlog.spec.ts:92:7 › Log de moderación › Filtrar por fecha futura da tabla vacía (10.0s)
+  x  37 [chromium] › tests\navegacion.spec.ts:26:7 › Páginas públicas › página de normas carga (retry #1) (6.5s)
+  x  38 [chromium] › tests\auth.spec.ts:59:7 › Login › login con credenciales correctas (admin) (7.6s)
+  x  40 [chromium] › tests\bugs conocidos.spec.ts:91:7 › Regresión — bugs documentados › [BUG] Portada no muestra error de hidratación React (retry #1) (6.0s)
+  ok 39 [chromium] › tests\Admin modlog.spec.ts:99:7 › Log de moderación › Limpiar filtros restaura el contador original (12.1s)
+  x  41 [chromium] › tests\navegacion.spec.ts:32:7 › Páginas públicas › página de ayuda carga (4.7s)
+  ok 42 [chromium] › tests\Admin modlog.spec.ts:109:7 › Log de moderación › Hacer click en "Fecha" cambia el orden (11.1s)
+  x  44 [chromium] › tests\bugs conocidos.spec.ts:114:7 › Regresión — bugs documentados › [BUG] dice_enabled = false debe bloquear tiradas de dado (6.4s)
+  x  43 [chromium] › tests\auth.spec.ts:59:7 › Login › login con credenciales correctas (admin) (retry #1) (7.0s)
+  ok 45 [chromium] › tests\Admin modlog.spec.ts:117:7 › Log de moderación › Hacer click dos veces en "Acción" invierte el orden (11.0s)
+  x  46 [chromium] › tests\navegacion.spec.ts:32:7 › Páginas públicas › página de ayuda carga (retry #1) (4.6s)
+  x  47 [chromium] › tests\bugs conocidos.spec.ts:114:7 › Regresión — bugs documentados › [BUG] dice_enabled = false debe bloquear tiradas de dado (retry #1) (5.1s)
+  x  48 [chromium] › tests\auth.spec.ts:70:7 › Login › login con contraseña incorrecta muestra error (5.2s)
+  ok 49 [chromium] › tests\Admin modlog.spec.ts:126:7 › Log de moderación › Cada fila tiene badge de acción y fecha (10.8s)
+  x  50 [chromium] › tests\navegacion.spec.ts:38:7 › Páginas públicas › página de anuncios carga (5.8s)
+  x  51 [chromium] › tests\personajes perfil.spec.ts:22:7 › Personajes › listado de personajes carga (5.1s)
+  ok 52 [chromium] › tests\Admin modlog.spec.ts:137:7 › Log de moderación › Si no hay logs se muestra el mensaje vacío (10.8s)
+  x  53 [chromium] › tests\auth.spec.ts:70:7 › Login › login con contraseña incorrecta muestra error (retry #1) (5.5s)
+  x  54 [chromium] › tests\navegacion.spec.ts:38:7 › Páginas públicas › página de anuncios carga (retry #1) (5.0s)
+  x  56 [chromium] › tests\personajes perfil.spec.ts:22:7 › Personajes › listado de personajes carga (retry #1) (5.2s)
+  x  55 [chromium] › tests\salas.spec.ts:23:7 › Salas › listado de salas carga (4.2s)
+  x  57 [chromium] › tests\auth.spec.ts:80:7 › Login › logout funciona (4.1s)
+  x  58 [chromium] › tests\navegacion.spec.ts:44:7 › Páginas públicas › listado de salas visible sin login (5.6s)
+  x  59 [chromium] › tests\personajes perfil.spec.ts:28:7 › Personajes › formulario de nuevo personaje carga (5.3s)
+  x  60 [chromium] › tests\salas.spec.ts:23:7 › Salas › listado de salas carga (retry #1) (5.0s)
+  x  61 [chromium] › tests\auth.spec.ts:80:7 › Login › logout funciona (retry #1) (4.7s)
+  x  62 [chromium] › tests\navegacion.spec.ts:44:7 › Páginas públicas › listado de salas visible sin login (retry #1) (5.1s)
+  x  63 [chromium] › tests\personajes perfil.spec.ts:28:7 › Personajes › formulario de nuevo personaje carga (retry #1) (4.0s)
+  x  64 [chromium] › tests\salas.spec.ts:29:7 › Salas › formulario de nueva sala carga (4.6s)
+  x  68 [chromium] › tests\salas.spec.ts:29:7 › Salas › formulario de nueva sala carga (retry #1) (4.9s)
+  x  65 [chromium] › tests\Usuarios.spec.ts:15:7 › Listado de usuarios › La página carga y muestra el título Comunidad (12.4s)
+  x  67 [chromium] › tests\personajes perfil.spec.ts:34:7 › Personajes › crear personaje nuevo (6.4s)
+  x  66 [chromium] › tests\navegacion.spec.ts:52:7 › Páginas públicas › listado de usuarios carga (7.0s)
+  x  69 [chromium] › tests\salas.spec.ts:35:7 › Salas › crear sala nueva (6.4s)
+  x  72 [chromium] › tests\navegacion.spec.ts:52:7 › Páginas públicas › listado de usuarios carga (retry #1) (6.0s)
+  x  70 [chromium] › tests\personajes perfil.spec.ts:34:7 › Personajes › crear personaje nuevo (retry #1) (7.3s)
+  x  71 [chromium] › tests\Usuarios.spec.ts:15:7 › Listado de usuarios › La página carga y muestra el título Comunidad (retry #1) (12.0s)
+  x  74 [chromium] › tests\navegacion.spec.ts:64:7 › Navegación con login › sidebar o navbar contiene links principales (4.7s)
+  x  75 [chromium] › tests\personajes perfil.spec.ts:59:7 › Perfil de usuario › editar perfil carga (4.0s)
+  x  73 [chromium] › tests\salas.spec.ts:35:7 › Salas › crear sala nueva (retry #1) (4.5s)
+  x  76 [chromium] › tests\Usuarios.spec.ts:21:7 › Listado de usuarios › El buscador está visible y funciona (9.8s)
+  x  77 [chromium] › tests\navegacion.spec.ts:64:7 › Navegación con login › sidebar o navbar contiene links principales (retry #1) (4.7s)
+  x  78 [chromium] › tests\personajes perfil.spec.ts:59:7 › Perfil de usuario › editar perfil carga (retry #1) (6.0s)
+  x  79 [chromium] › tests\salas.spec.ts:63:7 › Salas › sala creada aparece en el listado (4.9s)
+  x  80 [chromium] › tests\Usuarios.spec.ts:21:7 › Listado de usuarios › El buscador está visible y funciona (retry #1) (8.7s)
+  x  82 [chromium] › tests\personajes perfil.spec.ts:65:7 › Perfil de usuario › página de privacidad carga (6.0s)
+  x  81 [chromium] › tests\navegacion.spec.ts:81:7 › Navegación con login › página de insignias carga (7.7s)
+  x  83 [chromium] › tests\salas.spec.ts:63:7 › Salas › sala creada aparece en el listado (retry #1) (5.4s)
+  x  85 [chromium] › tests\personajes perfil.spec.ts:65:7 › Perfil de usuario › página de privacidad carga (retry #1) (7.5s)
+  x  87 [chromium] › tests\salas.spec.ts:88:7 › Temas y Posts › crear tema nuevo en la sala (6.4s)
+  x  86 [chromium] › tests\navegacion.spec.ts:81:7 › Navegación con login › página de insignias carga (retry #1) (6.8s)
+  x  84 [chromium] › tests\Usuarios.spec.ts:31:7 › Listado de usuarios › Los filtros de rol están presentes (9.4s)
+  x  90 [chromium] › tests\navegacion.spec.ts:87:7 › Navegación con login › página de notificaciones carga (7.1s)
+  x  88 [chromium] › tests\personajes perfil.spec.ts:71:7 › Perfil de usuario › página de badges carga (7.3s)
+  x  89 [chromium] › tests\salas.spec.ts:88:7 › Temas y Posts › crear tema nuevo en la sala (retry #1) (6.7s)
+  x  91 [chromium] › tests\Usuarios.spec.ts:31:7 › Listado de usuarios › Los filtros de rol están presentes (retry #1) (8.4s)
+  x  92 [chromium] › tests\navegacion.spec.ts:87:7 › Navegación con login › página de notificaciones carga (retry #1) (7.1s)
+  x  94 [chromium] › tests\salas.spec.ts:112:7 › Temas y Posts › publicar post en un tema existente (6.7s)
+  x  93 [chromium] › tests\personajes perfil.spec.ts:71:7 › Perfil de usuario › página de badges carga (retry #1) (7.0s)
+  x  95 [chromium] › tests\Usuarios.spec.ts:38:7 › Listado de usuarios › La grid de usuarios muestra al menos una tarjeta (12.8s)
+  x  98 [chromium] › tests\personajes perfil.spec.ts:77:7 › Perfil de usuario › perfil público de admin visible (5.3s)
+  x  97 [chromium] › tests\salas.spec.ts:112:7 › Temas y Posts › publicar post en un tema existente (retry #1) (5.9s)
+  x  96 [chromium] › tests\navegacion.spec.ts:93:7 › Navegación con login › página de mensajes carga (6.0s)
+  x  100 [chromium] › tests\salas.spec.ts:154:7 › Tirada de dados › componente de dados visible en tema (7.4s)
+  x  102 [chromium] › tests\navegacion.spec.ts:93:7 › Navegación con login › página de mensajes carga (retry #1) (7.5s)
+  x  101 [chromium] › tests\personajes perfil.spec.ts:77:7 › Perfil de usuario › perfil público de admin visible (retry #1) (7.5s)
+  x  99 [chromium] › tests\Usuarios.spec.ts:38:7 › Listado de usuarios › La grid de usuarios muestra al menos una tarjeta (retry #1) (12.0s)
+  x  103 [chromium] › tests\salas.spec.ts:154:7 › Tirada de dados › componente de dados visible en tema (retry #1) (8.1s)
+  x  105 [chromium] › tests\personajes perfil.spec.ts:98:7 › Wiki › wiki de una sala carga (8.4s)
+  x  104 [chromium] › tests\Wiki nueva.spec.ts:25:7 › Crear página wiki › La página de nueva wiki carga con el formulario (15.0s)
+  x  106 [chromium] › tests\Usuarios.spec.ts:45:7 › Listado de usuarios › Las tarjetas de usuario enlazan a perfil (13.5s)
+  x  107 [chromium] › tests\personajes perfil.spec.ts:98:7 › Wiki › wiki de una sala carga (retry #1) (4.4s)
+  x  108 [chromium] › tests\Wiki nueva.spec.ts:25:7 › Crear página wiki › La página de nueva wiki carga con el formulario (retry #1) (14.5s)
+  x  110 [chromium] › tests\personajes perfil.spec.ts:113:7 › Wiki › crear página wiki (6.0s)
+  x  109 [chromium] › tests\Usuarios.spec.ts:45:7 › Listado de usuarios › Las tarjetas de usuario enlazan a perfil (retry #1) (12.4s)
+  ok 113 [chromium] › tests\Usuarios.spec.ts:53:7 › Listado de usuarios › Filtrar por rol muestra resultados coherentes (6.2s)
+  x  112 [chromium] › tests\personajes perfil.spec.ts:113:7 › Wiki › crear página wiki (retry #1) (6.2s)
+  x  111 [chromium] › tests\Wiki nueva.spec.ts:32:7 › Crear página wiki › Contiene input de título (13.6s)
+  x  114 [chromium] › tests\Wiki nueva.spec.ts:32:7 › Crear página wiki › Contiene input de título (retry #1) (13.0s)
+  x  115 [chromium] › tests\Wiki nueva.spec.ts:40:7 › Crear página wiki › Contiene editor Quill (15.9s)
+  x  116 [chromium] › tests\Wiki nueva.spec.ts:40:7 › Crear página wiki › Contiene editor Quill (retry #1) (15.7s)
+  x  117 [chromium] › tests\Wiki nueva.spec.ts:46:7 › Crear página wiki › Contiene input de categorías (13.4s)
+  x  118 [chromium] › tests\Wiki nueva.spec.ts:46:7 › Crear página wiki › Contiene input de categorías (retry #1) (13.9s)
+  x  119 [chromium] › tests\Wiki nueva.spec.ts:54:7 › Crear página wiki › El botón de guardar existe y está habilitado (13.3s)
+  x  120 [chromium] › tests\Wiki nueva.spec.ts:54:7 › Crear página wiki › El botón de guardar existe y está habilitado (retry #1) (14.2s)
+  x  121 [chromium] › tests\Wiki nueva.spec.ts:62:7 › Crear página wiki › El enlace de cancelar vuelve a la wiki (6.2s)
+  x  122 [chromium] › tests\Wiki nueva.spec.ts:62:7 › Crear página wiki › El enlace de cancelar vuelve a la wiki (retry #1) (6.0s)
+  x  123 [chromium] › tests\Wiki nueva.spec.ts:70:7 › Crear página wiki › El checkbox de portada existe (13.8s)
+  x  124 [chromium] › tests\Wiki nueva.spec.ts:70:7 › Crear página wiki › El checkbox de portada existe (retry #1) (25.1s)
+  x  125 [chromium] › tests\Wiki nueva.spec.ts:75:7 › Crear página wiki › Puede rellenar el título y guardarlo (30.4s)
+  x  126 [chromium] › tests\Wiki nueva.spec.ts:75:7 › Crear página wiki › Puede rellenar el título y guardarlo (retry #1) (30.5s)
+  ok 127 [chromium] › tests\Wiki nueva.spec.ts:93:7 › Crear página wiki › Sin sesión redirige al login (6.4s)
+
+
+  1) [chromium] › tests\Admin modlog.spec.ts:71:7 › Log de moderación › Filtrar por acción "Baneo" muestra solo filas de baneo o tabla vacía 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"[7mB[27maneo"[39m
+    Received: [31m"[7mDesb[27maneo"[39m
+
+      79 |       const badges = s.locator('.modlog-action-badge')
+      80 |       for (let i = 0; i < await badges.count(); i++) {
+    > 81 |         expect((await badges.nth(i).textContent())?.trim()).toBe('Baneo')
+         |                                                             ^
+      82 |       }
+      83 |     } else {
+      84 |       await expect(s.locator('.empty-row')).toBeVisible()
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Admin modlog.spec.ts:81:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Admin modlog-Log-de-modera-cf437-ilas-de-baneo-o-tabla-vacía-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Admin modlog-Log-de-modera-cf437-ilas-de-baneo-o-tabla-vacía-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Admin modlog-Log-de-modera-cf437-ilas-de-baneo-o-tabla-vacía-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"[7mB[27maneo"[39m
+    Received: [31m"[7mDesb[27maneo"[39m
+
+      79 |       const badges = s.locator('.modlog-action-badge')
+      80 |       for (let i = 0; i < await badges.count(); i++) {
+    > 81 |         expect((await badges.nth(i).textContent())?.trim()).toBe('Baneo')
+         |                                                             ^
+      82 |       }
+      83 |     } else {
+      84 |       await expect(s.locator('.empty-row')).toBeVisible()
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Admin modlog.spec.ts:81:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Admin modlog-Log-de-modera-cf437-ilas-de-baneo-o-tabla-vacía-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Admin modlog-Log-de-modera-cf437-ilas-de-baneo-o-tabla-vacía-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Admin modlog-Log-de-modera-cf437-ilas-de-baneo-o-tabla-vacía-chromium-retry1\error-context.md
+
+  2) [chromium] › tests\auth.spec.ts:10:7 › Registro › página de registro carga correctamente ──────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/register", waiting until "load"[22m
+
+
+       9 | test.describe('Registro', () => {
+      10 |   test('página de registro carga correctamente', async ({ page }) => {
+    > 11 |     await page.goto('/auth/register');
+         |                ^
+      12 |     await expect(page).toHaveTitle(/.+/);
+      13 |     await expect(page.locator('input[type="email"], input[name="email"]')).toBeVisible();
+      14 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:11:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Registro-página-de-registro-carga-correctamente-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Registro-página-de-registro-carga-correctamente-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Registro-página-de-registro-carga-correctamente-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/register", waiting until "load"[22m
+
+
+       9 | test.describe('Registro', () => {
+      10 |   test('página de registro carga correctamente', async ({ page }) => {
+    > 11 |     await page.goto('/auth/register');
+         |                ^
+      12 |     await expect(page).toHaveTitle(/.+/);
+      13 |     await expect(page.locator('input[type="email"], input[name="email"]')).toBeVisible();
+      14 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:11:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Registro-página-de-registro-carga-correctamente-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Registro-página-de-registro-carga-correctamente-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Registro-página-de-registro-carga-correctamente-chromium-retry1\error-context.md
+
+  3) [chromium] › tests\auth.spec.ts:16:7 › Registro › registro con usuario nuevo ──────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/register", waiting until "load"[22m
+
+
+      15 |
+      16 |   test('registro con usuario nuevo', async ({ page }) => {
+    > 17 |     await page.goto('/auth/register');
+         |                ^
+      18 |
+      19 |     // Rellena el formulario (ajusta los selectores si tu form usa otros names/ids)
+      20 |     await page.fill('input[name="email"], input[type="email"]', TEST_USER.email);
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:17:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Registro-registro-con-usuario-nuevo-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Registro-registro-con-usuario-nuevo-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Registro-registro-con-usuario-nuevo-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/register", waiting until "load"[22m
+
+
+      15 |
+      16 |   test('registro con usuario nuevo', async ({ page }) => {
+    > 17 |     await page.goto('/auth/register');
+         |                ^
+      18 |
+      19 |     // Rellena el formulario (ajusta los selectores si tu form usa otros names/ids)
+      20 |     await page.fill('input[name="email"], input[type="email"]', TEST_USER.email);
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:17:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Registro-registro-con-usuario-nuevo-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Registro-registro-con-usuario-nuevo-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Registro-registro-con-usuario-nuevo-chromium-retry1\error-context.md
+
+  4) [chromium] › tests\auth.spec.ts:40:7 › Registro › registro con email duplicado muestra error ──
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/register", waiting until "load"[22m
+
+
+      39 |
+      40 |   test('registro con email duplicado muestra error', async ({ page }) => {
+    > 41 |     await page.goto('/auth/register');
+         |                ^
+      42 |     await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      43 |     await page.fill('input[name="username"], input[placeholder*="usuario" i]', 'adminduplicado');
+      44 |     await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:41:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Registro-registro-con-email-duplicado-muestra-error-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Registro-registro-con-email-duplicado-muestra-error-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Registro-registro-con-email-duplicado-muestra-error-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/register
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/register", waiting until "load"[22m
+
+
+      39 |
+      40 |   test('registro con email duplicado muestra error', async ({ page }) => {
+    > 41 |     await page.goto('/auth/register');
+         |                ^
+      42 |     await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      43 |     await page.fill('input[name="username"], input[placeholder*="usuario" i]', 'adminduplicado');
+      44 |     await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:41:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Registro-registro-con-email-duplicado-muestra-error-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Registro-registro-con-email-duplicado-muestra-error-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Registro-registro-con-email-duplicado-muestra-error-chromium-retry1\error-context.md
+
+  5) [chromium] › tests\auth.spec.ts:59:7 › Login › login con credenciales correctas (admin) ───────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+      58 | test.describe('Login', () => {
+      59 |   test('login con credenciales correctas (admin)', async ({ page }) => {
+    > 60 |     await page.goto('/auth/login');
+         |                ^
+      61 |     await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      62 |     await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      63 |     await page.click('button[type="submit"]');
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:60:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Login-login-con-credenciales-correctas-admin--chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Login-login-con-credenciales-correctas-admin--chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Login-login-con-credenciales-correctas-admin--chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+      58 | test.describe('Login', () => {
+      59 |   test('login con credenciales correctas (admin)', async ({ page }) => {
+    > 60 |     await page.goto('/auth/login');
+         |                ^
+      61 |     await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      62 |     await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      63 |     await page.click('button[type="submit"]');
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:60:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Login-login-con-credenciales-correctas-admin--chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Login-login-con-credenciales-correctas-admin--chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Login-login-con-credenciales-correctas-admin--chromium-retry1\error-context.md
+
+  6) [chromium] › tests\auth.spec.ts:70:7 › Login › login con contraseña incorrecta muestra error ──
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+      69 |
+      70 |   test('login con contraseña incorrecta muestra error', async ({ page }) => {
+    > 71 |     await page.goto('/auth/login');
+         |                ^
+      72 |     await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      73 |     await page.fill('input[name="password"], input[type="password"]', 'contraseña_incorrecta_xyz');
+      74 |     await page.click('button[type="submit"]');
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:71:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Login-login-con-contraseña-incorrecta-muestra-error-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Login-login-con-contraseña-incorrecta-muestra-error-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Login-login-con-contraseña-incorrecta-muestra-error-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+      69 |
+      70 |   test('login con contraseña incorrecta muestra error', async ({ page }) => {
+    > 71 |     await page.goto('/auth/login');
+         |                ^
+      72 |     await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      73 |     await page.fill('input[name="password"], input[type="password"]', 'contraseña_incorrecta_xyz');
+      74 |     await page.click('button[type="submit"]');
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:71:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Login-login-con-contraseña-incorrecta-muestra-error-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Login-login-con-contraseña-incorrecta-muestra-error-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Login-login-con-contraseña-incorrecta-muestra-error-chromium-retry1\error-context.md
+
+  7) [chromium] › tests\auth.spec.ts:80:7 › Login › logout funciona ────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+      79 |
+      80 |   test('logout funciona', async ({ page }) => {
+    > 81 |   await page.goto('/auth/login');
+         |              ^
+      82 |   await page.fill('input[name="email"]', ADMIN.email);
+      83 |   await page.fill('input[name="password"]', ADMIN.password);
+      84 |   await page.click('button[type="submit"]');
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:81:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Login-logout-funciona-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Login-logout-funciona-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Login-logout-funciona-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+      79 |
+      80 |   test('logout funciona', async ({ page }) => {
+    > 81 |   await page.goto('/auth/login');
+         |              ^
+      82 |   await page.fill('input[name="email"]', ADMIN.email);
+      83 |   await page.fill('input[name="password"]', ADMIN.password);
+      84 |   await page.click('button[type="submit"]');
+        at C:\Users\veint\talesrol\talesrol-tests\tests\auth.spec.ts:81:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-Login-logout-funciona-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\auth-Login-logout-funciona-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-Login-logout-funciona-chromium-retry1\error-context.md
+
+  8) [chromium] › tests\bugs conocidos.spec.ts:21:7 › Regresión — bugs documentados › [BUG] Editar sala — el HTML debe renderizarse, no verse como texto plano 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-5b72e-e-no-verse-como-texto-plano-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-5b72e-e-no-verse-como-texto-plano-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-5b72e-e-no-verse-como-texto-plano-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-5b72e-e-no-verse-como-texto-plano-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-5b72e-e-no-verse-como-texto-plano-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-5b72e-e-no-verse-como-texto-plano-chromium-retry1\error-context.md
+
+  9) [chromium] › tests\bugs conocidos.spec.ts:46:7 › Regresión — bugs documentados › [BUG] Próximos eventos en PA no debe lanzar error de cliente 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-82811-ebe-lanzar-error-de-cliente-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-82811-ebe-lanzar-error-de-cliente-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-82811-ebe-lanzar-error-de-cliente-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-82811-ebe-lanzar-error-de-cliente-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-82811-ebe-lanzar-error-de-cliente-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-82811-ebe-lanzar-error-de-cliente-chromium-retry1\error-context.md
+
+  10) [chromium] › tests\bugs conocidos.spec.ts:74:7 › Regresión — bugs documentados › [BUG] Estadísticas del perfil — contador de salas 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-ccb1f--perfil-—-contador-de-salas-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-ccb1f--perfil-—-contador-de-salas-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-ccb1f--perfil-—-contador-de-salas-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-ccb1f--perfil-—-contador-de-salas-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-ccb1f--perfil-—-contador-de-salas-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-ccb1f--perfil-—-contador-de-salas-chromium-retry1\error-context.md
+
+  11) [chromium] › tests\bugs conocidos.spec.ts:91:7 › Regresión — bugs documentados › [BUG] Portada no muestra error de hidratación React 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-97f14--error-de-hidratación-React-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-97f14--error-de-hidratación-React-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-97f14--error-de-hidratación-React-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-97f14--error-de-hidratación-React-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-97f14--error-de-hidratación-React-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-97f14--error-de-hidratación-React-chromium-retry1\error-context.md
+
+  12) [chromium] › tests\bugs conocidos.spec.ts:114:7 › Regresión — bugs documentados › [BUG] dice_enabled = false debe bloquear tiradas de dado 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-b076b-be-bloquear-tiradas-de-dado-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-b076b-be-bloquear-tiradas-de-dado-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-b076b-be-bloquear-tiradas-de-dado-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\bugs conocidos.spec.ts:17:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-b076b-be-bloquear-tiradas-de-dado-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\bugs conocidos-Regresión-—-b076b-be-bloquear-tiradas-de-dado-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\bugs conocidos-Regresión-—-b076b-be-bloquear-tiradas-de-dado-chromium-retry1\error-context.md
+
+  13) [chromium] › tests\navegacion.spec.ts:17:7 › Páginas públicas › portada carga sin errores ────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/
+    Call log:
+    [2m  - navigating to "http://localhost:3000/", waiting until "load"[22m
+
+
+      16 | test.describe('Páginas públicas', () => {
+      17 |   test('portada carga sin errores', async ({ page }) => {
+    > 18 |     await page.goto('/');
+         |                ^
+      19 |     await expect(page).not.toHaveTitle(/error|404|500/i);
+      20 |     // No debe haber errores de React visibles
+      21 |     const errorBoundary = page.locator('text=Application error, text=Unhandled Runtime Error');
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:18:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-portada-carga-sin-errores-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-portada-carga-sin-errores-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-portada-carga-sin-errores-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/
+    Call log:
+    [2m  - navigating to "http://localhost:3000/", waiting until "load"[22m
+
+
+      16 | test.describe('Páginas públicas', () => {
+      17 |   test('portada carga sin errores', async ({ page }) => {
+    > 18 |     await page.goto('/');
+         |                ^
+      19 |     await expect(page).not.toHaveTitle(/error|404|500/i);
+      20 |     // No debe haber errores de React visibles
+      21 |     const errorBoundary = page.locator('text=Application error, text=Unhandled Runtime Error');
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:18:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-portada-carga-sin-errores-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-portada-carga-sin-errores-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-portada-carga-sin-errores-chromium-retry1\error-context.md
+
+  14) [chromium] › tests\navegacion.spec.ts:26:7 › Páginas públicas › página de normas carga ───────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/normas
+    Call log:
+    [2m  - navigating to "http://localhost:3000/normas", waiting until "load"[22m
+
+
+      25 |
+      26 |   test('página de normas carga', async ({ page }) => {
+    > 27 |     await page.goto('/normas');
+         |                ^
+      28 |     await expect(page.locator('h1, h2').first()).toBeVisible({ timeout: 5000 });
+      29 |     console.log('✅ /normas OK');
+      30 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:27:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-normas-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-normas-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-página-de-normas-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/normas
+    Call log:
+    [2m  - navigating to "http://localhost:3000/normas", waiting until "load"[22m
+
+
+      25 |
+      26 |   test('página de normas carga', async ({ page }) => {
+    > 27 |     await page.goto('/normas');
+         |                ^
+      28 |     await expect(page.locator('h1, h2').first()).toBeVisible({ timeout: 5000 });
+      29 |     console.log('✅ /normas OK');
+      30 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:27:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-normas-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-normas-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-página-de-normas-carga-chromium-retry1\error-context.md
+
+  15) [chromium] › tests\navegacion.spec.ts:32:7 › Páginas públicas › página de ayuda carga ────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/ayuda
+    Call log:
+    [2m  - navigating to "http://localhost:3000/ayuda", waiting until "load"[22m
+
+
+      31 |
+      32 |   test('página de ayuda carga', async ({ page }) => {
+    > 33 |     await page.goto('/ayuda');
+         |                ^
+      34 |     await expect(page.locator('h1, h2, main').first()).toBeVisible({ timeout: 5000 });
+      35 |     console.log('✅ /ayuda OK');
+      36 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:33:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-ayuda-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-ayuda-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-página-de-ayuda-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/ayuda
+    Call log:
+    [2m  - navigating to "http://localhost:3000/ayuda", waiting until "load"[22m
+
+
+      31 |
+      32 |   test('página de ayuda carga', async ({ page }) => {
+    > 33 |     await page.goto('/ayuda');
+         |                ^
+      34 |     await expect(page.locator('h1, h2, main').first()).toBeVisible({ timeout: 5000 });
+      35 |     console.log('✅ /ayuda OK');
+      36 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:33:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-ayuda-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-ayuda-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-página-de-ayuda-carga-chromium-retry1\error-context.md
+
+  16) [chromium] › tests\navegacion.spec.ts:38:7 › Páginas públicas › página de anuncios carga ─────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/anuncios
+    Call log:
+    [2m  - navigating to "http://localhost:3000/anuncios", waiting until "load"[22m
+
+
+      37 |
+      38 |   test('página de anuncios carga', async ({ page }) => {
+    > 39 |     await page.goto('/anuncios');
+         |                ^
+      40 |     await expect(page.locator('main, article, .anuncio').first()).toBeVisible({ timeout: 5000 });
+      41 |     console.log('✅ /anuncios OK');
+      42 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:39:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-anuncios-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-anuncios-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-página-de-anuncios-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/anuncios
+    Call log:
+    [2m  - navigating to "http://localhost:3000/anuncios", waiting until "load"[22m
+
+
+      37 |
+      38 |   test('página de anuncios carga', async ({ page }) => {
+    > 39 |     await page.goto('/anuncios');
+         |                ^
+      40 |     await expect(page.locator('main, article, .anuncio').first()).toBeVisible({ timeout: 5000 });
+      41 |     console.log('✅ /anuncios OK');
+      42 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:39:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-anuncios-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-página-de-anuncios-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-página-de-anuncios-carga-chromium-retry1\error-context.md
+
+  17) [chromium] › tests\navegacion.spec.ts:44:7 › Páginas públicas › listado de salas visible sin login 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/salas
+    Call log:
+    [2m  - navigating to "http://localhost:3000/salas", waiting until "load"[22m
+
+
+      43 |
+      44 |   test('listado de salas visible sin login', async ({ page }) => {
+    > 45 |     await page.goto('/salas');
+         |                ^
+      46 |     await expect(page.locator('.users-page, main').first()).toBeVisible({ timeout: 8000 })
+      47 |     const title = await page.title();
+      48 |     expect(title).not.toMatch(/error|404|500/i);
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:45:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-pública-737c0--de-salas-visible-sin-login-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-pública-737c0--de-salas-visible-sin-login-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-pública-737c0--de-salas-visible-sin-login-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/salas
+    Call log:
+    [2m  - navigating to "http://localhost:3000/salas", waiting until "load"[22m
+
+
+      43 |
+      44 |   test('listado de salas visible sin login', async ({ page }) => {
+    > 45 |     await page.goto('/salas');
+         |                ^
+      46 |     await expect(page.locator('.users-page, main').first()).toBeVisible({ timeout: 8000 })
+      47 |     const title = await page.title();
+      48 |     expect(title).not.toMatch(/error|404|500/i);
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:45:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-pública-737c0--de-salas-visible-sin-login-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-pública-737c0--de-salas-visible-sin-login-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-pública-737c0--de-salas-visible-sin-login-chromium-retry1\error-context.md
+
+  18) [chromium] › tests\navegacion.spec.ts:52:7 › Páginas públicas › listado de usuarios carga ────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/usuarios
+    Call log:
+    [2m  - navigating to "http://localhost:3000/usuarios", waiting until "load"[22m
+
+
+      51 |
+      52 |   test('listado de usuarios carga', async ({ page }) => {
+    > 53 |     await page.goto('/usuarios');
+         |                ^
+      54 |     await expect(page.locator('main').first()).toBeVisible({ timeout: 5000 });
+      55 |     console.log('✅ /usuarios OK');
+      56 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:53:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-listado-de-usuarios-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-listado-de-usuarios-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-listado-de-usuarios-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/usuarios
+    Call log:
+    [2m  - navigating to "http://localhost:3000/usuarios", waiting until "load"[22m
+
+
+      51 |
+      52 |   test('listado de usuarios carga', async ({ page }) => {
+    > 53 |     await page.goto('/usuarios');
+         |                ^
+      54 |     await expect(page.locator('main').first()).toBeVisible({ timeout: 5000 });
+      55 |     console.log('✅ /usuarios OK');
+      56 |   });
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:53:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-listado-de-usuarios-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Páginas-públicas-listado-de-usuarios-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Páginas-públicas-listado-de-usuarios-carga-chromium-retry1\error-context.md
+
+  19) [chromium] › tests\navegacion.spec.ts:64:7 › Navegación con login › sidebar o navbar contiene links principales 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       7 | // Helper para hacer login rápido
+       8 | async function loginAdmin(page: any) {
+    >  9 |   await page.goto('/auth/login');
+         |              ^
+      10 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      11 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      12 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:9:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:61:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con--97dc3--contiene-links-principales-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con--97dc3--contiene-links-principales-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Navegación-con--97dc3--contiene-links-principales-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       7 | // Helper para hacer login rápido
+       8 | async function loginAdmin(page: any) {
+    >  9 |   await page.goto('/auth/login');
+         |              ^
+      10 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      11 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      12 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:9:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:61:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con--97dc3--contiene-links-principales-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con--97dc3--contiene-links-principales-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Navegación-con--97dc3--contiene-links-principales-chromium-retry1\error-context.md
+
+  20) [chromium] › tests\navegacion.spec.ts:81:7 › Navegación con login › página de insignias carga 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       7 | // Helper para hacer login rápido
+       8 | async function loginAdmin(page: any) {
+    >  9 |   await page.goto('/auth/login');
+         |              ^
+      10 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      11 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      12 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:9:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:61:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con-login-página-de-insignias-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con-login-página-de-insignias-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Navegación-con-login-página-de-insignias-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       7 | // Helper para hacer login rápido
+       8 | async function loginAdmin(page: any) {
+    >  9 |   await page.goto('/auth/login');
+         |              ^
+      10 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      11 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      12 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:9:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:61:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con-login-página-de-insignias-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con-login-página-de-insignias-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Navegación-con-login-página-de-insignias-carga-chromium-retry1\error-context.md
+
+  21) [chromium] › tests\navegacion.spec.ts:87:7 › Navegación con login › página de notificaciones carga 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       7 | // Helper para hacer login rápido
+       8 | async function loginAdmin(page: any) {
+    >  9 |   await page.goto('/auth/login');
+         |              ^
+      10 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      11 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      12 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:9:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:61:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con--00bec-ina-de-notificaciones-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con--00bec-ina-de-notificaciones-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Navegación-con--00bec-ina-de-notificaciones-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       7 | // Helper para hacer login rápido
+       8 | async function loginAdmin(page: any) {
+    >  9 |   await page.goto('/auth/login');
+         |              ^
+      10 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      11 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      12 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:9:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:61:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con--00bec-ina-de-notificaciones-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con--00bec-ina-de-notificaciones-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Navegación-con--00bec-ina-de-notificaciones-carga-chromium-retry1\error-context.md
+
+  22) [chromium] › tests\navegacion.spec.ts:93:7 › Navegación con login › página de mensajes carga ─
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       7 | // Helper para hacer login rápido
+       8 | async function loginAdmin(page: any) {
+    >  9 |   await page.goto('/auth/login');
+         |              ^
+      10 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      11 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      12 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:9:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:61:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con-login-página-de-mensajes-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con-login-página-de-mensajes-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Navegación-con-login-página-de-mensajes-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       7 | // Helper para hacer login rápido
+       8 | async function loginAdmin(page: any) {
+    >  9 |   await page.goto('/auth/login');
+         |              ^
+      10 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      11 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      12 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:9:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\navegacion.spec.ts:61:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con-login-página-de-mensajes-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\navegacion-Navegación-con-login-página-de-mensajes-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navegacion-Navegación-con-login-página-de-mensajes-carga-chromium-retry1\error-context.md
+
+  23) [chromium] › tests\personajes perfil.spec.ts:22:7 › Personajes › listado de personajes carga ─
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:19:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personajes-listado-de-personajes-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personajes-listado-de-personajes-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Personajes-listado-de-personajes-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:19:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personajes-listado-de-personajes-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personajes-listado-de-personajes-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Personajes-listado-de-personajes-carga-chromium-retry1\error-context.md
+
+  24) [chromium] › tests\personajes perfil.spec.ts:28:7 › Personajes › formulario de nuevo personaje carga 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:19:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personaj-1ceac-io-de-nuevo-personaje-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personaj-1ceac-io-de-nuevo-personaje-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Personaj-1ceac-io-de-nuevo-personaje-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:19:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personaj-1ceac-io-de-nuevo-personaje-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personaj-1ceac-io-de-nuevo-personaje-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Personaj-1ceac-io-de-nuevo-personaje-carga-chromium-retry1\error-context.md
+
+  25) [chromium] › tests\personajes perfil.spec.ts:34:7 › Personajes › crear personaje nuevo ───────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:19:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personajes-crear-personaje-nuevo-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personajes-crear-personaje-nuevo-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Personajes-crear-personaje-nuevo-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:19:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personajes-crear-personaje-nuevo-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Personajes-crear-personaje-nuevo-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Personajes-crear-personaje-nuevo-chromium-retry1\error-context.md
+
+  26) [chromium] › tests\personajes perfil.spec.ts:59:7 › Perfil de usuario › editar perfil carga ──
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:56:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-de-usuario-editar-perfil-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-de-usuario-editar-perfil-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Perfil-de-usuario-editar-perfil-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:56:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-de-usuario-editar-perfil-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-de-usuario-editar-perfil-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Perfil-de-usuario-editar-perfil-carga-chromium-retry1\error-context.md
+
+  27) [chromium] › tests\personajes perfil.spec.ts:65:7 › Perfil de usuario › página de privacidad carga 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:56:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-d-64cb2--página-de-privacidad-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-d-64cb2--página-de-privacidad-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Perfil-d-64cb2--página-de-privacidad-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:56:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-d-64cb2--página-de-privacidad-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-d-64cb2--página-de-privacidad-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Perfil-d-64cb2--página-de-privacidad-carga-chromium-retry1\error-context.md
+
+  28) [chromium] › tests\personajes perfil.spec.ts:71:7 › Perfil de usuario › página de badges carga 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:56:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-de-usuario-página-de-badges-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-de-usuario-página-de-badges-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Perfil-de-usuario-página-de-badges-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:56:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-de-usuario-página-de-badges-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-de-usuario-página-de-badges-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Perfil-de-usuario-página-de-badges-carga-chromium-retry1\error-context.md
+
+  29) [chromium] › tests\personajes perfil.spec.ts:77:7 › Perfil de usuario › perfil público de admin visible 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:56:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-d-30de0-il-público-de-admin-visible-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-d-30de0-il-público-de-admin-visible-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Perfil-d-30de0-il-público-de-admin-visible-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:56:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-d-30de0-il-público-de-admin-visible-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Perfil-d-30de0-il-público-de-admin-visible-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Perfil-d-30de0-il-público-de-admin-visible-chromium-retry1\error-context.md
+
+  30) [chromium] › tests\personajes perfil.spec.ts:98:7 › Wiki › wiki de una sala carga ────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:95:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Wiki-wiki-de-una-sala-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Wiki-wiki-de-una-sala-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Wiki-wiki-de-una-sala-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:95:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Wiki-wiki-de-una-sala-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Wiki-wiki-de-una-sala-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Wiki-wiki-de-una-sala-carga-chromium-retry1\error-context.md
+
+  31) [chromium] › tests\personajes perfil.spec.ts:113:7 › Wiki › crear página wiki ────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:95:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Wiki-crear-página-wiki-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Wiki-crear-página-wiki-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Wiki-crear-página-wiki-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\personajes perfil.spec.ts:95:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\personajes perfil-Wiki-crear-página-wiki-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\personajes perfil-Wiki-crear-página-wiki-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\personajes perfil-Wiki-crear-página-wiki-chromium-retry1\error-context.md
+
+  32) [chromium] › tests\salas.spec.ts:23:7 › Salas › listado de salas carga ───────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:20:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Salas-listado-de-salas-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Salas-listado-de-salas-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Salas-listado-de-salas-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:20:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Salas-listado-de-salas-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Salas-listado-de-salas-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Salas-listado-de-salas-carga-chromium-retry1\error-context.md
+
+  33) [chromium] › tests\salas.spec.ts:29:7 › Salas › formulario de nueva sala carga ───────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:20:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Salas-formulario-de-nueva-sala-carga-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Salas-formulario-de-nueva-sala-carga-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Salas-formulario-de-nueva-sala-carga-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:20:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Salas-formulario-de-nueva-sala-carga-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Salas-formulario-de-nueva-sala-carga-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Salas-formulario-de-nueva-sala-carga-chromium-retry1\error-context.md
+
+  34) [chromium] › tests\salas.spec.ts:35:7 › Salas › crear sala nueva ─────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:20:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Salas-crear-sala-nueva-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Salas-crear-sala-nueva-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Salas-crear-sala-nueva-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:20:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Salas-crear-sala-nueva-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Salas-crear-sala-nueva-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Salas-crear-sala-nueva-chromium-retry1\error-context.md
+
+  35) [chromium] › tests\salas.spec.ts:63:7 › Salas › sala creada aparece en el listado ────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:20:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Salas-sala-creada-aparece-en-el-listado-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Salas-sala-creada-aparece-en-el-listado-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Salas-sala-creada-aparece-en-el-listado-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:20:11
+
+    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Salas-sala-creada-aparece-en-el-listado-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Salas-sala-creada-aparece-en-el-listado-chromium-retry1\error-context.md
+
+  36) [chromium] › tests\salas.spec.ts:88:7 › Temas y Posts › crear tema nuevo en la sala ──────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:76:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Temas-y-Posts-crear-tema-nuevo-en-la-sala-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Temas-y-Posts-crear-tema-nuevo-en-la-sala-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Temas-y-Posts-crear-tema-nuevo-en-la-sala-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:76:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Temas-y-Posts-crear-tema-nuevo-en-la-sala-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Temas-y-Posts-crear-tema-nuevo-en-la-sala-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Temas-y-Posts-crear-tema-nuevo-en-la-sala-chromium-retry1\error-context.md
+
+  37) [chromium] › tests\salas.spec.ts:112:7 › Temas y Posts › publicar post en un tema existente ──
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:76:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Temas-y-Posts-publicar-post-en-un-tema-existente-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Temas-y-Posts-publicar-post-en-un-tema-existente-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Temas-y-Posts-publicar-post-en-un-tema-existente-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:76:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Temas-y-Posts-publicar-post-en-un-tema-existente-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Temas-y-Posts-publicar-post-en-un-tema-existente-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Temas-y-Posts-publicar-post-en-un-tema-existente-chromium-retry1\error-context.md
+
+  38) [chromium] › tests\salas.spec.ts:154:7 › Tirada de dados › componente de dados visible en tema 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:151:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Tirada-de-dados-componente-de-dados-visible-en-tema-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Tirada-de-dados-componente-de-dados-visible-en-tema-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Tirada-de-dados-componente-de-dados-visible-en-tema-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/auth/login
+    Call log:
+    [2m  - navigating to "http://localhost:3000/auth/login", waiting until "load"[22m
+
+
+       6 |
+       7 | async function loginAdmin(page: Page) {
+    >  8 |   await page.goto('/auth/login');
+         |              ^
+       9 |   await page.fill('input[name="email"], input[type="email"]', ADMIN.email);
+      10 |   await page.fill('input[name="password"], input[type="password"]', ADMIN.password);
+      11 |   await page.click('button[type="submit"]');
+        at loginAdmin (C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:8:14)
+        at C:\Users\veint\talesrol\talesrol-tests\tests\salas.spec.ts:151:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\salas-Tirada-de-dados-componente-de-dados-visible-en-tema-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\salas-Tirada-de-dados-componente-de-dados-visible-en-tema-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\salas-Tirada-de-dados-componente-de-dados-visible-en-tema-chromium-retry1\error-context.md
+
+  39) [chromium] › tests\Usuarios.spec.ts:15:7 › Listado de usuarios › La página carga y muestra el título Comunidad 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('h1.users-title')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('h1.users-title')[22m
+
+
+      15 |   test('La página carga y muestra el título Comunidad', async ({ page }) => {
+      16 |     await page.goto(`${BASE_URL}/usuarios`)
+    > 17 |     await expect(page.locator('h1.users-title')).toBeVisible({ timeout: 8000 })
+         |                                                  ^
+      18 |     await expect(page.locator('h1.users-title')).toHaveText('Comunidad')
+      19 |   })
+      20 |
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:17:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-28984-muestra-el-título-Comunidad-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-28984-muestra-el-título-Comunidad-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-28984-muestra-el-título-Comunidad-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('h1.users-title')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('h1.users-title')[22m
+
+
+      15 |   test('La página carga y muestra el título Comunidad', async ({ page }) => {
+      16 |     await page.goto(`${BASE_URL}/usuarios`)
+    > 17 |     await expect(page.locator('h1.users-title')).toBeVisible({ timeout: 8000 })
+         |                                                  ^
+      18 |     await expect(page.locator('h1.users-title')).toHaveText('Comunidad')
+      19 |   })
+      20 |
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:17:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-28984-muestra-el-título-Comunidad-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-28984-muestra-el-título-Comunidad-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-28984-muestra-el-título-Comunidad-chromium-retry1\error-context.md
+
+  40) [chromium] › tests\Usuarios.spec.ts:21:7 › Listado de usuarios › El buscador está visible y funciona 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('input.users-search')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('input.users-search')[22m
+
+
+      22 |     await page.goto(`${BASE_URL}/usuarios`)
+      23 |     const search = page.locator('input.users-search')
+    > 24 |     await expect(search).toBeVisible()
+         |                          ^
+      25 |     await search.fill('admin')
+      26 |     // La lista se filtra (puede quedar vacía si no hay usuario "admin")
+      27 |     // Solo verificamos que el input acepta texto
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:24:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-ba230-dor-está-visible-y-funciona-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-ba230-dor-está-visible-y-funciona-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-ba230-dor-está-visible-y-funciona-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('input.users-search')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('input.users-search')[22m
+
+
+      22 |     await page.goto(`${BASE_URL}/usuarios`)
+      23 |     const search = page.locator('input.users-search')
+    > 24 |     await expect(search).toBeVisible()
+         |                          ^
+      25 |     await search.fill('admin')
+      26 |     // La lista se filtra (puede quedar vacía si no hay usuario "admin")
+      27 |     // Solo verificamos que el input acepta texto
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:24:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-ba230-dor-está-visible-y-funciona-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-ba230-dor-está-visible-y-funciona-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-ba230-dor-está-visible-y-funciona-chromium-retry1\error-context.md
+
+  41) [chromium] › tests\Usuarios.spec.ts:31:7 › Listado de usuarios › Los filtros de rol están presentes 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('button.role-filter-btn').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('button.role-filter-btn').first()[22m
+
+
+      31 |   test('Los filtros de rol están presentes', async ({ page }) => {
+      32 |     await page.goto(`${BASE_URL}/usuarios`)
+    > 33 |     await expect(page.locator('button.role-filter-btn').first()).toBeVisible()
+         |                                                                  ^
+      34 |     // Debe haber al menos el botón "Todos"
+      35 |     await expect(page.locator('button.role-filter-btn:has-text("Todos")')).toBeVisible()
+      36 |   })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:33:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-adeff-tros-de-rol-están-presentes-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-adeff-tros-de-rol-están-presentes-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-adeff-tros-de-rol-están-presentes-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('button.role-filter-btn').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('button.role-filter-btn').first()[22m
+
+
+      31 |   test('Los filtros de rol están presentes', async ({ page }) => {
+      32 |     await page.goto(`${BASE_URL}/usuarios`)
+    > 33 |     await expect(page.locator('button.role-filter-btn').first()).toBeVisible()
+         |                                                                  ^
+      34 |     // Debe haber al menos el botón "Todos"
+      35 |     await expect(page.locator('button.role-filter-btn:has-text("Todos")')).toBeVisible()
+      36 |   })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:33:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-adeff-tros-de-rol-están-presentes-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-adeff-tros-de-rol-están-presentes-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-adeff-tros-de-rol-están-presentes-chromium-retry1\error-context.md
+
+  42) [chromium] › tests\Usuarios.spec.ts:38:7 › Listado de usuarios › La grid de usuarios muestra al menos una tarjeta 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.users-grid')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('.users-grid')[22m
+
+
+      38 |   test('La grid de usuarios muestra al menos una tarjeta', async ({ page }) => {
+      39 |     await page.goto(`${BASE_URL}/usuarios`)
+    > 40 |     await expect(page.locator('.users-grid')).toBeVisible({ timeout: 8000 })
+         |                                               ^
+      41 |     const cards = page.locator('a.user-card')
+      42 |     await expect(cards.first()).toBeVisible()
+      43 |   })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-53f30-uestra-al-menos-una-tarjeta-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-53f30-uestra-al-menos-una-tarjeta-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-53f30-uestra-al-menos-una-tarjeta-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.users-grid')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('.users-grid')[22m
+
+
+      38 |   test('La grid de usuarios muestra al menos una tarjeta', async ({ page }) => {
+      39 |     await page.goto(`${BASE_URL}/usuarios`)
+    > 40 |     await expect(page.locator('.users-grid')).toBeVisible({ timeout: 8000 })
+         |                                               ^
+      41 |     const cards = page.locator('a.user-card')
+      42 |     await expect(cards.first()).toBeVisible()
+      43 |   })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-53f30-uestra-al-menos-una-tarjeta-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-53f30-uestra-al-menos-una-tarjeta-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-53f30-uestra-al-menos-una-tarjeta-chromium-retry1\error-context.md
+
+  43) [chromium] › tests\Usuarios.spec.ts:45:7 › Listado de usuarios › Las tarjetas de usuario enlazan a perfil 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('a.user-card').first()
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('a.user-card').first()[22m
+
+
+      46 |     await page.goto(`${BASE_URL}/usuarios`)
+      47 |     const firstCard = page.locator('a.user-card').first()
+    > 48 |     await expect(firstCard).toBeVisible({ timeout: 8000 })
+         |                             ^
+      49 |     const href = await firstCard.getAttribute('href')
+      50 |     expect(href).toMatch(/^\/perfil\//)
+      51 |   })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:48:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-228b8-de-usuario-enlazan-a-perfil-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-228b8-de-usuario-enlazan-a-perfil-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-228b8-de-usuario-enlazan-a-perfil-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('a.user-card').first()
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('a.user-card').first()[22m
+
+
+      46 |     await page.goto(`${BASE_URL}/usuarios`)
+      47 |     const firstCard = page.locator('a.user-card').first()
+    > 48 |     await expect(firstCard).toBeVisible({ timeout: 8000 })
+         |                             ^
+      49 |     const href = await firstCard.getAttribute('href')
+      50 |     expect(href).toMatch(/^\/perfil\//)
+      51 |   })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Usuarios.spec.ts:48:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-228b8-de-usuario-enlazan-a-perfil-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Usuarios-Listado-de-usuari-228b8-de-usuario-enlazan-a-perfil-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Usuarios-Listado-de-usuari-228b8-de-usuario-enlazan-a-perfil-chromium-retry1\error-context.md
+
+  44) [chromium] › tests\Wiki nueva.spec.ts:25:7 › Crear página wiki › La página de nueva wiki carga con el formulario 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('h1.wiki-form-title')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('h1.wiki-form-title')[22m
+
+
+      26 |     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+      27 |     // El título de la página usa h1.wiki-form-title
+    > 28 |     await expect(page.locator('h1.wiki-form-title')).toBeVisible({ timeout: 8000 })
+         |                                                      ^
+      29 |     await expect(page.locator('h1.wiki-form-title')).toHaveText('Nueva página')
+      30 |   })
+      31 |
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:28:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-b7e4b-iki-carga-con-el-formulario-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-b7e4b-iki-carga-con-el-formulario-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wi-b7e4b-iki-carga-con-el-formulario-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('h1.wiki-form-title')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('h1.wiki-form-title')[22m
+
+
+      26 |     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+      27 |     // El título de la página usa h1.wiki-form-title
+    > 28 |     await expect(page.locator('h1.wiki-form-title')).toBeVisible({ timeout: 8000 })
+         |                                                      ^
+      29 |     await expect(page.locator('h1.wiki-form-title')).toHaveText('Nueva página')
+      30 |   })
+      31 |
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:28:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-b7e4b-iki-carga-con-el-formulario-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-b7e4b-iki-carga-con-el-formulario-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wi-b7e4b-iki-carga-con-el-formulario-chromium-retry1\error-context.md
+
+  45) [chromium] › tests\Wiki nueva.spec.ts:32:7 › Crear página wiki › Contiene input de título ────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('input.wpf-input').first()
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('input.wpf-input').first()[22m
+
+
+      34 |     // El primer input.wpf-input es el título
+      35 |     const titleInput = page.locator('input.wpf-input').first()
+    > 36 |     await expect(titleInput).toBeVisible({ timeout: 8000 })
+         |                              ^
+      37 |     await expect(titleInput).toHaveAttribute('placeholder', /título|reino|PNJs/i)
+      38 |   })
+      39 |
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:36:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-título-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-título-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-título-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('input.wpf-input').first()
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('input.wpf-input').first()[22m
+
+
+      34 |     // El primer input.wpf-input es el título
+      35 |     const titleInput = page.locator('input.wpf-input').first()
+    > 36 |     await expect(titleInput).toBeVisible({ timeout: 8000 })
+         |                              ^
+      37 |     await expect(titleInput).toHaveAttribute('placeholder', /título|reino|PNJs/i)
+      38 |   })
+      39 |
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:36:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-título-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-título-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-título-chromium-retry1\error-context.md
+
+  46) [chromium] › tests\Wiki nueva.spec.ts:40:7 › Crear página wiki › Contiene editor Quill ───────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.ql-editor')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('.ql-editor')[22m
+
+
+      41 |     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+      42 |     // Quill se carga dinámicamente (next/dynamic sin ssr)
+    > 43 |     await expect(page.locator('.ql-editor')).toBeVisible({ timeout: 10000 })
+         |                                              ^
+      44 |   })
+      45 |
+      46 |   test('Contiene input de categorías', async ({ page }) => {
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:43:46
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-editor-Quill-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-editor-Quill-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wiki-Contiene-editor-Quill-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.ql-editor')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('.ql-editor')[22m
+
+
+      41 |     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+      42 |     // Quill se carga dinámicamente (next/dynamic sin ssr)
+    > 43 |     await expect(page.locator('.ql-editor')).toBeVisible({ timeout: 10000 })
+         |                                              ^
+      44 |   })
+      45 |
+      46 |   test('Contiene input de categorías', async ({ page }) => {
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:43:46
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-editor-Quill-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-editor-Quill-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wiki-Contiene-editor-Quill-chromium-retry1\error-context.md
+
+  47) [chromium] › tests\Wiki nueva.spec.ts:46:7 › Crear página wiki › Contiene input de categorías 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('input.wpf-input')
+    Expected: [32m2[39m
+    Received: [31m0[39m
+    Timeout:  8000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 8000ms[22m
+    [2m  - waiting for locator('input.wpf-input')[22m
+    [2m    11 × locator resolved to 0 elements[22m
+    [2m       - unexpected value "0"[22m
+
+
+      48 |     // El segundo input.wpf-input es categorías
+      49 |     const inputs = page.locator('input.wpf-input')
+    > 50 |     await expect(inputs).toHaveCount(2, { timeout: 8000 })
+         |                          ^
+      51 |     await expect(inputs.nth(1)).toHaveAttribute('placeholder', /categorías|lore/i)
+      52 |   })
+      53 |
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:50:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-categorías-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-categorías-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-categorías-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('input.wpf-input')
+    Expected: [32m2[39m
+    Received: [31m0[39m
+    Timeout:  8000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 8000ms[22m
+    [2m  - waiting for locator('input.wpf-input')[22m
+    [2m    11 × locator resolved to 0 elements[22m
+    [2m       - unexpected value "0"[22m
+
+
+      48 |     // El segundo input.wpf-input es categorías
+      49 |     const inputs = page.locator('input.wpf-input')
+    > 50 |     await expect(inputs).toHaveCount(2, { timeout: 8000 })
+         |                          ^
+      51 |     await expect(inputs.nth(1)).toHaveAttribute('placeholder', /categorías|lore/i)
+      52 |   })
+      53 |
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:50:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-categorías-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-categorías-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wiki-Contiene-input-de-categorías-chromium-retry1\error-context.md
+
+  48) [chromium] › tests\Wiki nueva.spec.ts:54:7 › Crear página wiki › El botón de guardar existe y está habilitado 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('button.btn-primary')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('button.btn-primary')[22m
+
+
+      55 |     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+      56 |     const saveBtn = page.locator('button.btn-primary')
+    > 57 |     await expect(saveBtn).toBeVisible({ timeout: 8000 })
+         |                           ^
+      58 |     await expect(saveBtn).toBeEnabled()
+      59 |     await expect(saveBtn).toContainText('Crear página')
+      60 |   })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:57:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-5df6a-ar-existe-y-está-habilitado-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-5df6a-ar-existe-y-está-habilitado-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wi-5df6a-ar-existe-y-está-habilitado-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('button.btn-primary')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('button.btn-primary')[22m
+
+
+      55 |     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+      56 |     const saveBtn = page.locator('button.btn-primary')
+    > 57 |     await expect(saveBtn).toBeVisible({ timeout: 8000 })
+         |                           ^
+      58 |     await expect(saveBtn).toBeEnabled()
+      59 |     await expect(saveBtn).toContainText('Crear página')
+      60 |   })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:57:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-5df6a-ar-existe-y-está-habilitado-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-5df6a-ar-existe-y-está-habilitado-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wi-5df6a-ar-existe-y-está-habilitado-chromium-retry1\error-context.md
+
+  49) [chromium] › tests\Wiki nueva.spec.ts:62:7 › Crear página wiki › El enlace de cancelar vuelve a la wiki 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"/salas/salas/wiki"[39m
+    Received string:    [31m"/auth/login"[39m
+
+      65 |     await expect(cancelLink).toBeVisible({ timeout: 8000 })
+      66 |     const href = await cancelLink.getAttribute('href')
+    > 67 |     expect(href).toContain(`/salas/${ROOM_SLUG}/wiki`)
+         |                  ^
+      68 |   })
+      69 |
+      70 |   test('El checkbox de portada existe', async ({ page }) => {
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:67:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-3902b-e-cancelar-vuelve-a-la-wiki-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-3902b-e-cancelar-vuelve-a-la-wiki-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wi-3902b-e-cancelar-vuelve-a-la-wiki-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"/salas/salas/wiki"[39m
+    Received string:    [31m"/auth/login"[39m
+
+      65 |     await expect(cancelLink).toBeVisible({ timeout: 8000 })
+      66 |     const href = await cancelLink.getAttribute('href')
+    > 67 |     expect(href).toContain(`/salas/${ROOM_SLUG}/wiki`)
+         |                  ^
+      68 |   })
+      69 |
+      70 |   test('El checkbox de portada existe', async ({ page }) => {
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:67:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-3902b-e-cancelar-vuelve-a-la-wiki-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-3902b-e-cancelar-vuelve-a-la-wiki-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wi-3902b-e-cancelar-vuelve-a-la-wiki-chromium-retry1\error-context.md
+
+  50) [chromium] › tests\Wiki nueva.spec.ts:70:7 › Crear página wiki › El checkbox de portada existe 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('input.wpf-checkbox')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('input.wpf-checkbox')[22m
+
+
+      70 |   test('El checkbox de portada existe', async ({ page }) => {
+      71 |     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+    > 72 |     await expect(page.locator('input.wpf-checkbox')).toBeVisible({ timeout: 8000 })
+         |                                                      ^
+      73 |   })
+      74 |
+      75 |   test('Puede rellenar el título y guardarlo', async ({ page }) => {
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:72:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-El-checkbox-de-portada-existe-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-El-checkbox-de-portada-existe-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wiki-El-checkbox-de-portada-existe-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('input.wpf-checkbox')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 8000ms[22m
+    [2m  - waiting for locator('input.wpf-checkbox')[22m
+
+
+      70 |   test('El checkbox de portada existe', async ({ page }) => {
+      71 |     await page.goto(`${BASE_URL}/salas/${ROOM_SLUG}/wiki/nueva`)
+    > 72 |     await expect(page.locator('input.wpf-checkbox')).toBeVisible({ timeout: 8000 })
+         |                                                      ^
+      73 |   })
+      74 |
+      75 |   test('Puede rellenar el título y guardarlo', async ({ page }) => {
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:72:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-El-checkbox-de-portada-existe-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wiki-El-checkbox-de-portada-existe-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wiki-El-checkbox-de-portada-existe-chromium-retry1\error-context.md
+
+  51) [chromium] › tests\Wiki nueva.spec.ts:75:7 › Crear página wiki › Puede rellenar el título y guardarlo 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('input.wpf-input').first()[22m
+
+
+      77 |
+      78 |     const titleInput = page.locator('input.wpf-input').first()
+    > 79 |     await titleInput.fill(`Página de prueba ${Date.now()}`)
+         |                      ^
+      80 |
+      81 |     // Esperar Quill y escribir contenido mínimo
+      82 |     await page.locator('.ql-editor').waitFor({ state: 'visible', timeout: 10000 })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:79:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-034e1-lenar-el-título-y-guardarlo-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-034e1-lenar-el-título-y-guardarlo-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wi-034e1-lenar-el-título-y-guardarlo-chromium\error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('input.wpf-input').first()[22m
+
+
+      77 |
+      78 |     const titleInput = page.locator('input.wpf-input').first()
+    > 79 |     await titleInput.fill(`Página de prueba ${Date.now()}`)
+         |                      ^
+      80 |
+      81 |     // Esperar Quill y escribir contenido mínimo
+      82 |     await page.locator('.ql-editor').waitFor({ state: 'visible', timeout: 10000 })
+        at C:\Users\veint\talesrol\talesrol-tests\tests\Wiki nueva.spec.ts:79:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-034e1-lenar-el-título-y-guardarlo-chromium-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\Wiki nueva-Crear-página-wi-034e1-lenar-el-título-y-guardarlo-chromium-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\Wiki nueva-Crear-página-wi-034e1-lenar-el-título-y-guardarlo-chromium-retry1\error-context.md
+
+  51 failed
+    [chromium] › tests\Admin modlog.spec.ts:71:7 › Log de moderación › Filtrar por acción "Baneo" muestra solo filas de baneo o tabla vacía 
+    [chromium] › tests\auth.spec.ts:10:7 › Registro › página de registro carga correctamente ───────
+    [chromium] › tests\auth.spec.ts:16:7 › Registro › registro con usuario nuevo ───────────────────
+    [chromium] › tests\auth.spec.ts:40:7 › Registro › registro con email duplicado muestra error ───
+    [chromium] › tests\auth.spec.ts:59:7 › Login › login con credenciales correctas (admin) ────────
+    [chromium] › tests\auth.spec.ts:70:7 › Login › login con contraseña incorrecta muestra error ───
+    [chromium] › tests\auth.spec.ts:80:7 › Login › logout funciona ─────────────────────────────────
+    [chromium] › tests\bugs conocidos.spec.ts:21:7 › Regresión — bugs documentados › [BUG] Editar sala — el HTML debe renderizarse, no verse como texto plano 
+    [chromium] › tests\bugs conocidos.spec.ts:46:7 › Regresión — bugs documentados › [BUG] Próximos eventos en PA no debe lanzar error de cliente 
+    [chromium] › tests\bugs conocidos.spec.ts:74:7 › Regresión — bugs documentados › [BUG] Estadísticas del perfil — contador de salas 
+    [chromium] › tests\bugs conocidos.spec.ts:91:7 › Regresión — bugs documentados › [BUG] Portada no muestra error de hidratación React 
+    [chromium] › tests\bugs conocidos.spec.ts:114:7 › Regresión — bugs documentados › [BUG] dice_enabled = false debe bloquear tiradas de dado 
+    [chromium] › tests\navegacion.spec.ts:17:7 › Páginas públicas › portada carga sin errores ──────
+    [chromium] › tests\navegacion.spec.ts:26:7 › Páginas públicas › página de normas carga ─────────
+    [chromium] › tests\navegacion.spec.ts:32:7 › Páginas públicas › página de ayuda carga ──────────
+    [chromium] › tests\navegacion.spec.ts:38:7 › Páginas públicas › página de anuncios carga ───────
+    [chromium] › tests\navegacion.spec.ts:44:7 › Páginas públicas › listado de salas visible sin login 
+    [chromium] › tests\navegacion.spec.ts:52:7 › Páginas públicas › listado de usuarios carga ──────
+    [chromium] › tests\navegacion.spec.ts:64:7 › Navegación con login › sidebar o navbar contiene links principales 
+    [chromium] › tests\navegacion.spec.ts:81:7 › Navegación con login › página de insignias carga ──
+    [chromium] › tests\navegacion.spec.ts:87:7 › Navegación con login › página de notificaciones carga 
+    [chromium] › tests\navegacion.spec.ts:93:7 › Navegación con login › página de mensajes carga ───
+    [chromium] › tests\personajes perfil.spec.ts:22:7 › Personajes › listado de personajes carga ───
+    [chromium] › tests\personajes perfil.spec.ts:28:7 › Personajes › formulario de nuevo personaje carga 
+    [chromium] › tests\personajes perfil.spec.ts:34:7 › Personajes › crear personaje nuevo ─────────
+    [chromium] › tests\personajes perfil.spec.ts:59:7 › Perfil de usuario › editar perfil carga ────
+    [chromium] › tests\personajes perfil.spec.ts:65:7 › Perfil de usuario › página de privacidad carga 
+    [chromium] › tests\personajes perfil.spec.ts:71:7 › Perfil de usuario › página de badges carga ─
+    [chromium] › tests\personajes perfil.spec.ts:77:7 › Perfil de usuario › perfil público de admin visible 
+    [chromium] › tests\personajes perfil.spec.ts:98:7 › Wiki › wiki de una sala carga ──────────────
+    [chromium] › tests\personajes perfil.spec.ts:113:7 › Wiki › crear página wiki ──────────────────
+    [chromium] › tests\salas.spec.ts:23:7 › Salas › listado de salas carga ─────────────────────────
+    [chromium] › tests\salas.spec.ts:29:7 › Salas › formulario de nueva sala carga ─────────────────
+    [chromium] › tests\salas.spec.ts:35:7 › Salas › crear sala nueva ───────────────────────────────
+    [chromium] › tests\salas.spec.ts:63:7 › Salas › sala creada aparece en el listado ──────────────
+    [chromium] › tests\salas.spec.ts:88:7 › Temas y Posts › crear tema nuevo en la sala ────────────
+    [chromium] › tests\salas.spec.ts:112:7 › Temas y Posts › publicar post en un tema existente ────
+    [chromium] › tests\salas.spec.ts:154:7 › Tirada de dados › componente de dados visible en tema ─
+    [chromium] › tests\Usuarios.spec.ts:15:7 › Listado de usuarios › La página carga y muestra el título Comunidad 
+    [chromium] › tests\Usuarios.spec.ts:21:7 › Listado de usuarios › El buscador está visible y funciona 
+    [chromium] › tests\Usuarios.spec.ts:31:7 › Listado de usuarios › Los filtros de rol están presentes 
+    [chromium] › tests\Usuarios.spec.ts:38:7 › Listado de usuarios › La grid de usuarios muestra al menos una tarjeta 
+    [chromium] › tests\Usuarios.spec.ts:45:7 › Listado de usuarios › Las tarjetas de usuario enlazan a perfil 
+    [chromium] › tests\Wiki nueva.spec.ts:25:7 › Crear página wiki › La página de nueva wiki carga con el formulario 
+    [chromium] › tests\Wiki nueva.spec.ts:32:7 › Crear página wiki › Contiene input de título ──────
+    [chromium] › tests\Wiki nueva.spec.ts:40:7 › Crear página wiki › Contiene editor Quill ─────────
+    [chromium] › tests\Wiki nueva.spec.ts:46:7 › Crear página wiki › Contiene input de categorías ──
+    [chromium] › tests\Wiki nueva.spec.ts:54:7 › Crear página wiki › El botón de guardar existe y está habilitado 
+    [chromium] › tests\Wiki nueva.spec.ts:62:7 › Crear página wiki › El enlace de cancelar vuelve a la wiki 
+    [chromium] › tests\Wiki nueva.spec.ts:70:7 › Crear página wiki › El checkbox de portada existe ─
+    [chromium] › tests\Wiki nueva.spec.ts:75:7 › Crear página wiki › Puede rellenar el título y guardarlo 
+  25 passed (11.1m)
