@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { deleteRoom, changeRoomStatus } from '../actions'
+import { deleteRoom, changeRoomStatus } from '@/app/(main)/salas/actions'
 import {
   PencilSquareIcon,
   TrashIcon,
@@ -19,6 +20,7 @@ const STATUSES = [
 ]
 
 export default function RoomActions({ roomId, slug, currentStatus }: { roomId: string; slug: string; currentStatus?: string }) {
+  const router = useRouter()
   const [loading, setLoading]       = useState(false)
   const [statusOpen, setStatusOpen] = useState(false)
   const [status, setStatus]         = useState(currentStatus ?? 'active')
@@ -27,7 +29,19 @@ export default function RoomActions({ roomId, slug, currentStatus }: { roomId: s
   async function handleDelete() {
     if (!confirm('¿Eliminar esta sala? Se archivarán todos sus temas.')) return
     setLoading(true)
-    await deleteRoom(roomId)
+    setError(null)
+    try {
+      const result = await deleteRoom(roomId)
+      if (result?.error) {
+        setError(result.error)
+        setLoading(false)
+      } else {
+        router.push('/salas')
+      }
+    } catch {
+      setError('Error al eliminar la sala.')
+      setLoading(false)
+    }
   }
 
   async function handleStatusChange(newStatus: string) {
@@ -49,7 +63,6 @@ export default function RoomActions({ roomId, slug, currentStatus }: { roomId: s
 
   return (
     <div className="room-actions-wrap">
-      {/* Selector de estado */}
       <div className="status-selector">
         <button
           className="status-btn"
@@ -79,30 +92,24 @@ export default function RoomActions({ roomId, slug, currentStatus }: { roomId: s
         )}
       </div>
 
-      {/* Editar */}
-      <Link
-        href={`/salas/${slug}/editar`}
-        className="btn-ghost room-action-btn"
-      >
+      <Link href={`/salas/${slug}/editar`} className="btn-ghost room-action-btn">
         <PencilSquareIcon className="room-action-icon" />
         Editar
       </Link>
 
-      {/* Eliminar */}
       <button
         onClick={handleDelete}
         disabled={loading}
         className="btn-ghost room-action-btn danger"
       >
         <TrashIcon className="room-action-icon" />
-        Eliminar
+        {loading ? 'Eliminando...' : 'Eliminar'}
       </button>
 
       {error && <span className="room-action-error">{error}</span>}
 
       <style>{`
         .room-actions-wrap { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; position: relative; }
-
         .status-selector { position: relative; }
         .status-btn { display: flex; align-items: center; gap: 0.4rem; background: transparent; border: 1px solid; border-radius: 4px; padding: 0.35rem 0.75rem; font-size: 0.75rem; font-family: var(--font-cinzel); letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
         .status-btn:hover { opacity: 0.8; }
@@ -110,14 +117,12 @@ export default function RoomActions({ roomId, slug, currentStatus }: { roomId: s
         .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
         .status-caret { width: 12px; height: 12px; transition: transform 0.2s; }
         .status-caret.open { transform: rotate(180deg); }
-
         .status-dropdown { position: absolute; top: calc(100% + 6px); left: 0; background: var(--bg-elevated); border: 1px solid var(--border-medium); border-radius: 6px; min-width: 160px; box-shadow: 0 12px 32px rgba(0,0,0,0.5); z-index: 200; overflow: hidden; animation: dropdownIn 0.15s ease-out; }
         @keyframes dropdownIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
         .status-option { display: flex; align-items: center; gap: 0.5rem; width: 100%; padding: 0.55rem 0.85rem; background: transparent; border: none; font-size: 0.82rem; font-family: var(--font-cinzel); letter-spacing: 0.04em; color: var(--text-secondary); cursor: pointer; transition: background 0.15s; }
         .status-option:hover { background: rgba(193,6,6,0.08); color: var(--text-primary); }
         .status-option.active { color: var(--text-primary); background: rgba(193,6,6,0.06); }
         .status-check { width: 13px; height: 13px; margin-left: auto; color: var(--color-crimson); }
-
         .room-action-btn { display: flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.75rem; font-size: 0.78rem; }
         .room-action-btn.danger { color: var(--text-muted); }
         .room-action-btn.danger:hover { color: #ff4444; border-color: #ff4444; }
