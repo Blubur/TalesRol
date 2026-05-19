@@ -162,11 +162,14 @@ export default function AdminUsersTable({ users, currentUserId, roleColors: init
   if (!confirm(`¿Eliminar permanentemente a @${username}? Esta acción no se puede deshacer.`)) return
   setLoading(userId + '_delete')
   const result = await deleteUser(userId)
+  console.log('deleteUser result:', result)
   if (!result?.error) {
     setLocalUsers(prev => prev.filter(u => u.id !== userId))
+  } else {
+    alert('Error al eliminar: ' + result.error)
   }
   setLoading(null)
-  }
+}
 
   async function handleSaveColors() {
     if (Object.keys(pendingColors).length === 0) return
