@@ -170,7 +170,7 @@ async function handleDelete(userId: string, username: string) {
   }
   setLoading(null)
 }
-}
+
 
   async function handleSaveColors() {
     if (Object.keys(pendingColors).length === 0) return
