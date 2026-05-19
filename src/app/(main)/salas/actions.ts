@@ -3,7 +3,15 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { hasPermission } from '@/lib/permissions'
+
+function service() {
+  return createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 export async function createRoom(formData: FormData) {
   let redirectTo: string | null = null
@@ -100,7 +108,9 @@ export async function updateRoom(formData: FormData) {
 
     const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : []
 
-    const { error } = await supabase
+    // Usar service role para saltar RLS en el update
+    const db = service()
+    const { error } = await db
       .from('rooms')
       .update({
         title:       title.trim(),
@@ -126,7 +136,6 @@ export async function updateRoom(formData: FormData) {
   if (redirectTo) redirect(redirectTo)
 }
 
-// Sin redirect — el cliente maneja la navegación tras el borrado
 export async function deleteRoom(id: string) {
   try {
     const supabase = await createClient()
@@ -143,7 +152,9 @@ export async function deleteRoom(id: string) {
       return { error: 'No tienes permiso.' }
     }
 
-    const { error } = await supabase
+    // Usar service role para saltar RLS
+    const db = service()
+    const { error } = await db
       .from('rooms')
       .update({ deleted_at: new Date().toISOString(), status: 'archived' })
       .eq('id', id)
@@ -174,7 +185,9 @@ export async function changeRoomStatus(roomId: string, status: string) {
       return { error: 'No tienes permiso.' }
     }
 
-    const { error } = await supabase
+    // Usar service role para saltar RLS
+    const db = service()
+    const { error } = await db
       .from('rooms')
       .update({ status, updated_at: new Date().toISOString() })
       .eq('id', roomId)
