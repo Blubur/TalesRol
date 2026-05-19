@@ -69,6 +69,27 @@ export async function unbanUser(userId: string) {
   return { success: true }
 }
 
+export async function deleteUser(userId: string) {
+  const { error, supabase, user } = await requireAdmin()
+  if (error || !supabase || !user) return { error }
+
+  const { createClient: createServiceClient } = await import('@supabase/supabase-js')
+  const admin = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  const { data: target } = await admin.from('profiles').select('username').eq('id', userId).single()
+
+  // Elimina el usuario de Supabase Auth (también elimina el perfil por cascade si lo tienes configurado)
+  const { error: authError } = await admin.auth.admin.deleteUser(userId)
+  if (authError) return { error: authError.message }
+
+  await logModerationAction(admin, user.id, 'delete_user', 'user', userId, target?.username)
+
+  revalidatePath('/admin', 'page')
+  return { success: true }
+}
 // ── REPORTES ──────────────────────────────────────────────
 
 export async function resolveReport(reportId: string) {

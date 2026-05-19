@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import type { Profile } from '@/types/database'
-import { changeUserRole, banUser, unbanUser, updateRoleColors } from './actions'
+import { changeUserRole, banUser, unbanUser, deleteUser, updateRoleColors } from './actions'
 import {
   NoSymbolIcon,
   CheckCircleIcon,
@@ -13,6 +13,7 @@ import {
   ChevronUpIcon,
   ChevronDownIcon,
   ChevronUpDownIcon,
+  TrashIcon,  
 } from '@heroicons/react/24/outline'
 
 const ROLES = ['admin', 'master', 'director', 'jugador', 'miembro'] as const
@@ -155,6 +156,16 @@ export default function AdminUsersTable({ users, currentUserId, roleColors: init
     const result = await unbanUser(userId)
     if (!result?.error) setLocalUsers(prev => prev.map(u => u.id === userId ? { ...u, status: 'active' } : u))
     setLoading(null)
+  }
+
+  async function handleDelete(userId: string, username: string) {
+  if (!confirm(`¿Eliminar permanentemente a @${username}? Esta acción no se puede deshacer.`)) return
+  setLoading(userId + '_delete')
+  const result = await deleteUser(userId)
+  if (!result?.error) {
+    setLocalUsers(prev => prev.filter(u => u.id !== userId))
+  }
+  setLoading(null)
   }
 
   async function handleSaveColors() {
@@ -383,19 +394,29 @@ export default function AdminUsersTable({ users, currentUserId, roleColors: init
                   </td>
                   <td>
                     {!isSelf ? (
-                      <div className="action-btns">
-                        {isBanned ? (
-                          <button className="action-btn success" onClick={() => handleUnban(u.id)} disabled={loading === u.id + '_ban'}>
-                            <CheckCircleIcon className="action-btn-icon" /> Desbanear
-                          </button>
-                        ) : (
-                          <button className="action-btn danger" onClick={() => handleBan(u.id)} disabled={loading === u.id + '_ban'}>
-                            <NoSymbolIcon className="action-btn-icon" /> Banear
-                          </button>
-                        )}
-                      </div>
+                    <div className="action-btns">
+                    {isBanned ? (
+                      <button className="action-btn success" onClick={() => handleUnban(u.id)} disabled={loading === u.id + '_ban'}>
+                        <CheckCircleIcon className="action-btn-icon" /> Desbanear
+                      </button>
                     ) : (
-                      <span className="self-label">Tú</span>
+                       <button className="action-btn danger" onClick={() => handleBan(u.id)} disabled={loading === u.id + '_ban'}>
+                         <NoSymbolIcon className="action-btn-icon" /> Banear
+                       </button>
+                    )}
+                        {/* ← botón nuevo */}
+                   <button
+      className="action-btn danger"
+      onClick={() => handleDelete(u.id, u.username)}
+      disabled={loading === u.id + '_delete'}
+      title="Eliminar usuario permanentemente">
+      <TrashIcon className="action-btn-icon" />
+      {loading === u.id + '_delete' ? 'Eliminando…' : 'Eliminar'}
+    </button>
+  </div>
+) : (
+  <span className="self-label">Tú</span>
+
                     )}
                   </td>
                 </tr>
