@@ -158,17 +158,18 @@ export default function AdminUsersTable({ users, currentUserId, roleColors: init
     setLoading(null)
   }
 
-  async function handleDelete(userId: string, username: string) {
+async function handleDelete(userId: string, username: string) {
   if (!confirm(`¿Eliminar permanentemente a @${username}? Esta acción no se puede deshacer.`)) return
   setLoading(userId + '_delete')
   const result = await deleteUser(userId)
   console.log('deleteUser result:', result)
-  if (!result?.error) {
+  if (result && 'success' in result && result.success) {
     setLocalUsers(prev => prev.filter(u => u.id !== userId))
   } else {
-    alert('Error al eliminar: ' + result.error)
+    alert('Error al eliminar: ' + result?.error)
   }
   setLoading(null)
+}
 }
 
   async function handleSaveColors() {
