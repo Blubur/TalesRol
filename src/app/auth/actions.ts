@@ -4,8 +4,6 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
-import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
 
 function service() {
   return createServiceClient(
@@ -47,7 +45,6 @@ export async function login(formData: FormData) {
     revalidatePath('/', 'layout')
     shouldRedirect = true
   } catch (e: unknown) {
-    // next/navigation redirect lanza una excepción interna — hay que dejarla pasar
     const msg = e instanceof Error ? e.message : ''
     if (msg === 'NEXT_REDIRECT' || (e as { digest?: string })?.digest?.startsWith('NEXT_REDIRECT')) {
       throw e
@@ -90,14 +87,12 @@ export async function register(formData: FormData) {
     const supabase = await createClient()
     const db = service()
 
-    // Comprobar si el registro está abierto
     const { data: regOpenRow } = await db
       .from('site_config').select('value').eq('key', 'registration_open').single()
     if (regOpenRow?.value === 'false') {
       return { error: 'El registro está cerrado temporalmente.' }
     }
 
-    // Comprobar modo invitación
     const { data: inviteOnlyRow } = await db
       .from('site_config').select('value').eq('key', 'invite_only').single()
     if (inviteOnlyRow?.value === 'true') {
@@ -112,7 +107,6 @@ export async function register(formData: FormData) {
       }
     }
 
-    // Verificar username único
     const { data: existing } = await supabase
       .from('profiles')
       .select('username')
@@ -141,10 +135,8 @@ export async function register(formData: FormData) {
       return { error: error.message }
     }
 
-    // Esperar a que el trigger de Supabase cree el perfil
     await new Promise(r => setTimeout(r, 800))
 
-    // Enviar notificación de bienvenida según el rol
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       const { data: profile } = await db
@@ -202,9 +194,6 @@ export async function logout() {
   redirect('/auth/login')
 }
 
-
-
-
 // ─── Recuperar contraseña (envía email) ───────────────────────────────────────
 export async function forgotPassword(formData: FormData) {
   const email = formData.get('email') as string
@@ -229,7 +218,7 @@ export async function forgotPassword(formData: FormData) {
 // ─── Restablecer contraseña (con token del email) ─────────────────────────────
 export async function resetPassword(formData: FormData) {
   const password = formData.get('password') as string
-  const confirm = formData.get('confirm') as string
+  const confirm  = formData.get('confirm') as string
 
   if (!password || password.length < 6) {
     return { error: 'La contraseña debe tener al menos 6 caracteres.' }
