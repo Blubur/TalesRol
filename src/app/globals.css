@@ -296,7 +296,7 @@ p:last-child { margin-bottom: 0; }
 /* Room card */
 .room-card { display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); text-decoration: none; overflow: hidden; transition: all var(--transition-base); }
 .room-card:hover { border-color: var(--border-medium); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(193,6,6,0.06); }
-.room-card-cover { height: 120px; position: relative; overflow: hidden; }
+.room-card-cover { height: 200px; position: relative; overflow: hidden; }
 .room-card-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
 .room-card:hover .room-card-cover img { transform: scale(1.05); }
 .room-card-cover-overlay     { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(10,10,10,0.8)); }
