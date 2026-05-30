@@ -4,6 +4,8 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 
 function service() {
   return createServiceClient(
@@ -198,4 +200,52 @@ export async function logout() {
     console.error('[logout] unexpected error:', e)
   }
   redirect('/auth/login')
+}
+
+
+
+
+// ─── Recuperar contraseña (envía email) ───────────────────────────────────────
+export async function forgotPassword(formData: FormData) {
+  const email = formData.get('email') as string
+
+  if (!email) {
+    return { error: 'Introduce tu correo electrónico.' }
+  }
+
+  const supabase = await createClient()
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/reset-password`,
+  })
+
+  if (error) {
+    return { error: 'No se pudo enviar el correo. Verifica la dirección e inténtalo de nuevo.' }
+  }
+
+  return { success: true }
+}
+
+// ─── Restablecer contraseña (con token del email) ─────────────────────────────
+export async function resetPassword(formData: FormData) {
+  const password = formData.get('password') as string
+  const confirm = formData.get('confirm') as string
+
+  if (!password || password.length < 6) {
+    return { error: 'La contraseña debe tener al menos 6 caracteres.' }
+  }
+
+  if (password !== confirm) {
+    return { error: 'Las contraseñas no coinciden.' }
+  }
+
+  const supabase = await createClient()
+
+  const { error } = await supabase.auth.updateUser({ password })
+
+  if (error) {
+    return { error: 'No se pudo actualizar la contraseña. El enlace puede haber expirado.' }
+  }
+
+  redirect('/')
 }

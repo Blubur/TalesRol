@@ -2,19 +2,21 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { login } from '../actions'
+import { forgotPassword } from '../actions'
 
-export default function LoginPage() {
+export default function RecuperarPage() {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'sent'>('idle')
   const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
 
   async function handleSubmit(formData: FormData) {
-    setLoading(true)
+    setStatus('loading')
     setError(null)
-    const result = await login(formData)
+    const result = await forgotPassword(formData)
     if (result?.error) {
       setError(result.error)
-      setLoading(false)
+      setStatus('idle')
+    } else {
+      setStatus('sent')
     }
   }
 
@@ -22,96 +24,83 @@ export default function LoginPage() {
     <div className="auth-page">
       <div className="auth-bg-overlay" />
 
-      {/* Logo */}
       <div className="auth-logo animate-enter" style={{ animationDelay: '0s' }}>
         <div className="auth-logo-symbol">✦</div>
         <h1 className="auth-logo-text">TalesRol</h1>
         <p className="auth-logo-sub">Plataforma de Roleplay</p>
       </div>
 
-      {/* Card */}
       <div className="auth-card animate-enter border-ornament" style={{ animationDelay: '0.1s' }}>
-        <div className="auth-card-header">
-          <h2>Iniciar Sesión</h2>
-          <p>Bienvenido de vuelta, aventurero</p>
-        </div>
 
-        <form action={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label htmlFor="email">Correo electrónico</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="tu@email.com"
-              className="input-base"
-              required
-              autoComplete="email"
-            />
+        {status === 'sent' ? (
+          /* Estado: email enviado */
+          <div className="sent-state">
+            <div className="sent-icon">✉</div>
+            <h2>Revisa tu correo</h2>
+            <p>
+              Si existe una cuenta con esa dirección, recibirás un enlace para
+              restablecer tu contraseña en los próximos minutos.
+            </p>
+            <p className="sent-note">
+              Recuerda mirar también la carpeta de spam.
+            </p>
+            <Link href="/auth/login" className="btn-primary auth-submit" style={{ display: 'block', textAlign: 'center', textDecoration: 'none', marginTop: '1.5rem', padding: '0.8rem' }}>
+              Volver al inicio de sesión
+            </Link>
           </div>
-
-          <div className="form-group">
-            <div className="password-label-row">
-              <label htmlFor="password">Contraseña</label>
-              <Link href="/auth/recuperar" className="forgot-link">
-                ¿Olvidaste tu contraseña?
-              </Link>
+        ) : (
+          /* Formulario normal */
+          <>
+            <div className="auth-card-header">
+              <h2>Recuperar contraseña</h2>
+              <p>Te enviaremos un enlace para restablecerla</p>
             </div>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="••••••••"
-              className="input-base"
-              required
-              autoComplete="current-password"
-            />
-          </div>
 
-          {/* Recordar sesión */}
-          <div className="remember-row">
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                name="remember"
-                className="checkbox-input"
-                defaultChecked
-              />
-              <span className="checkbox-custom" />
-              <span className="checkbox-text">Recordar sesión</span>
-            </label>
-          </div>
+            <form action={handleSubmit} className="auth-form">
+              <div className="form-group">
+                <label htmlFor="email">Correo electrónico</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="tu@email.com"
+                  className="input-base"
+                  required
+                  autoComplete="email"
+                />
+              </div>
 
-          {error && (
-            <div className="auth-error">
-              <span>⚠</span> {error}
+              {error && (
+                <div className="auth-error">
+                  <span>⚠</span> {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="btn-primary auth-submit"
+                disabled={status === 'loading'}
+              >
+                {status === 'loading' ? (
+                  <>
+                    <span className="spinner" />
+                    Enviando...
+                  </>
+                ) : (
+                  'Enviar enlace de recuperación'
+                )}
+              </button>
+            </form>
+
+            <div className="divider-ornament">
+              <span>✦</span>
             </div>
-          )}
 
-          <button
-            type="submit"
-            className="btn-primary auth-submit"
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <span className="spinner" />
-                Entrando...
-              </>
-            ) : (
-              'Entrar al Portal'
-            )}
-          </button>
-        </form>
-
-        <div className="divider-ornament">
-          <span>✦</span>
-        </div>
-
-        <p className="auth-switch">
-          ¿Aún no tienes cuenta?{' '}
-          <Link href="/auth/register">Únete a TalesRol</Link>
-        </p>
+            <p className="auth-switch">
+              <Link href="/auth/login">← Volver al inicio de sesión</Link>
+            </p>
+          </>
+        )}
       </div>
 
       <style>{`
@@ -213,68 +202,6 @@ export default function LoginPage() {
           text-transform: uppercase;
           color: var(--text-secondary);
         }
-        /* Fila label contraseña + enlace olvidé */
-        .password-label-row {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .forgot-link {
-          font-size: 0.78rem;
-          color: var(--text-muted);
-          text-decoration: none;
-          transition: color 0.2s;
-          font-family: var(--font-cinzel);
-          letter-spacing: 0.04em;
-        }
-        .forgot-link:hover {
-          color: var(--color-crimson);
-        }
-        /* Checkbox recordar */
-        .remember-row {
-          margin-top: -0.25rem;
-        }
-        .checkbox-label {
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-          cursor: pointer;
-          user-select: none;
-        }
-        .checkbox-input {
-          display: none;
-        }
-        .checkbox-custom {
-          width: 16px;
-          height: 16px;
-          border: 1px solid var(--border-subtle);
-          border-radius: 3px;
-          background: var(--bg-card);
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          transition: border-color 0.2s, background 0.2s;
-          position: relative;
-        }
-        .checkbox-input:checked + .checkbox-custom {
-          background: var(--color-crimson);
-          border-color: var(--color-crimson);
-        }
-        .checkbox-input:checked + .checkbox-custom::after {
-          content: '';
-          display: block;
-          width: 4px;
-          height: 7px;
-          border: 2px solid #fff;
-          border-top: none;
-          border-left: none;
-          transform: rotate(45deg) translate(-1px, -1px);
-        }
-        .checkbox-text {
-          font-size: 0.85rem;
-          color: var(--text-muted);
-        }
         .auth-error {
           background: rgba(193,6,6,0.12);
           border: 1px solid rgba(193,6,6,0.3);
@@ -301,8 +228,36 @@ export default function LoginPage() {
           color: var(--color-crimson);
           font-weight: 600;
         }
-        .auth-switch a:hover {
-          color: #ff4444;
+        .auth-switch a:hover { color: #ff4444; }
+        /* Estado enviado */
+        .sent-state {
+          text-align: center;
+        }
+        .sent-icon {
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+          display: block;
+          color: var(--color-crimson);
+          animation: flicker 3s infinite;
+        }
+        .sent-state h2 {
+          font-family: var(--font-cinzel);
+          font-size: 1.4rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          color: var(--text-primary);
+          margin: 0 0 1rem;
+        }
+        .sent-state p {
+          color: var(--text-muted);
+          font-size: 0.9rem;
+          line-height: 1.6;
+          margin: 0 0 0.5rem;
+        }
+        .sent-note {
+          font-size: 0.8rem !important;
+          color: var(--text-muted) !important;
+          opacity: 0.7;
         }
         .spinner {
           width: 16px;
