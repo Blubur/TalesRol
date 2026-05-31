@@ -15,9 +15,11 @@ interface RecentPost {
   } | null
   topics: {
     title: string
+    deleted_at: string | null
     rooms: {
       slug: string
       title: string
+      deleted_at: string | null
     } | null
   } | null
 }
@@ -46,7 +48,6 @@ function timeAgo(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })
 }
 
-// Service client que bypasea RLS — igual que en layout.tsx
 function getServiceClient() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -70,23 +71,31 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
         avatar_url,
         role
       ),
-      topics (
+      topics!inner (
         title,
-        rooms (
+        deleted_at,
+        rooms!inner (
           slug,
-          title
+          title,
+          deleted_at
         )
       )
     `)
     .is('deleted_at', null)
     .is('blocked_at', null)
+    .is('topics.deleted_at', null)
+    .is('topics.rooms.deleted_at', null)
     .order('created_at', { ascending: false })
     .limit(limit)
 
   if (error) console.error('[RecentPostsWidget] error:', error)
   if (!data?.length) console.warn('[RecentPostsWidget] sin datos')
 
-  const posts = (data ?? []) as unknown as RecentPost[]
+  // Filtro de seguridad en JS por si los filtros anidados de Supabase no funcionan
+  const posts = ((data ?? []) as unknown as RecentPost[]).filter(
+    p => !p.topics?.deleted_at && !p.topics?.rooms?.deleted_at
+  )
+
   if (posts.length === 0) return null
 
   return (
