@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Room, Topic, Profile } from '@/types/database'
 import RoomActions from './RoomActions'
+import TopicActions from './TopicActions'
 import {
   ArrowLeftIcon,
   PlusIcon,
@@ -266,44 +267,63 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
             {topics.map((topic, i) => {
               const pCount   = postCounts[topic.id] ?? 0
               const newCount = newPostCounts[topic.id] ?? 0
+
+              // Un usuario puede editar/eliminar un tema si es el autor, el dueño de la sala o admin
+              const canManageTopic = !!user && (
+                topic.author_id === user.id ||
+                isOwner ||
+                isAdmin
+              )
+
               return (
-                <Link
+                <div
                   key={topic.id}
-                  href={`/salas/${slug}/${topic.id}`}
-                  className={`topic-row animate-enter ${topic.is_pinned ? 'pinned' : ''} ${newCount > 0 ? 'has-new' : ''}`}
+                  className={`topic-row-wrapper animate-enter ${newCount > 0 ? 'has-new' : ''}`}
                   style={{ animationDelay: `${0.2 + i * 0.04}s` }}
                 >
-                  <div className="topic-row-left">
-                    {topic.is_pinned && <MapPinIcon className="topic-icon pin" title="Fijado" />}
-                    {topic.is_locked && <LockClosedIcon className="topic-icon lock" title="Bloqueado" />}
-                    <div className="topic-info">
-                      <div className="topic-title-row">
-                        <span className="topic-title">{topic.title}</span>
-                        {newCount > 0 && (
-                          <span className="topic-new-badge">{newCount} nuevo{newCount !== 1 ? 's' : ''}</span>
+                  <Link
+                    href={`/salas/${slug}/${topic.id}`}
+                    className={`topic-row ${topic.is_pinned ? 'pinned' : ''} ${newCount > 0 ? 'has-new' : ''}`}
+                  >
+                    <div className="topic-row-left">
+                      {topic.is_pinned && <MapPinIcon className="topic-icon pin" title="Fijado" />}
+                      {topic.is_locked && <LockClosedIcon className="topic-icon lock" title="Bloqueado" />}
+                      <div className="topic-info">
+                        <div className="topic-title-row">
+                          <span className="topic-title">{topic.title}</span>
+                          {newCount > 0 && (
+                            <span className="topic-new-badge">{newCount} nuevo{newCount !== 1 ? 's' : ''}</span>
+                          )}
+                        </div>
+                        {topic.profiles && (
+                          <span className="topic-author">
+                            por <strong>{topic.profiles.display_name || topic.profiles.username}</strong>
+                          </span>
                         )}
                       </div>
-                      {topic.profiles && (
-                        <span className="topic-author">
-                          por <strong>{topic.profiles.display_name || topic.profiles.username}</strong>
-                        </span>
-                      )}
                     </div>
-                  </div>
-                  <div className="topic-row-right">
-                    <span className="topic-stat">
-                      <ChatBubbleLeftEllipsisIcon className="topic-stat-icon" /> {pCount}
-                    </span>
-                    <span className="topic-stat">
-                      <EyeIcon className="topic-stat-icon" /> {topic.view_count}
-                    </span>
-                    <span className="topic-stat">
-                      <CalendarIcon className="topic-stat-icon" />
-                      {new Date(topic.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
-                    </span>
-                    <span className="topic-arrow">→</span>
-                  </div>
-                </Link>
+                    <div className="topic-row-right">
+                      <span className="topic-stat">
+                        <ChatBubbleLeftEllipsisIcon className="topic-stat-icon" /> {pCount}
+                      </span>
+                      <span className="topic-stat">
+                        <EyeIcon className="topic-stat-icon" /> {topic.view_count}
+                      </span>
+                      <span className="topic-stat">
+                        <CalendarIcon className="topic-stat-icon" />
+                        {new Date(topic.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                      </span>
+                      {canManageTopic && (
+                        <TopicActions
+                          topicId={topic.id}
+                          slug={slug}
+                          topicTitle={topic.title}
+                        />
+                      )}
+                      <span className="topic-arrow">→</span>
+                    </div>
+                  </Link>
+                </div>
               )
             })}
           </div>
@@ -320,6 +340,9 @@ export default async function SalaDetailPage({ params }: { params: Promise<{ slu
           padding: 0.1rem 0.45rem; border-radius: 999px;
           white-space: nowrap;
         }
+        /* El wrapper sustituye al <Link> como contenedor del hover */
+        .topic-row-wrapper { position: relative; }
+        .topic-row { display: flex; }
         .topic-row.has-new { border-left: 3px solid var(--color-crimson); }
       `}</style>
     </div>
