@@ -50,6 +50,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   const htmlValueRef = useRef(defaultValue)
   const wrapperRef   = useRef<HTMLDivElement>(null)
   const dropdownRef  = useRef<HTMLDivElement>(null)
+  const defaultValueRef = useRef(defaultValue)
 
   const [htmlMode, setHtmlMode]   = useState(false)
   const [htmlValue, setHtmlValue] = useState(defaultValue)
@@ -140,59 +141,58 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
   // ── Inicializar Quill ─────────────────────────────────────────────────────
   useEffect(() => {
-    destroyedRef.current = false
+  destroyedRef.current = false
 
-    async function init() {
-      if (!document.querySelector('link[data-quill-css]')) {
-        await new Promise<void>(resolve => {
-          const link = document.createElement('link')
-          link.rel = 'stylesheet'
-          link.href = 'https://cdn.quilljs.com/1.3.7/quill.snow.css'
-          link.setAttribute('data-quill-css', '1')
-          link.onload = () => resolve()
-          document.head.appendChild(link)
-        })
-      }
-      if (destroyedRef.current) return
-      if (!editorElRef.current || !toolbarRef.current) return
-
-      const { default: Quill } = await import('quill')
-      if (destroyedRef.current) return
-
-      const q = new Quill(editorElRef.current, {
-        theme: 'snow',
-        placeholder,
-        modules: { toolbar: toolbarRef.current },
+  async function init() {
+    if (!document.querySelector('link[data-quill-css]')) {
+      await new Promise<void>(resolve => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = 'https://cdn.quilljs.com/1.3.7/quill.snow.css'
+        link.setAttribute('data-quill-css', '1')
+        link.onload = () => resolve()
+        document.head.appendChild(link)
       })
+    }
+    if (destroyedRef.current) return
+    if (!editorElRef.current || !toolbarRef.current) return
 
-      // FIX: usar updateValue() en lugar de asignar directamente al DOM y al hidden
-      // por separado. Así htmlValueRef, htmlValue state y el input hidden quedan
-      // sincronizados desde el principio, incluso si el usuario no toca el editor.
-      if (defaultValue) {
-        q.root.innerHTML = defaultValue
-        updateValue(defaultValue)
-      }
+    const { default: Quill } = await import('quill')
+    if (destroyedRef.current) return
 
-      q.on('text-change', () => {
-        if (destroyedRef.current) return
-        updateValue(q.root.innerHTML)
-        checkMentionTrigger(q)
-      })
+    const q = new Quill(editorElRef.current, {
+      theme: 'snow',
+      placeholder,
+      modules: { toolbar: toolbarRef.current },
+    })
 
-      quillRef.current = q
+    // ← USA EL REF, no el closure
+    const initial = defaultValueRef.current
+    if (initial) {
+      q.root.innerHTML = initial
+      updateValue(initial)
     }
 
-    init()
+    q.on('text-change', () => {
+      if (destroyedRef.current) return
+      updateValue(q.root.innerHTML)
+      checkMentionTrigger(q)
+    })
 
-    return () => {
-      destroyedRef.current = true
-      if (quillRef.current) {
-        try { const s = quillRef.current.scroll; if (s?.observer) s.observer.disconnect() } catch {}
-        quillRef.current = null
-      }
+    quillRef.current = q
+  }
+
+  init()
+
+  return () => {
+    destroyedRef.current = true
+    if (quillRef.current) {
+      try { const s = quillRef.current.scroll; if (s?.observer) s.observer.disconnect() } catch {}
+      quillRef.current = null
     }
+  }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+}, [])
 
   // ── Detectar @ en el texto ────────────────────────────────────────────────
   function checkMentionTrigger(q: any) {
@@ -263,12 +263,14 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     setHtmlMode(true)
   }
 
-  function switchToVisual() {
-    setHtmlMode(false)
-    setTimeout(() => {
-      if (quillRef.current) quillRef.current.root.innerHTML = htmlValueRef.current
-    }, 50)
-  }
+function switchToVisual() {
+  setHtmlMode(false)
+  setTimeout(() => {
+    if (quillRef.current) {
+      quillRef.current.root.innerHTML = htmlValueRef.current
+    }
+  }, 50)
+}
 
   function handleHtmlChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     updateValue(e.target.value)
