@@ -56,12 +56,12 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
       post_number,
       created_at,
       topic_id,
-      profiles!posts_author_id_fkey (
-        username,
-        display_name,
-        avatar_url,
-        role
-      ),
+      profiles (
+  username,
+  display_name,
+  avatar_url,
+  role
+),
       topics (
         title,
         rooms (
@@ -128,6 +128,13 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
           )
         })}
       </ul>
+
+      
+const { data, error } = await supabase.from('posts').select(`...`)
+console.log('RecentPosts error:', error)
+console.log('RecentPosts data[0]:', JSON.stringify(data?.[0], null, 2))
+
+
 
       <style>{`
         .rpw {

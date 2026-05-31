@@ -5,7 +5,8 @@ interface FooterProps {
 }
 
 export default function Footer({ footerText }: FooterProps) {
-  const text = footerText || `© ${new Date().getFullYear()} — Plataforma de Roleplay`
+const year = new Date().getFullYear() 
+const text = footerText || `© 2025 — Plataforma de Roleplay`
 
   return (
     <footer className="footer">
@@ -19,8 +20,6 @@ export default function Footer({ footerText }: FooterProps) {
         </div>
         <div className="footer-links">
           <Link href="/normas">Normas</Link>
-          <Link href="/privacidad">Privacidad</Link>
-          <Link href="/contacto">Contacto</Link>
         </div>
       </div>
 
