@@ -46,24 +46,17 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   const editorElRef     = useRef<HTMLDivElement>(null)
   const hiddenRef       = useRef<HTMLInputElement>(null)
   const quillRef        = useRef<any>(null)
-  const destroyedRef    = useRef(false)
   const htmlValueRef    = useRef(defaultValue)
   const defaultValueRef = useRef(defaultValue)
   const wrapperRef      = useRef<HTMLDivElement>(null)
   const dropdownRef     = useRef<HTMLDivElement>(null)
+  // Evita el doble-init de React StrictMode sin depender del DOM
+  const initDoneRef     = useRef(false)
 
   const [htmlMode, setHtmlMode]   = useState(false)
   const [htmlValue, setHtmlValue] = useState(defaultValue)
   const [mention, setMention]     = useState<MentionState>(MENTION_INITIAL)
   const mentionRef = useRef<MentionState>(MENTION_INITIAL)
-
-  // ── DEBUG ─────────────────────────────────────────────────────────────────
-  useEffect(() => {
-    console.log('[QuillEditor] mount — defaultValue:', JSON.stringify(defaultValue?.substring(0, 80)))
-    console.log('[QuillEditor] mount — defaultValueRef:', JSON.stringify(defaultValueRef.current?.substring(0, 80)))
-    return () => { console.log('[QuillEditor] cleanup') }
-  }, [])
-  // ─────────────────────────────────────────────────────────────────────────
 
   function syncMention(next: Partial<MentionState>) {
     mentionRef.current = { ...mentionRef.current, ...next }
@@ -81,8 +74,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     insertHTML(html: string) {
       if (quillRef.current) {
         const q = quillRef.current
-        const len = q.getLength()
-        if (len > 1) q.insertText(len - 1, '\n')
         const range = q.getSelection(true) ?? { index: q.getLength(), length: 0 }
         q.clipboard.dangerouslyPasteHTML(range.index, html)
         updateValue(q.root.innerHTML)
@@ -94,10 +85,14 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     },
     getHTML() { return htmlValueRef.current },
     clear() {
-      if (quillRef.current) { quillRef.current.setText(''); updateValue('') }
+      if (quillRef.current) {
+        quillRef.current.setText('')
+        updateValue('')
+      }
     },
   }))
 
+  // ── Buscar usuarios ───────────────────────────────────────────────────────
   const searchUsers = useCallback(async (query: string) => {
     if (query.length < 1) { syncMention({ users: [], loading: false }); return }
     syncMention({ loading: true })
@@ -111,6 +106,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     }
   }, [])
 
+  // ── Insertar mención ──────────────────────────────────────────────────────
   function insertMention(user: MentionUser) {
     const q = quillRef.current
     if (!q) return
@@ -118,7 +114,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     const { atIndex } = mentionRef.current
     const range = q.getSelection()
     const cursorIndex = range?.index ?? q.getLength()
-
     const deleteLen = cursorIndex - atIndex
     if (deleteLen > 0) q.deleteText(atIndex, deleteLen)
 
@@ -147,12 +142,13 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
   // ── Inicializar Quill ─────────────────────────────────────────────────────
   useEffect(() => {
-    destroyedRef.current = false
-    let localQuill: any = null
+    // Guard contra el doble mount de React StrictMode.
+    // A diferencia de destroyedRef, este NO se resetea en el cleanup,
+    // así que el segundo ciclo mount→cleanup→mount lo encuentra a true y aborta.
+    if (initDoneRef.current) return
+    initDoneRef.current = true
 
     async function init() {
-      console.log('[init] start — destroyed:', destroyedRef.current)
-
       if (!document.querySelector('link[data-quill-css]')) {
         await new Promise<void>(resolve => {
           const link = document.createElement('link')
@@ -164,23 +160,11 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         })
       }
 
-      console.log('[init] CSS ready — destroyed:', destroyedRef.current)
-      if (destroyedRef.current) return
-      if (!editorElRef.current || !toolbarRef.current) {
-        console.warn('[init] refs not ready')
-        return
-      }
-
-      if ((editorElRef.current as any).__quill_instance) {
-        console.warn('[init] already has instance, skipping')
-        return
-      }
+      if (!editorElRef.current || !toolbarRef.current) return
 
       const { default: Quill } = await import('quill')
-      console.log('[init] Quill imported — destroyed:', destroyedRef.current)
-      if (destroyedRef.current) return
 
-      editorElRef.current.innerHTML = ''
+      if (!editorElRef.current || !toolbarRef.current) return
 
       const q = new Quill(editorElRef.current, {
         theme: 'snow',
@@ -188,53 +172,43 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         modules: { toolbar: toolbarRef.current },
       })
 
-      ;(editorElRef.current as any).__quill_instance = q
-
+      // Usar dangerouslyPasteHTML en lugar de asignar innerHTML directamente.
+      // La asignación directa de innerHTML dispara el MutationObserver interno
+      // de Quill, que intenta emitir eventos antes de que la instancia esté
+      // completamente inicializada → error "Cannot read properties of undefined
+      // (reading 'emit')". dangerouslyPasteHTML pasa por la API oficial de Quill
+      // y no tiene este problema.
       const initial = defaultValueRef.current
-      console.log('[init] setting initial content:', JSON.stringify(initial?.substring(0, 80)))
-
       if (initial) {
-        q.root.innerHTML = initial
-        updateValue(initial)
-        console.log('[init] after set, q.root.innerHTML:', JSON.stringify(q.root.innerHTML?.substring(0, 80)))
+        q.clipboard.dangerouslyPasteHTML(0, initial)
+        updateValue(q.root.innerHTML)
       }
 
       q.on('text-change', () => {
-        if (destroyedRef.current) return
         updateValue(q.root.innerHTML)
         checkMentionTrigger(q)
       })
 
-      localQuill = q
       quillRef.current = q
-      console.log('[init] done ✓')
     }
 
     init()
 
     return () => {
-      console.log('[init cleanup] destroyed=true, localQuill:', !!localQuill)
-      destroyedRef.current = true
-
-      if (localQuill) {
+      // Limpiar la instancia al desmontar definitivamente (navegación, etc.)
+      // pero NO resetear initDoneRef — eso es intencional para el guard de StrictMode.
+      if (quillRef.current) {
         try {
-          const scroll = localQuill.scroll
+          const scroll = quillRef.current.scroll
           if (scroll?.observer) scroll.observer.disconnect()
         } catch { /* ignorar */ }
-
-        if (editorElRef.current) {
-          ;(editorElRef.current as any).__quill_instance = undefined
-          editorElRef.current.innerHTML = ''
-        }
-
-        localQuill = null
+        quillRef.current = null
       }
-
-      quillRef.current = null
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // ── Detectar @ ───────────────────────────────────────────────────────────
   function checkMentionTrigger(q: any) {
     const range = q.getSelection()
     if (!range) return
@@ -246,14 +220,11 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     if (match) {
       const atIndex = cursorIndex - match[0].length
       const query   = match[1]
-
       const cursorBounds = q.getBounds(cursorIndex)
       const wrapRect   = wrapperRef.current?.getBoundingClientRect()  ?? { top: 0, left: 0 }
       const editorRect = editorElRef.current?.getBoundingClientRect() ?? { top: 0, left: 0 }
-
       const top  = (editorRect.top - wrapRect.top) + cursorBounds.top + cursorBounds.height + 4
       const left = (editorRect.left - wrapRect.left) + cursorBounds.left
-
       syncMention({ open: true, query, atIndex, top, left, selectedIndex: 0 })
       searchUsers(query)
     } else {
@@ -261,11 +232,11 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     }
   }
 
+  // ── Teclado mention ───────────────────────────────────────────────────────
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       const m = mentionRef.current
       if (!m.open || m.users.length === 0) return
-
       if (e.key === 'ArrowDown') {
         e.preventDefault()
         syncMention({ selectedIndex: (m.selectedIndex + 1) % m.users.length })
@@ -280,12 +251,12 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         syncMention(MENTION_INITIAL)
       }
     }
-
     document.addEventListener('keydown', onKeyDown, true)
     return () => document.removeEventListener('keydown', onKeyDown, true)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // ── Click fuera del dropdown ──────────────────────────────────────────────
   useEffect(() => {
     function onMouseDown(e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -305,7 +276,9 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     setHtmlMode(false)
     setTimeout(() => {
       if (quillRef.current) {
-        quillRef.current.root.innerHTML = htmlValueRef.current
+        // Aquí también usamos dangerouslyPasteHTML para evitar el mismo problema
+        quillRef.current.setText('')
+        quillRef.current.clipboard.dangerouslyPasteHTML(0, htmlValueRef.current)
       }
     }, 50)
   }
@@ -357,11 +330,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
       <input ref={hiddenRef} type="hidden" name={name} value={htmlValue} onChange={() => {}} />
 
       {mention.open && (
-        <div
-          ref={dropdownRef}
-          className="mention-dropdown"
-          style={{ top: mention.top, left: mention.left }}
-        >
+        <div ref={dropdownRef} className="mention-dropdown" style={{ top: mention.top, left: mention.left }}>
           {mention.loading && <div className="mention-loading">Buscando…</div>}
           {!mention.loading && mention.users.length === 0 && mention.query.length > 0 && (
             <div className="mention-empty">Sin resultados</div>
