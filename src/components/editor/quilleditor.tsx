@@ -57,6 +57,14 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   const [mention, setMention]     = useState<MentionState>(MENTION_INITIAL)
   const mentionRef = useRef<MentionState>(MENTION_INITIAL)
 
+  // ── DEBUG ─────────────────────────────────────────────────────────────────
+  useEffect(() => {
+    console.log('[QuillEditor] mount — defaultValue:', JSON.stringify(defaultValue?.substring(0, 80)))
+    console.log('[QuillEditor] mount — defaultValueRef:', JSON.stringify(defaultValueRef.current?.substring(0, 80)))
+    return () => { console.log('[QuillEditor] cleanup') }
+  }, [])
+  // ─────────────────────────────────────────────────────────────────────────
+
   function syncMention(next: Partial<MentionState>) {
     mentionRef.current = { ...mentionRef.current, ...next }
     setMention(prev => ({ ...prev, ...next }))
@@ -90,7 +98,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     },
   }))
 
-  // ── Buscar usuarios por query ─────────────────────────────────────────────
   const searchUsers = useCallback(async (query: string) => {
     if (query.length < 1) { syncMention({ users: [], loading: false }); return }
     syncMention({ loading: true })
@@ -104,7 +111,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     }
   }, [])
 
-  // ── Insertar mención en Quill ─────────────────────────────────────────────
   function insertMention(user: MentionUser) {
     const q = quillRef.current
     if (!q) return
@@ -142,12 +148,11 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   // ── Inicializar Quill ─────────────────────────────────────────────────────
   useEffect(() => {
     destroyedRef.current = false
-    // Referencia local a la instancia creada en ESTE ciclo de efecto.
-    // El cleanup cierra sobre esta variable, no sobre quillRef.current,
-    // que puede ser pisada por un segundo mount (React StrictMode).
     let localQuill: any = null
 
     async function init() {
+      console.log('[init] start — destroyed:', destroyedRef.current)
+
       if (!document.querySelector('link[data-quill-css]')) {
         await new Promise<void>(resolve => {
           const link = document.createElement('link')
@@ -159,18 +164,22 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         })
       }
 
+      console.log('[init] CSS ready — destroyed:', destroyedRef.current)
       if (destroyedRef.current) return
-      if (!editorElRef.current || !toolbarRef.current) return
+      if (!editorElRef.current || !toolbarRef.current) {
+        console.warn('[init] refs not ready')
+        return
+      }
 
-      // Guard: si el elemento ya tiene una instancia activa, no crear otra.
-      // Evita el doble-mount de StrictMode que dejaba una instancia zombie
-      // con su MutationObserver disparando "Cannot read properties of undefined (reading 'emit')".
-      if ((editorElRef.current as any).__quill_instance) return
+      if ((editorElRef.current as any).__quill_instance) {
+        console.warn('[init] already has instance, skipping')
+        return
+      }
 
       const { default: Quill } = await import('quill')
+      console.log('[init] Quill imported — destroyed:', destroyedRef.current)
       if (destroyedRef.current) return
 
-      // Limpiar DOM residual del mount anterior antes de inicializar
       editorElRef.current.innerHTML = ''
 
       const q = new Quill(editorElRef.current, {
@@ -179,16 +188,15 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         modules: { toolbar: toolbarRef.current },
       })
 
-      // Marcar el elemento para el guard
       ;(editorElRef.current as any).__quill_instance = q
 
-      // Usar el ref para el valor inicial — el closure de init()
-      // puede haberse formado antes de que el prop llegara si el
-      // componente es cargado con dynamic(). El ref siempre es actual.
       const initial = defaultValueRef.current
+      console.log('[init] setting initial content:', JSON.stringify(initial?.substring(0, 80)))
+
       if (initial) {
         q.root.innerHTML = initial
         updateValue(initial)
+        console.log('[init] after set, q.root.innerHTML:', JSON.stringify(q.root.innerHTML?.substring(0, 80)))
       }
 
       q.on('text-change', () => {
@@ -199,25 +207,21 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
       localQuill = q
       quillRef.current = q
+      console.log('[init] done ✓')
     }
 
     init()
 
     return () => {
+      console.log('[init cleanup] destroyed=true, localQuill:', !!localQuill)
       destroyedRef.current = true
 
-      // Destruir SOLO la instancia creada en este ciclo
       if (localQuill) {
         try {
           const scroll = localQuill.scroll
-          // Desconectar el MutationObserver interno de Quill ANTES de nullear
-          // la instancia, para evitar el error "Cannot read properties of
-          // undefined (reading 'emit')" que dispara el observer sobre un
-          // Quill ya destruido.
           if (scroll?.observer) scroll.observer.disconnect()
         } catch { /* ignorar */ }
 
-        // Limpiar la marca del elemento para que el próximo mount pueda inicializar
         if (editorElRef.current) {
           ;(editorElRef.current as any).__quill_instance = undefined
           editorElRef.current.innerHTML = ''
@@ -231,7 +235,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // ── Detectar @ en el texto ────────────────────────────────────────────────
   function checkMentionTrigger(q: any) {
     const range = q.getSelection()
     if (!range) return
@@ -258,7 +261,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     }
   }
 
-  // ── Teclado: navegar y seleccionar en dropdown ────────────────────────────
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       const m = mentionRef.current
@@ -284,7 +286,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // ── Cerrar dropdown al hacer click fuera ─────────────────────────────────
   useEffect(() => {
     function onMouseDown(e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -361,9 +362,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
           className="mention-dropdown"
           style={{ top: mention.top, left: mention.left }}
         >
-          {mention.loading && (
-            <div className="mention-loading">Buscando…</div>
-          )}
+          {mention.loading && <div className="mention-loading">Buscando…</div>}
           {!mention.loading && mention.users.length === 0 && mention.query.length > 0 && (
             <div className="mention-empty">Sin resultados</div>
           )}
