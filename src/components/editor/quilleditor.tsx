@@ -47,10 +47,13 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   { name, defaultValue = '', placeholder = 'Escribe aquí...', height = 300, onChange, initialHtmlMode = false },
   ref
 ) {
-  const htmlValueRef  = useRef(defaultValue)
-  const htmlModeRef   = useRef(initialHtmlMode)
-  const wrapperRef    = useRef<HTMLDivElement>(null)
-  const dropdownRef   = useRef<HTMLDivElement>(null)
+  const htmlValueRef    = useRef(defaultValue)
+  const htmlModeRef     = useRef(initialHtmlMode)
+  // Mientras sea true, onUpdate no sobreescribe htmlValueRef.
+  // Se pone a false solo cuando el usuario edita manualmente en modo Visual.
+  const blockUpdateRef  = useRef(initialHtmlMode)
+  const wrapperRef      = useRef<HTMLDivElement>(null)
+  const dropdownRef     = useRef<HTMLDivElement>(null)
 
   const [htmlMode, setHtmlMode]   = useState(initialHtmlMode)
   const [htmlValue, setHtmlValue] = useState(defaultValue)
@@ -77,16 +80,15 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         HTMLAttributes: { class: 'tiptap-link' },
       }),
     ],
-    // Si arranca en modo HTML no pasamos el contenido a TipTap —
-    // TipTap sanearía el HTML eliminando divs, clases, etc.
-    // El contenido se carga solo cuando el usuario cambia a modo Visual.
+    // Si arranca en modo HTML pasamos string vacío a TipTap para que
+    // no sanee ni toque el contenido real, que vive en htmlValueRef.
     content: initialHtmlMode ? '' : defaultValue,
     onUpdate({ editor }) {
-      // Solo sincronizar cuando estamos en modo Visual.
-      // En modo HTML el valor lo gestiona el textarea directamente.
-      if (!htmlModeRef.current) {
-        updateValue(editor.getHTML())
-      }
+      // Ignorar actualizaciones mientras blockUpdateRef sea true.
+      // Esto evita que TipTap sobreescriba htmlValueRef durante su
+      // inicialización interna o cuando cargamos contenido vía setContent.
+      if (htmlModeRef.current || blockUpdateRef.current) return
+      updateValue(editor.getHTML())
     },
     editorProps: {
       attributes: {
@@ -99,6 +101,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   useImperativeHandle(ref, () => ({
     insertHTML(html: string) {
       if (editor && !htmlModeRef.current) {
+        blockUpdateRef.current = false
         editor.chain().focus().insertContent(html).run()
         updateValue(editor.getHTML())
       } else {
@@ -116,6 +119,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
   function switchToHtml() {
     htmlModeRef.current = true
+    blockUpdateRef.current = true
     if (editor) updateValue(editor.getHTML())
     setHtmlMode(true)
   }
@@ -125,9 +129,13 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     setHtmlMode(false)
     setTimeout(() => {
       if (editor) {
-        // Aquí sí pasamos por TipTap — el usuario es consciente de que
-        // el editor visual puede simplificar algunos elementos HTML complejos
+        // Bloqueamos onUpdate mientras cargamos el contenido para que
+        // setContent no dispare onUpdate y sobreescriba htmlValueRef
+        blockUpdateRef.current = true
         editor.commands.setContent(htmlValueRef.current, false)
+        // Desbloqueamos tras el ciclo de render para que las ediciones
+        // del usuario ya sí actualicen htmlValueRef
+        setTimeout(() => { blockUpdateRef.current = false }, 50)
       }
     }, 30)
   }
@@ -154,6 +162,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   function insertMention(user: MentionUser) {
     if (!editor) return
     const mentionHtml = `<a class="mention" href="/perfil/${user.username}">@${user.username}</a> `
+    blockUpdateRef.current = false
     editor.chain().focus().insertContent(mentionHtml).run()
     updateValue(editor.getHTML())
     syncMention(MENTION_INITIAL)
@@ -236,13 +245,11 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   return (
     <div className="tte-wrapper" ref={wrapperRef} style={{ position: 'relative' }}>
 
-      {/* Barra de modo */}
       <div className="tte-modebar">
         <button type="button" className={`tte-mode-btn ${!htmlMode ? 'active' : ''}`} onClick={switchToVisual}>✦ Visual</button>
         <button type="button" className={`tte-mode-btn ${htmlMode ? 'active' : ''}`} onClick={switchToHtml}>&lt;/&gt; HTML</button>
       </div>
 
-      {/* Barra de herramientas visual */}
       {!htmlMode && editor && (
         <div className="tte-toolbar">
           <select
@@ -254,6 +261,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
             }
             onChange={e => {
               const val = e.target.value
+              blockUpdateRef.current = false
               if (val === '') editor.chain().focus().setParagraph().run()
               else editor.chain().focus().toggleHeading({ level: Number(val) as 1|2|3 }).run()
             }}
@@ -264,31 +272,29 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
             <option value="3">H3</option>
           </select>
           <div className="tte-sep" />
-          <button type="button" className={`tte-btn ${editor.isActive('bold') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleBold().run()} title="Negrita"><strong>B</strong></button>
-          <button type="button" className={`tte-btn ${editor.isActive('italic') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleItalic().run()} title="Cursiva"><em>I</em></button>
-          <button type="button" className={`tte-btn ${editor.isActive('underline') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleUnderline().run()} title="Subrayado"><u>U</u></button>
-          <button type="button" className={`tte-btn ${editor.isActive('strike') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleStrike().run()} title="Tachado"><s>S</s></button>
+          <button type="button" className={`tte-btn ${editor.isActive('bold') ? 'active' : ''}`} onClick={() => { blockUpdateRef.current = false; editor.chain().focus().toggleBold().run() }} title="Negrita"><strong>B</strong></button>
+          <button type="button" className={`tte-btn ${editor.isActive('italic') ? 'active' : ''}`} onClick={() => { blockUpdateRef.current = false; editor.chain().focus().toggleItalic().run() }} title="Cursiva"><em>I</em></button>
+          <button type="button" className={`tte-btn ${editor.isActive('underline') ? 'active' : ''}`} onClick={() => { blockUpdateRef.current = false; editor.chain().focus().toggleUnderline().run() }} title="Subrayado"><u>U</u></button>
+          <button type="button" className={`tte-btn ${editor.isActive('strike') ? 'active' : ''}`} onClick={() => { blockUpdateRef.current = false; editor.chain().focus().toggleStrike().run() }} title="Tachado"><s>S</s></button>
           <div className="tte-sep" />
-          <button type="button" className={`tte-btn ${editor.isActive('bulletList') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleBulletList().run()} title="Lista">☰</button>
-          <button type="button" className={`tte-btn ${editor.isActive('orderedList') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleOrderedList().run()} title="Lista numerada">①</button>
+          <button type="button" className={`tte-btn ${editor.isActive('bulletList') ? 'active' : ''}`} onClick={() => { blockUpdateRef.current = false; editor.chain().focus().toggleBulletList().run() }} title="Lista">☰</button>
+          <button type="button" className={`tte-btn ${editor.isActive('orderedList') ? 'active' : ''}`} onClick={() => { blockUpdateRef.current = false; editor.chain().focus().toggleOrderedList().run() }} title="Lista numerada">①</button>
           <div className="tte-sep" />
-          <button type="button" className={`tte-btn ${editor.isActive('blockquote') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleBlockquote().run()} title="Cita">❝</button>
+          <button type="button" className={`tte-btn ${editor.isActive('blockquote') ? 'active' : ''}`} onClick={() => { blockUpdateRef.current = false; editor.chain().focus().toggleBlockquote().run() }} title="Cita">❝</button>
           <button type="button" className="tte-btn" onClick={() => {
             const url = window.prompt('URL del enlace:')
-            if (url) editor.chain().focus().setLink({ href: url }).run()
+            if (url) { blockUpdateRef.current = false; editor.chain().focus().setLink({ href: url }).run() }
           }} title="Enlace">🔗</button>
-          <button type="button" className="tte-btn" onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Separador">—</button>
+          <button type="button" className="tte-btn" onClick={() => { blockUpdateRef.current = false; editor.chain().focus().setHorizontalRule().run() }} title="Separador">—</button>
           <div className="tte-sep" />
-          <button type="button" className="tte-btn" onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()} title="Limpiar formato">✕</button>
+          <button type="button" className="tte-btn" onClick={() => { blockUpdateRef.current = false; editor.chain().focus().unsetAllMarks().clearNodes().run() }} title="Limpiar formato">✕</button>
         </div>
       )}
 
-      {/* Editor visual TipTap */}
       <div style={{ display: htmlMode ? 'none' : 'block' }}>
         <EditorContent editor={editor} />
       </div>
 
-      {/* Editor HTML — el contenido se guarda tal cual, sin pasar por TipTap */}
       {htmlMode && (
         <textarea
           className="tte-html-textarea"
@@ -303,7 +309,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
       <input type="hidden" name={name} value={htmlValue} onChange={() => {}} />
 
-      {/* Dropdown menciones */}
       {mention.open && (
         <div ref={dropdownRef} className="mention-dropdown" style={{ top: mention.top, left: mention.left }}>
           {mention.loading && <div className="mention-loading">Buscando…</div>}
@@ -335,12 +340,10 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
       <style>{`
         .tte-wrapper { display: flex; flex-direction: column; border-radius: 4px; overflow: visible; border: 1px solid var(--border-subtle); transition: border-color 0.2s; }
         .tte-wrapper:focus-within { border-color: var(--color-crimson); box-shadow: 0 0 0 3px rgba(193,6,6,0.12); }
-
         .tte-modebar { display: flex; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); padding: 0.25rem 0.5rem; gap: 0.25rem; }
         .tte-mode-btn { background: transparent; border: 1px solid transparent; border-radius: 3px; color: var(--text-muted); font-family: var(--font-cinzel); font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.2rem 0.6rem; cursor: pointer; transition: all 0.15s; }
         .tte-mode-btn:hover { color: var(--text-secondary); border-color: var(--border-medium); }
         .tte-mode-btn.active { color: var(--color-crimson); border-color: rgba(193,6,6,0.3); background: rgba(193,6,6,0.08); }
-
         .tte-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 0.15rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); padding: 0.35rem 0.5rem; }
         .tte-btn { background: transparent; border: 1px solid transparent; border-radius: 3px; color: var(--text-secondary); font-size: 0.85rem; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; }
         .tte-btn:hover { color: var(--text-primary); border-color: var(--border-medium); background: var(--bg-card); }
@@ -348,7 +351,6 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         .tte-select { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 3px; color: var(--text-secondary); font-size: 0.75rem; padding: 0.15rem 0.35rem; cursor: pointer; font-family: var(--font-display); }
         .tte-select:focus { outline: none; border-color: var(--color-crimson); }
         .tte-sep { width: 1px; height: 16px; background: var(--border-subtle); margin: 0 0.15rem; }
-
         .tte-wrapper .tiptap { outline: none; }
         .tte-editor { padding: 1rem; background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-body); font-size: 1.05rem; line-height: 1.75; }
         .tte-editor p { margin: 0.4em 0; }
@@ -361,10 +363,8 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         .tte-editor a, .tiptap-link { color: var(--color-crimson); text-decoration: underline; }
         .tte-editor a.mention { color: var(--color-crimson); font-weight: 600; background: rgba(193,6,6,0.08); border-radius: 3px; padding: 0 3px; text-decoration: none; }
         .tte-editor p.is-editor-empty:first-child::before { content: attr(data-placeholder); color: var(--text-muted); font-style: italic; float: left; pointer-events: none; height: 0; }
-
         .tte-html-textarea { width: 100%; background: #0d1117; color: #a8d8a8; border: none; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; resize: vertical; box-sizing: border-box; display: block; }
         .tte-html-textarea:focus { outline: none; }
-
         .mention-dropdown { position: absolute; z-index: 9999; min-width: 220px; max-width: 300px; background: var(--bg-elevated); border: 1px solid var(--border-medium); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); overflow: hidden; }
         .mention-loading, .mention-empty { padding: 0.6rem 1rem; font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
         .mention-item { display: flex; align-items: center; gap: 0.6rem; width: 100%; background: transparent; border: none; padding: 0.5rem 0.75rem; cursor: pointer; text-align: left; transition: background 0.1s; }
