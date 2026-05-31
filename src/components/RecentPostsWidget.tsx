@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
 import { getPageForPostNumber } from '@/lib/pagination'
 
@@ -46,10 +46,18 @@ function timeAgo(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })
 }
 
-export default async function RecentPostsWidget({ limit = 10 }: { limit?: number }) {
-  const supabase = await createClient()
+// Service client que bypasea RLS — igual que en layout.tsx
+function getServiceClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
-  const { data, error } = await supabase   // <-- cambia 'data' solo por '{ data, error }'
+export default async function RecentPostsWidget({ limit = 10 }: { limit?: number }) {
+  const supabase = getServiceClient()
+
+  const { data, error } = await supabase
     .from('posts')
     .select(`
       id,
@@ -75,10 +83,8 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
     .order('created_at', { ascending: false })
     .limit(limit)
 
-
-  console.log('RecentPosts error:', error)
-  console.log('RecentPosts count:', data?.length)
-  console.log('RecentPosts data[0]:', JSON.stringify(data?.[0], null, 2))
+  if (error) console.error('[RecentPostsWidget] error:', error)
+  if (!data?.length) console.warn('[RecentPostsWidget] sin datos')
 
   const posts = (data ?? []) as unknown as RecentPost[]
   if (posts.length === 0) return null
@@ -106,7 +112,6 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
 
           return (
             <li key={post.id} className="rpw-item">
-              {/* Fila superior: avatar pequeño + título del tema */}
               <div className="rpw-row-top">
                 <Link href={`/perfil/${profile.username}`} className="rpw-avatar-wrap" title={name}>
                   <img src={avatar} alt={name} className="rpw-avatar" />
@@ -117,7 +122,6 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
                 </Link>
               </div>
 
-              {/* Fila inferior: autor · sala · tiempo */}
               <div className="rpw-row-bottom">
                 <Link href={`/perfil/${profile.username}`} className="rpw-author" style={{ color }}>
                   {name}
@@ -134,18 +138,15 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
         })}
       </ul>
 
-
-
       <style>{`
         .rpw {
           background: var(--bg-card);
           border: 1px solid var(--border-subtle);
           border-radius: 6px;
-         overflow: auto;
-         height: 21em;
+          overflow: auto;
+          height: 21em;
         }
 
-        /* Cabecera */
         .rpw-head {
           display: flex;
           align-items: center;
@@ -154,7 +155,7 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
           border-bottom: 1px solid var(--border-subtle);
         }
         .rpw-head-title {
-          font-family: var(--font-cinzel);
+          font-family: var(--font-display);
           font-size: 0.68rem;
           font-weight: 700;
           letter-spacing: 0.07em;
@@ -163,14 +164,13 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
         }
         .rpw-head-link {
           font-size: 0.63rem;
-          font-family: var(--font-cinzel);
+          font-family: var(--font-display);
           color: var(--text-muted);
           text-decoration: none;
           transition: color 0.15s;
         }
         .rpw-head-link:hover { color: var(--color-crimson); }
 
-        /* Lista */
         .rpw-list {
           list-style: none;
           margin: 0;
@@ -187,7 +187,6 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
         .rpw-item:last-child { border-bottom: none; }
         .rpw-item:hover { background: var(--bg-elevated); }
 
-        /* Fila del título con avatar */
         .rpw-row-top {
           display: flex;
           align-items: center;
@@ -195,7 +194,6 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
           min-width: 0;
         }
 
-        /* Avatar 18px con punto de rol */
         .rpw-avatar-wrap {
           position: relative;
           flex-shrink: 0;
@@ -221,10 +219,9 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
           border: 1px solid var(--bg-card);
         }
 
-        /* Título del tema */
         .rpw-topic {
           font-size: 0.76rem;
-          font-family: var(--font-cinzel);
+          font-family: var(--font-display);
           color: var(--text-primary);
           text-decoration: none;
           white-space: nowrap;
@@ -237,7 +234,6 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
         }
         .rpw-topic:hover { color: var(--color-crimson); }
 
-        /* Fila de metadatos — indentada para alinear con el título */
         .rpw-row-bottom {
           display: flex;
           align-items: center;
@@ -268,7 +264,7 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
         .rpw-time {
           font-size: 0.63rem;
           color: var(--text-muted);
-          font-family: var(--font-cinzel);
+          font-family: var(--font-display);
           white-space: nowrap;
           flex-shrink: 0;
         }
