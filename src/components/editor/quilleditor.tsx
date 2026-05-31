@@ -47,9 +47,10 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   { name, defaultValue = '', placeholder = 'Escribe aquí...', height = 300, onChange, initialHtmlMode = false },
   ref
 ) {
-  const htmlValueRef = useRef(defaultValue)
-  const wrapperRef   = useRef<HTMLDivElement>(null)
-  const dropdownRef  = useRef<HTMLDivElement>(null)
+  const htmlValueRef  = useRef(defaultValue)
+  const htmlModeRef   = useRef(initialHtmlMode)
+  const wrapperRef    = useRef<HTMLDivElement>(null)
+  const dropdownRef   = useRef<HTMLDivElement>(null)
 
   const [htmlMode, setHtmlMode]   = useState(initialHtmlMode)
   const [htmlValue, setHtmlValue] = useState(defaultValue)
@@ -76,9 +77,16 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         HTMLAttributes: { class: 'tiptap-link' },
       }),
     ],
-    content: defaultValue,
+    // Si arranca en modo HTML no pasamos el contenido a TipTap —
+    // TipTap sanearía el HTML eliminando divs, clases, etc.
+    // El contenido se carga solo cuando el usuario cambia a modo Visual.
+    content: initialHtmlMode ? '' : defaultValue,
     onUpdate({ editor }) {
-      updateValue(editor.getHTML())
+      // Solo sincronizar cuando estamos en modo Visual.
+      // En modo HTML el valor lo gestiona el textarea directamente.
+      if (!htmlModeRef.current) {
+        updateValue(editor.getHTML())
+      }
     },
     editorProps: {
       attributes: {
@@ -90,7 +98,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
   useImperativeHandle(ref, () => ({
     insertHTML(html: string) {
-      if (editor) {
+      if (editor && !htmlModeRef.current) {
         editor.chain().focus().insertContent(html).run()
         updateValue(editor.getHTML())
       } else {
@@ -101,24 +109,24 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     },
     getHTML() { return htmlValueRef.current },
     clear() {
-      if (editor) {
-        editor.chain().focus().clearContent().run()
-        updateValue('')
-      }
+      if (editor) editor.chain().focus().clearContent().run()
+      updateValue('')
     },
   }))
 
-  // Sync editor content when switching Visual → HTML → Visual
   function switchToHtml() {
+    htmlModeRef.current = true
     if (editor) updateValue(editor.getHTML())
     setHtmlMode(true)
   }
 
   function switchToVisual() {
+    htmlModeRef.current = false
     setHtmlMode(false)
-    // Pequeño delay para que el DOM del editor esté visible antes de setear contenido
     setTimeout(() => {
       if (editor) {
+        // Aquí sí pasamos por TipTap — el usuario es consciente de que
+        // el editor visual puede simplificar algunos elementos HTML complejos
         editor.commands.setContent(htmlValueRef.current, false)
       }
     }, 30)
@@ -166,6 +174,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   useEffect(() => {
     if (!editor) return
     const handler = () => {
+      if (htmlModeRef.current) return
       const { state } = editor
       const { selection } = state
       const { $from } = selection
@@ -279,7 +288,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         <EditorContent editor={editor} />
       </div>
 
-      {/* Editor HTML */}
+      {/* Editor HTML — el contenido se guarda tal cual, sin pasar por TipTap */}
       {htmlMode && (
         <textarea
           className="tte-html-textarea"
