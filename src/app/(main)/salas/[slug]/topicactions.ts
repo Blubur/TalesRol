@@ -363,3 +363,43 @@ export async function deleteTopicOnly(id: string, slug: string) {
   revalidatePath(`/salas/${slug}`)
   return { success: true }
 }
+
+// ── AÑADIR al final de topicactions.ts ────────────────────────────────────────
+
+export async function deleteTopicOnly(id: string, slug: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No autenticado.' }
+
+  const { data: topic } = await supabase
+    .from('topics').select('author_id, room_id').eq('id', id).single()
+
+  const { data: profile } = await supabase
+    .from('profiles').select('role').eq('id', user.id).single()
+
+  const isAdmin  = profile?.role === 'admin'
+  const isAuthor = topic?.author_id === user.id
+
+  let isRoomOwner = false
+  if (!isAdmin && !isAuthor && topic?.room_id) {
+    const { data: room } = await supabase
+      .from('rooms').select('owner_id').eq('id', topic.room_id).single()
+    isRoomOwner = room?.owner_id === user.id
+  }
+
+  if (!isAuthor && !isAdmin && !isRoomOwner) {
+    return { error: 'No tienes permiso para eliminar este tema.' }
+  }
+
+  // Usar service client para saltarse RLS en el UPDATE
+  const service = getServiceClient()
+  const { error } = await service
+    .from('topics')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id)
+
+  if (error) return { error: error.message }
+
+  revalidatePath(`/salas/${slug}`)
+  return { success: true }
+}
