@@ -53,7 +53,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   // Evita el doble-init de React StrictMode sin depender del DOM
   const initDoneRef     = useRef(false)
 
-  const [htmlMode, setHtmlMode]   = useState(false)
+  const [htmlMode, setHtmlMode]   = useState(true)
   const [htmlValue, setHtmlValue] = useState(defaultValue)
   const [mention, setMention]     = useState<MentionState>(MENTION_INITIAL)
   const mentionRef = useRef<MentionState>(MENTION_INITIAL)
