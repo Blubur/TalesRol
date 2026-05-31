@@ -134,13 +134,14 @@ export default function WikiPageForm({ roomId, roomSlug, page, otherPages = [] }
 
         <div className="wpf-field">
           <label className="wpf-label">Contenido</label>
-          <QuillEditor
-            ref={editorRef}
-            name="content"
-            defaultValue={page?.content ?? ''}
-            placeholder="Escribe el contenido de esta página de la wiki..."
-            height={420}
-          />
+         <QuillEditor
+  ref={editorRef}
+  name="content"
+  defaultValue={page?.content ?? ''}
+  placeholder="Escribe el contenido de esta página de la wiki..."
+  height={420}
+  initialHtmlMode={!!page}
+/>
         </div>
 
         {otherPages.length > 0 && (
