@@ -64,7 +64,7 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
       post_number,
       created_at,
       topic_id,
-      profiles (
+      profiles!posts_author_id_fkey (
         username,
         display_name,
         avatar_url,
