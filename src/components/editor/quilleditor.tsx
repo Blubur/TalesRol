@@ -1,6 +1,10 @@
 'use client'
 
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle, useCallback } from 'react'
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import Link from '@tiptap/extension-link'
+import Underline from '@tiptap/extension-underline'
 
 export interface QuillEditorHandle {
   insertHTML: (html: string) => void
@@ -14,6 +18,7 @@ interface QuillEditorProps {
   placeholder?: string
   height?: number
   onChange?: (value: string) => void
+  initialHtmlMode?: boolean
 }
 
 interface MentionUser {
@@ -39,21 +44,14 @@ const MENTION_INITIAL: MentionState = {
 }
 
 const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function QuillEditor(
-  { name, defaultValue = '', placeholder = 'Escribe aquí...', height = 300, onChange },
+  { name, defaultValue = '', placeholder = 'Escribe aquí...', height = 300, onChange, initialHtmlMode = false },
   ref
 ) {
-  const toolbarRef      = useRef<HTMLDivElement>(null)
-  const editorElRef     = useRef<HTMLDivElement>(null)
-  const hiddenRef       = useRef<HTMLInputElement>(null)
-  const quillRef        = useRef<any>(null)
-  const htmlValueRef    = useRef(defaultValue)
-  const defaultValueRef = useRef(defaultValue)
-  const wrapperRef      = useRef<HTMLDivElement>(null)
-  const dropdownRef     = useRef<HTMLDivElement>(null)
-  // Evita el doble-init de React StrictMode sin depender del DOM
-  const initDoneRef     = useRef(false)
+  const htmlValueRef = useRef(defaultValue)
+  const wrapperRef   = useRef<HTMLDivElement>(null)
+  const dropdownRef  = useRef<HTMLDivElement>(null)
 
-  const [htmlMode, setHtmlMode]   = useState(true)
+  const [htmlMode, setHtmlMode]   = useState(initialHtmlMode)
   const [htmlValue, setHtmlValue] = useState(defaultValue)
   const [mention, setMention]     = useState<MentionState>(MENTION_INITIAL)
   const mentionRef = useRef<MentionState>(MENTION_INITIAL)
@@ -66,17 +64,35 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   function updateValue(val: string) {
     htmlValueRef.current = val
     setHtmlValue(val)
-    if (hiddenRef.current) hiddenRef.current.value = val
     onChange?.(val)
   }
 
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: { class: 'tiptap-link' },
+      }),
+    ],
+    content: defaultValue,
+    onUpdate({ editor }) {
+      updateValue(editor.getHTML())
+    },
+    editorProps: {
+      attributes: {
+        class: 'tte-editor',
+        style: `min-height: ${height}px`,
+      },
+    },
+  })
+
   useImperativeHandle(ref, () => ({
     insertHTML(html: string) {
-      if (quillRef.current) {
-        const q = quillRef.current
-        const range = q.getSelection(true) ?? { index: q.getLength(), length: 0 }
-        q.clipboard.dangerouslyPasteHTML(range.index, html)
-        updateValue(q.root.innerHTML)
+      if (editor) {
+        editor.chain().focus().insertContent(html).run()
+        updateValue(editor.getHTML())
       } else {
         const next = (htmlValueRef.current || '') + html
         updateValue(next)
@@ -85,12 +101,32 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     },
     getHTML() { return htmlValueRef.current },
     clear() {
-      if (quillRef.current) {
-        quillRef.current.setText('')
+      if (editor) {
+        editor.chain().focus().clearContent().run()
         updateValue('')
       }
     },
   }))
+
+  // Sync editor content when switching Visual → HTML → Visual
+  function switchToHtml() {
+    if (editor) updateValue(editor.getHTML())
+    setHtmlMode(true)
+  }
+
+  function switchToVisual() {
+    setHtmlMode(false)
+    // Pequeño delay para que el DOM del editor esté visible antes de setear contenido
+    setTimeout(() => {
+      if (editor) {
+        editor.commands.setContent(htmlValueRef.current, false)
+      }
+    }, 30)
+  }
+
+  function handleHtmlChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    updateValue(e.target.value)
+  }
 
   // ── Buscar usuarios ───────────────────────────────────────────────────────
   const searchUsers = useCallback(async (query: string) => {
@@ -108,129 +144,61 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
   // ── Insertar mención ──────────────────────────────────────────────────────
   function insertMention(user: MentionUser) {
-    const q = quillRef.current
-    if (!q) return
-
-    const { atIndex } = mentionRef.current
-    const range = q.getSelection()
-    const cursorIndex = range?.index ?? q.getLength()
-    const deleteLen = cursorIndex - atIndex
-    if (deleteLen > 0) q.deleteText(atIndex, deleteLen)
-
-    const mentionText = `@${user.username}`
-    q.insertText(atIndex, mentionText, { link: `/perfil/${user.username}`, 'mention-user': user.username })
-    q.insertText(atIndex + mentionText.length, ' ')
-    q.setSelection(atIndex + mentionText.length + 1)
-
-    setTimeout(() => {
-      if (!q) return
-      const html = q.root.innerHTML
-      const fixed = html.replace(
-        /(<a[^>]+href="\/perfil\/([^"]+)"[^>]*>)(@[^<]+)(<\/a>)/g,
-        (_, open, uname, text, close) => {
-          if (open.includes('class=')) return open.replace(/class="[^"]*"/, 'class="mention"') + text + close
-          return `<a class="mention" href="/perfil/${uname}">${text}</a>`
-        }
-      )
-      q.root.innerHTML = fixed
-      updateValue(q.root.innerHTML)
-      q.setSelection(q.getLength())
-    }, 0)
-
+    if (!editor) return
+    const mentionHtml = `<a class="mention" href="/perfil/${user.username}">@${user.username}</a> `
+    editor.chain().focus().insertContent(mentionHtml).run()
+    updateValue(editor.getHTML())
     syncMention(MENTION_INITIAL)
   }
 
-  // ── Inicializar Quill ─────────────────────────────────────────────────────
+  // ── Click fuera del dropdown ──────────────────────────────────────────────
   useEffect(() => {
-    // Guard contra el doble mount de React StrictMode.
-    // A diferencia de destroyedRef, este NO se resetea en el cleanup,
-    // así que el segundo ciclo mount→cleanup→mount lo encuentra a true y aborta.
-    if (initDoneRef.current) return
-    initDoneRef.current = true
-
-    async function init() {
-      if (!document.querySelector('link[data-quill-css]')) {
-        await new Promise<void>(resolve => {
-          const link = document.createElement('link')
-          link.rel = 'stylesheet'
-          link.href = 'https://cdn.quilljs.com/1.3.7/quill.snow.css'
-          link.setAttribute('data-quill-css', '1')
-          link.onload = () => resolve()
-          document.head.appendChild(link)
-        })
-      }
-
-      if (!editorElRef.current || !toolbarRef.current) return
-
-      const { default: Quill } = await import('quill')
-
-      if (!editorElRef.current || !toolbarRef.current) return
-
-      const q = new Quill(editorElRef.current, {
-        theme: 'snow',
-        placeholder,
-        modules: { toolbar: toolbarRef.current },
-      })
-
-      // Usar dangerouslyPasteHTML en lugar de asignar innerHTML directamente.
-      // La asignación directa de innerHTML dispara el MutationObserver interno
-      // de Quill, que intenta emitir eventos antes de que la instancia esté
-      // completamente inicializada → error "Cannot read properties of undefined
-      // (reading 'emit')". dangerouslyPasteHTML pasa por la API oficial de Quill
-      // y no tiene este problema.
-      const initial = defaultValueRef.current
-      if (initial) {
-        q.clipboard.dangerouslyPasteHTML(0, initial)
-        updateValue(q.root.innerHTML)
-      }
-
-      q.on('text-change', () => {
-        updateValue(q.root.innerHTML)
-        checkMentionTrigger(q)
-      })
-
-      quillRef.current = q
-    }
-
-    init()
-
-    return () => {
-      // Limpiar la instancia al desmontar definitivamente (navegación, etc.)
-      // pero NO resetear initDoneRef — eso es intencional para el guard de StrictMode.
-      if (quillRef.current) {
-        try {
-          const scroll = quillRef.current.scroll
-          if (scroll?.observer) scroll.observer.disconnect()
-        } catch { /* ignorar */ }
-        quillRef.current = null
+    function onMouseDown(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        syncMention(MENTION_INITIAL)
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    document.addEventListener('mousedown', onMouseDown)
+    return () => document.removeEventListener('mousedown', onMouseDown)
   }, [])
 
-  // ── Detectar @ ───────────────────────────────────────────────────────────
-  function checkMentionTrigger(q: any) {
-    const range = q.getSelection()
-    if (!range) return
-
-    const cursorIndex = range.index
-    const text = q.getText(0, cursorIndex)
-    const match = text.match(/@([a-zA-Z0-9_]*)$/)
-
-    if (match) {
-      const atIndex = cursorIndex - match[0].length
-      const query   = match[1]
-      const cursorBounds = q.getBounds(cursorIndex)
-      const wrapRect   = wrapperRef.current?.getBoundingClientRect()  ?? { top: 0, left: 0 }
-      const editorRect = editorElRef.current?.getBoundingClientRect() ?? { top: 0, left: 0 }
-      const top  = (editorRect.top - wrapRect.top) + cursorBounds.top + cursorBounds.height + 4
-      const left = (editorRect.left - wrapRect.left) + cursorBounds.left
-      syncMention({ open: true, query, atIndex, top, left, selectedIndex: 0 })
-      searchUsers(query)
-    } else {
-      if (mentionRef.current.open) syncMention(MENTION_INITIAL)
+  // ── Detectar @ mientras se escribe ───────────────────────────────────────
+  useEffect(() => {
+    if (!editor) return
+    const handler = () => {
+      const { state } = editor
+      const { selection } = state
+      const { $from } = selection
+      const textBefore = $from.parent.textContent.slice(0, $from.parentOffset)
+      const match = textBefore.match(/@([a-zA-Z0-9_]*)$/)
+      if (match) {
+        const query = match[1]
+        const domSel = window.getSelection()
+        if (domSel && domSel.rangeCount > 0) {
+          const range = domSel.getRangeAt(0)
+          const rect = range.getBoundingClientRect()
+          const wrapRect = wrapperRef.current?.getBoundingClientRect() ?? { top: 0, left: 0 }
+          syncMention({
+            open: true,
+            query,
+            atIndex: $from.parentOffset - match[0].length,
+            top: rect.bottom - wrapRect.top + 4,
+            left: rect.left - wrapRect.left,
+            selectedIndex: 0,
+          })
+          searchUsers(query)
+        }
+      } else {
+        if (mentionRef.current.open) syncMention(MENTION_INITIAL)
+      }
     }
-  }
+    editor.on('selectionUpdate', handler)
+    editor.on('update', handler)
+    return () => {
+      editor.off('selectionUpdate', handler)
+      editor.off('update', handler)
+    }
+  }, [editor, searchUsers])
 
   // ── Teclado mention ───────────────────────────────────────────────────────
   useEffect(() => {
@@ -254,71 +222,68 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     document.addEventListener('keydown', onKeyDown, true)
     return () => document.removeEventListener('keydown', onKeyDown, true)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // ── Click fuera del dropdown ──────────────────────────────────────────────
-  useEffect(() => {
-    function onMouseDown(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        syncMention(MENTION_INITIAL)
-      }
-    }
-    document.addEventListener('mousedown', onMouseDown)
-    return () => document.removeEventListener('mousedown', onMouseDown)
-  }, [])
-
-  function switchToHtml() {
-    if (quillRef.current) updateValue(quillRef.current.root.innerHTML)
-    setHtmlMode(true)
-  }
-
-  function switchToVisual() {
-    setHtmlMode(false)
-    setTimeout(() => {
-      if (quillRef.current) {
-        // Aquí también usamos dangerouslyPasteHTML para evitar el mismo problema
-        quillRef.current.setText('')
-        quillRef.current.clipboard.dangerouslyPasteHTML(0, htmlValueRef.current)
-      }
-    }, 50)
-  }
-
-  function handleHtmlChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    updateValue(e.target.value)
-  }
+  }, [editor])
 
   return (
-    <div className="qe-wrapper" ref={wrapperRef} style={{ position: 'relative' }}>
-      <div className="qe-modebar">
-        <button type="button" className={`qe-mode-btn ${!htmlMode ? 'active' : ''}`} onClick={switchToVisual}>✦ Visual</button>
-        <button type="button" className={`qe-mode-btn ${htmlMode ? 'active' : ''}`} onClick={switchToHtml}>&lt;/&gt; HTML</button>
+    <div className="tte-wrapper" ref={wrapperRef} style={{ position: 'relative' }}>
+
+      {/* Barra de modo */}
+      <div className="tte-modebar">
+        <button type="button" className={`tte-mode-btn ${!htmlMode ? 'active' : ''}`} onClick={switchToVisual}>✦ Visual</button>
+        <button type="button" className={`tte-mode-btn ${htmlMode ? 'active' : ''}`} onClick={switchToHtml}>&lt;/&gt; HTML</button>
       </div>
 
-      <div ref={toolbarRef} className="qe-toolbar" style={{ display: htmlMode ? 'none' : undefined }}>
-        <span className="ql-formats">
-          <select className="ql-header" defaultValue="">
-            <option value="1" /><option value="2" /><option value="3" /><option value="" />
+      {/* Barra de herramientas visual */}
+      {!htmlMode && editor && (
+        <div className="tte-toolbar">
+          <select
+            className="tte-select"
+            value={
+              editor.isActive('heading', { level: 1 }) ? '1' :
+              editor.isActive('heading', { level: 2 }) ? '2' :
+              editor.isActive('heading', { level: 3 }) ? '3' : ''
+            }
+            onChange={e => {
+              const val = e.target.value
+              if (val === '') editor.chain().focus().setParagraph().run()
+              else editor.chain().focus().toggleHeading({ level: Number(val) as 1|2|3 }).run()
+            }}
+          >
+            <option value="">Párrafo</option>
+            <option value="1">H1</option>
+            <option value="2">H2</option>
+            <option value="3">H3</option>
           </select>
-        </span>
-        <span className="ql-formats">
-          <button className="ql-bold" /><button className="ql-italic" />
-          <button className="ql-underline" /><button className="ql-strike" />
-        </span>
-        <span className="ql-formats">
-          <button className="ql-list" value="ordered" /><button className="ql-list" value="bullet" />
-        </span>
-        <span className="ql-formats">
-          <button className="ql-blockquote" /><button className="ql-link" />
-        </span>
-        <span className="ql-formats"><button className="ql-clean" /></span>
+          <div className="tte-sep" />
+          <button type="button" className={`tte-btn ${editor.isActive('bold') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleBold().run()} title="Negrita"><strong>B</strong></button>
+          <button type="button" className={`tte-btn ${editor.isActive('italic') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleItalic().run()} title="Cursiva"><em>I</em></button>
+          <button type="button" className={`tte-btn ${editor.isActive('underline') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleUnderline().run()} title="Subrayado"><u>U</u></button>
+          <button type="button" className={`tte-btn ${editor.isActive('strike') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleStrike().run()} title="Tachado"><s>S</s></button>
+          <div className="tte-sep" />
+          <button type="button" className={`tte-btn ${editor.isActive('bulletList') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleBulletList().run()} title="Lista">☰</button>
+          <button type="button" className={`tte-btn ${editor.isActive('orderedList') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleOrderedList().run()} title="Lista numerada">①</button>
+          <div className="tte-sep" />
+          <button type="button" className={`tte-btn ${editor.isActive('blockquote') ? 'active' : ''}`} onClick={() => editor.chain().focus().toggleBlockquote().run()} title="Cita">❝</button>
+          <button type="button" className="tte-btn" onClick={() => {
+            const url = window.prompt('URL del enlace:')
+            if (url) editor.chain().focus().setLink({ href: url }).run()
+          }} title="Enlace">🔗</button>
+          <button type="button" className="tte-btn" onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Separador">—</button>
+          <div className="tte-sep" />
+          <button type="button" className="tte-btn" onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()} title="Limpiar formato">✕</button>
+        </div>
+      )}
+
+      {/* Editor visual TipTap */}
+      <div style={{ display: htmlMode ? 'none' : 'block' }}>
+        <EditorContent editor={editor} />
       </div>
 
-      <div ref={editorElRef} className="qe-editor" style={{ display: htmlMode ? 'none' : 'block', minHeight: height }} />
-
+      {/* Editor HTML */}
       {htmlMode && (
         <textarea
-          className="qe-html-textarea"
-          style={{ height }}
+          className="tte-html-textarea"
+          style={{ minHeight: height }}
           value={htmlValue}
           onChange={handleHtmlChange}
           placeholder="<p>Escribe HTML aquí...</p>"
@@ -327,8 +292,9 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
         />
       )}
 
-      <input ref={hiddenRef} type="hidden" name={name} value={htmlValue} onChange={() => {}} />
+      <input type="hidden" name={name} value={htmlValue} onChange={() => {}} />
 
+      {/* Dropdown menciones */}
       {mention.open && (
         <div ref={dropdownRef} className="mention-dropdown" style={{ top: mention.top, left: mention.left }}>
           {mention.loading && <div className="mention-loading">Buscando…</div>}
@@ -358,32 +324,38 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
       )}
 
       <style>{`
-        .qe-wrapper { display: flex; flex-direction: column; border-radius: 4px; overflow: visible; border: 1px solid var(--border-subtle); transition: border-color 0.2s; }
-        .qe-wrapper:focus-within { border-color: var(--color-crimson); box-shadow: 0 0 0 3px rgba(193,6,6,0.12); }
-        .qe-modebar { display: flex; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); padding: 0.25rem 0.5rem; gap: 0.25rem; }
-        .qe-mode-btn { background: transparent; border: 1px solid transparent; border-radius: 3px; color: var(--text-muted); font-family: var(--font-cinzel); font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.2rem 0.6rem; cursor: pointer; transition: all 0.15s; }
-        .qe-mode-btn:hover { color: var(--text-secondary); border-color: var(--border-medium); }
-        .qe-mode-btn.active { color: var(--color-crimson); border-color: rgba(193,6,6,0.3); background: rgba(193,6,6,0.08); }
-        .qe-toolbar { background: var(--bg-secondary) !important; border: none !important; border-bottom: 1px solid var(--border-subtle) !important; padding: 0.35rem 0.5rem !important; }
-        .qe-toolbar .ql-stroke { stroke: var(--text-secondary) !important; }
-        .qe-toolbar .ql-fill { fill: var(--text-secondary) !important; }
-        .qe-toolbar .ql-picker-label { color: var(--text-secondary) !important; }
-        .qe-toolbar button:hover .ql-stroke, .qe-toolbar .ql-active .ql-stroke { stroke: var(--color-crimson) !important; }
-        .qe-toolbar button:hover .ql-fill, .qe-toolbar .ql-active .ql-fill { fill: var(--color-crimson) !important; }
-        .qe-toolbar .ql-picker-options { background: var(--bg-elevated) !important; border: 1px solid var(--border-medium) !important; }
-        .qe-toolbar .ql-picker-item { color: var(--text-secondary) !important; }
-        .qe-toolbar .ql-picker-item:hover { color: var(--color-crimson) !important; }
-        .qe-wrapper .ql-container { background: var(--bg-secondary) !important; border: none !important; font-family: var(--font-crimson-pro) !important; font-size: 1.05rem !important; color: var(--text-primary) !important; }
-        .qe-wrapper .ql-editor { color: var(--text-primary) !important; line-height: 1.75 !important; min-height: ${height}px; }
-        .qe-wrapper .ql-editor.ql-blank::before { color: var(--text-muted) !important; font-style: italic; }
-        .qe-wrapper .ql-editor h1 { font-family: var(--font-cinzel); font-size: 1.5rem; color: var(--color-crimson); margin: 0.8em 0 0.4em; }
-        .qe-wrapper .ql-editor h2 { font-family: var(--font-cinzel); font-size: 1.2rem; color: #d4820a; margin: 0.7em 0 0.3em; }
-        .qe-wrapper .ql-editor h3 { font-family: var(--font-cinzel); font-size: 1rem; margin: 0.6em 0 0.3em; }
-        .qe-wrapper .ql-editor blockquote { border-left: 3px solid var(--color-crimson); padding-left: 1em; color: var(--text-secondary); font-style: italic; margin: 0.8em 0; }
-        .qe-wrapper .ql-editor a { color: var(--color-crimson); }
-        .qe-wrapper .ql-editor a.mention { color: var(--color-crimson); font-weight: 600; background: rgba(193,6,6,0.08); border-radius: 3px; padding: 0 3px; text-decoration: none; }
-        .qe-html-textarea { width: 100%; background: #0d1117; color: #a8d8a8; border: none; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; resize: vertical; box-sizing: border-box; display: block; }
-        .qe-html-textarea:focus { outline: none; }
+        .tte-wrapper { display: flex; flex-direction: column; border-radius: 4px; overflow: visible; border: 1px solid var(--border-subtle); transition: border-color 0.2s; }
+        .tte-wrapper:focus-within { border-color: var(--color-crimson); box-shadow: 0 0 0 3px rgba(193,6,6,0.12); }
+
+        .tte-modebar { display: flex; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); padding: 0.25rem 0.5rem; gap: 0.25rem; }
+        .tte-mode-btn { background: transparent; border: 1px solid transparent; border-radius: 3px; color: var(--text-muted); font-family: var(--font-cinzel); font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.2rem 0.6rem; cursor: pointer; transition: all 0.15s; }
+        .tte-mode-btn:hover { color: var(--text-secondary); border-color: var(--border-medium); }
+        .tte-mode-btn.active { color: var(--color-crimson); border-color: rgba(193,6,6,0.3); background: rgba(193,6,6,0.08); }
+
+        .tte-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 0.15rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); padding: 0.35rem 0.5rem; }
+        .tte-btn { background: transparent; border: 1px solid transparent; border-radius: 3px; color: var(--text-secondary); font-size: 0.85rem; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; }
+        .tte-btn:hover { color: var(--text-primary); border-color: var(--border-medium); background: var(--bg-card); }
+        .tte-btn.active { color: var(--color-crimson); border-color: rgba(193,6,6,0.3); background: rgba(193,6,6,0.08); }
+        .tte-select { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 3px; color: var(--text-secondary); font-size: 0.75rem; padding: 0.15rem 0.35rem; cursor: pointer; font-family: var(--font-display); }
+        .tte-select:focus { outline: none; border-color: var(--color-crimson); }
+        .tte-sep { width: 1px; height: 16px; background: var(--border-subtle); margin: 0 0.15rem; }
+
+        .tte-wrapper .tiptap { outline: none; }
+        .tte-editor { padding: 1rem; background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-body); font-size: 1.05rem; line-height: 1.75; }
+        .tte-editor p { margin: 0.4em 0; }
+        .tte-editor h1 { font-family: var(--font-cinzel); font-size: 1.5rem; color: var(--color-crimson); margin: 0.8em 0 0.4em; }
+        .tte-editor h2 { font-family: var(--font-cinzel); font-size: 1.2rem; color: #d4820a; margin: 0.7em 0 0.3em; }
+        .tte-editor h3 { font-family: var(--font-cinzel); font-size: 1rem; margin: 0.6em 0 0.3em; }
+        .tte-editor blockquote { border-left: 3px solid var(--color-crimson); padding-left: 1em; color: var(--text-secondary); font-style: italic; margin: 0.8em 0; }
+        .tte-editor ul, .tte-editor ol { padding-left: 1.5em; margin: 0.4em 0; }
+        .tte-editor hr { border: none; border-top: 1px solid var(--border-subtle); margin: 1em 0; }
+        .tte-editor a, .tiptap-link { color: var(--color-crimson); text-decoration: underline; }
+        .tte-editor a.mention { color: var(--color-crimson); font-weight: 600; background: rgba(193,6,6,0.08); border-radius: 3px; padding: 0 3px; text-decoration: none; }
+        .tte-editor p.is-editor-empty:first-child::before { content: attr(data-placeholder); color: var(--text-muted); font-style: italic; float: left; pointer-events: none; height: 0; }
+
+        .tte-html-textarea { width: 100%; background: #0d1117; color: #a8d8a8; border: none; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; resize: vertical; box-sizing: border-box; display: block; }
+        .tte-html-textarea:focus { outline: none; }
+
         .mention-dropdown { position: absolute; z-index: 9999; min-width: 220px; max-width: 300px; background: var(--bg-elevated); border: 1px solid var(--border-medium); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); overflow: hidden; }
         .mention-loading, .mention-empty { padding: 0.6rem 1rem; font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
         .mention-item { display: flex; align-items: center; gap: 0.6rem; width: 100%; background: transparent; border: none; padding: 0.5rem 0.75rem; cursor: pointer; text-align: left; transition: background 0.1s; }
