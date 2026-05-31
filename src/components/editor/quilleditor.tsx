@@ -42,15 +42,15 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
   { name, defaultValue = '', placeholder = 'Escribe aquí...', height = 300, onChange },
   ref
 ) {
-  const toolbarRef   = useRef<HTMLDivElement>(null)
-  const editorElRef  = useRef<HTMLDivElement>(null)
-  const hiddenRef    = useRef<HTMLInputElement>(null)
-  const quillRef     = useRef<any>(null)
-  const destroyedRef = useRef(false)
-  const htmlValueRef = useRef(defaultValue)
-  const wrapperRef   = useRef<HTMLDivElement>(null)
-  const dropdownRef  = useRef<HTMLDivElement>(null)
+  const toolbarRef      = useRef<HTMLDivElement>(null)
+  const editorElRef     = useRef<HTMLDivElement>(null)
+  const hiddenRef       = useRef<HTMLInputElement>(null)
+  const quillRef        = useRef<any>(null)
+  const destroyedRef    = useRef(false)
+  const htmlValueRef    = useRef(defaultValue)
   const defaultValueRef = useRef(defaultValue)
+  const wrapperRef      = useRef<HTMLDivElement>(null)
+  const dropdownRef     = useRef<HTMLDivElement>(null)
 
   const [htmlMode, setHtmlMode]   = useState(false)
   const [htmlValue, setHtmlValue] = useState(defaultValue)
@@ -141,58 +141,95 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
 
   // ── Inicializar Quill ─────────────────────────────────────────────────────
   useEffect(() => {
-  destroyedRef.current = false
+    destroyedRef.current = false
+    // Referencia local a la instancia creada en ESTE ciclo de efecto.
+    // El cleanup cierra sobre esta variable, no sobre quillRef.current,
+    // que puede ser pisada por un segundo mount (React StrictMode).
+    let localQuill: any = null
 
-  async function init() {
-    if (!document.querySelector('link[data-quill-css]')) {
-      await new Promise<void>(resolve => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = 'https://cdn.quilljs.com/1.3.7/quill.snow.css'
-        link.setAttribute('data-quill-css', '1')
-        link.onload = () => resolve()
-        document.head.appendChild(link)
-      })
-    }
-    if (destroyedRef.current) return
-    if (!editorElRef.current || !toolbarRef.current) return
+    async function init() {
+      if (!document.querySelector('link[data-quill-css]')) {
+        await new Promise<void>(resolve => {
+          const link = document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = 'https://cdn.quilljs.com/1.3.7/quill.snow.css'
+          link.setAttribute('data-quill-css', '1')
+          link.onload = () => resolve()
+          document.head.appendChild(link)
+        })
+      }
 
-    const { default: Quill } = await import('quill')
-    if (destroyedRef.current) return
-
-    const q = new Quill(editorElRef.current, {
-      theme: 'snow',
-      placeholder,
-      modules: { toolbar: toolbarRef.current },
-    })
-
-    // ← USA EL REF, no el closure
-    const initial = defaultValueRef.current
-    if (initial) {
-      q.root.innerHTML = initial
-      updateValue(initial)
-    }
-
-    q.on('text-change', () => {
       if (destroyedRef.current) return
-      updateValue(q.root.innerHTML)
-      checkMentionTrigger(q)
-    })
+      if (!editorElRef.current || !toolbarRef.current) return
 
-    quillRef.current = q
-  }
+      // Guard: si el elemento ya tiene una instancia activa, no crear otra.
+      // Evita el doble-mount de StrictMode que dejaba una instancia zombie
+      // con su MutationObserver disparando "Cannot read properties of undefined (reading 'emit')".
+      if ((editorElRef.current as any).__quill_instance) return
 
-  init()
+      const { default: Quill } = await import('quill')
+      if (destroyedRef.current) return
 
-  return () => {
-    destroyedRef.current = true
-    if (quillRef.current) {
-      try { const s = quillRef.current.scroll; if (s?.observer) s.observer.disconnect() } catch {}
+      // Limpiar DOM residual del mount anterior antes de inicializar
+      editorElRef.current.innerHTML = ''
+
+      const q = new Quill(editorElRef.current, {
+        theme: 'snow',
+        placeholder,
+        modules: { toolbar: toolbarRef.current },
+      })
+
+      // Marcar el elemento para el guard
+      ;(editorElRef.current as any).__quill_instance = q
+
+      // Usar el ref para el valor inicial — el closure de init()
+      // puede haberse formado antes de que el prop llegara si el
+      // componente es cargado con dynamic(). El ref siempre es actual.
+      const initial = defaultValueRef.current
+      if (initial) {
+        q.root.innerHTML = initial
+        updateValue(initial)
+      }
+
+      q.on('text-change', () => {
+        if (destroyedRef.current) return
+        updateValue(q.root.innerHTML)
+        checkMentionTrigger(q)
+      })
+
+      localQuill = q
+      quillRef.current = q
+    }
+
+    init()
+
+    return () => {
+      destroyedRef.current = true
+
+      // Destruir SOLO la instancia creada en este ciclo
+      if (localQuill) {
+        try {
+          const scroll = localQuill.scroll
+          // Desconectar el MutationObserver interno de Quill ANTES de nullear
+          // la instancia, para evitar el error "Cannot read properties of
+          // undefined (reading 'emit')" que dispara el observer sobre un
+          // Quill ya destruido.
+          if (scroll?.observer) scroll.observer.disconnect()
+        } catch { /* ignorar */ }
+
+        // Limpiar la marca del elemento para que el próximo mount pueda inicializar
+        if (editorElRef.current) {
+          ;(editorElRef.current as any).__quill_instance = undefined
+          editorElRef.current.innerHTML = ''
+        }
+
+        localQuill = null
+      }
+
       quillRef.current = null
     }
-  }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+  }, [])
 
   // ── Detectar @ en el texto ────────────────────────────────────────────────
   function checkMentionTrigger(q: any) {
@@ -208,7 +245,7 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
       const query   = match[1]
 
       const cursorBounds = q.getBounds(cursorIndex)
-      const wrapRect  = wrapperRef.current?.getBoundingClientRect()  ?? { top: 0, left: 0 }
+      const wrapRect   = wrapperRef.current?.getBoundingClientRect()  ?? { top: 0, left: 0 }
       const editorRect = editorElRef.current?.getBoundingClientRect() ?? { top: 0, left: 0 }
 
       const top  = (editorRect.top - wrapRect.top) + cursorBounds.top + cursorBounds.height + 4
@@ -263,14 +300,14 @@ const QuillEditor = forwardRef<QuillEditorHandle, QuillEditorProps>(function Qui
     setHtmlMode(true)
   }
 
-function switchToVisual() {
-  setHtmlMode(false)
-  setTimeout(() => {
-    if (quillRef.current) {
-      quillRef.current.root.innerHTML = htmlValueRef.current
-    }
-  }, 50)
-}
+  function switchToVisual() {
+    setHtmlMode(false)
+    setTimeout(() => {
+      if (quillRef.current) {
+        quillRef.current.root.innerHTML = htmlValueRef.current
+      }
+    }, 50)
+  }
 
   function handleHtmlChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     updateValue(e.target.value)
