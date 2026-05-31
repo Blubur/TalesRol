@@ -49,7 +49,7 @@ function timeAgo(dateStr: string): string {
 export default async function RecentPostsWidget({ limit = 10 }: { limit?: number }) {
   const supabase = await createClient()
 
-  const { data } = await supabase
+  const { data, error } = await supabase   // <-- cambia 'data' solo por '{ data, error }'
     .from('posts')
     .select(`
       id,
@@ -57,11 +57,11 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
       created_at,
       topic_id,
       profiles (
-  username,
-  display_name,
-  avatar_url,
-  role
-),
+        username,
+        display_name,
+        avatar_url,
+        role
+      ),
       topics (
         title,
         rooms (
@@ -74,6 +74,11 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
     .is('blocked_at', null)
     .order('created_at', { ascending: false })
     .limit(limit)
+
+
+  console.log('RecentPosts error:', error)
+  console.log('RecentPosts count:', data?.length)
+  console.log('RecentPosts data[0]:', JSON.stringify(data?.[0], null, 2))
 
   const posts = (data ?? []) as unknown as RecentPost[]
   if (posts.length === 0) return null
@@ -128,11 +133,6 @@ export default async function RecentPostsWidget({ limit = 10 }: { limit?: number
           )
         })}
       </ul>
-
-      
-const { data, error } = await supabase.from('posts').select(`...`)
-console.log('RecentPosts error:', error)
-console.log('RecentPosts data[0]:', JSON.stringify(data?.[0], null, 2))
 
 
 
